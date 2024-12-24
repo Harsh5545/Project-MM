@@ -39,6 +39,10 @@ export function Dashboard({ children, session }) {
     router.push(url);
   };
 
+ 
+ const user = {
+    role:"ADMIN"
+ } 
   const linkData = {
     ADMIN: [
       { href: "/admin/category", text: "Category", icon: Home },
@@ -150,7 +154,7 @@ export function Dashboard({ children, session }) {
           </div>
           <Button variant="primary" size="icon" className="border border-primary mx-2 py-2">
             <Avatar>
-              <AvatarFallback>{getInitials(session?.user?.name)}</AvatarFallback>
+              {/* <AvatarFallback>{getInitials(session?.user?.name)}</AvatarFallback> */}
             </Avatar>
           </Button>
           <DropdownMenu>
