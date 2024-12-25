@@ -243,13 +243,13 @@ const ServicePage = ({ params }) => {
             Testimonials
           </h2>
           <div className="mt-6">
-          <Carousel className="w-full max-w-xs py-0">
+          <Carousel className=" py-0">
       <CarouselContent>
         {testimonials.map((testimonial, index) => (
           <CarouselItem key={index}>
             <div className="p-1">
               <Card className="bg-gray-100 p-6 rounded-lg shadow-md mx-2">
-                <CardContent className="flex aspect-square items-center justify-center p-6">
+                <CardContent className="flex aspect-square flex-col items-center justify-center p-6">
                   <p className="italic">{testimonial.quote}</p>
                   <footer className="text-right mt-4">- {testimonial.author}</footer>
                 </CardContent>
