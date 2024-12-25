@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { servicesDataPage } from "@/data";
 import { DM_Sans } from "next/font/google";
-
+import { Box } from "lucide-react";
 import {
   Accordion,
   AccordionContent,
@@ -262,7 +262,7 @@ const ServicePage = ({ params }) => {
         <section className="mt-14 pt-4 bg-gray-50  shadow-lg rounded-lg text-center">
           <h2 className="text-4xl font-semibold text-black">FAQs</h2>
           <div className="mt-6 bg-gray-50 ">
-            {faqData.map((faq, index) => (
+            {/* {faqData.map((faq, index) => ( */}
                 <Accordion type="single" collapsible>
                 {faqData.map((faq, index) => (
                   <AccordionItem key={index} value={`item-${index}`}>
@@ -276,7 +276,7 @@ const ServicePage = ({ params }) => {
                   </AccordionItem>
                 ))}
               </Accordion>
-            ))}
+            {/* ))} */}
           </div>
         </section>
 
