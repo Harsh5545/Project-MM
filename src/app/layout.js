@@ -3,9 +3,11 @@ import "./globals.css";
 
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
-import Navbarr from "@/components/Navbar";
+// import Navbarr from "@/components/Navbar";
 import Footer from "@/components/footer/Footer";
-// import Navbar from "@/components/navbar/Navbar";
+import Navbarr from "@/components/Navbar";
+import Header from "@/components/Navbar/Navbar";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,7 +34,7 @@ export default async function RootLayout({ children }) {
         >
           <div className=" h-screen flex flex-col">
             {/* <Navbar /> */}
-            <Navbarr/>
+            <Header/>
             <div className="flex-grow">
               {children}
             </div>
