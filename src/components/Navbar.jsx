@@ -4,7 +4,7 @@ import React from 'react'
 import LogoutButton from './LoginMethod/LogoutButton';
 import Image from 'next/image';
 
-const Navbar = async () => {
+const Navbarr = async () => {
     const session = await auth();
     return (
         <nav className='border-b border-gray-300 bg-background w-full flex items-center'>
@@ -51,4 +51,4 @@ const Navbar = async () => {
     )
 }
 
-export default Navbar
+export default Navbarr
