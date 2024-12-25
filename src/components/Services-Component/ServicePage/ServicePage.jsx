@@ -26,7 +26,7 @@ const dm_Sans = DM_Sans({
 });
 
 const ServicePage = ({ params }) => {
-  const { id } = params;
+  const { id } = JSON.parse(params.value);
   const [foundService, setFoundService] = useState(null);
   const [expandedPoint, setExpandedPoint] = useState(null);
 
