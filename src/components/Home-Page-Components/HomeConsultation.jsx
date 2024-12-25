@@ -39,10 +39,11 @@ const HomeConsultation = () => {
       name: "",
       phone: "",
       email: "",
-      service: "",
+      service: undefined, // Reset value
       message: "",
     });
   };
+
 
   return (
     <div className="flex flex-col items-center dark:bg-[#00001F] p-8 md:p-24 gap-10 justify-center">
@@ -93,14 +94,18 @@ const HomeConsultation = () => {
               className="w-full"
             />
             <Select
-              value={formData.service}
+              value={formData.service || undefined} // Ensures no empty string is passed
               onValueChange={(value) => setFormData({ ...formData, service: value })}
               required
               className="w-full"
             >
-              <SelectTrigger className="p-3 w-full">
-                <Label>Select Service</Label>
-              </SelectTrigger>
+             <SelectTrigger className="p-3 w-full">
+    {formData.service ? (
+      <span>{formData.service}</span>
+    ) : (
+      <span className="text-gray-400">Select Service</span>
+    )}
+  </SelectTrigger>
               <SelectContent>
                 <SelectItem value="">Select Service</SelectItem>
                 <SelectItem value="Personality Enhancement Programme">Personality Enhancement Programme</SelectItem>
