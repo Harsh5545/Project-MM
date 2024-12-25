@@ -4,6 +4,7 @@ import "./globals.css";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
 import Navbarr from "@/components/Navbar";
+import Footer from "@/components/footer/Footer";
 // import Navbar from "@/components/navbar/Navbar";
 
 const geistSans = Geist({
@@ -35,6 +36,7 @@ export default async function RootLayout({ children }) {
             <div className="flex-grow">
               {children}
             </div>
+            <Footer/>
           </div>
         </body>
       </html>

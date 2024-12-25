@@ -94,20 +94,19 @@ const HomeConsultation = () => {
               className="w-full"
             />
             <Select
-              value={formData.service || undefined} // Ensures no empty string is passed
+              value={formData.service || undefined} // Ensure no empty string is passed
               onValueChange={(value) => setFormData({ ...formData, service: value })}
               required
               className="w-full"
             >
-             <SelectTrigger className="p-3 w-full">
-    {formData.service ? (
-      <span>{formData.service}</span>
-    ) : (
-      <span className="text-gray-400">Select Service</span>
-    )}
-  </SelectTrigger>
+              <SelectTrigger className="p-3 w-full">
+                {formData.service ? (
+                  <span>{formData.service}</span>
+                ) : (
+                  <span className="text-gray-400">Select Service</span>
+                )}
+              </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">Select Service</SelectItem>
                 <SelectItem value="Personality Enhancement Programme">Personality Enhancement Programme</SelectItem>
                 <SelectItem value="Business Etiquette & Corporate Image Programme">Business Etiquette & Corporate Image Programme</SelectItem>
                 <SelectItem value="Children’s Etiquette Programme">Children’s Etiquette Programme</SelectItem>
@@ -117,6 +116,7 @@ const HomeConsultation = () => {
                 <SelectItem value="Communication & Soft Skills Training">Communication & Soft Skills Training</SelectItem>
               </SelectContent>
             </Select>
+
           </div>
           <div className="mb-4">
             <Textarea

@@ -5,7 +5,7 @@ import HomeConsultation from "@/components/Home-Page-Components/HomeConsultation
 import HomeDinning from "@/components/Home-Page-Components/HomeDinning";
 import HomeSection from "@/components/Home-Page-Components/HomeSection";
 import HomeTestimonial from "@/components/Home-Page-Components/HomeTestimonial";
-import Image from "next/image";
+
 
 export default function Home() {
   return (
@@ -16,7 +16,7 @@ export default function Home() {
       <HomeAbout />
       <HomeTestimonial />
       <HomeConsultation />
-      {/* <HomeSection /> */}
+      <HomeSection />
       </>
   );
 }
