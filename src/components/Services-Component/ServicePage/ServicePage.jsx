@@ -3,17 +3,20 @@
 import React, { useEffect, useState } from "react";
 import { servicesDataPage } from "@/data";
 import { DM_Sans } from "next/font/google";
+
 import {
   Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  Typography,
-  Box,
-  Button,
-} from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
-import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
+
+
+import ShadcnButton from "@/components/Atom/button/ShadcnButton";
+import { ChevronDown, HelpCircle } from "lucide-react";
+
+import { CheckCircle } from "lucide-react";
+
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 const dm_Sans = DM_Sans({
@@ -127,7 +130,8 @@ const ServicePage = ({ params }) => {
                 className="p-2 text-gray-600 flex items-center gap-1"
               >
                 <div className="flex gap-4 items-cente">
-                  <CheckCircleOutlineIcon className="text-gray-700" />
+                  <CheckCircle className="text-gray-700" />
+
                   {highlight}
                 </div>
               </li>
@@ -207,12 +211,12 @@ const ServicePage = ({ params }) => {
           <h2 className="text-4xl font-bold text-black">
             Help Your Child Shine with Confidence and Polished Manners!
           </h2>
-          <Button
+          <ShadcnButton
             variant="contained"
             className="mt-6 bg-black hover:bg-gray-600 "
           >
             Register Now
-          </Button>
+          </ShadcnButton>
         </section>
         {/* Why Choose Modern Mannerism Section */}
         <section className="mt-14 bg-gray-50 shadow-lg rounded-lg py-6 px-6">
@@ -259,16 +263,18 @@ const ServicePage = ({ params }) => {
           <h2 className="text-4xl font-semibold text-black">FAQs</h2>
           <div className="mt-6 bg-gray-50 ">
             {faqData.map((faq, index) => (
-              <Accordion key={index} className="bg-gray-50">
-                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                  <Typography className="text-lg font-semibold  text-black flex items-center gap-2">
-                    <HelpOutlineIcon />
-                    {faq.question}
-                  </Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <Typography>{faq.answer}</Typography>
-                </AccordionDetails>
+                <Accordion type="single" collapsible>
+                {faqData.map((faq, index) => (
+                  <AccordionItem key={index} value={`item-${index}`}>
+                    <AccordionTrigger className="text-lg font-semibold flex items-center gap-2">
+                      <HelpCircle className="w-5 h-5" />
+                      {faq.question}
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      <p className="text-gray-600">{faq.answer}</p>
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
               </Accordion>
             ))}
           </div>

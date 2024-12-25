@@ -45,7 +45,7 @@ const AllLinks = () => {
             },
           ],
         },
-        { title: "Children's Etiquette", path: "/services"},
+        { title: "Children's Etiquette", path: "/services/3"},
         { title: "Young Adult Etiquette", path: "/servicesadult-etiquette" },
         {
           title: "Latest Workshop",
