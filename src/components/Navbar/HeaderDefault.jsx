@@ -2,14 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
-
-import "./navbar.module.css";
-import "./Header.css";
 import Image from "next/image";
 import { useRouter } from "next/navigation"; 
 import AllLinks from "./links/AllLinks";
 import { Lato } from "next/font/google";
 import ShadcnButton from "../Atom/button/ShadcnButton";
+
 const dm_Sans = Lato({
   subsets: ["latin"],
   weight: ["400"],
@@ -36,8 +34,8 @@ function HeaderDefault() {
   const router = useRouter();
 
   return (
-    <div className="flex skeleton-navbar z-[999] absolute w-full pb-5 justify-center items-center">
-      <div className="flex-col bg-black text-white dark:bg-opacity-30 bg-opacity-30 dark:bg-[#06273A] md:flex-row flex justify-between px-2 md:px-10 rounded-md w-[90%] items-center backdrop-filter backdrop-blur-md py-1 mt-4">
+    <div className="flex z-[999] absolute w-full pb-5 justify-center items-center">
+      <div className="flex-col bg-black text-white bg-opacity-30 md:flex-row flex justify-between px-2 md:px-10 rounded-md w-[90%] items-center backdrop-filter backdrop-blur-md py-1 mt-4">
         <div className="flex justify-between items-center w-full md:w-0">
           <span className="text-xl">
             <Image
@@ -69,7 +67,7 @@ function HeaderDefault() {
 
         <div className="flex flex-col items-start">
           <div
-            className={`flex flex-col text-white dark:text-white font-poppins md:flex-row items-center gap-8 md:gap-10 h-[20rem] md:h-0 justify-center ${isMobileMenuOpen ? "block" : "hidden"
+            className={`flex flex-col text-white font-poppins md:flex-row items-center gap-8 md:gap-10 h-[20rem] md:h-0 justify-center ${isMobileMenuOpen ? "block" : "hidden"
               } md:flex`}
           >
             <AllLinks />
@@ -81,10 +79,10 @@ function HeaderDefault() {
             } md:flex gap-2 flex-col-reverse md:flex-row items-center justify-center`}
         >
           <ShadcnButton 
-            className={`${dm_Sans.className} tracking-wide rounded-full bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] font-extrabold text-white 
-              p-2 px-4 sm:px-6 sm:py-3 md:px-8 md:py-4 lg:px-8 lg:py-2 text-sm sm:text-base md:text-lg lg:text-xl shadow-lg`}
+            className={`${dm_Sans.className} tracking-wide rounded-full bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] text-white 
+              p-2 px-4 sm:px-6 sm:py-3 md:px-8 md:py-4 lg:px-8 lg:py-2 text-sm sm:text-base md:text-base lg:text-base shadow-lg`}
             onClick={() => {
-              router.push("/contact");
+              router.push("/contact-us");
               toggleMobileMenu();
             }}
           >

@@ -1,6 +1,5 @@
+"use client"
 import React from "react";
-// import { Button } from '@shadcn/ui/button'; // or similar
-
 import { Cormorant_Garamond } from "next/font/google";
 import ShadcnButton from "../Atom/button/ShadcnButton";
 
@@ -11,7 +10,7 @@ const dm_Sans = Cormorant_Garamond({
 
 const HomeDinning = () => {
   return (
-    <div className="relative w-full  lg:h-screen bg-gray-100 dark:bg-gray-300">
+    <div className="relative w-full lg:h-screen bg-gray-100 dark:bg-gray-300">
       {/* Full-screen background image */}
       <div
         className="absolute inset-0 bg-fixed bg-cover bg-center"
@@ -20,13 +19,13 @@ const HomeDinning = () => {
         }}
       >
         {/* Overlay */}
-        <div className="absolute inset-0 lg:w-1/2 "></div>
+        <div className="absolute inset-0 lg:w-1/2"></div>
       </div>
 
       {/* Content */}
       <div className="relative h-full z-10 flex flex-col lg:flex-row justify-end items-center lg:h-screen text-center lg:text-right gap-8">
         {/* Empty Left Side for Larger Screens */}
-        <div className="hidden lg:hidden lg:block lg:w-1/2"></div>
+        <div className="hidden lg:block lg:w-1/2"></div>
 
         {/* Content on the Right Side */}
         <div className="lg:w-1/2 w-full h-full bg-opacity-70 dark:bg-opacity-80 bg-[#793600] dark:bg-[#793600]">
@@ -57,8 +56,17 @@ const HomeDinning = () => {
               Learn More
             </ShadcnButton>
           </div>
+          <style jsx>{`
+        @media (max-width: 767px) {
+          .bg-fixed {
+            background-attachment: scroll;
+          }
+        }
+      `}</style>
         </div>
       </div>
+
+      
     </div>
   );
 };

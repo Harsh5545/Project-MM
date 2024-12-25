@@ -1,3 +1,4 @@
+"use client"
 import React from "react";
 import ShadcnButton from "../Atom/button/ShadcnButton";
 import { Lato } from "next/font/google";
@@ -37,7 +38,16 @@ const HomeSection = () => {
             JOIN NOW
           </ShadcnButton>
         </div>
+        <style jsx>{`
+        @media (max-width: 767px) {
+          .bg-fixed {
+            background-attachment: scroll;
+          }
+        }
+      `}</style>
       </div>
+      
+    
     </div>
   );
 };

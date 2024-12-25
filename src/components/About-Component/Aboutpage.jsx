@@ -3,7 +3,7 @@ import React from "react";
 
 function Aboutpage() {
   return (
-    <div className="flex flex-col dark:bg-[#00001F] md:flex-row  items-center gap-5 justify-evenly px-3 w-full h-full py-40">
+    <div className="flex flex-col dark:bg-[#00001F] md:flex-row  items-center gap-5 justify-evenly px-3 w-full h-full py-16 md:py-20  lg:py-24">
       <div className="md:w-[92%] w-full flex md:gap-0 gap-5 flex-col md:flex-row">
         <div className="flex-1 flex-col flex text-center gap-5 ">
           <div className="px-2 md:w-[90%] w-full flex text-center flex-col gap-4">

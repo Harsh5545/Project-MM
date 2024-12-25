@@ -32,7 +32,7 @@ export default async function RootLayout({ children }) {
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-          <div className=" h-screen flex flex-col">
+          <div className="  flex flex-col">
             {/* <Navbar /> */}
             <Header/>
             <div className="flex-grow">
@@ -40,6 +40,7 @@ export default async function RootLayout({ children }) {
             </div>
             <Footer/>
           </div>
+          
         </body>
       </html>
     </SessionProvider>

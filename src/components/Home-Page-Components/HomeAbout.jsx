@@ -48,14 +48,14 @@ const HomeAbout = () => {
             Modern Mannerism provides professional-quality training and learning globally. We help professionals, corporates, and organizations to embrace transformation and accomplish breakthrough performance by becoming proficient at the skills.
           </p>
 
-          <div className="flex flex-col md:flex-row gap-8 justify-between items-stretch p-8">
+          <div className="flex flex-col md:flex-row gap-8 justify-between items-stretch p-4 md:p-6">
             {/* Vision Section */}
             <div className="flex-1 flex flex-col items-center gap-4 bg-gray-50 dark:bg-[#1A1A3B] p-6 rounded-lg shadow-lg">
               <Star size={40} color="#eabf91" />
               <span className={`${dm_Sans.className} font-bold dark:text-white md:text-2xl text-xl text-[#06273A]`}>
                 Vision
               </span>
-              <p className="text-gray-700 dark:text-gray-300 md:text-sm text-sm text-start">
+              <p className="text-gray-700 dark:text-gray-300 md:text-sm text-xs text-start">
                 We aim to empower individuals with the confidence, polish, and grace needed to thrive in today's modern world.
               </p>
             </div>
@@ -64,12 +64,12 @@ const HomeAbout = () => {
             <div className="hidden md:block" style={{ height: "auto", width: 2, backgroundColor: "#eabf91" }} />
 
             {/* Our Values Section */}
-            <div className="flex-1 flex flex-col items-center gap-4 bg-gray-50 dark:bg-[#1A1A3B] p-6 rounded-lg shadow-lg">
+            <div className="flex-1 flex flex-col items-center gap-4 bg-gray-50 dark:bg-[#1A1A3B] p-2 md:p-6 rounded-lg shadow-lg">
               <Award size={40} color="#eabf91" />
               <span className={`${dm_Sans.className} font-bold dark:text-white md:text-2xl text-xl text-[#06273A]`}>
                 Our Values
               </span>
-              <ul className="text-gray-700 dark:text-gray-300 md:text-sm text-sm space-y-2 text-start">
+              <ul className="text-gray-700 dark:text-gray-300 md:text-sm text-xs space-y-2 text-start">
                 <li>▫ Professionalism: Excellence in every detail.</li>
                 <li>▫ Personalization: Tailored strategies for unique needs.</li>
                 <li>▫ Inclusivity: Adapting to cross-cultural environments with ease.</li>

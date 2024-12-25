@@ -11,7 +11,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import AllLinks from "./links/AllLinks";
-import { ThemeSwitcher } from "../theme/ThemeSwitcher"; 
+import { ThemeSwitcher } from "../theme/ThemeSwitcher";
 import { Lato } from "next/font/google";
 import ShadcnButton from "../Atom/button/ShadcnButton";
 const dm_Sans = Lato({
@@ -92,13 +92,14 @@ function HeaderFixed() {
                 }`}>
                 <ThemeSwitcher />
                 <ShadcnButton
-                    className={`${dm_Sans.className} tracking-widest  bg-gradient-to-r  from-[#c3965d] via-[#eabf91] to-[#c3965d] text-white`}
+                    className={`${dm_Sans.className} tracking-wide rounded-full bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] text-white 
+              p-2 px-4 sm:px-6 sm:py-3 md:px-8 md:py-4 lg:px-8 lg:py-3 text-sm sm:text-base md:text-base lg:text-base shadow-lg`}
                     onClick={() => {
-                        router.push('/contact')
-                        toggleMobileMenu;
+                        router.push("/contact-us");
+                        toggleMobileMenu();
                     }}
                 >
-                    Contact Us
+                    CONTACT US
                 </ShadcnButton>
             </div>
         </motion.div>

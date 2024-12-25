@@ -50,7 +50,7 @@ const CardComponent = () => {
           {courses.map((course, index) => (
             <div
               key={index}
-              className={`relative ${styles.container} w-full lg:w-full bg-[#cca26c] bg-opacity-65 dark:bg-[#122031] rounded-3xl text-black p-6 text-center flex flex-col items-center justify-between gap-5 h-[500px] dark:hover:bg-[#0e1a2b] shadow-2xl hover:shadow-md hover:shadow-[#8c9c88] dark:hover:shadow-[#3a4e4f] transform hover:scale-105 transition-transform duration-300 ease-in-out`}
+              className={`relative ${styles.container} w-full lg:w-full bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] bg-opacity-1 dark:bg-[#122031] rounded-3xl text-black p-6 text-center flex flex-col items-center justify-between gap-5 h-[500px] dark:hover:bg-[#0e1a2b] shadow-2xl hover:shadow-md hover:shadow-[#8c9c88] dark:hover:shadow-[#3a4e4f] transform hover:scale-105 transition-transform duration-300 ease-in-out`}
             >
               {course.isBestSelling && (
                 <div className={`${styles.card_box}`}>
@@ -85,5 +85,5 @@ const CardComponent = () => {
     </div>
   );
 };
-
+ 
 export default CardComponent;
