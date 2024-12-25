@@ -89,13 +89,13 @@ const ServicePage = ({ params }) => {
 
         </section>
         {/* Overview Section */}
-        <section className="mt-14 py-4  bg-white rounded-lg shadow-md text-center">
+        <section className="mt-14 py-4   text-center">
           <h2 className="text-4xl font-semibold text-black">Overview</h2>
-          <div className="mt-6 p-6 ">
+          <div className="mt-6  bg-white rounded-lg shadow-md p-6 ">
 
             <p className="text-gray-700">{overview}</p>
             <ul className="mt-6 grid grid-cols-1 md:grid-cols-1 gap-4">
-              <h4 className="text-gray-700 text-xl font-bold text-start">This program offers: </h4>
+              <h4 className="text-gray-700  text-xl font-bold text-start">This program offers: </h4>
               {programOptions.map((option, index) => (
                 <li
                   key={index}
@@ -112,11 +112,11 @@ const ServicePage = ({ params }) => {
         </section>
 
         {/* What They’ll Learn Section */}
-        <section className="mt-14 py-4 bg-white rounded-lg shadow-md text-center">
-          <h2 className="text-4xl  font-semibold text-black">
+        <section className="mt-14 py-4 text-center">
+          <span className="text-4xl  font-semibold text-black">
             What They’ll Learn
-          </h2>
-          <div className="mt-8 flex  py-6 px-8 md:px-24 justify-center flex-col gap-2">
+          </span>
+          <div className="mt-8 flex  bg-white rounded-lg shadow-md  py-6 px-8 md:px-24 justify-center flex-col gap-2">
             {learningPoints.map((point, index) => (
               <div key={index} className="flex gap-4 items-center">
                 <span className="w-2 h-2 rounded-full bg-gray-700"></span>
@@ -127,11 +127,11 @@ const ServicePage = ({ params }) => {
         </section>
 
         {/* Program Highlights Section */}
-        <section className="mt-14  py-4 bg-white rounded-lg shadow-md text-center">
-          <h2 className="text-4xl font-semibold text-black">
+        <section className="mt-14   text-center">
+          <span className="text-4xl font-semibold text-black">
             Program Highlights
-          </h2>
-          <ul className="mt-6 items-center flex flex-wrap md:px-24 px-4 justify-start gap-1">
+          </span>
+          <ul className="mt-6 py-4 bg-white rounded-lg shadow-md items-center flex flex-wrap md:px-24 px-4 justify-start gap-1">
             {highlights.map((highlight, index) => (
               <li
                 key={index}
@@ -147,11 +147,11 @@ const ServicePage = ({ params }) => {
           </ul>
         </section>
         {/*Program details Section */}
-        <section className="mt-14 bg-gray-50 shadow-lg rounded-lg py-4">
-          <h2 className="text-4xl font-semibold text-black text-center mb-8">
+        <section className="mt-14 text-center py-4">
+          <span className="text-4xl my-6 font-semibold text-black text-center ">
             Program Details
-          </h2>
-          <div className=" md:px-24 px-4 space-y-6">
+          </span>
+          <div className=" md:px-24 py-6 px-4 text-start bg-gray-50 shadow-lg rounded-lg space-y-6">
             {/* Age Group */}
             <div className="flex items-center gap-4">
               <span className="w-2 h-2 rounded-full bg-gray-700 mt-1"></span>
@@ -227,11 +227,11 @@ const ServicePage = ({ params }) => {
           </ShadcnButton>
         </section>
         {/* Why Choose Modern Mannerism Section */}
-        <section className="mt-14 bg-gray-50 shadow-lg rounded-lg py-6 px-6">
+        <section className="mt-14 py-6 px-6">
           <h2 className="text-3xl font-semibold text-center text-black">
             Why Choose Modern Mannerism?
           </h2>
-          <p className="mt-4 text-center text-gray-700">
+          <p className="mt-4 text-center p-6 bg-gray-50 shadow-lg rounded-lg  text-gray-700">
             At <strong className="text-black">Modern Mannerism</strong>, we understand that every child is unique. Our programs are designed to foster growth, confidence, and respect in a nurturing environment. We help children step into the world with grace, charm, and confidence.
           </p>
         </section>
@@ -239,7 +239,7 @@ const ServicePage = ({ params }) => {
 
         {/* Testimonials Section */}
         <section className="mt-14 w-full text-center">
-          <h2 className="text-4xl font-semibold text-gray-700">
+          <h2 className="text-4xl font-semibold text-black">
             Testimonials
           </h2>
           <div className="mt-6">
@@ -265,8 +265,9 @@ const ServicePage = ({ params }) => {
         </section>
 
         {/* FAQ Section */}
-        <section className="mt-14 pt-4 bg-gray-50  shadow-lg rounded-lg text-center">
-          <h2 className="text-4xl font-semibold text-black">FAQs</h2>
+       
+        <section className="mt-14  text-center">
+        <h2 className="text-4xl font-semibold text-black">FAQs</h2>
           <div className="mt-6 bg-gray-50 ">
             {/* {faqData.map((faq, index) => ( */}
                 <Accordion type="single" collapsible>
