@@ -2,7 +2,18 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import ShadcnButton from "../Atom/button/ShadcnButton";
-import { Input, Textarea, Select, SelectItem, SelectTrigger, SelectContent, SelectLabel } from "shadcn";
+import { Label } from "@/components/ui/label"
+
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+
 
 const HomeConsultation = () => {
   const [formData, setFormData] = useState({
@@ -88,7 +99,7 @@ const HomeConsultation = () => {
               className="w-full"
             >
               <SelectTrigger className="p-3 w-full">
-                <SelectLabel>Select Service</SelectLabel>
+                <Label>Select Service</Label>
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="">Select Service</SelectItem>
