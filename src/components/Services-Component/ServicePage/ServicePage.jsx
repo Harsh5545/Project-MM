@@ -3,7 +3,17 @@
 import React, { useEffect, useState } from "react";
 import { servicesDataPage } from "@/data";
 import { DM_Sans } from "next/font/google";
-
+import {
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Typography,
+  Box,
+  Button,
+} from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 const dm_Sans = DM_Sans({
