@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import ShadcnButton from "../Atom/button/ShadcnButton";
-import {, Input, Textarea, Select, SelectItem, SelectTrigger, SelectContent, SelectLabel } from "shadcn";
+import { Input, Textarea, Select, SelectItem, SelectTrigger, SelectContent, SelectLabel } from "shadcn";
 
 const HomeConsultation = () => {
   const [formData, setFormData] = useState({
