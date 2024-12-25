@@ -272,7 +272,7 @@ const ServicePage = ({ params }) => {
                 <Accordion type="single" collapsible>
                 {faqData.map((faq, index) => (
                   <AccordionItem key={index} value={`item-${index}`}>
-                    <AccordionTrigger className="text-lg font-semibold flex items-center gap-2">
+                    <AccordionTrigger className="text-lg p-4 font-semibold flex items-center gap-2">
                       <HelpCircle className="w-5 h-5" />
                       {faq.question}
                     </AccordionTrigger>
