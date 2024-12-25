@@ -1,8 +1,14 @@
+
+import ServicesComponent from '@/components/Services-Component/ServicesComponent'
+import ServicesHero from '@/components/Services-Component/servicesHero'
 import React from 'react'
 
-const page = () => {
+function page() {
   return (
-    <div>page</div>
+    <div>
+      <ServicesHero />
+      <ServicesComponent />
+    </div>
   )
 }
 

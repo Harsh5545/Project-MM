@@ -11,61 +11,61 @@ const AllLinks = () => {
 
   const links = [
     { title: "Home", path: "/" },
-    { title: "About", path: "/about" },
+    { title: "About", path: "/about-us" },
     {
       title: "Services",
-      path: "/service",
+      path: "/services",
       subLinks: [
-        { title: "Consultation", path: "/service/consultation" },
+        { title: "Consultation", path: "/servicestation" },
         {
           title: "Personality Transformation",
-          path: "/service/personality-transformation",
+          path: "/servicesality-transformation",
           subLinks: [
             {
               title: "Personality Transformation for Men",
-              path: "/service/personality-transformation/Men",
+              path: "/servicesality-transformation/Men",
             },
             {
               title: "Personality Transformation for Women",
-              path: "/service/personality-transformation/Women",
+              path: "/servicesality-transformation/Women",
             },
           ],
         },
         {
           title: "Corporate Grooming",
-          path: "/service/corporate-grooming",
+          path: "/servicesate-grooming",
           subLinks: [
             {
               title: "Bespoke Business Etiquette & Corporate Grooming",
-              path: "/service/bespoke-business-etiquette-&-corporate-grooming",
+              path: "/servicese-business-etiquette-&-corporate-grooming",
             },
             {
               title: "In-house Corporate Training",
-              path: "/service/In-house-Corporate-Training",
+              path: "/servicesse-Corporate-Training",
             },
           ],
         },
-        { title: "Children's Etiquette", path: "/service/3" },
-        { title: "Young Adult Etiquette", path: "/service/young-adult-etiquette" },
+        { title: "Children's Etiquette", path: "/services"},
+        { title: "Young Adult Etiquette", path: "/servicesadult-etiquette" },
         {
           title: "Latest Workshop",
-          path: "/service/latest-workshop",
+          path: "/services-workshop",
           subLinks: [
             {
               title: "Ladies Grooming & Social Etiquette Programme",
-              path: "/service/latest-workshop/ladies-grooming",
+              path: "/services-workshop/ladies-grooming",
             },
             {
               title: "Young Adult-Grooming & Etiquette",
-              path: "/service/latest-workshop/young-adult-grooming",
+              path: "/services-workshop/young-adult-grooming",
             },
             {
               title: "Young Adult Training",
-              path: "/service/latest-workshop/young-adult",
+              path: "/services-workshop/young-adult",
             },
             {
               title: "Dining Etiquette Workshop",
-              path: "/service/latest-workshop/dining-etiquette",
+              path: "/services-workshop/dining-etiquette",
             },
           ],
         },
