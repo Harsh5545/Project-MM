@@ -4,20 +4,28 @@ import React, { useEffect, useState } from "react";
 import { servicesDataPage } from "@/data";
 import { DM_Sans } from "next/font/google";
 import { Box } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
-
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 import ShadcnButton from "@/components/Atom/button/ShadcnButton";
 import { ChevronDown, HelpCircle } from "lucide-react";
 
 import { CheckCircle } from "lucide-react";
 
-import Carousel from "react-multi-carousel";
+
 import "react-multi-carousel/lib/styles.css";
 const dm_Sans = DM_Sans({
   subsets: ["latin"],
@@ -230,31 +238,29 @@ const ServicePage = ({ params }) => {
 
 
         {/* Testimonials Section */}
-        <section className="mt-14 text-center">
+        <section className="mt-14 w-full text-center">
           <h2 className="text-4xl font-semibold text-gray-700">
             Testimonials
           </h2>
           <div className="mt-6">
-            <Carousel
-              responsive={carouselResponsive}
-              infinite
-              autoPlay
-              autoPlaySpeed={3000}
-              showDots={true}
-              arrows={false}
-              className="py-0"
-
-            >
-              {testimonials.map((testimonial, index) => (
-                <Box
-                  key={index}
-                  className="bg-gray-100 p-6 rounded-lg shadow-md mx-2"
-                >
+          <Carousel className="w-full max-w-xs py-0">
+      <CarouselContent>
+        {testimonials.map((testimonial, index) => (
+          <CarouselItem key={index}>
+            <div className="p-1">
+              <Card className="bg-gray-100 p-6 rounded-lg shadow-md mx-2">
+                <CardContent className="flex aspect-square items-center justify-center p-6">
                   <p className="italic">{testimonial.quote}</p>
                   <footer className="text-right mt-4">- {testimonial.author}</footer>
-                </Box>
-              ))}
-            </Carousel>
+                </CardContent>
+              </Card>
+            </div>
+          </CarouselItem>
+        ))}
+      </CarouselContent>
+      <CarouselPrevious />
+      <CarouselNext />
+    </Carousel>
           </div>
         </section>
 
