@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
@@ -32,8 +33,8 @@ export async function POST(req) {
     const result = await prisma.category.create({
       data: newCategory,
     });
-
     return NextResponse.json({ success: true, data: result });
+    
   } catch (error) {
 
     if (error instanceof z.ZodError) {

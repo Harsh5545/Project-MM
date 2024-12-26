@@ -9,9 +9,9 @@ import Testimonials from './Testimonials';
 const AddServices = () => {
   return (
     <div className="min-h-screen bg-gradient-to-r from-gray-200 to-gray-100 p-6 sm:p-12">
-      <div className="max-w-4xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 space-y-8">
+      <div className="w-full mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 space-y-8">
         <h1 className="text-3xl font-bold text-gray-800 dark:text-white text-center">Add New Service</h1>
-        
+
         <form className="space-y-6">
           <div>
             <label className="block text-gray-700 dark:text-gray-300 mb-2">Main Title:</label>
@@ -38,9 +38,9 @@ const AddServices = () => {
               className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white h-32"
             />
           </div>
-<CourseDetails/>
-<ProgramDetails/>
-<Testimonials/>
+          <CourseDetails />
+          <ProgramDetails />
+          <Testimonials />
           <Button
             type="submit"
             className="w-full bg-purple-600 hover:bg-purple-700 text-white py-3 rounded-lg font-semibold"
@@ -54,3 +54,6 @@ const AddServices = () => {
 }
 
 export default AddServices;
+
+
+
