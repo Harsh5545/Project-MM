@@ -2,7 +2,6 @@ import NextAuth from "next-auth"
 import { prisma } from "./lib/prisma"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import Facebook from "next-auth/providers/facebook"
-import Google from "next-auth/providers/google"
 import Passkey from "next-auth/providers/passkey"
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prisma),
@@ -13,10 +12,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     Facebook({
       clientId: process.env.FACEBOOK_CLIENT_ID,
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-    }),
-    Google({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
     Passkey
   ],
@@ -30,5 +25,4 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return session
     }
   },
-  experimental: { enableWebAuthn: true },
 })
