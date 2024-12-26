@@ -13,14 +13,17 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     Facebook({
       clientId: process.env.FACEBOOK_CLIENT_ID,
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
+      allowDangerousEmailAccountLinking: true,
     }),
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      allowDangerousEmailAccountLinking: true,
     }),
     Github({
       clientId: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
+      allowDangerousEmailAccountLinking: true,
     }),
   ],
   callbacks: {
@@ -34,4 +37,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }
   },
   experimental: { enableWebAuthn: true },
+  pages: {
+    signIn: "/sign-in",
+    newUser: "/sign-up",
+  }
 })
