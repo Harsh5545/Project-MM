@@ -27,7 +27,7 @@ const Testimonials = () => {
 
   return (
     <div className="min-h-screen ">
-      <div className="max-w-4xl mx-auto bg-white dark:bg-gray-800 rounded-lg space-y-8">
+      <div className="mx-auto bg-white dark:bg-gray-800 rounded-lg space-y-8">
 
         
         <div className="space-y-6">

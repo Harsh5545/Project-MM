@@ -37,7 +37,7 @@ const ProgramDetails = () => {
 
   return (
     <div className="min-h-screen">
-      <div className="max-w-4xl mx-auto bg-white dark:bg-gray-800 rounded-lg space-y-8">
+      <div className="mx-auto bg-white dark:bg-gray-800 rounded-lg space-y-8">
         <h1 className="text-2xl font-bold text-gray-800 dark:text-white text-left">Program Details</h1>
         
         <div className="space-y-6">
