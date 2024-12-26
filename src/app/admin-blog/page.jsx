@@ -1,4 +1,4 @@
-import AddBlog from '@/components/Amin-Components/Blog-Admin-Component/AddBlog'
+import AddBlog from '@/components/Admin-Components/Blog-Admin-Component/AddBlog'
 import React from 'react'
 
 const page = () => {

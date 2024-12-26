@@ -91,6 +91,7 @@ const ServicePage = ({ params }) => {
         {/* Overview Section */}
         <section className="mt-14 py-4 text-center">
           <h2 className="text-4xl font-semibold text-black">Overview</h2>
+          
           <div className="mt-6  bg-white rounded-lg mx-2 shadow-md p-4 md:p-6 ">
 
             <p className="text-gray-700">{overview}</p>
@@ -151,8 +152,8 @@ const ServicePage = ({ params }) => {
           </ul>
         </section>
         {/*Program details Section */}
-        <section className="mt-14 text-center py-4">
-          <span className="text-4xl my-6 font-semibold text-black text-center ">
+        <section className="mt-14 flex flex-col gap-6 text-center py-4">
+          <span className="text-4xl font-semibold text-black ">
             Program Details
           </span>
           <div className=" md:px-24 py-6 px-4 text-start mx-2 bg-gray-50 shadow-lg rounded-lg space-y-6">
@@ -270,9 +271,9 @@ const ServicePage = ({ params }) => {
 
 
         {/* FAQ Section */}
-        <section className="mt-14 text-center">
+        <section className="mt-14 rounded-md text-center">
           <h2 className="text-4xl font-semibold text-black">FAQs</h2>
-          <div className="mt-6 mx-2 bg-gray-50">
+          <div className="mt-6 mx-2 rounded-lg shadow-md bg-gray-50">
             <Accordion type="single" collapsible>
               {faqData.map((faq, index) => (
                 <AccordionItem key={index} value={`item-${index}`}>
