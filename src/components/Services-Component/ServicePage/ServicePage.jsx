@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { servicesDataPage } from "@/data";
 import { DM_Sans } from "next/font/google";
-import { Box } from "lucide-react";
+// import { Box } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 
 import {
@@ -80,18 +80,18 @@ const ServicePage = ({ params }) => {
         <div className="relative flex flex-col justify-center items-center text-center text-white   ">
           <h1 className="text-2xl lg:text-4xl font-bold uppercase">{title}</h1>
           <h2
-            className={`${dm_Sans.className} mt-4 text-lg lg:text-xl`}>{headline}</h2>
+            className={`${dm_Sans.className} mt-4 px-2 text-lg lg:text-xl`}>{headline}</h2>
         </div>
       </div>
       <div className="w-full md:w-[60%] ">
         <section className="mt-14 py-4 px-4 bg-white rounded-lg shadow-md text-center">
-          <p className="text-center text-gray-600 text-xl  lg:text-md">{subheadline}</p>
+          <p className="text-center text-gray-600 text-xl mx-2 lg:text-md">{subheadline}</p>
 
         </section>
         {/* Overview Section */}
-        <section className="mt-14 py-4   text-center">
+        <section className="mt-14 py-4 text-center">
           <h2 className="text-4xl font-semibold text-black">Overview</h2>
-          <div className="mt-6  bg-white rounded-lg shadow-md p-6 ">
+          <div className="mt-6  bg-white rounded-lg mx-2 shadow-md p-4 md:p-6 ">
 
             <p className="text-gray-700">{overview}</p>
             <ul className="mt-6 grid grid-cols-1 md:grid-cols-1 gap-4">
@@ -99,11 +99,15 @@ const ServicePage = ({ params }) => {
               {programOptions.map((option, index) => (
                 <li
                   key={index}
-                  className="rounded-lg  text-gray-700 flex items-start md:items-center gap-2"
+                  className="rounded-lg text-gray-700 flex items-start md:items-center gap-2"
                 >
-                  <div className="flex text-base items-start gap-4 md:px-24 lg:items-center">
-                  <span className="w-2 h-2 rounded-full bg-gray-700"></span>
-                  <span className=" text-xs text-gray-700"> {option}</span>
+                  <div className="flex text-sm md:text-base lg:text-lg items-start md:items-start gap-4 w-full md:px-24">
+                    <span className="w-2 h-2 rounded-full bg-gray-700"></span>
+                    <div className="flex items-start">
+                      <span className="text-xs md:text-sm text-left font-medium text-gray-900 flex-grow whitespace-nowrap">{option.title}</span>
+                      <span className="text-xs md:text-sm text-gray-700">:</span>
+                      <span className="text-xs md:text-sm ml-1 text-left text-gray-700 flex-grow">{option.description}</span>
+                    </div>
                   </div>
                 </li>
               ))}
@@ -116,11 +120,11 @@ const ServicePage = ({ params }) => {
           <span className="text-4xl  font-semibold text-black">
             What They’ll Learn
           </span>
-          <div className="mt-8 flex  bg-white rounded-lg shadow-md  py-6 px-8 md:px-24 justify-center flex-col gap-2">
+          <div className="mt-8 flex mx-2 bg-white rounded-lg shadow-md  py-6 px-8 md:px-24 justify-center flex-col gap-2">
             {learningPoints.map((point, index) => (
               <div key={index} className="flex gap-4 items-center">
                 <span className="w-2 h-2 rounded-full bg-gray-700"></span>
-                <span className="pl-2 text-lg text-gray-700">{point.title}</span>
+                <span className="pl-2 text-lg text-left text-gray-700">{point.title}</span>
               </div>
             ))}
           </div>
@@ -131,13 +135,13 @@ const ServicePage = ({ params }) => {
           <span className="text-4xl font-semibold text-black">
             Program Highlights
           </span>
-          <ul className="mt-6 py-4 bg-white rounded-lg shadow-md items-center flex flex-wrap md:px-24 px-4 justify-start gap-1">
+          <ul className="mt-6 py-4 bg-white mx-2 rounded-lg shadow-md items-center flex flex-wrap md:px-24 px-4 justify-start gap-1">
             {highlights.map((highlight, index) => (
               <li
                 key={index}
                 className="p-2 text-gray-600 flex items-center gap-1"
               >
-                <div className="flex gap-4 items-cente">
+                <div className="flex text-left  gap-4 items-cente">
                   <CheckCircle className="text-gray-700" />
 
                   {highlight}
@@ -151,29 +155,29 @@ const ServicePage = ({ params }) => {
           <span className="text-4xl my-6 font-semibold text-black text-center ">
             Program Details
           </span>
-          <div className=" md:px-24 py-6 px-4 text-start bg-gray-50 shadow-lg rounded-lg space-y-6">
+          <div className=" md:px-24 py-6 px-4 text-start mx-2 bg-gray-50 shadow-lg rounded-lg space-y-6">
             {/* Age Group */}
             <div className="flex items-center gap-4">
-              <span className="w-2 h-2 rounded-full bg-gray-700 mt-1"></span>
+
               <p className="text-lg">
-                <strong>Age Group:</strong> 10–15 years
+                <span className="text-lg font-semibold text-black ">Age Group:</span> 10–15 years
               </p>
             </div>
 
             {/* Format */}
             <div>
-              <p className="text-lg font-semibold text-gray-700">Format:</p>
+              <p className="text-lg font-semibold text-black">Format:</p>
               <ul className="mt-2 space-y-2">
                 <li className="flex items-center gap-4">
                   <span className="w-2 h-2 rounded-full bg-gray-700 mt-1"></span>
                   <p>
-                    <strong>Group Workshops:</strong> Fun, collaborative learning with peers.
+                    <span className="font-medium text-gray-900">Group Workshops:</span> Fun, collaborative learning with peers.
                   </p>
                 </li>
                 <li className="flex items-center gap-4">
                   <span className="w-2 h-2 rounded-full bg-gray-700 mt-1"></span>
                   <p>
-                    <strong>Private Sessions:</strong> Personalized, focused coaching.
+                    <span className="font-medium text-gray-900">Private Sessions: </span>Personalized, focused coaching.
                   </p>
                 </li>
               </ul>
@@ -181,18 +185,18 @@ const ServicePage = ({ params }) => {
 
             {/* Duration */}
             <div>
-              <p className="text-lg font-semibold text-gray-700">Duration:</p>
+              <p className="text-lg font-semibold text-black">Duration:</p>
               <ul className="mt-2 space-y-2">
                 <li className="flex items-center gap-4">
                   <span className="w-2 h-2 rounded-full bg-gray-700 mt-1"></span>
                   <p>
-                    <strong>Group Workshops:</strong> 2–3 hours per session.
+                    <span className="font-medium text-gray-900">Group Workshops</span>: 2–3 hours per session.
                   </p>
                 </li>
                 <li className="flex items-center gap-4">
                   <span className="w-2 h-2 rounded-full bg-gray-700 mt-1"></span>
                   <p>
-                    <strong>Private Sessions:</strong> 1-hour sessions, scheduled as per convenience.
+                    <span className="font-medium text-gray-900">Private Sessions:</span> 1-hour sessions, scheduled as per convenience.
                   </p>
                 </li>
               </ul>
@@ -200,7 +204,7 @@ const ServicePage = ({ params }) => {
 
             {/* Location */}
             <div>
-              <p className="text-lg font-semibold text-gray-700">Location:</p>
+              <p className="text-lg font-semibold text-black">Location:</p>
               <ul className="mt-2 space-y-2">
                 <li className="flex items-center gap-4">
                   <span className="w-2 h-2 rounded-full bg-gray-700 mt-1"></span>
@@ -227,11 +231,11 @@ const ServicePage = ({ params }) => {
           </ShadcnButton>
         </section>
         {/* Why Choose Modern Mannerism Section */}
-        <section className="mt-14 py-6 px-6">
+        <section className="mt-14 py-6 ">
           <h2 className="text-3xl font-semibold text-center text-black">
             Why Choose Modern Mannerism?
           </h2>
-          <p className="mt-4 text-center p-6 bg-gray-50 shadow-lg rounded-lg  text-gray-700">
+          <p className="mt-4 text-center p-6 mx-2 w-full bg-gray-50 shadow-lg rounded-lg  text-gray-700">
             At <strong className="text-black">Modern Mannerism</strong>, we understand that every child is unique. Our programs are designed to foster growth, confidence, and respect in a nurturing environment. We help children step into the world with grace, charm, and confidence.
           </p>
         </section>
@@ -239,54 +243,51 @@ const ServicePage = ({ params }) => {
 
         {/* Testimonials Section */}
         <section className="mt-14 w-full text-center">
-  <h2 className="text-4xl font-semibold text-black">
-    Testimonials
-  </h2>
-  <div className="mt-6 relative">
-        <Carousel className="py-0">
-          <CarouselContent>
-            {testimonials.map((testimonial, index) => (
-              <CarouselItem key={index}>
-                <div className="p-1">
-                  <Card className="bg-gray-100 p-6 rounded-lg shadow-md mx-2 w-full sm:w-auto">
-                    <CardContent className="flex flex-col items-center justify-center p-6">
-                      <p className="italic">{testimonial.quote}</p>
-                      <footer className="text-right mt-4">- {testimonial.author}</footer>
-                    </CardContent>
-                  </Card>
-                </div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          <CarouselPrevious className="absolute left-0 transform -translate-y-1/2 top-1/2" />
-          <CarouselNext className="absolute right-0 transform -translate-y-1/2 top-1/2" />
-        </Carousel>
-      </div>
-</section>
-
-        {/* FAQ Section */}
-       
-        <section className="mt-14  text-center">
-        <h2 className="text-4xl font-semibold text-black">FAQs</h2>
-          <div className="mt-6 bg-gray-50 ">
-            {/* {faqData.map((faq, index) => ( */}
-                <Accordion type="single" collapsible>
-                {faqData.map((faq, index) => (
-                  <AccordionItem key={index} value={`item-${index}`}>
-                    <AccordionTrigger className="text-lg p-4 font-semibold flex items-center gap-2">
-                      <HelpCircle className="w-5 h-5" />
-                      {faq.question}
-                    </AccordionTrigger>
-                    <AccordionContent>
-                      <p className="text-gray-600">{faq.answer}</p>
-                    </AccordionContent>
-                  </AccordionItem>
+          <h2 className="text-4xl font-semibold text-black">
+            Testimonials
+          </h2>
+          <div className="mt-6  relative">
+            <Carousel className="py-0">
+              <CarouselContent>
+                {testimonials.map((testimonial, index) => (
+                  <CarouselItem key={index}>
+                    <div className="p-1">
+                      <Card className=" p-6 rounded-lg shadow-md mx-2 w-full sm:w-auto">
+                        <CardContent className="flex flex-col items-center justify-center p-6">
+                          <p className="italic">{testimonial.quote}</p>
+                          <footer className="text-right mt-4">- {testimonial.author}</footer>
+                        </CardContent>
+                      </Card>
+                    </div>
+                  </CarouselItem>
                 ))}
-              </Accordion>
-            {/* ))} */}
+              </CarouselContent>
+              <CarouselPrevious className="absolute left-0 transform -translate-y-1/2 top-1/2" />
+              <CarouselNext className="absolute right-0 transform -translate-y-1/2 top-1/2" />
+            </Carousel>
           </div>
         </section>
 
+
+        {/* FAQ Section */}
+        <section className="mt-14 text-center">
+          <h2 className="text-4xl font-semibold text-black">FAQs</h2>
+          <div className="mt-6 mx-2 bg-gray-50">
+            <Accordion type="single" collapsible>
+              {faqData.map((faq, index) => (
+                <AccordionItem key={index} value={`item-${index}`}>
+                  <AccordionTrigger className="text-lg p-4 font-semibold flex items-center gap-2">
+                    <HelpCircle className="lg:w-5 w-4 lg:h-5 h-4" />
+                    <span className="flex-1 text-left md:text-center">{faq.question}</span>
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <p className="text-gray-600">{faq.answer}</p>
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
+        </section>
 
       </div>
     </div>

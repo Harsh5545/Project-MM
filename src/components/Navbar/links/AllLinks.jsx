@@ -72,7 +72,7 @@ const AllLinks = () => {
         // { title: "Train the Trainer", path: "/service/train-the-trainer" },
       ],
     },
-    { title: "Blog", path: "/blog" },
+    { title: "Blog", path: "/blogs" },
   ];
 
   useEffect(() => {

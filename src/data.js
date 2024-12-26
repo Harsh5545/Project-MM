@@ -62,8 +62,9 @@ export const servicesDataPage = [
     overview:
       "In today’s world, mastering the art of etiquette and social grace is just as important as academic excellence. The Children’s Etiquette Program by Modern Mannerism equips young learners with essential life skills, helping them build confidence, respect, and empathy while preparing them to thrive in social, school, and family environments.",
     programOptions: [
-      "Group Workshops: Fun and interactive sessions in a collaborative setting.",
-      "Private Sessions: Personalized coaching tailored to your child’s unique needs.",
+      { title: "Group Workshops", description: "Fun and interactive sessions in a collaborative setting." },
+      { title: "Private Sessions", description: "Personalized coaching tailored to your child’s unique needs." },
+      
     ],
     learningPoints: [
       { title: "The Importance of Etiquette", description: "Why good manners matter in life and how they shape a positive personality." },

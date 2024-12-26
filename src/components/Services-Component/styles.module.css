@@ -93,3 +93,22 @@
 .mySwiper .swiper-pagination {
   display: none; /* Hide pagination bullets */
 }
+
+.container {
+  width: 100%;
+  padding: 16px;
+}
+
+@media (min-width: 768px) {
+  .container {
+    width: 80%;
+    padding: 24px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    width: 60%;
+    padding: 32px;
+  }
+}
