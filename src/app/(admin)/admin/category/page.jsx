@@ -1,3 +1,5 @@
+import { AddCategoryDialog } from '@/components/Admin-Components/Category-Components/AddCategoryDailog'
+import CategoryTable from '@/components/Admin-Components/Category-Components/CategoryTable'
 import React from 'react'
 
 
@@ -9,7 +11,10 @@ export const metadata = {
 
 const page = () => {
   return (
-    <div>category add page</div>
+    <div>
+      <AddCategoryDialog />
+      <CategoryTable/>
+    </div>
   )
 }
 

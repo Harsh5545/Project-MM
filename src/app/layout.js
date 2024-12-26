@@ -7,6 +7,7 @@ import { auth } from "@/auth";
 import Footer from "@/components/footer/Footer";
 import Navbarr from "@/components/Navbar";
 import Header from "@/components/Navbar/Navbar";
+import { Toaster } from "@/components/ui/toaster";
 
 
 const geistSans = Geist({
@@ -34,13 +35,14 @@ export default async function RootLayout({ children }) {
         >
           <div className="  flex flex-col">
             {/* <Navbar /> */}
-            <Header/>
+            <Header />
             <div className="flex-grow">
               {children}
+              <Toaster />
             </div>
-            <Footer/>
+            <Footer />
           </div>
-          
+
         </body>
       </html>
     </SessionProvider>
