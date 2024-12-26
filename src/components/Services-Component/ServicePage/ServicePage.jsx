@@ -220,7 +220,7 @@ const ServicePage = ({ params }) => {
         </section>
         {/* Call to Action */}
         <section className="mt-14 text-center">
-          <h2 className="text-4xl font-bold text-black">
+          <h2 className="lg:text-4xl text-2xl  font-bold text-black">
             Help Your Child Shine with Confidence and Polished Manners!
           </h2>
           <ShadcnButton
