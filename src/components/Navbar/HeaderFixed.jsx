@@ -63,9 +63,20 @@ function HeaderFixed() {
             style={{ width: "90%" }}
         >
             <div className="flex justify-between  items-center w-full md:w-0">
-                <span className="text-xl">
-                    <Image width={300} height={300} src="/assets/MM.png" className="md:max-w-40 max-w-16" alt="ModernMannerism institue logo" />
-                </span>
+            <span className="text-xl">
+      <Link href="/" passHref>
+        
+          <Image
+            width={300}
+            height={300}
+            src="/assets/MM.png"
+            className="md:max-w-40 max-w-16"
+            alt="ModernMannerism institute logo"
+          />
+
+
+      </Link>
+    </span>
                 <div className="md:hidden">
                     <label className="hamburger">
                         <input type="checkbox" onChange={toggleMobileMenu} checked={navInput} />
@@ -78,6 +89,7 @@ function HeaderFixed() {
                         </svg>
                     </label>
                 </div>
+                
             </div>
 
             <div className="flex flex-col items-start">

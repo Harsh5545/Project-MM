@@ -102,7 +102,7 @@ function ServicesComponent() {
 
                   {/* Button */}
                   <Link href={`/services/${course.id}`}>
-                    <button className="mt-6 flex items-center justify-center bg-[#28425f] text-white dark:bg-[#eabf91] dark:text-[#1a1a2e] py-2 px-6 rounded-full font-semibold shadow-md hover:bg-[#1e3346] dark:hover:bg-[#d4a971] transition-colors duration-300">
+                    <button className="mt-6 flex items-center justify-center bg-gradient-to-r from-[#28425f] via-[#345374] to-[#28425f] text-white dark:bg-[#eabf91] dark:text-[#1a1a2e] py-2 px-6 rounded-full font-semibold shadow-md hover:bg-[#1e3346] dark:hover:bg-[#d4a971] transition-colors duration-300">
                       See more
                       <MdOutlineArrowForwardIos className="ml-2" />
                     </button>
