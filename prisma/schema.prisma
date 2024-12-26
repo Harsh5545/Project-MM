@@ -89,3 +89,49 @@ model Authenticator {
 
   @@id([userId, credentialID])
 }
+
+enum CategoryStatus {
+  ACTIVE
+  INACTIVE
+}
+
+model Category {
+  id             Int            @id @default(autoincrement())
+  category_name  String         @unique
+  category_image String?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  status         CategoryStatus @default(ACTIVE) // Default to ACTIVE
+  services       Service[] // One-to-many relation to services
+}
+
+// Service model with SEO-related data and program details
+model Service {
+  id         Int      @id @default(autoincrement())
+  categoryId Int // Foreign key linking to the Category
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  heading             String // SEO Heading
+  subheading          String // SEO Subheading
+  testimonial         String? // Testimonial (optional)
+  faq                 String? // FAQ (optional)
+  why_choose_program  String? // "Why Choose" content
+  program_details     String? // Details about the program
+  program_highlights  String? // Program highlights
+  what_you_learn      String? // "What You Learn" section
+  overview            String? // Program overview
+  what_program_offers String? // What the program offers
+  hero_image          String? // URL or path to the hero image
+  image               String? // URL or path to an additional image
+
+  // SEO Fields
+  slug             String  @unique // Unique URL slug for the service page
+  meta_title       String? // Meta title for the service page
+  meta_description String? // Meta description for the service page
+  og_title         String? // Open Graph (OG) title for social media
+  og_image         String? // Open Graph (OG) image for social media
+  keywords         String? // Keywords for SEO optimization
+
+  createdAt DateTime @default(now()) // Automatically set when created
+  updatedAt DateTime @updatedAt // Automatically updated when modified
+}
