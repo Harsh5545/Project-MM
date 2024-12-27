@@ -11,7 +11,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import AllLinks from "./links/AllLinks";
-import { ThemeSwitcher } from "../theme/ThemeSwitcher";
 import { Lato } from "next/font/google";
 import ShadcnButton from "../Atom/button/ShadcnButton";
 const dm_Sans = Lato({
@@ -102,7 +101,7 @@ function HeaderFixed() {
 
             <div className={`${isMobile ? (isMobileMenuOpen ? "block" : "hidden") : "flex items-center gap-2"
                 }`}>
-                <ThemeSwitcher />
+               
                 <ShadcnButton
                     className={`${dm_Sans.className} tracking-wide rounded-full bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] text-white 
               p-2 px-4 sm:px-6 sm:py-2 md:px-8 md:py-2 lg:px-8 lg:py-2  text-sm sm:text-base md:text-base lg:text-base shadow-lg`}
