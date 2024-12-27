@@ -85,8 +85,8 @@ const ServicesTable = () => {
   );
 
   return (
-    <div className="bg-gradient-to-r from-gray-200 to-gray-100 p-6 sm:p-12">
-      <div className="w-full mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 space-y-8">
+    <div className="bg-gradient-to-r from-gray-200 to-gray-100 ">
+      <div className="w-full mx-auto bg-white dark:bg-gray-800  p-8 space-y-8">
         <h1 className="text-3xl font-bold text-gray-800 dark:text-white text-center">
           Services Table
         </h1>
