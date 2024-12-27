@@ -53,8 +53,8 @@ const CourseDetails = () => {
   };
 
   return (
-    <div className="min-h-screen ">
-      <div className=" mx-auto bg-white dark:bg-gray-800 rounded-lg space-y-8">
+    <div className=" ">
+      <div className=" bg-white dark:bg-gray-800 rounded-lg space-y-8">
         <h1 className="text-2xl font-bold text-gray-700 dark:text-white text-Left">Course Details</h1>
         
         <div className="space-y-6">
