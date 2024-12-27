@@ -9,10 +9,8 @@ import { usePathname } from "next/navigation";
 import dynamic from 'next/dynamic';
 import { Suspense } from "react";
 import { useRouter } from "next/navigation";
-import LogoutButton from "@/components/LoginMethod/LogoutButton";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Image from "next/image";
-import { useAuth, UserButton, useUser } from '@clerk/nextjs'
+
 
 // Create a dynamic import for the main content
 const DynamicMainContent = dynamic(() => import('./MainContent'), {
@@ -30,24 +28,23 @@ function LoadingSpinner() {
   );
 }
 
-export function Dashboard({ children }) {
+export function Dashboard({ children ,session}) {
   const pathname = usePathname();
   const router = useRouter();
 
   const handleNavigation = (url) => {
     router.push(url);
   };
-  const { isLoaded, isSignedIn, user } = useUser();
-  console.log(isLoaded, isSignedIn, user)
+
   const linkData = {
-    admin: [
+    Admin: [
       { href: "/admin/category", text: "Category", icon: Home },
       { href: "/admin/blog", text: "Blogs", icon: Package },
       { href: "/admin/users", text: "Users", icon: Package },
       { href: "/admin/services", text: "Services", icon: Users },
       { href: "/admin/events", text: "Events", icon: Users },
     ],
-    user: [
+    User: [
       { href: "/admin/category", text: "Category", icon: Home },
       { href: "/admin/blog", text: "Blogs", icon: Package },
       { href: "/admin/users", text: "Users", icon: Package },
@@ -58,7 +55,7 @@ export function Dashboard({ children }) {
     ]
   };
 
-  const roleLinks = linkData[user?.role] || linkData['user'];
+  const roleLinks = linkData[session?.user?.role?.name] || [];
   const commonLinks = linkData.common;
 
   function getInitials(name) {
@@ -158,7 +155,7 @@ export function Dashboard({ children }) {
             </form>
           </div>
           <Button variant="primary" size="icon" className="border border-primary mx-2 py-2">
-            <UserButton />
+            {/* add user profile here> */}
           </Button>
         </header>
         <Suspense fallback={<LoadingSpinner />}>
