@@ -29,7 +29,12 @@ const HeroCarousel = () => {
   const handleSlideChange = (swiper) => {
     setCurrentSlide(swiper.realIndex);
   };
-
+  const scrollToTestimonials = () => {
+    const testimonialSection = document.getElementById("testimonials");
+    if (testimonialSection) {
+      testimonialSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
   const slides = [
     {
       id: 1,
@@ -168,7 +173,7 @@ const HeroCarousel = () => {
                     <p>{slide.description}</p>
                     <p>{slide.description2}</p>
                   </div>
-                  <Button className={styles.button}>{slide.button}</Button>
+                  <Button onClick={scrollToTestimonials} className={styles.button}>{slide.button}</Button>
                 </div>
               </div>
             </SwiperSlide>

@@ -14,8 +14,10 @@ export default function Home() {
     <CardComponent/>
     <HomeDinning />
       <HomeAbout />
-      <HomeTestimonial />
-      <HomeConsultation />
+      
+    <HomeTestimonial />
+  <div id="testimonials">
+      <HomeConsultation /></div> 
       <HomeSection />
       </>
   );
