@@ -1,5 +1,5 @@
 import { Geist, Geist_Mono } from "next/font/google";
-import "../../globals.css";
+import "../globals.css";
 import { Dashboard } from "@/components/Admin-Components/Dashboard/Dashboard";
 import { auth } from "@/auth";
 

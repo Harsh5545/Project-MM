@@ -1,7 +1,9 @@
 'use client'
+import {  useToast } from '@/hooks/use-toast';
 import React, { useState, useEffect } from 'react';
 
 const CategoryTable = () => {
+  const { toast } = useToast()
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [sortOrder, setSortOrder] = useState('asc'); // Sorting order (asc or desc)
@@ -9,16 +11,14 @@ const CategoryTable = () => {
   const [pageIndex, setPageIndex] = useState(0); // Current page index
   const [pageSize, setPageSize] = useState(10); // Number of items per page
 
-  // Fetch data (example: fetching from an API)
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch('/api/category/list');
-      const result = await response.json();
-      setData(result.data);
-      setLoading(false);
-    };
-    fetchData();
-  }, []);
+  const fetchData = async () => {
+
+    const response = await fetch('/api/category/list');
+    const result = await response.json();
+    setData(result.data);
+    setLoading(false);
+  };
+
 
   // Sorting function
   const handleSort = (column) => {
@@ -48,17 +48,41 @@ const CategoryTable = () => {
     setPageIndex(0); // Reset to first page when page size changes
   };
 
-  // Handle delete action
-  const handleDelete = (id) => {
-    const newData = data.filter(item => item.id !== id);
-    setData(newData);
+
+  const handleDelete = async (id) => {
+    const response = await fetch('/api/category/delete', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id }),
+    });
+    const result = await response.json();
+    if (result.Success) {
+      toast({
+        title: "Success",
+        description: result?.Message,
+      })
+      fetchData();
+    }else{
+      toast({
+        title: "Error",
+        description: result?.Message,
+        variant: "destructive",
+      })
+    }
+    
   };
 
   // Handle edit action
   const handleEdit = (id) => {
-    // Implement edit functionality here, e.g., open a modal or navigate to an edit page
     console.log(`Edit category with id: ${id}`);
   };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
 
   if (loading) return <div>Loading...</div>;
 
