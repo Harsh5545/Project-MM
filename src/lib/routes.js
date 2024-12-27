@@ -26,6 +26,7 @@ export const ADMIN_ROUTES = [
    "/admin/all-blogs",
    "/api/users",
    "/api/category/delete",
+   "/api/users/list"
 ];
 
 export const USER_ROUTES = [

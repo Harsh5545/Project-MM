@@ -1,3 +1,4 @@
+import UserTable from '@/components/Admin-Components/Users_components/UserTable'
 import React from 'react'
 
 
@@ -8,7 +9,9 @@ export const metadata = {
 
 const page = () => {
   return (
-    <div>Users page</div>
+    <div>
+      <UserTable/>
+    </div>
   )
 }
 
