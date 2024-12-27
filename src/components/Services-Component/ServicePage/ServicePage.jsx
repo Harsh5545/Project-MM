@@ -73,14 +73,13 @@ const ServicePage = ({ params }) => {
     <div className="flex h-full dark:bg-[rgb(0,0,31)]  items-center pb-4 md:pb-10 justify-center w-full flex-col  bg-gray-100">
       {/* Hero Section */}
       <div
-        className=" h-[35vh] md:h-[40vh] lg:h-[30vh]  bg-[#793600] dark:bg-opacity-20 opacity-50  w-full pb-5 bg-cover bg-center flex items-end justify-center"
-      // style={{ backgroundImage: `url(${heroImage})` }}
+        className="h-[35vh] md:h-[40vh] lg:h-[30vh] bg-[#793600] dark:bg-opacity-20 opacity-50 w-full pb-5 bg-cover bg-center flex items-end justify-center"
+        style={{ backgroundImage: `url(${heroImage})` }}
       >
         {/* <div className="absolute inset-0 bg-black opacity-50"></div> */}
-        <div className="relative flex flex-col justify-center items-center text-center text-white   ">
+        <div className="relative flex flex-col justify-center items-center text-center text-white">
           <h1 className="text-2xl lg:text-4xl font-bold uppercase">{title}</h1>
-          <h2
-            className={`${dm_Sans.className} mt-4 px-2 text-lg lg:text-xl`}>{headline}</h2>
+          <h2 className={`${dm_Sans.className} mt-4 px-2 text-lg lg:text-xl`}>{headline}</h2>
         </div>
       </div>
       <div className="w-full md:w-[60%] ">
@@ -91,7 +90,7 @@ const ServicePage = ({ params }) => {
         {/* Overview Section */}
         <section className="mt-14 py-4 text-center">
           <h2 className="text-4xl font-semibold text-black">Overview</h2>
-          
+
           <div className="mt-6  bg-white rounded-lg mx-2 shadow-md p-4 md:p-6 ">
 
             <p className="text-gray-700">{overview}</p>
