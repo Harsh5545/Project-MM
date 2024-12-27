@@ -1,3 +1,4 @@
+import BlogTable from '@/components/Admin-Components/Blog-Admin-Component/BlogTable'
 import React from 'react'
 
 export const metadata = {
@@ -8,7 +9,7 @@ export const metadata = {
 const page = () => {
   
   return (
-    <div>Blog Page</div>
+    <div><BlogTable/></div>
   )
 }
 

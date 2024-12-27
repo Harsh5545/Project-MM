@@ -14,7 +14,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Image from "next/image";
 import { useAuth, UserButton, useUser } from '@clerk/nextjs'
 
-
 // Create a dynamic import for the main content
 const DynamicMainContent = dynamic(() => import('./MainContent'), {
   loading: () => <LoadingSpinner />,
@@ -31,7 +30,6 @@ function LoadingSpinner() {
   );
 }
 
-
 export function Dashboard({ children }) {
   const pathname = usePathname();
   const router = useRouter();
@@ -40,7 +38,7 @@ export function Dashboard({ children }) {
     router.push(url);
   };
   const { isLoaded, isSignedIn, user } = useUser();
-  console.log(isLoaded,isSignedIn,user)
+  console.log(isLoaded, isSignedIn, user)
   const linkData = {
     admin: [
       { href: "/admin/category", text: "Category", icon: Home },
@@ -50,6 +48,10 @@ export function Dashboard({ children }) {
       { href: "/admin/events", text: "Events", icon: Users },
     ],
     user: [
+      { href: "/admin/category", text: "Category", icon: Home },
+      { href: "/admin/blog", text: "Blogs", icon: Package },
+      { href: "/admin/users", text: "Users", icon: Package },
+      { href: "/admin/services", text: "Services", icon: Users },
       { href: "/user", text: "Products", icon: Package },
       { href: "/user/profile", text: "Customers", icon: Users },
       { href: "/user/courses", text: "Analytics", icon: LineChart },
@@ -59,7 +61,6 @@ export function Dashboard({ children }) {
   const roleLinks = linkData[user?.role] || linkData['user'];
   const commonLinks = linkData.common;
 
-
   function getInitials(name) {
     const nameParts = name.split(' ');
     const initials = nameParts.map(part => part.charAt(0).toUpperCase()).join('');
@@ -67,25 +68,32 @@ export function Dashboard({ children }) {
   }
   console.log(pathname)
   return (
-    <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
-      <div className="hidden border-r bg-muted/40 md:block">
+    <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr] bg-gray-100">
+      <div className="hidden border-r bg-white shadow-md md:block">
         <div className="flex h-full max-h-screen flex-col gap-2">
-          <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
+          <div className="flex h-24 items-center border-b px-4 lg:h-[60px] lg:px-6 bg-gray-50">
             <Link href="/" className="flex items-center gap-2 font-semibold">
-              <Package2 className="h-6 w-6" />
-              <span className="font-bold text-yellow-300">Modern Mannerisim</span>
+              <span className="text-lg">
+                <Image
+                  src="/assets/MM.png"
+                  width={300}
+                  height={300}
+                  className="md:max-w-[8rem] max-w-[6rem]"
+                  alt="ModernMannerism logo"
+                  priority
+                />
+              </span>
             </Link>
-
           </div>
-          <div className="flex-1">
+          <div className="flex-1 overflow-y-auto">
             <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
               {roleLinks.map((link, index) => (
                 <Link
                   key={index}
                   href={link.href}
                   className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${pathname === link.href
-                    ? "bg-red-500 text-primary"
-                    : "text-muted-foreground hover:text-primary"
+                    ? "bg-purple-600 text-white"
+                    : "text-gray-700 hover:bg-gray-200"
                     }`}
                 >
                   <link.icon className="h-4 w-4" />
@@ -102,7 +110,7 @@ export function Dashboard({ children }) {
         </div>
       </div>
       <div className="flex flex-col">
-        <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
+        <header className="flex h-14 items-center gap-4 border-b bg-white shadow-md px-4 lg:h-[60px] lg:px-6">
           <Sheet>
             <SheetTrigger asChild>
               <Button
@@ -128,8 +136,8 @@ export function Dashboard({ children }) {
                     key={index}
                     href={link.href}
                     className={`mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 transition-colors ${link.isActive
-                      ? "bg-muted text-foreground"
-                      : "text-muted-foreground hover:text-foreground"
+                      ? "bg-gray-200 text-gray-900"
+                      : "text-gray-700 hover:bg-gray-200"
                       }`}
                   >
                     <link.icon className="h-5 w-5" />
@@ -141,7 +149,6 @@ export function Dashboard({ children }) {
                     )}
                   </Link>
                 ))}
-
               </nav>
             </SheetContent>
           </Sheet>
@@ -155,7 +162,7 @@ export function Dashboard({ children }) {
           </Button>
         </header>
         <Suspense fallback={<LoadingSpinner />}>
-          <main className="flex-1 p-4">
+          <main className="flex-1 p-4 bg-white shadow-md rounded-lg m-4">
             <DynamicMainContent>{children}</DynamicMainContent>
           </main>
         </Suspense>

@@ -44,7 +44,7 @@ const AddServices = ({ onClose }) => {
 
   return (
     <div className="bg-gradient-to-r from-gray-200 to-gray-100 ">
-      <div className="w-full mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 space-y-8 relative">
+      <div className="w-full mx-auto bg-white dark:bg-gray-800 rounded-lg p-8 space-y-8 relative">
         <button
           type="button"
           className="absolute top-4 right-4 bg-red-600 hover:bg-red-700 text-white px-2 py-1 rounded-lg"
