@@ -2,8 +2,8 @@ import React from "react";
 
 const TermsPage = () => {
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100 dark:bg-gray-900">
-      <div className="w-full max-w-4xl p-6 md:p-12 mt-12 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
+    <div className="flex justify-center items-center my-24 bg-gray-100 dark:bg-gray-900">
+      <div className="w-full max-w-6xl p-6 md:p-12 mt-12 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
         <h1 className="text-4xl font-bold text-center text-gray-900 dark:text-gray-100 mb-10">
           Terms & Conditions
         </h1>

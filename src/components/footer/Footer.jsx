@@ -4,7 +4,7 @@ import SocialButtons from "./SocialIcons";
 const Footer = () => {
   return (
     <>
-      <footer className="dark:bg-[#00001F] bg-white text-black dark:text-white p-5 border-t-8  flex flex-col relative h-screen">
+      <footer className="dark:bg-[#00001F] bg-white text-black dark:text-white p-5 border-t-10  flex flex-col relative h-[80vh]">
         
         {/* "Contact Us" Header in Top Left */}
         <div className="absolute top-8 left-8 text-4xl md:text-6xl font-semibold">
@@ -42,7 +42,7 @@ const Footer = () => {
           &copy; 2024 Modern Mannerism {' | '}<p>
           <a href="/privacy-policy" className="text-black-400  cursor-pointer "> Privacy Policy </a>
           {' | '}
-          <a href="/terms" className="text-black-400 cursor-pointer "> Terms </a>
+          <a href="/term&condition" className="text-black-400 cursor-pointer "> Terms </a>
         </p> {' | '} Designed by Harsh
         </div>
       </footer>
