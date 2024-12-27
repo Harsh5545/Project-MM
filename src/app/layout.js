@@ -1,13 +1,10 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-
-import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
-// import Navbarr from "@/components/Navbar";
 import Footer from "@/components/footer/Footer";
-import Navbarr from "@/components/Navbar";
 import Header from "@/components/Navbar/Navbar";
 import { Toaster } from "@/components/ui/toaster";
+import { ClerkProvider, SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 
 
 const geistSans = Geist({
@@ -28,13 +25,10 @@ export const metadata = {
 export default async function RootLayout({ children }) {
   const session = await auth();
   return (
-    <SessionProvider session={session}>
+    <ClerkProvider>
       <html lang="en">
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
-          <div className="  flex flex-col">
-            {/* <Navbar /> */}
+        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`} >
+          <div className="flex flex-col">
             <Header />
             <div className="flex-grow">
               {children}
@@ -42,9 +36,8 @@ export default async function RootLayout({ children }) {
             </div>
             <Footer />
           </div>
-
         </body>
       </html>
-    </SessionProvider>
+    </ClerkProvider>
   );
 }

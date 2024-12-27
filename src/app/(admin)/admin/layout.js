@@ -1,7 +1,5 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "../../globals.css";
-import { SessionProvider } from "next-auth/react";
-import { auth } from "@/auth";
 import { Dashboard } from "@/components/Admin-Components/Dashboard/Dashboard";
 
 
@@ -21,18 +19,16 @@ export const metadata = {
 };
 
 export default async function Layout({ children }) {
-    const session = await auth();
+
     return (
-        <SessionProvider session={session} supressFirstRenderFlash={true}>
             <html lang="en">
                 <body
                     className={`${geistSans.variable} ${geistMono.variable} antialiased`}
                 >
-                    <Dashboard session={session}>
+                    <Dashboard>
                         {children}
                     </Dashboard>
                 </body>
             </html>
-        </SessionProvider>
     );
 }

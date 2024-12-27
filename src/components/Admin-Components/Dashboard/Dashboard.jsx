@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 import LogoutButton from "@/components/LoginMethod/LogoutButton";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Image from "next/image";
+import { useAuth, UserButton, useUser } from '@clerk/nextjs'
 
 
 // Create a dynamic import for the main content
@@ -31,36 +32,33 @@ function LoadingSpinner() {
 }
 
 
-export function Dashboard({ children, session }) {
+export function Dashboard({ children }) {
   const pathname = usePathname();
   const router = useRouter();
 
   const handleNavigation = (url) => {
     router.push(url);
   };
-
- 
- const user = {
-    role:"ADMIN"
- } 
+  const { isLoaded, isSignedIn, user } = useUser();
+  console.log(isLoaded,isSignedIn,user)
   const linkData = {
-    ADMIN: [
+    admin: [
       { href: "/admin/category", text: "Category", icon: Home },
       { href: "/admin/blog", text: "Blogs", icon: Package },
       { href: "/admin/users", text: "Users", icon: Package },
       { href: "/admin/services", text: "Services", icon: Users },
       { href: "/admin/events", text: "Events", icon: Users },
     ],
-    USER: [
+    user: [
       { href: "/user", text: "Products", icon: Package },
       { href: "/user/profile", text: "Customers", icon: Users },
       { href: "/user/courses", text: "Analytics", icon: LineChart },
     ]
   };
 
-  const roleLinks = linkData[session?.user?.role] || [];
+  const roleLinks = linkData[user?.role] || linkData['user'];
   const commonLinks = linkData.common;
-  console.log(session?.user?.image)
+
 
   function getInitials(name) {
     const nameParts = name.split(' ');
@@ -153,31 +151,8 @@ export function Dashboard({ children, session }) {
             </form>
           </div>
           <Button variant="primary" size="icon" className="border border-primary mx-2 py-2">
-            <Avatar>
-              <AvatarFallback>{getInitials(session?.user?.name)}</AvatarFallback>
-            </Avatar>
+            <UserButton />
           </Button>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="secondary" size="icon" className="rounded-full border border-primary">
-                <Avatar>
-                  <Image src={session?.user?.image} width={30} height={30} className='w-10 h-10 rounded-full' alt='user image' />
-                  {/* <AvatarFallback>{getInitials(session?.user?.name)}</AvatarFallback> */}
-                </Avatar>
-                <span className="sr-only">Toggle user menu</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={() => handleNavigation('/account')}>My Account</DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => handleNavigation('/account/setting')}>Settings</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => handleNavigation('/account/help-center')}> Support</DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <LogoutButton />
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
         </header>
         <Suspense fallback={<LoadingSpinner />}>
           <main className="flex-1 p-4">
