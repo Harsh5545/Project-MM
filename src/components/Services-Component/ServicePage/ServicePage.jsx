@@ -61,8 +61,10 @@ const ServicePage = ({ params }) => {
     highlights,
     testimonials,
     faqData,
-    heroImage,
+    heroimage,
   } = foundService;
+
+  console.log(foundService,'dkfjk')
 
   const carouselResponsive = {
     superLargeDesktop: { breakpoint: { max: 4000, min: 1024 }, items: 1 },
@@ -75,7 +77,7 @@ const ServicePage = ({ params }) => {
       {/* Hero Section */}
       <div
         className="h-[35vh] md:h-[40vh] lg:h-[30vh] bg-[#793600] dark:bg-opacity-20 opacity-50 w-full pb-5 bg-cover bg-center flex items-end justify-center"
-        style={{ backgroundImage: `url(${heroImage})` }}
+        style={{ backgroundImage: `url(${heroimage})`,opacity:.1 }}
       >
         {/* <div className="absolute inset-0 bg-black opacity-50"></div> */}
         <div className="relative flex flex-col justify-center items-center text-center text-white">
