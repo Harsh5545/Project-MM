@@ -55,7 +55,7 @@ export const servicesDataPage = [
   {
     id: "3",
     title: "Children’s Etiquette Programme",
-    heroimage:"/assets/Etiquettechildren.jpgz",
+    heroimage:"/assets/Etiquettechildren.jpg",
     headline: "Empowering Tomorrow's Leaders with Polished Etiquette and Essential Life Skills",
     subheadline:
       "Designed for children aged 10–15, this program instills confidence, communication skills, and impeccable manners, setting the foundation for their future success.",

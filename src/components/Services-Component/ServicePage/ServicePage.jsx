@@ -5,6 +5,7 @@ import { servicesDataPage } from "@/data";
 import { DM_Sans } from "next/font/google";
 // import { Box } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import { motion } from "framer-motion";
 
 import {
   Accordion,
@@ -22,11 +23,13 @@ import {
 
 import ShadcnButton from "@/components/Atom/button/ShadcnButton";
 import { ChevronDown, HelpCircle } from "lucide-react";
+import { FaCheckCircle } from "react-icons/fa"; // Importing an icon from react-icons
 
 import { CheckCircle } from "lucide-react";
 
 
 import "react-multi-carousel/lib/styles.css";
+import Image from "next/image";
 const dm_Sans = DM_Sans({
   subsets: ["latin"],
   weight: ["400"],
@@ -60,8 +63,10 @@ const ServicePage = ({ params }) => {
     highlights,
     testimonials,
     faqData,
-    heroImage,
+    heroimage,
   } = foundService;
+
+  console.log(foundService, 'dkfjk')
 
   const carouselResponsive = {
     superLargeDesktop: { breakpoint: { max: 4000, min: 1024 }, items: 1 },
@@ -70,50 +75,90 @@ const ServicePage = ({ params }) => {
   };
 
   return (
-    <div className="flex h-full dark:bg-[rgb(0,0,31)]  items-center pb-4 md:pb-10 justify-center w-full flex-col  bg-gray-100">
+    <div className="flex h-full dark:bg-[rgb(0,0,31)] bg-[#FFFFFF] items-center pb-4 md:pb-10 justify-center w-full flex-col  ">
       {/* Hero Section */}
       <div
-        className="h-[35vh] md:h-[40vh] lg:h-[30vh] bg-[#793600] dark:bg-opacity-20 opacity-50 w-full pb-5 bg-cover bg-center flex items-end justify-center"
-        style={{ backgroundImage: `url(${heroImage})` }}
+        className=" mt-36 w-full pb-5 bg-cover bg-center flex items-end justify-center"
+      // style={{ backgroundImage: `url(${heroimage})`,}}
       >
-        {/* <div className="absolute inset-0 bg-black opacity-50"></div> */}
-        <div className="relative flex flex-col justify-center items-center text-center text-white">
+        {/* <div className="absolute inset-0 bg-[#793600] opacity-25"></div> */}
+        <div className="relative flex flex-col justify-center items-center text-center text-black">
           <h1 className="text-2xl lg:text-4xl font-bold uppercase">{title}</h1>
           <h2 className={`${dm_Sans.className} mt-4 px-2 text-lg lg:text-xl`}>{headline}</h2>
+          <Image alt="MM"
+            className="rounded-lg mt-8 shadow-md my-1"
+            height={500}
+            width={1135}
+            src="/assets/BusinessHandshake.jpg"
+          />
+          <section className=" px-4 py-2 md:w-[80%] text-center">
+          <p className="text-center text-gray-500 text-base lg:text-xl mx-2 lg:text-md">{subheadline}</p>
+        </section>
         </div>
       </div>
-      <div className="w-full md:w-[60%] ">
-        <section className="mt-14 py-4 px-4 bg-white rounded-lg shadow-md text-center">
-          <p className="text-center text-gray-600 text-xl mx-2 lg:text-md">{subheadline}</p>
-
-        </section>
+      <div className="w-full flex justify-center bg-[#F7F7F7]">
+      <div className="w-[96%] md:w-[60%] ">
+        
+        {/* <section className=" flex justify-center items-center">
+        
+        </section> */}
         {/* Overview Section */}
-        <section className="mt-14 py-4 text-center">
-          <h2 className="text-4xl font-semibold text-black">Overview</h2>
-
-          <div className="mt-6  bg-white rounded-lg mx-2 shadow-md p-4 md:p-6 ">
-
-            <p className="text-gray-700">{overview}</p>
-            <ul className="mt-6 grid grid-cols-1 md:grid-cols-1 gap-4">
-              <h4 className="text-gray-700 text-xl font-bold text-start">This program offers: </h4>
-              {programOptions.map((option, index) => (
-                <li
-                  key={index}
-                  className="rounded-lg text-gray-700 flex items-start md:items-center gap-2"
+          <section className="mt-14 py-8 px-4 md:px-8 lg:px-16 bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-800 rounded-lg shadow-lg">
+            <div className="flex flex-col md:flex-row items-start justify-between">
+              <div className="md:w-1/2">
+                <h2 className="text-4xl font-semibold text-black dark:text-white mb-6">Overview</h2>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                  className="mt-2"
                 >
-                  <div className="flex text-sm md:text-base lg:text-lg items-start md:items-start gap-4 w-full md:px-24">
-                    <span className="w-2 h-2 rounded-full bg-gray-700"></span>
-                    <div className="flex items-start">
-                      <span className="text-xs md:text-sm text-left font-medium text-gray-900 flex-grow whitespace-nowrap">{option.title}</span>
-                      <span className="text-xs md:text-sm text-gray-700">:</span>
-                      <span className="text-xs md:text-sm ml-1 text-left text-gray-700 flex-grow">{option.description}</span>
+                  <p className="text-gray-700 dark:text-gray-300 text-left mb-6">{overview}</p>
+                </motion.div>
+                <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className=" bg-gray-100 md:ml-24 absolute z-10 md:-right-50 dark:bg-gray-800 p-6 rounded-lg shadow-md"
+            >
+              <h4 className="text-gray-700 dark:text-gray-300 text-xl font-bold text-start mb-4">This program offers:</h4>
+              <ul className=" space-y-4">
+                {programOptions.map((option, index) => (
+                  <motion.li
+                    key={index}
+                    initial={{ opacity: 0, x: -40 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.3, delay: index * 0.1 }}
+                    className="rounded-lg text-gray-700 dark:text-gray-300 flex items-start gap-2"
+                  >
+                    <div className="flex items-start gap-4 w-full">
+                      <FaCheckCircle className="text-gray-700 dark:text-gray-300 mt-1" />
+                      <div className="flex flex-col">
+                        <span className="text-sm md:text-base font-medium text-gray-900 dark:text-white">
+                          {option.title}
+                        </span>
+                        <span className="text-sm md:text-base text-gray-700 dark:text-gray-300">
+                          {option.description}
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
+                  </motion.li>
+                ))}
+              </ul>
+            </motion.div>
+              </div>
+              <div className="md:w-1/2 relative mt-8 md:mt-0 md:ml-8">
+                <Image
+                  alt="MM"
+                  className="rounded-lg  h-[50vh] shadow-md"
+                  height={500}
+                  width={1135}
+                  src="/assets/BusinessHandshake.jpg"
+                />
+              </div>
+            </div>
+            
+          </section>
 
         {/* What They’ll Learn Section */}
         <section className="mt-14 py-4 text-center">
@@ -289,7 +334,7 @@ const ServicePage = ({ params }) => {
           </div>
         </section>
 
-      </div>
+      </div></div>
     </div>
   );
 };

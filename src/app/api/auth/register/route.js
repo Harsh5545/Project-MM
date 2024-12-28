@@ -7,7 +7,7 @@ export async function POST(req) {
     try {
         // Parse the request body
         const body = await req.json();
-
+console.log(body)
         // Basic validation of input fields
         if (
             !body.firstName ||
@@ -63,8 +63,7 @@ export async function POST(req) {
             Success: true,
         });
     } catch (error) {
-        console.error("Error in user creation:", error);
-
+       
         // Return error response if anything goes wrong
         return NextResponse.json({
             Message: "User creation failed. Please try again later.",
