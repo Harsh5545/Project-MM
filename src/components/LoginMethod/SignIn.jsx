@@ -15,7 +15,7 @@ export function LoginForm() {
       <label>
         Password
         <input name="password" type="password" />
-      </label>
+      </label> 
       <button>Sign In</button>
     </form>
   )
