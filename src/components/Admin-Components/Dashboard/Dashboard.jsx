@@ -10,6 +10,10 @@ import dynamic from 'next/dynamic';
 import { Suspense } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { AvatarFallback } from "@radix-ui/react-avatar";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { signOut } from "@/auth";
+import SignOutPage, { SignOut } from "@/components/SignOut";
 
 
 // Create a dynamic import for the main content
@@ -28,7 +32,7 @@ function LoadingSpinner() {
   );
 }
 
-export function Dashboard({ children ,session}) {
+export function Dashboard({ children, session }) {
   const pathname = usePathname();
   const router = useRouter();
 
@@ -150,12 +154,13 @@ export function Dashboard({ children ,session}) {
             </SheetContent>
           </Sheet>
           <div className="w-full flex-1">
-            <form>
-
-            </form>
+                <SignOut/>
           </div>
           <Button variant="primary" size="icon" className="border border-primary mx-2 py-2">
-            {/* add user profile here> */}
+            <Avatar>
+              <AvatarImage src="https://github.com/shadcn.png" />
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
           </Button>
         </header>
         <Suspense fallback={<LoadingSpinner />}>

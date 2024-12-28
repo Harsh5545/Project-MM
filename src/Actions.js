@@ -1,6 +1,7 @@
 'use server';
 
 import { signIn } from "next-auth/react";
+import { signOut } from "./auth";
 
 export async function doCredentialLogin(formData) {
     try {
@@ -15,3 +16,7 @@ export async function doCredentialLogin(formData) {
         throw err;
     }
 }
+
+export async function handleSignOut(){
+   const res = await signOut(); 
+};
