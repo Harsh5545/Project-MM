@@ -1,5 +1,5 @@
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import "../globals.css";
 import { auth } from "@/auth";
 import Footer from "@/components/footer/Footer";
 import Header from "@/components/Navbar/Navbar";
@@ -25,7 +25,6 @@ export const metadata = {
 
 export default async function RootLayout({ children }) {
   const session = await auth();
-  console.log(session);
   return (
     <SessionProvider session={session}>
       <html lang="en">

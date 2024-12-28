@@ -55,7 +55,7 @@ export function Dashboard({ children ,session}) {
     ]
   };
 
-  const roleLinks = linkData[session?.user?.role?.name] || [];
+  const roleLinks = linkData[session?.user?.role] || [];
   const commonLinks = linkData.common;
 
   function getInitials(name) {

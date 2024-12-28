@@ -41,8 +41,8 @@ export async function middleware(request) {
     }
 
     // If the user is logged in but not on their appropriate route, redirect based on their role
-    const userRole = token?.role?.name; 
-
+    const userRole = token?.role; 
+    console.log(userRole,'userRole')
     if (userRole === 'Admin') {
         if (!ADMIN_ROUTES.includes(nextUrl.pathname)) {
             return NextResponse.redirect(new URL(ADMIN_ROUTES[0], nextUrl)); 
