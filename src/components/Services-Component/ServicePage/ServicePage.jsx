@@ -85,20 +85,15 @@ const ServicePage = ({ params }) => {
         <div className="relative flex flex-col justify-center items-center text-center text-black">
           <h1 className="text-2xl lg:text-4xl font-bold uppercase">{title}</h1>
           <h2 className={`${dm_Sans.className} mt-4 px-2 text-lg lg:text-xl`}>{headline}</h2>
-          <Image alt="MM"
-            className="rounded-lg mt-8 shadow-md my-1"
-            height={500}
-            width={1135}
-            src="/assets/BusinessHandshake.jpg"
-          />
-          <section className=" px-4 py-2 md:w-[80%] text-center">
-          <p className="text-center text-gray-500 text-base lg:text-xl mx-2 lg:text-md">{subheadline}</p>
-        </section>
+      
+          
         </div>
       </div>
       <div className="w-full flex justify-center bg-[#F7F7F7]">
       <div className="w-[96%] md:w-[60%] ">
-        
+      <section className="mt-4 px-4 py-2  text-center">
+          <p className="text-center text-gray-500 text-base lg:text-xl mx-2 lg:text-md">{subheadline}</p>
+        </section>
         {/* <section className=" flex justify-center items-center">
         
         </section> */}
@@ -119,7 +114,7 @@ const ServicePage = ({ params }) => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className=" bg-gray-100 md:ml-24 absolute z-10 md:-right-50 dark:bg-gray-800 p-6 rounded-lg shadow-md"
+              className=" bg-orange-50 bg-opacity-90 md:ml-24 absolute z-10 md:-right-50 dark:bg-gray-800 p-6 rounded-lg shadow-md"
             >
               <h4 className="text-gray-700 dark:text-gray-300 text-xl font-bold text-start mb-4">This program offers:</h4>
               <ul className=" space-y-4">
@@ -161,19 +156,19 @@ const ServicePage = ({ params }) => {
           </section>
 
         {/* What They’ll Learn Section */}
-        <section className="mt-14 py-4 text-center">
-          <span className="text-4xl  font-semibold text-black">
-            What They’ll Learn
-          </span>
-          <div className="mt-8 flex mx-2 bg-white rounded-lg shadow-md  py-6 px-8 md:px-24 justify-center flex-col gap-2">
-            {learningPoints.map((point, index) => (
-              <div key={index} className="flex gap-4 items-center">
-                <span className="w-2 h-2 rounded-full bg-gray-700"></span>
-                <span className="pl-2 text-lg text-left text-gray-700">{point.title}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+        <section className="mt-14 py-8 px-4 md:px-8 lg:px-16 bg-gradient-to-b from-gray-100 to-white dark:from-gray-800 dark:to-gray-900 rounded-lg shadow-lg">
+            <h2 className="text-4xl font-semibold text-black dark:text-white mb-6">What They’ll Learn</h2>
+            <div className="mt-8 flex flex-col gap-4">
+              {learningPoints.map((point, index) => (
+                <div key={index} className="flex items-start gap-4">
+                  <FaCheckCircle className="text-[#345374] mt-1" />
+                  <div className="flex flex-col">
+                    <span className="text-lg font-medium text-gray-900 dark:text-white">{point.title}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
 
         {/* Program Highlights Section */}
         <section className="mt-14   text-center">
