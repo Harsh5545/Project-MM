@@ -1,14 +1,16 @@
+"use client"
 import { doCredentialLogin } from "@/Actions";
 import { signIn } from "@/auth";
+import { useState } from "react";
 export function LoginForm() {
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [error, setError] = useState("");
-  // const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (event) => {
     // "use server"
-    // event.preventDefault();
+    event.preventDefault();
     setError("");
     setLoading(true);
 
@@ -45,15 +47,12 @@ export function LoginForm() {
     <div className="bg-gray-100 dark:bg-gray-900  flex items-center justify-center py-12">
       <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-8 w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6 text-center text-gray-800 dark:text-white">Sign In</h2>
-        {/* {error && (
+        {error && (
           <div className="text-red-500 text-center mb-4 bg-red-100 p-3 rounded">
             {error}
           </div>
-        )} */}
-        <form action={async (formData) => {
-        "use server"
-        await doCredentialLogin(formData)
-      }} className="flex flex-col gap-6">
+        )}
+        <form onSubmit={handleSubmit} className="flex flex-col gap-6">
           <div>
             <label className="block text-gray-700 dark:text-gray-200 mb-2" htmlFor="email">
               Email
@@ -63,6 +62,8 @@ export function LoginForm() {
               id="email"
               name="email"
               type="email"
+              value={email}
+              onChange={(e)=>setEmail(e.target.value)}
               required
             />
           </div>
@@ -75,16 +76,21 @@ export function LoginForm() {
               id="password"
               name="password"
               type="password"
+              value={password}
+              onChange={(e)=>setPassword(e.target.value)}
               required
             />
           </div>
           <button
             type="submit"
-            className={`w-full py-2 rounded-lg text-white font-bold bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] hover:bg-[#c3965d]`}
-            // disabled={loading}
+            className={`w-full py-2 rounded-lg text-white font-bold ${
+              loading
+                ? "bg-gray-400 cursor-not-allowed"
+                : " bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] hover:bg-[#c3965d]"
+            }`}
+            disabled={loading}
           >
-            Sign In
-            {/* {loading ? "Logging in..." : ""} */}
+            {loading ? "Logging in..." : "Sign In"}
           </button>
         </form>
       </div>
