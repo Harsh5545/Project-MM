@@ -28,6 +28,7 @@ import { CheckCircle } from "lucide-react";
 
 
 import "react-multi-carousel/lib/styles.css";
+import Image from "next/image";
 const dm_Sans = DM_Sans({
   subsets: ["latin"],
   weight: ["400"],
@@ -64,7 +65,7 @@ const ServicePage = ({ params }) => {
     heroimage,
   } = foundService;
 
-  console.log(foundService,'dkfjk')
+  console.log(foundService, 'dkfjk')
 
   const carouselResponsive = {
     superLargeDesktop: { breakpoint: { max: 4000, min: 1024 }, items: 1 },
@@ -73,61 +74,71 @@ const ServicePage = ({ params }) => {
   };
 
   return (
-    <div className="flex h-full dark:bg-[rgb(0,0,31)]  items-center pb-4 md:pb-10 justify-center w-full flex-col  ">
+    <div className="flex h-full dark:bg-[rgb(0,0,31)] bg-gray-50  items-center pb-4 md:pb-10 justify-center w-full flex-col  ">
       {/* Hero Section */}
       <div
-        className="h-[35vh] md:h-[40vh] relative lg:h-[30vh]  dark:bg-opacity-20 opacity-50 w-full pb-5 bg-cover bg-center flex items-end justify-center"
-        style={{ backgroundImage: `url(${heroimage})`,}}
+        className=" mt-36 w-full pb-5 bg-cover bg-center flex items-end justify-center"
+      // style={{ backgroundImage: `url(${heroimage})`,}}
       >
-        <div className="absolute inset-0 bg-[#793600] opacity-25"></div>
-        <div className="relative flex flex-col justify-center items-center text-center text-white">
+        {/* <div className="absolute inset-0 bg-[#793600] opacity-25"></div> */}
+        <div className="relative flex flex-col justify-center items-center text-center text-black">
           <h1 className="text-2xl lg:text-4xl font-bold uppercase">{title}</h1>
           <h2 className={`${dm_Sans.className} mt-4 px-2 text-lg lg:text-xl`}>{headline}</h2>
+          <Image alt="MM"
+            className="rounded-lg mt-8 shadow-md my-1"
+            height={300}
+            width={1135}
+            src="/assets/BusinessHandshake.jpg"
+          />
+          <section className=" px-4 py-2 md:w-[80%] text-center">
+          <p className="text-center text-gray-500 text-base lg:text-xl mx-2 lg:text-md">{subheadline}</p>
+        </section>
         </div>
       </div>
-      <div className="w-full md:w-[60%] ">
-        <section className="mt-14 py-4 px-4 bg-white rounded-lg shadow-md text-center">
-          <p className="text-center text-gray-600 text-xl mx-2 lg:text-md">{subheadline}</p>
-
+      <div className="w-full flex justify-center bg-gray-100">
+      <div className="w-[96%] md:w-[60%] ">
+        
+        <section className=" flex justify-center items-center">
+        
         </section>
         {/* Overview Section */}
         <section className="mt-14 py-4 text-center">
-        <h2 className="text-4xl font-semibold text-black">Overview</h2>
+          <h2 className="text-4xl font-semibold text-black">Overview</h2>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="mt-6 bg-white rounded-lg mx-2 shadow-md p-4 md:p-6"
-        >
-          <p className="text-gray-700">{overview}</p>
-          <ul className="mt-6 grid grid-cols-1 md:grid-cols-1 gap-4">
-            <h4 className="text-gray-700 text-xl font-bold text-start">This program offers: </h4>
-            {programOptions.map((option, index) => (
-              <motion.li
-                key={index}
-                initial={{ opacity: 0, x: -40 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.3, delay: index * 0.1 }}
-                className="rounded-lg text-gray-700 flex items-start md:items-center gap-2"
-              >
-                <div className="flex text-sm md:text-base lg:text-lg items-start md:items-start gap-4 w-full md:px-24">
-                  <span className="w-2 h-2 rounded-full bg-gray-700 mt-1"></span>
-                  <div className="flex items-start">
-                    <span className="text-xs md:text-sm text-left font-medium text-gray-900 flex-grow whitespace-nowrap">
-                      {option.title}
-                    </span>
-                    <span className="text-xs md:text-sm text-gray-700">:</span>
-                    <span className="text-xs md:text-sm ml-1 text-left text-gray-700 flex-grow">
-                      {option.description}
-                    </span>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="mt-6 bg-white rounded-lg mx-2 shadow-md p-4 md:p-6"
+          >
+            <p className="text-gray-700">{overview}</p>
+            <ul className="mt-6 grid grid-cols-1 md:grid-cols-1 gap-4">
+              <h4 className="text-gray-700 text-xl font-bold text-start">This program offers: </h4>
+              {programOptions.map((option, index) => (
+                <motion.li
+                  key={index}
+                  initial={{ opacity: 0, x: -40 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.3, delay: index * 0.1 }}
+                  className="rounded-lg text-gray-700 flex items-start md:items-center gap-2"
+                >
+                  <div className="flex text-sm md:text-base lg:text-lg items-start md:items-start gap-4 w-full md:px-24">
+                    <span className="w-2 h-2 rounded-full bg-gray-700 mt-1"></span>
+                    <div className="flex items-start">
+                      <span className="text-xs md:text-sm text-left font-medium text-gray-900 flex-grow whitespace-nowrap">
+                        {option.title}
+                      </span>
+                      <span className="text-xs md:text-sm text-gray-700">:</span>
+                      <span className="text-xs md:text-sm ml-1 text-left text-gray-700 flex-grow">
+                        {option.description}
+                      </span>
+                    </div>
                   </div>
-                </div>
-              </motion.li>
-            ))}
-          </ul>
-        </motion.div>
-      </section>
+                </motion.li>
+              ))}
+            </ul>
+          </motion.div>
+        </section>
 
         {/* What They’ll Learn Section */}
         <section className="mt-14 py-4 text-center">
@@ -303,7 +314,7 @@ const ServicePage = ({ params }) => {
           </div>
         </section>
 
-      </div>
+      </div></div>
     </div>
   );
 };
