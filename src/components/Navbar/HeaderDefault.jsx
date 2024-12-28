@@ -78,7 +78,7 @@ function HeaderDefault() {
           className={`${isMobileMenuOpen ? "block" : "hidden"
             } md:flex gap-2 flex-col-reverse md:flex-row items-center justify-center`}
         >
-          <ShadcnButton 
+          {/* <ShadcnButton 
             className={`${dm_Sans.className} tracking-wide rounded-full bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] text-white 
               p-2 px-4 sm:px-6 sm:py-3 md:px-8 md:py-4 lg:px-8 lg:py-2 text-sm sm:text-base md:text-base lg:text-base shadow-lg`}
             onClick={() => {
@@ -87,7 +87,7 @@ function HeaderDefault() {
             }}
           >
             CONTACT US
-          </ShadcnButton>  
+          </ShadcnButton>   */}
         </div>
       </div>
     </div>

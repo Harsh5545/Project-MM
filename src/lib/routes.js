@@ -6,6 +6,7 @@ export const PUBLIC_ROUTES = [
    "/sign-up",
    "/sign-in",
    "/about",
+   "/contact-us",
    "/service",
    "/blog",
    "/register",
