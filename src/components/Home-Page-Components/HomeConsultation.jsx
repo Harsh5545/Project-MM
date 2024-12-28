@@ -95,7 +95,7 @@ const HomeConsultation = () => {
               />
             </div>
           </div>
-          <div className="flex flex-col md:flex-row gap-6 mb-4">
+          <div className="flex flex-col md:flex-row gap-8 my-4">
             <div className="w-full">
               <Label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                 Email *
@@ -157,7 +157,7 @@ const HomeConsultation = () => {
               </Select>
             </div>
           </div>
-          <div className="mb-4">
+          <div className="my-8">
             <Label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
               Message
             </Label>

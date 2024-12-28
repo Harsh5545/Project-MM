@@ -39,11 +39,11 @@ const Footer = () => {
 
         {/* Footer Bottom */}
         <div className="text-center  flex items-center justify-center py-4 text-sm">
-          &copy; 2024 Modern Mannerism {' | '}<p>
-          <a href="/privacy-policy" className="text-black-400  cursor-pointer "> Privacy Policy </a>
+          &copy; 2024 Modern Mannerism {' | '}<span className="flex gap-1 justify-center items-center">
+          <p href="/privacy-policy" className="text-black-400  cursor-pointer "> Privacy Policy </p>
           {' | '}
-          <a href="/term&condition" className="text-black-400 cursor-pointer "> Terms </a>
-        </p> {' | '} Designed by Harsh
+          <p href="/term&condition" className="text-black-400 cursor-pointer "> Terms </p>
+        </span> {' | '} Designed by Harsh
         </div>
       </footer>
     </>

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import ShadcnButton from "../Atom/button/ShadcnButton";
 import { Lato } from "next/font/google";
 import { Input } from "@/components/ui/input";
@@ -14,6 +14,7 @@ const HomeSection = () => {
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({ email: "", message: "" });
   const [showThankYou, setShowThankYou] = useState(false);
+  const modalRef = useRef(null);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -32,6 +33,23 @@ const HomeSection = () => {
     }, 3000);
     setFormData({ email: "", message: "" });
   };
+
+  const handleClickOutside = (event) => {
+    if (modalRef.current && !modalRef.current.contains(event.target)) {
+      setShowModal(false);
+    }
+  };
+
+  useEffect(() => {
+    if (showModal) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showModal]);
 
   return (
     <div>
@@ -75,6 +93,7 @@ const HomeSection = () => {
             className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
           >
             <motion.div
+              ref={modalRef}
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}

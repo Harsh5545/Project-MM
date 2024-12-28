@@ -5,6 +5,7 @@ import { servicesDataPage } from "@/data";
 import { DM_Sans } from "next/font/google";
 // import { Box } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import { motion } from "framer-motion";
 
 import {
   Accordion,
@@ -89,31 +90,42 @@ const ServicePage = ({ params }) => {
         </section>
         {/* Overview Section */}
         <section className="mt-14 py-4 text-center">
-          <h2 className="text-4xl font-semibold text-black">Overview</h2>
+        <h2 className="text-4xl font-semibold text-black">Overview</h2>
 
-          <div className="mt-6  bg-white rounded-lg mx-2 shadow-md p-4 md:p-6 ">
-
-            <p className="text-gray-700">{overview}</p>
-            <ul className="mt-6 grid grid-cols-1 md:grid-cols-1 gap-4">
-              <h4 className="text-gray-700 text-xl font-bold text-start">This program offers: </h4>
-              {programOptions.map((option, index) => (
-                <li
-                  key={index}
-                  className="rounded-lg text-gray-700 flex items-start md:items-center gap-2"
-                >
-                  <div className="flex text-sm md:text-base lg:text-lg items-start md:items-start gap-4 w-full md:px-24">
-                    <span className="w-2 h-2 rounded-full bg-gray-700"></span>
-                    <div className="flex items-start">
-                      <span className="text-xs md:text-sm text-left font-medium text-gray-900 flex-grow whitespace-nowrap">{option.title}</span>
-                      <span className="text-xs md:text-sm text-gray-700">:</span>
-                      <span className="text-xs md:text-sm ml-1 text-left text-gray-700 flex-grow">{option.description}</span>
-                    </div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="mt-6 bg-white rounded-lg mx-2 shadow-md p-4 md:p-6"
+        >
+          <p className="text-gray-700">{overview}</p>
+          <ul className="mt-6 grid grid-cols-1 md:grid-cols-1 gap-4">
+            <h4 className="text-gray-700 text-xl font-bold text-start">This program offers: </h4>
+            {programOptions.map((option, index) => (
+              <motion.li
+                key={index}
+                initial={{ opacity: 0, x: -40 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.3, delay: index * 0.1 }}
+                className="rounded-lg text-gray-700 flex items-start md:items-center gap-2"
+              >
+                <div className="flex text-sm md:text-base lg:text-lg items-start md:items-start gap-4 w-full md:px-24">
+                  <span className="w-2 h-2 rounded-full bg-gray-700 mt-1"></span>
+                  <div className="flex items-start">
+                    <span className="text-xs md:text-sm text-left font-medium text-gray-900 flex-grow whitespace-nowrap">
+                      {option.title}
+                    </span>
+                    <span className="text-xs md:text-sm text-gray-700">:</span>
+                    <span className="text-xs md:text-sm ml-1 text-left text-gray-700 flex-grow">
+                      {option.description}
+                    </span>
                   </div>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
+                </div>
+              </motion.li>
+            ))}
+          </ul>
+        </motion.div>
+      </section>
 
         {/* What They’ll Learn Section */}
         <section className="mt-14 py-4 text-center">

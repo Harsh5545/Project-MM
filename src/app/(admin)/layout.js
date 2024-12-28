@@ -1,8 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
-import "../globals.css";
+
 import { Dashboard } from "@/components/Admin-Components/Dashboard/Dashboard";
 import { auth } from "@/auth";
-
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -21,16 +20,9 @@ export const metadata = {
 
 export default async function Layout({ children }) {
     const session = await auth();
-    console.log(session,'ggggg')
     return (
-            <html lang="en">
-                <body
-                    className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-                >
-                    <Dashboard session={session}>
-                        {children}
-                    </Dashboard>
-                </body>
-            </html>
+        <Dashboard session={session}>
+            {children}
+        </Dashboard>
     );
 }
