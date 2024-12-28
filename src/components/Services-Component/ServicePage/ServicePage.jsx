@@ -73,13 +73,13 @@ const ServicePage = ({ params }) => {
   };
 
   return (
-    <div className="flex h-full dark:bg-[rgb(0,0,31)]  items-center pb-4 md:pb-10 justify-center w-full flex-col  bg-gray-100">
+    <div className="flex h-full dark:bg-[rgb(0,0,31)]  items-center pb-4 md:pb-10 justify-center w-full flex-col  ">
       {/* Hero Section */}
       <div
-        className="h-[35vh] md:h-[40vh] lg:h-[30vh] bg-[#793600] dark:bg-opacity-20 opacity-50 w-full pb-5 bg-cover bg-center flex items-end justify-center"
-        style={{ backgroundImage: `url(${heroimage})`,opacity:.1 }}
+        className="h-[35vh] md:h-[40vh] relative lg:h-[30vh]  dark:bg-opacity-20 opacity-50 w-full pb-5 bg-cover bg-center flex items-end justify-center"
+        style={{ backgroundImage: `url(${heroimage})`,}}
       >
-        {/* <div className="absolute inset-0 bg-black opacity-50"></div> */}
+        <div className="absolute inset-0 bg-[#793600] opacity-25"></div>
         <div className="relative flex flex-col justify-center items-center text-center text-white">
           <h1 className="text-2xl lg:text-4xl font-bold uppercase">{title}</h1>
           <h2 className={`${dm_Sans.className} mt-4 px-2 text-lg lg:text-xl`}>{headline}</h2>
