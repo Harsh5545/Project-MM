@@ -104,7 +104,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             throw new Error("User not found");
           }
 
-          const isMatch = await bcrypt.compare(credentials.password, user.password);
+          const isMatch = bcrypt.compare(credentials.password, user.password);
           if (!isMatch) {
             throw new Error("Invalid email or password");
           }

@@ -1,40 +1,35 @@
-datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
-}
-
 generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["driverAdapters"]
 }
 
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
 model Role {
   id        Int      @id @default(autoincrement())
   name      String   @unique
-  users     User[] // One-to-many relation
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  users     User[]
 }
 
-// User model
 model User {
   id            Int      @id @default(autoincrement())
   email         String   @unique
-  first_name    String?
-  last_name     String?
+  first_name    String
+  last_name     String
   password      String
-  mobile_number String?
+  mobile_number String
   roleId        Int
-  role          Role     @relation(fields: [roleId], references: [id])
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
-  image         String? 
-}
+  image         String?
+  role          Role     @relation(fields: [roleId], references: [id])
 
-// Category model with timestamps
-enum CategoryStatus {
-  ACTIVE
-  INACTIVE
+  @@index([roleId], map: "User_roleId_fkey")
 }
 
 model Category {
@@ -43,37 +38,45 @@ model Category {
   category_image String?
   createdAt      DateTime       @default(now())
   updatedAt      DateTime       @updatedAt
-  status         CategoryStatus @default(ACTIVE) // Default to ACTIVE
-  services       Service[] // One-to-many relation to services
+  status         CategoryStatus @default(ACTIVE)
+  services       Service[]
 }
 
-// Service model with SEO-related data and program details
 model Service {
-  id         Int      @id @default(autoincrement())
-  categoryId Int // Foreign key linking to the Category
-  category   Category @relation(fields: [categoryId], references: [id])
+  id                  Int      @id @default(autoincrement())
+  categoryId          Int
+  heading             String
+  subheading          String
+  testimonial         String?
+  faq                 String?
+  why_choose_program  String?
+  program_details     String?
+  program_highlights  String?
+  what_you_learn      String?
+  overview            String?
+  what_program_offers String?
+  hero_image          String?
+  image               String?
+  slug                String   @unique
+  meta_title          String?
+  meta_description    String?
+  og_title            String?
+  og_image            String?
+  keywords            String?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  category            Category @relation(fields: [categoryId], references: [id])
 
-  heading             String // SEO Heading
-  subheading          String // SEO Subheading
-  testimonial         String? // Testimonial (optional)
-  faq                 String? // FAQ (optional)
-  why_choose_program  String? // "Why Choose" content
-  program_details     String? // Details about the program
-  program_highlights  String? // Program highlights
-  what_you_learn      String? // "What You Learn" section
-  overview            String? // Program overview
-  what_program_offers String? // What the program offers
-  hero_image          String? // URL or path to the hero image
-  image               String? // URL or path to an additional image
+  @@index([categoryId], map: "Service_categoryId_fkey")
+}
 
-  // SEO Fields
-  slug             String  @unique // Unique URL slug for the service page
-  meta_title       String? // Meta title for the service page
-  meta_description String? // Meta description for the service page
-  og_title         String? // Open Graph (OG) title for social media
-  og_image         String? // Open Graph (OG) image for social media
-  keywords         String? // Keywords for SEO optimization
-
-  createdAt DateTime @default(now()) // Automatically set when created
+enum CategoryStatus {
+  ACTIVE
+  INACTIVE
+ated
+  updatedAt DateTime @updatedAt // Automatically updated when modified
+ated
+  updatedAt DateTime @updatedAt // Automatically updated when modified
+ated
   updatedAt DateTime @updatedAt // Automatically updated when modified
 }

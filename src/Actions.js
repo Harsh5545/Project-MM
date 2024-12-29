@@ -1,7 +1,7 @@
 'use server';
 
-import { signIn } from "next-auth/react";
-import { signOut } from "./auth";
+import { redirect } from "next/navigation";
+import { signOut, signIn } from "./auth";
 
 export async function doCredentialLogin(formData) {
     try {
@@ -10,8 +10,7 @@ export async function doCredentialLogin(formData) {
             password: formData.get("password"),
             redirect: false,
         });
-        revalidatePath("/");
-        return response;
+        redirect('/')
     } catch (err) {
         throw err;
     }

@@ -7,7 +7,7 @@ export async function POST(req) {
     try {
         // Parse the request body
         const body = await req.json();
-console.log(body)
+        // console.log(body)
         // Basic validation of input fields
         if (
             !body.firstName ||
@@ -53,9 +53,18 @@ console.log(body)
         };
 
         // Create the user in the database
-        const user = await prisma.user.create({
-            data: newUser,
-        });
+        try {
+            const user = await prisma.user.create({
+                data: newUser,
+            });
+            console.log(user, 'created user')
+        } catch (err) {
+            console.log(err, 'jf')
+            return NextResponse.json({
+                Message: "Unable to create user.",
+                Success: false,
+            });
+        }
 
         // Return success response
         return NextResponse.json({
@@ -63,7 +72,7 @@ console.log(body)
             Success: true,
         });
     } catch (error) {
-       
+
         // Return error response if anything goes wrong
         return NextResponse.json({
             Message: "User creation failed. Please try again later.",
