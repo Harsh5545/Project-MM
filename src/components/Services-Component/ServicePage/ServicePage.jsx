@@ -4,7 +4,13 @@ import React, { useEffect, useState } from "react";
 import { servicesDataPage } from "@/data";
 import { DM_Sans } from "next/font/google";
 // import { Box } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
 import { motion } from "framer-motion";
 
 import {
@@ -20,14 +26,11 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-
 import ShadcnButton from "@/components/Atom/button/ShadcnButton";
 import { ChevronDown, HelpCircle } from "lucide-react";
 import { FaCheckCircle } from "react-icons/fa"; // Importing an icon from react-icons
-
 import { CheckCircle } from "lucide-react";
-
-
+import  { HoverEffect }  from "@/components/ui/hover-effect";
 import "react-multi-carousel/lib/styles.css";
 import Image from "next/image";
 const dm_Sans = DM_Sans({
@@ -90,7 +93,7 @@ const ServicePage = ({ params }) => {
         </div>
       </div>
       <div className="w-full flex justify-center bg-[#F7F7F7]">
-      <div className="w-[96%] md:w-[60%] ">
+      <div className="w-[96%] md:w-[60%]">
       <section className="mt-4 px-4 py-2  text-center">
           <p className="text-center text-gray-500 text-base lg:text-xl mx-2 lg:text-md">{subheadline}</p>
         </section>
@@ -98,40 +101,46 @@ const ServicePage = ({ params }) => {
         
         </section> */}
         {/* Overview Section */}
-          <section className="mt-14 py-8 px-4 md:px-8 lg:px-16 bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-800 rounded-lg shadow-lg">
-            <div className="flex flex-col md:flex-row items-start justify-between">
-              <div className="md:w-1/2">
-                <h2 className="text-4xl font-semibold text-black dark:text-white mb-6">Overview</h2>
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
-                  className="mt-2"
-                >
-                  <p className="text-gray-700 dark:text-gray-300 text-left mb-6">{overview}</p>
-                </motion.div>
-                <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className=" bg-orange-50 bg-opacity-90 md:ml-24 absolute z-10 md:-right-50 dark:bg-gray-800 p-6 rounded-lg shadow-md"
-            >
-              <h4 className="text-gray-700 dark:text-gray-300 text-xl font-bold text-start mb-4">This program offers:</h4>
-              <ul className=" space-y-4">
+        <section className="mt-14 py-8 px-2 md:px-8 lg:px-8 bg-gradient-to-b from-gray-100 to-white dark:from-gray-900 dark:to-gray-800 rounded-lg shadow-lg w-full relative z-10">
+      <div className="flex flex-col gap-8 md:flex-row items-start justify-between">
+        <div className="md:w-1/2 mb-8 md:mb-0">
+          <motion.h2
+            className="text-4xl font-bold text-center md:text-left bg-clip-text text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] mb-6"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            Overview
+          </motion.h2>
+          <motion.p
+            className="text-gray-700 dark:text-gray-300 text-left mb-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            {overview}
+          </motion.p>
+          <Card className="dark:bg-gray-800 shadow-md">
+            <CardHeader>
+              <CardTitle className="text-gray-700 dark:text-gray-300 text-xl font-bold mb-4">
+                This program offers:
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ul className="space-y-4">
                 {programOptions.map((option, index) => (
                   <motion.li
                     key={index}
                     initial={{ opacity: 0, x: -40 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.3, delay: index * 0.1 }}
-                    className="rounded-lg text-gray-700 dark:text-gray-300 flex items-start gap-2"
                   >
-                    <div className="flex items-start gap-4 w-full">
-                      <FaCheckCircle className="text-gray-700 dark:text-gray-300 mt-1" />
-                      <div className="flex flex-col">
+                    <div className="flex items-center gap-6">
+                          <div className="flex flex-col"> <div className="flex gap-3 justify-normal items-center"><div className="w-3 h-3 bg-gradient-to-r from-gray-400 to-gray-600 transform rotate-45"></div>
+                 
                         <span className="text-sm md:text-base font-medium text-gray-900 dark:text-white">
                           {option.title}
-                        </span>
+                        </span></div>
                         <span className="text-sm md:text-base text-gray-700 dark:text-gray-300">
                           {option.description}
                         </span>
@@ -140,59 +149,65 @@ const ServicePage = ({ params }) => {
                   </motion.li>
                 ))}
               </ul>
-            </motion.div>
-              </div>
-              <div className="md:w-1/2 relative mt-8 md:mt-0 md:ml-8">
-                <Image
-                  alt="MM"
-                  className="rounded-lg  h-[50vh] shadow-md"
-                  height={500}
-                  width={1135}
-                  src="/assets/BusinessHandshake.jpg"
-                />
-              </div>
-            </div>
-            
-          </section>
-
+            </CardContent>
+          </Card>
+        </div>
+        <div className="md:w-1/2 relative">
+          <Image
+            alt="Business Handshake"
+            className="rounded-lg h-[50vh] shadow-md"
+            height={500}
+            width={1135}
+            src="/assets/BusinessHandshake.jpg"
+          />
+        </div>
+      </div>
+    </section>
         {/* What They’ll Learn Section */}
-        <section className="mt-14 py-8 px-4 md:px-8 lg:px-16 bg-gradient-to-b from-gray-100 to-white dark:from-gray-800 dark:to-gray-900 rounded-lg shadow-lg">
-            <h2 className="text-4xl font-semibold text-black dark:text-white mb-6">What They’ll Learn</h2>
-            <div className="mt-8 flex flex-col gap-4">
-              {learningPoints.map((point, index) => (
-                <div key={index} className="flex items-start gap-4">
-                  <FaCheckCircle className="text-[#345374] mt-1" />
-                  <div className="flex flex-col">
-                    <span className="text-lg font-medium text-gray-900 dark:text-white">{point.title}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
+        <section className="mt-14 py-8 px-4 md:px-8 lg:px-16 bg-gradient-to-b from-gray-100 to-white dark:from-gray-800 dark:to-gray-90 0 rounded-lg shadow-lg">
+  <h2 className="text-4xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] mb-6">What They’ll Learn</h2>
+  <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-2">
+    {learningPoints.map((point, index) => (
+      <motion.div
+        key={index}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="flex items-center gap-3 p-4"
+      >
+        <div className="w-2 h-2 bg-gradient-to-r from-gray-400 to-gray-500 transform rotate-45"></div> {/* Diamond shape */}
+        <div className="flex flex-col">
+          <span className="text-lg font-medium text-gray-900 dark:text-white">{point.title}</span>
+        </div>
+      </motion.div>
+    ))}
+  </div>
+</section>
 
         {/* Program Highlights Section */}
-        <section className="mt-14   text-center">
-          <span className="text-4xl font-semibold text-black">
-            Program Highlights
-          </span>
-          <ul className="mt-6 py-4 bg-white mx-2 rounded-lg shadow-md items-center flex flex-wrap md:px-24 px-4 justify-start gap-1">
-            {highlights.map((highlight, index) => (
-              <li
-                key={index}
-                className="p-2 text-gray-600 flex items-center gap-1"
-              >
-                <div className="flex text-left  gap-4 items-cente">
-                  <CheckCircle className="text-gray-700" />
-
-                  {highlight}
-                </div>
-              </li>
-            ))}
-          </ul>
-        </section>
+        <section className="mt-14 text-center">
+            <span className="text-4xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] mb-6">
+              Program Highlights
+            </span>
+            <ul className="mt-6 py-4 bg-white mx-2 rounded-lg shadow-md items-center flex flex-wrap md:px-24 px-4 justify-start gap-1">
+              {highlights.map((highlight, index) => (
+                <li
+                  key={index}
+                  className="p-2 text-gray-600 flex items-center gap-1"
+                >
+                  <div className="flex text-left gap-4 items-center">
+                    <CheckCircle className="text-gray-700" />
+                    {highlight}
+                  </div>
+                </li>
+                
+              ))}
+            </ul>
+            
+          </section>
         {/*Program details Section */}
         <section className="mt-14 flex flex-col gap-6 text-center py-4">
-          <span className="text-4xl font-semibold text-black ">
+          <span className="text-4xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] mb-6 ">
             Program Details
           </span>
           <div className=" md:px-24 py-6 px-4 text-start mx-2 bg-gray-50 shadow-lg rounded-lg space-y-6">
