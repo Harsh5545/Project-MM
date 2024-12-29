@@ -19,7 +19,10 @@ export const PUBLIC_ROUTES = [
 
 export const ADMIN_ROUTES = [
    "/admin",
+   "/admin/blog",
+   "/admin/blog/create",
    "/admin/category",
+   "/admin/services",
    "/api/category/add-category",
    "/admin/add-services",
    "/api/category/list",

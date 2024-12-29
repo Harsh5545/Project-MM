@@ -89,7 +89,7 @@ const BlogTable = () => {
         <Button
           type="button"
           className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg"
-          onClick={() => router.push('/add-blog')}
+          onClick={() => router.push('blog/create')}
         >
           Add Blog
         </Button>
