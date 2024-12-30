@@ -13,7 +13,7 @@ const dm_Sans = Cormorant_Garamond({
 const Overview = (props) => {
     const { overview, programOptions } = props
     return (
-        <div className="flex mt-16 bg-slate-50 rounded-2xl flex-col py-6 md:py-16 w-full">
+        <div className="flex  bg-slate-50 rounded-2xl flex-col py-6 md:py-16 w-full">
             {/* Main Content */}
             <div className="flex relative dark:bg-[#00001F] gap-6 justify-center flex-col md:flex-row items-center">
                 {/* Image Section */}

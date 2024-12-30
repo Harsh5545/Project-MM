@@ -4,35 +4,12 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { FaCheckCircle, FaStar, FaHeart } from 'react-icons/fa'; // Importing icons from react-icons
 
 const programHighlightsData = [
-  {
-    icon: FaCheckCircle,
-    heading: 'Highlight 1',
-    description: 'Description for highlight 1.'
-  },
-  {
-    icon: FaStar,
-    heading: 'Highlight 2',
-    description: 'Description for highlight 2.'
-  },
-  {
-    icon: FaHeart,
-    heading: 'Highlight 3',
-    description: 'Description for highlight 3.'
-  },
-  {
-    icon: FaHeart,
-    heading: 'Highlight 4',
-    description: 'Description for highlight 4.'
-  },{
-    icon: FaHeart,
-    heading: 'Highlight 3',
-    description: 'Description for highlight 3.'
-  },
-  {
-    icon: FaHeart,
-    heading: 'Highlight 4',
-    description: 'Description for highlight 4.'
-  },
+  { icon:FaCheckCircle, heading: "Interactive Activities", description: "Hands-on exercises that keep children engaged."},
+  { icon: FaCheckCircle, heading: "Role-Playing Scenarios", description: "Real-life simulations to practice manners and etiquette."},
+  { icon: FaCheckCircle, heading: "Tailored Learning", description: "Content adapted to suit group dynamics or individual needs."},
+  { icon: FaCheckCircle, heading: "Parental Involvement", description: "Progress updates to help parents reinforce learning at home."},
+  { icon: FaCheckCircle, heading: "Certification", description: "Completion certificates to acknowledge children’s achievements."},
+
   // Add more highlights as needed
 ];
 
@@ -67,7 +44,7 @@ const ProgramHighlights = () => {
                 initial={{ opacity: 0, x: 100 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5 }}
-                className="p-4"
+                className="p-4 text-center"
               >
                 <Card className="h-full transition-all duration-300 hover:bg-gradient-to-r hover:from-[#c3965d] hover:via-[#eabf91] hover:to-[#c3965d] hover:text-white group">
                   <div className="flex justify-center items-center p-4">
