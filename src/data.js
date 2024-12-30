@@ -83,10 +83,11 @@ export const servicesDataPage = [
       { title: "Life Skills", description: "Problem-solving, teamwork, and adaptability for everyday situations." },
     ],
     highlights: [
-      "Interactive Activities: Hands-on exercises that keep children engaged.",
-      "Role-Playing Scenarios: Real-life simulations to practice manners and etiquette.",
-      "Tailored Learning: Content adapted to suit group dynamics or individual needs.",
-      "Parental Involvement: Progress updates to help parents reinforce learning at home.",
+      {title: "Interactive Activities", description: "Hands-on exercises that keep children engaged."},
+      {title: "Role-Playing Scenarios", description: "Real-life simulations to practice manners and etiquette."},
+      {title: "Tailored Learning", description: "Content adapted to suit group dynamics or individual needs."},
+      {title: "Parental Involvement", description: "Progress updates to help parents reinforce learning at home."},
+      {title: "Certification", description: "Completion certificates to acknowledge children’s achievements."},
     ],
     programDetails: {
       ageGroup: "10–15 years",

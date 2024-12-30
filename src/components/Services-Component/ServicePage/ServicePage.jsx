@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { servicesDataPage } from "@/data";
-import { DM_Sans } from "next/font/google";
+import { Cormorant_Garamond, DM_Sans } from "next/font/google";
 // import { Box } from "lucide-react";
 import {
   Card,
@@ -13,12 +13,7 @@ import {
 } from "@/components/ui/card";
 import { motion } from "framer-motion";
 
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion"
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=line_start_diamond" />
 import {
   Carousel,
   CarouselContent,
@@ -27,19 +22,24 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import ShadcnButton from "@/components/Atom/button/ShadcnButton";
-import { ChevronDown, HelpCircle } from "lucide-react";
+import { ChevronDown, HelpCircle, Play } from "lucide-react";
 import { FaCheckCircle } from "react-icons/fa"; // Importing an icon from react-icons
 import { CheckCircle } from "lucide-react";
 import { HoverEffect } from "@/components/ui/hover-effect";
 import "react-multi-carousel/lib/styles.css";
 import Image from "next/image";
 import Overview from "./Overview";
+import Faq from "./Faq";
+import ProgramHighlights from "./ProgramHighlight";
 const dm_Sans = DM_Sans({
   subsets: ["latin"],
   weight: ["400"],
   // Add weights if needed
 });
-
+const dm_Sanss = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["700"],
+});
 const ServicePage = ({ params }) => {
   const { id } = JSON.parse(params.value);
   const [foundService, setFoundService] = useState(null);
@@ -94,7 +94,7 @@ const ServicePage = ({ params }) => {
         </div>
       </div>
       <div className="w-full flex justify-center bg-[#F7F7F7]">
-        <div className="w-[96%] md:w-[75%]">
+        <div className="w-[96%] md:w-[70%]">
           <section className="mt-4 px-4 py-2  text-center">
             <p className="text-center text-gray-500 text-base lg:text-xl mx-2 lg:text-md">{subheadline}</p>
           </section>
@@ -102,8 +102,8 @@ const ServicePage = ({ params }) => {
         
         </section> */}
           {/* Overview Section */}
-          
-          <Overview programOptions={programOptions} overview={overview}/>
+
+          <Overview programOptions={programOptions} overview={overview} />
           {/* What They’ll Learn Section */}
           <section className="mt-14 py-8 px-4 md:px-8 lg:px-16 bg-gradient-to-b from-gray-100 to-white dark:from-gray-800 dark:to-gray-90 0 rounded-lg shadow-lg">
             <h2 className="text-4xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] mb-6">What They’ll Learn</h2>
@@ -118,15 +118,17 @@ const ServicePage = ({ params }) => {
                 >
                   <div className="w-2 h-2 bg-gradient-to-r from-gray-400 to-gray-500 transform rotate-45"></div> {/* Diamond shape */}
                   <div className="flex flex-col">
-                    <span className="text-lg font-medium text-gray-900 dark:text-white">{point.title}</span>
+                    <span className="text-lg font-medium text-gray-900 dark:text-white">
+                      {point.title}</span>
                   </div>
                 </motion.div>
               ))}
             </div>
           </section>
 
+
           {/* Program Highlights Section */}
-          <section className="mt-14 text-center">
+          {/* <section className="mt-14 text-center">
             <span className="text-4xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] mb-6">
               Program Highlights
             </span>
@@ -145,7 +147,8 @@ const ServicePage = ({ params }) => {
               ))}
             </ul>
 
-          </section>
+          </section> */}
+          <ProgramHighlights />
           {/*Program details Section */}
           <section className="mt-14 flex flex-col gap-6 text-center py-4">
             <span className="text-4xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] mb-6 ">
@@ -227,14 +230,7 @@ const ServicePage = ({ params }) => {
             </ShadcnButton>
           </section>
           {/* Why Choose Modern Mannerism Section */}
-          <section className="mt-14 py-6 ">
-            <h2 className="text-3xl font-semibold text-center text-black">
-              Why Choose Modern Mannerism?
-            </h2>
-            <p className="mt-4 text-center p-6 mx-2 w-full bg-gray-50 shadow-lg rounded-lg  text-gray-700">
-              At <strong className="text-black">Modern Mannerism</strong>, we understand that every child is unique. Our programs are designed to foster growth, confidence, and respect in a nurturing environment. We help children step into the world with grace, charm, and confidence.
-            </p>
-          </section>
+          \
 
 
           {/* Testimonials Section */}
@@ -266,25 +262,8 @@ const ServicePage = ({ params }) => {
 
 
           {/* FAQ Section */}
-          <section className="mt-14 rounded-md text-center">
-            <h2 className="text-4xl font-semibold text-black">FAQs</h2>
-            <div className="mt-6 mx-2 rounded-lg shadow-md bg-gray-50">
-              <Accordion type="single" collapsible>
-                {faqData.map((faq, index) => (
-                  <AccordionItem key={index} value={`item-${index}`}>
-                    <AccordionTrigger className="text-lg p-4 font-semibold flex items-center gap-2">
-                      <HelpCircle className="lg:w-5 w-4 lg:h-5 h-4" />
-                      <span className="flex-1 text-left md:text-center">{faq.question}</span>
-                    </AccordionTrigger>
-                    <AccordionContent>
-                      <p className="text-gray-600">{faq.answer}</p>
-                    </AccordionContent>
-                  </AccordionItem>
-                ))}
-              </Accordion>
-            </div>
-          </section>
 
+          <Faq faqData={faqData} />
         </div></div>
     </div>
   );

@@ -1,6 +1,6 @@
 import React from "react";
 import { Cormorant_Garamond } from "next/font/google";
-import { UsersRound, GlobeLock, LaptopMinimal } from 'lucide-react';
+import { UsersRound, GlobeLock, Handshake , LaptopMinimal } from 'lucide-react';
 
 import Image from "next/image"; // Ensure Image is imported
 // Import the custom ShadCN Button you created
@@ -13,14 +13,14 @@ const dm_Sans = Cormorant_Garamond({
 const Overview = (props) => {
     const { overview, programOptions } = props
     return (
-        <div className="flex mt-16 flex-col py-6 md:py-16 w-full">
+        <div className="flex mt-16 bg-slate-50 rounded-2xl flex-col py-6 md:py-16 w-full">
             {/* Main Content */}
             <div className="flex relative dark:bg-[#00001F] gap-6 justify-center flex-col md:flex-row items-center">
                 {/* Image Section */}
                 <div className="w-[90%] relative md:w-2/5 flex  justify-center m-2 items-center">
                     <div className="relative">
-                <div className="absolute right-[-90] top-[-160] circle-animation">
-					<div style={{clipPath:'circle(50% at 0 100%)'}} className="bg-gradient-to-b from-[#c3965d] to-[#eabf91] w-[100px] h-[200px]"></div>														
+                <div className="absolute right-[-80] top-[-180] circle-animation">
+					<div style={{clipPath:'circle(50% at 0 100%)'}} className="bg-gradient-to-b hidden md:block from-[#c3965d] to-[#eabf91] w-[100px] h-[200px]"></ div>														
                 </div>
                         <Image
                             width={400}
@@ -59,7 +59,8 @@ const Overview = (props) => {
                             <div key={index} className="flex gap-8">
                                 <div className=" flex flex-col items-center gap-4 bg-gray-50 dark:bg-[#1A1A3B] p-6 rounded-lg shadow-lg">
                                     {index == 0 && <UsersRound size={40} color="#eabf91" />}
-                                    {index == 1 && <GlobeLock size={40} color="#eabf91" />}
+                                    {index == 1 && <Handshake    size={40} color="#eabf91" />}
+                                    {/* {index == 1 && <p className="p-1 text-4xl font-semibold text-[#eabf91]">1:1</p>} */}
                                     {index == 2 && <LaptopMinimal size={40} color="#eabf91" />}
                                     <span
                                         className={`${dm_Sans.className} font-bold dark:text-white md:text-2xl text-xl text-[#06273A]`}

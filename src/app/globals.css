@@ -151,7 +151,7 @@ body{
   }
 }
 .circle-animation {
-  animation: bounce-x 2s infinite linear;
+  animation: bounce-x 1s infinite linear;
 }
 
 @keyframes bounce-x {
