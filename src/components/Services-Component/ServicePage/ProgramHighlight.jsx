@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { FaCheckCircle, FaStar, FaHeart } from 'react-icons/fa'; // Importing icons from react-icons
@@ -23,24 +23,34 @@ const programHighlightsData = [
     icon: FaHeart,
     heading: 'Highlight 4',
     description: 'Description for highlight 4.'
+  },{
+    icon: FaHeart,
+    heading: 'Highlight 3',
+    description: 'Description for highlight 3.'
+  },
+  {
+    icon: FaHeart,
+    heading: 'Highlight 4',
+    description: 'Description for highlight 4.'
   },
   // Add more highlights as needed
 ];
 
 const ProgramHighlights = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
 
-  const nextSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % programHighlightsData.length);
-  };
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
 
-  const prevSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + programHighlightsData.length) % programHighlightsData.length);
-  };
+    handleResize();
+    window.addEventListener('resize', handleResize);
 
-  const goToSlide = (index) => {
-    setCurrentIndex(index);
-  };
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   return (
     <section className="py-8 mt-16 px-4 md:px-8 lg:px-16 bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-800 rounded-lg shadow-lg w-full relative z-10">
@@ -48,40 +58,31 @@ const ProgramHighlights = () => {
         Program Highlights
       </h2>
       <div className="relative">
-        <div className="flex overflow-x-auto space-x-4">
+        <div className={`grid gap-4 ${isMobile ? 'grid-cols-1 sm:grid-cols-2' : 'grid-cols-1 sm:grid-cols-2 md:grid-cols-4'}`}>
           {programHighlightsData.map((highlight, index) => {
             const IconComponent = highlight.icon;
             return (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, x: 100 }}
-                animate={{ opacity: currentIndex <= index && index < currentIndex + 4 ? 1 : 0, x: currentIndex <= index && index < currentIndex + 4 ? 0 : 100 }}
+                animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5 }}
-                className={`w-full md:w-1/4 p-4 ${currentIndex <= index && index < currentIndex + 4 ? 'block' : 'hidden'}`}
+                className="p-4"
               >
-                <Card className="transition-all duration-300 hover:bg-black hover:text-white group">
+                <Card className="h-full transition-all duration-300 hover:bg-gradient-to-r hover:from-[#c3965d] hover:via-[#eabf91] hover:to-[#c3965d] hover:text-white group">
                   <div className="flex justify-center items-center p-4">
                     <IconComponent className="w-16 h-16 text-gray-700 dark:text-gray-300 transition-all duration-300 group-hover:text-white" />
                   </div>
                   <CardHeader>
-                    <CardTitle className="text-lg font-bold">{highlight.heading}</CardTitle>
+                    <CardTitle className="text-lg font-bold transition-all duration-300 group-hover:text-white">{highlight.heading}</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p>{highlight.description}</p>
+                    <p className="transition-all duration-300 group-hover:text-white">{highlight.description}</p>
                   </CardContent>
                 </Card>
               </motion.div>
             );
           })}
-        </div>
-        <div className="flex justify-center mt-4">
-          {programHighlightsData.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => goToSlide(index)}
-              className={`w-3 h-3 mx-1 rounded-full ${currentIndex === index ? 'bg-gray-800' : 'bg-gray-400'}`}
-            />
-          ))}
         </div>
       </div>
     </section>

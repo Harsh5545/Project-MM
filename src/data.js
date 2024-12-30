@@ -1,3 +1,6 @@
+import { FaCheckCircle } from 'react-icons/fa'; // Importing the icon from react-icons
+
+
 const TestimonialData = [{
     Name: "Priya Sharma",
     City: "Mumbai",
@@ -83,11 +86,11 @@ export const servicesDataPage = [
       { title: "Life Skills", description: "Problem-solving, teamwork, and adaptability for everyday situations." },
     ],
     highlights: [
-      {title: "Interactive Activities", description: "Hands-on exercises that keep children engaged."},
-      {title: "Role-Playing Scenarios", description: "Real-life simulations to practice manners and etiquette."},
-      {title: "Tailored Learning", description: "Content adapted to suit group dynamics or individual needs."},
-      {title: "Parental Involvement", description: "Progress updates to help parents reinforce learning at home."},
-      {title: "Certification", description: "Completion certificates to acknowledge children’s achievements."},
+      { icon:{FaCheckCircle}, heading: "Interactive Activities", description: "Hands-on exercises that keep children engaged."},
+      { icon: {FaCheckCircle}, heading: "Role-Playing Scenarios", description: "Real-life simulations to practice manners and etiquette."},
+      { icon: {FaCheckCircle}, heading: "Tailored Learning", description: "Content adapted to suit group dynamics or individual needs."},
+      { icon: {FaCheckCircle}, heading: "Parental Involvement", description: "Progress updates to help parents reinforce learning at home."},
+      { icon: {FaCheckCircle}, heading: "Certification", description: "Completion certificates to acknowledge children’s achievements."},
     ],
     programDetails: {
       ageGroup: "10–15 years",

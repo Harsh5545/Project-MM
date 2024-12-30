@@ -21,16 +21,17 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+// import { FaCheckCircle, FaStar, FaHeart } from 'react-icons/fa';
 import ShadcnButton from "@/components/Atom/button/ShadcnButton";
-import { ChevronDown, HelpCircle, Play } from "lucide-react";
-import { FaCheckCircle } from "react-icons/fa"; // Importing an icon from react-icons
-import { CheckCircle } from "lucide-react";
-import { HoverEffect } from "@/components/ui/hover-effect";
+import { FaCheckCircle, FaHeart, FaStar } from "react-icons/fa"; // Importing an icon from react-icons
+
 import "react-multi-carousel/lib/styles.css";
 import Image from "next/image";
 import Overview from "./Overview";
 import Faq from "./Faq";
 import ProgramHighlights from "./ProgramHighlight";
+import ProgramDetails from "./ProgramDetails";
+import Testimonials from "./Testimonial";
 const dm_Sans = DM_Sans({
   subsets: ["latin"],
   weight: ["400"],
@@ -43,9 +44,7 @@ const dm_Sanss = Cormorant_Garamond({
 const ServicePage = ({ params }) => {
   const { id } = JSON.parse(params.value);
   const [foundService, setFoundService] = useState(null);
-  const [expandedPoint, setExpandedPoint] = useState(null);
-
-
+  
   useEffect(() => {
     if (id) {
       const service = servicesDataPage.find((service) => service.id === id);
@@ -77,6 +76,7 @@ const ServicePage = ({ params }) => {
     desktop: { breakpoint: { max: 1024, min: 768 }, items: 1 },
     mobile: { breakpoint: { max: 768, min: 0 }, items: 1 },
   };
+  const icons = [FaCheckCircle, FaStar, FaHeart]; // Array of icons to use
 
   return (
     <div className="flex h-full dark:bg-[rgb(0,0,31)] bg-[#FFFFFF] items-center pb-4 md:pb-10 justify-center w-full flex-col  ">
@@ -93,9 +93,9 @@ const ServicePage = ({ params }) => {
 
         </div>
       </div>
-      <div className="w-full flex justify-center bg-[#F7F7F7]">
+      <div className="w-full flex items-center justify-center bg-[#F7F7F7]">
         <div className="w-[96%] md:w-[70%]">
-          <section className="mt-4 px-4 py-2  text-center">
+          <section className="mt-4 px-4   text-center">
             <p className="text-center text-gray-500 text-base lg:text-xl mx-2 lg:text-md">{subheadline}</p>
           </section>
           {/* <section className=" flex justify-center items-center">
@@ -105,26 +105,30 @@ const ServicePage = ({ params }) => {
 
           <Overview programOptions={programOptions} overview={overview} />
           {/* What They’ll Learn Section */}
-          <section className="mt-14 py-8 px-4 md:px-8 lg:px-16 bg-gradient-to-b from-gray-100 to-white dark:from-gray-800 dark:to-gray-90 0 rounded-lg shadow-lg">
-            <h2 className="text-4xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] mb-6">What They’ll Learn</h2>
-            <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-2">
-              {learningPoints.map((point, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
-                  className="flex items-center gap-3 p-4"
-                >
-                  <div className="w-2 h-2 bg-gradient-to-r from-gray-400 to-gray-500 transform rotate-45"></div> {/* Diamond shape */}
-                  <div className="flex flex-col">
-                    <span className="text-lg font-medium text-gray-900 dark:text-white">
-                      {point.title}</span>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </section>
+          <section className="mt-14 py-8 px-4 md:px-8 lg:px-16 bg-gradient-to-b from-gray-100 to-white dark:from-gray-800 dark:to-gray-900 rounded-lg shadow-lg">
+  <h2 className="text-4xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] pb-6">What They’ll Learn</h2>
+  <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4">
+    {learningPoints.map((point, index) => {
+      const IconComponent = icons[index % icons.length]; // Cycle through icons
+      return (
+        <motion.div
+          key={index}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="flex items-center gap-4 p-4 bg-white dark:bg-gray-800 rounded-lg shadow-md"
+        >
+          <div className="flex justify-center items-center w-7 h-7 bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] rounded-full shadow-lg">
+            <FaStar className="text-white w-4  h-4" />
+          </div>
+          <div className="flex flex-col">
+            <span className="text-lg font-medium text-gray-900 dark:text-white">{point.title}</span>
+          </div>
+        </motion.div>
+      );
+    })}
+  </div>
+</section>
 
 
           {/* Program Highlights Section */}
@@ -148,75 +152,10 @@ const ServicePage = ({ params }) => {
             </ul>
 
           </section> */}
-          <ProgramHighlights />
+          <ProgramHighlights programDetailsData={highlights} />
           {/*Program details Section */}
-          <section className="mt-14 flex flex-col gap-6 text-center py-4">
-            <span className="text-4xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] mb-6 ">
-              Program Details
-            </span>
-            <div className=" md:px-24 py-6 px-4 text-start mx-2 bg-gray-50 shadow-lg rounded-lg space-y-6">
-              {/* Age Group */}
-              <div className="flex items-center gap-4">
-
-                <p className="text-lg">
-                  <span className="text-lg font-semibold text-black ">Age Group:</span> 10–15 years
-                </p>
-              </div>
-
-              {/* Format */}
-              <div>
-                <p className="text-lg font-semibold text-black">Format:</p>
-                <ul className="mt-2 space-y-2">
-                  <li className="flex items-center gap-4">
-                    <span className="w-2 h-2 rounded-full bg-gray-700 mt-1"></span>
-                    <p>
-                      <span className="font-medium text-gray-900">Group Workshops:</span> Fun, collaborative learning with peers.
-                    </p>
-                  </li>
-                  <li className="flex items-center gap-4">
-                    <span className="w-2 h-2 rounded-full bg-gray-700 mt-1"></span>
-                    <p>
-                      <span className="font-medium text-gray-900">Private Sessions: </span>Personalized, focused coaching.
-                    </p>
-                  </li>
-                </ul>
-              </div>
-
-              {/* Duration */}
-              <div>
-                <p className="text-lg font-semibold text-black">Duration:</p>
-                <ul className="mt-2 space-y-2">
-                  <li className="flex items-center gap-4">
-                    <span className="w-2 h-2 rounded-full bg-gray-700 mt-1"></span>
-                    <p>
-                      <span className="font-medium text-gray-900">Group Workshops</span>: 2–3 hours per session.
-                    </p>
-                  </li>
-                  <li className="flex items-center gap-4">
-                    <span className="w-2 h-2 rounded-full bg-gray-700 mt-1"></span>
-                    <p>
-                      <span className="font-medium text-gray-900">Private Sessions:</span> 1-hour sessions, scheduled as per convenience.
-                    </p>
-                  </li>
-                </ul>
-              </div>
-
-              {/* Location */}
-              <div>
-                <p className="text-lg font-semibold text-black">Location:</p>
-                <ul className="mt-2 space-y-2">
-                  <li className="flex items-center gap-4">
-                    <span className="w-2 h-2 rounded-full bg-gray-700 mt-1"></span>
-                    <p>In-person at designated venues.</p>
-                  </li>
-                  <li className="flex items-center gap-4">
-                    <span className="w-2 h-2 rounded-full bg-gray-700 mt-1"></span>
-                    <p>Online options available upon request.</p>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </section>
+       
+          <ProgramDetails/>
           {/* Call to Action */}
           <section className="mt-14 text-center">
             <h2 className="lg:text-4xl text-2xl  font-bold text-black">
@@ -230,8 +169,7 @@ const ServicePage = ({ params }) => {
             </ShadcnButton>
           </section>
           {/* Why Choose Modern Mannerism Section */}
-          \
-
+          
 
           {/* Testimonials Section */}
           <section className="mt-14 w-full text-center">
@@ -259,7 +197,7 @@ const ServicePage = ({ params }) => {
               </Carousel>
             </div>
           </section>
-
+<Testimonials/>
 
           {/* FAQ Section */}
 

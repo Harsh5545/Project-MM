@@ -20,7 +20,7 @@ const Overview = (props) => {
                 <div className="w-[90%] relative md:w-2/5 flex  justify-center m-2 items-center">
                     <div className="relative">
                 <div className="absolute right-[-80] top-[-180] circle-animation">
-					<div style={{clipPath:'circle(50% at 0 100%)'}} className="bg-gradient-to-b hidden md:block from-[#c3965d] to-[#eabf91] w-[100px] h-[200px]"></ div>														
+					{/* <div style={{clipPath:'circle(50% at 0 100%)'}} className="bg-gradient-to-b hidden md:block from-[#c3965d] to-[#eabf91] w-[100px] h-[200px]"></ div>														 */}
                 </div>
                         <Image
                             width={400}
