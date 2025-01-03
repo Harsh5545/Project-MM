@@ -1,11 +1,19 @@
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { FaCheckCircle, FaStar, FaHeart } from 'react-icons/fa'; // Importing icons from react-icons
+
+const icons = {
+  FaCheckCircle: <FaCheckCircle />,
+  FaStar: <FaStar />,
+  FaHeart: <FaHeart />
+};
 
 const CourseDetails = () => {
   const [courseHeadings, setCourseHeadings] = useState([{ heading: '', subheading: '' }]);
   const [courseDetails, setCourseDetails] = useState(['']);
-  const [programHighlights, setProgramHighlights] = useState(['']);
+  const [programHighlights, setProgramHighlights] = useState([{ icon: 'FaCheckCircle', heading: '', description: '' }]);
+  const [overviewImage, setOverviewImage] = useState('');
 
   const addCourseHeading = () => {
     setCourseHeadings([...courseHeadings, { heading: '', subheading: '' }]);
@@ -16,7 +24,7 @@ const CourseDetails = () => {
   };
 
   const addProgramHighlight = () => {
-    setProgramHighlights([...programHighlights, '']);
+    setProgramHighlights([...programHighlights, { icon: 'FaCheckCircle', heading: '', description: '' }]);
   };
 
   const handleCourseHeadingChange = (index, field, value) => {
@@ -31,9 +39,9 @@ const CourseDetails = () => {
     setCourseDetails(newCourseDetails);
   };
 
-  const handleProgramHighlightChange = (index, value) => {
+  const handleProgramHighlightChange = (index, field, value) => {
     const newProgramHighlights = [...programHighlights];
-    newProgramHighlights[index] = value;
+    newProgramHighlights[index][field] = value;
     setProgramHighlights(newProgramHighlights);
   };
 
@@ -59,6 +67,24 @@ const CourseDetails = () => {
         
         <div className="space-y-6">
           <h2 className="text-2xl font-semibold text-gray-800 dark:text-white">Overview</h2>
+          
+          {/* Overview Image Section */}
+          <div>
+            <label className="block text-gray-700 dark:text-gray-300 mb-2">Overview Image URL:</label>
+            <Input
+              type="text"
+              value={overviewImage}
+              onChange={(e) => setOverviewImage(e.target.value)}
+              placeholder="Enter the overview image URL"
+              className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+            />
+            {overviewImage && (
+              <div className="mt-4">
+                <img src={overviewImage} alt="Overview" className="w-full h-auto rounded-lg shadow-md" />
+              </div>
+            )}
+          </div>
+
           <div>
             <label className="block text-gray-700 dark:text-gray-300 mb-2">Overview Description:</label>
             <Input
@@ -140,24 +166,50 @@ const CourseDetails = () => {
 
           <h2 className="text-2xl font-semibold text-gray-800 dark:text-white">Program Highlights</h2>
           {programHighlights.map((highlight, index) => (
-            <div key={index} className="flex items-center space-x-4">
-              <div className="flex-1">
-                <label className="block text-gray-700 dark:text-gray-300 mb-2">Program Highlight:</label>
+            <div key={index} className="space-y-4">
+              <div className="flex items-center space-x-4">
+                <div className="flex-1">
+                  <label className="block text-gray-700 dark:text-gray-300 mb-2">Icon:</label>
+                  <select
+                    value={highlight.icon}
+                    onChange={(e) => handleProgramHighlightChange(index, 'icon', e.target.value)}
+                    className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                  >
+                    {Object.keys(icons).map((iconKey) => (
+                      <option key={iconKey} value={iconKey}>
+                        {iconKey}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="flex-1">
+                  <label className="block text-gray-700 dark:text-gray-300 mb-2">Program Highlight Heading:</label>
+                  <Input
+                    type="text"
+                    value={highlight.heading}
+                    onChange={(e) => handleProgramHighlightChange(index, 'heading', e.target.value)}
+                    placeholder="Enter the program highlight heading"
+                    className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                  />
+                </div>
+                <Button
+                  type="button"
+                  onClick={() => removeProgramHighlight(index)}
+                  className="mt-6 bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg"
+                >
+                  Delete
+                </Button>
+              </div>
+              <div>
+                <label className="block text-gray-700 dark:text-gray-300 mb-2">Program Highlight Description:</label>
                 <Input
                   type="text"
-                  value={highlight}
-                  onChange={(e) => handleProgramHighlightChange(index, e.target.value)}
-                  placeholder="Enter the program highlight"
+                  value={highlight.description}
+                  onChange={(e) => handleProgramHighlightChange(index, 'description', e.target.value)}
+                  placeholder="Enter the program highlight description"
                   className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                 />
               </div>
-              <Button
-                type="button"
-                onClick={() => removeProgramHighlight(index)}
-                className="mt-6 bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg"
-              >
-                Delete
-              </Button>
             </div>
           ))}
           <Button
