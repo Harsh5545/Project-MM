@@ -117,10 +117,10 @@ const ServicesTable = () => {
           />
           <table {...getTableProps()} className="min-w-full bg-white dark:bg-gray-800">
             <thead>
-              {headerGroups.map(headerGroup => (
-                <tr {...headerGroup.getHeaderGroupProps()}>
-                  {headerGroup.headers.map(column => (
-                    <th
+              {headerGroups.map((headerGroup,ind) => (
+                <tr key={ind} {...headerGroup.getHeaderGroupProps()}>
+                  {headerGroup.headers.map((column,index) => (
+                    <th key={index}
                       {...column.getHeaderProps()}
                       className="px-4 py-2 border-b-2 border-gray-300 dark:border-gray-600 text-left text-sm font-semibold text-gray-700 dark:text-gray-300"
                     >
@@ -131,12 +131,12 @@ const ServicesTable = () => {
               ))}
             </thead>
             <tbody {...getTableBodyProps()}>
-              {page.map(row => {
+              {page.map((row,key) => {
                 prepareRow(row);
                 return (
-                  <tr {...row.getRowProps()}>
-                    {row.cells.map(cell => (
-                      <td
+                  <tr key={key} {...row.getRowProps()}>
+                    {row.cells.map((cell,ind) => (
+                      <td key={ind}
                         {...cell.getCellProps()}
                         className="px-4 py-2 border-b border-gray-300 dark:border-gray-600 text-sm text-gray-700 dark:text-gray-300"
                       >

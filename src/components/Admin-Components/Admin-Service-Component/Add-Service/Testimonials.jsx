@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-const Testimonials = () => {
-  const [testimonials, setTestimonials] = useState([{ comment: '', name: '' }]);
-  const [faqs, setFaqs] = useState([{ question: '', answer: '' }]);
+const Testimonials = (props) => {
+  const { formData ,setFormData } = props;
+  const [testimonials, setTestimonials] = useState( formData?.testimonials?.testimonials ||[{ comment: '', name: '' }]);
+  const [faqs, setFaqs] = useState( formData?.testimonials?.faqs || [{ question: '', answer: '' }]);
 
   const addTestimonial = () => {
     setTestimonials([...testimonials, { comment: '', name: '' }]);
@@ -24,7 +25,26 @@ const Testimonials = () => {
     const newState = state.filter((_, i) => i !== index);
     setState(newState);
   };
+  useEffect(() => {
+    // On mount: Initialize form data
+    setFormData((prevData) => ({
+      ...prevData,
+      testimonials: {
+        testimonials,faqs
 
+      },
+    }));
+    return () => {  
+      setFormData((prevData) => ({
+        ...prevData,
+        testimonials: {
+          testimonials,
+          faqs
+        },
+      }));
+    };
+  }, [testimonials,
+    faqs]);
   return (
     <div className="min-h-screen ">
       <div className="mx-auto bg-white dark:bg-gray-800 rounded-lg space-y-8">

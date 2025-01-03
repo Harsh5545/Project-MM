@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FaCheckCircle, FaStar, FaHeart } from 'react-icons/fa'; // Importing icons from react-icons
@@ -9,18 +9,20 @@ const icons = {
   FaHeart: <FaHeart />
 };
 
-const CourseDetails = () => {
-  const [courseHeadings, setCourseHeadings] = useState([{ heading: '', subheading: '' }]);
-  const [courseDetails, setCourseDetails] = useState(['']);
-  const [programHighlights, setProgramHighlights] = useState([{ icon: 'FaCheckCircle', heading: '', description: '' }]);
-  const [overviewImage, setOverviewImage] = useState('');
+const CourseDetails = (props) => {
+  const { formData ,setFormData } = props;
+  const [courseHeadings, setCourseHeadings] = useState(formData?.courseDetails?.courseHeadings || [{ heading: '', subheading: '' }]);
+  const [courseDetail, setCourseDetail] = useState(formData?.courseDetails?.courseDetail || ['']);
+  const [programHighlights, setProgramHighlights] = useState(formData?.courseDetails?.programHighlights || [{ icon: 'FaCheckCircle', heading: '', description: '' }]);
+  const [overviewImage, setOverviewImage] = useState(formData?.courseDetails?.overviewImage || '');
+  const [overviewDescription, setOverviewDescription] = useState(formData?.courseDetails?.overviewDescription || '');
 
   const addCourseHeading = () => {
     setCourseHeadings([...courseHeadings, { heading: '', subheading: '' }]);
   };
 
   const addCourseDetail = () => {
-    setCourseDetails([...courseDetails, '']);
+    setCourseDetail([...courseDetail, '']);
   };
 
   const addProgramHighlight = () => {
@@ -34,9 +36,9 @@ const CourseDetails = () => {
   };
 
   const handleCourseDetailChange = (index, value) => {
-    const newCourseDetails = [...courseDetails];
+    const newCourseDetails = [...courseDetail];
     newCourseDetails[index] = value;
-    setCourseDetails(newCourseDetails);
+    setCourseDetail(newCourseDetails);
   };
 
   const handleProgramHighlightChange = (index, field, value) => {
@@ -51,8 +53,8 @@ const CourseDetails = () => {
   };
 
   const removeCourseDetail = (index) => {
-    const newCourseDetails = courseDetails.filter((_, i) => i !== index);
-    setCourseDetails(newCourseDetails);
+    const newCourseDetails = courseDetail.filter((_, i) => i !== index);
+    setCourseDetail(newCourseDetails);
   };
 
   const removeProgramHighlight = (index) => {
@@ -60,6 +62,34 @@ const CourseDetails = () => {
     setProgramHighlights(newProgramHighlights);
   };
 
+  useEffect(() => {
+    // On mount: Initialize form data
+    setFormData((prevData) => ({
+      ...prevData,
+      courseDetails: {
+        courseHeadings,
+        courseDetail,
+        programHighlights,
+        overviewImage,
+        overviewDescription
+      },
+    }));
+  
+    // Cleanup: Save form data when component unmounts
+    return () => {
+      setFormData((prevData) => ({
+        ...prevData,
+        courseDetails: {
+          courseHeadings,
+          courseDetail,
+          programHighlights,
+          overviewImage,
+          overviewDescription
+        },
+      }));
+    };
+  }, [courseHeadings, courseDetail, programHighlights, overviewImage,overviewDescription]);
+  
   return (
     <div className=" ">
       <div className=" bg-white dark:bg-gray-800 rounded-lg space-y-8">
@@ -77,6 +107,7 @@ const CourseDetails = () => {
               onChange={(e) => setOverviewImage(e.target.value)}
               placeholder="Enter the overview image URL"
               className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+              required
             />
             {overviewImage && (
               <div className="mt-4">
@@ -89,8 +120,10 @@ const CourseDetails = () => {
             <label className="block text-gray-700 dark:text-gray-300 mb-2">Overview Description:</label>
             <Input
               type="text"
+              value={overviewDescription}
               placeholder="Enter the overview description"
               className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+              onChange={(e) => setOverviewDescription(e.target.value)}
             />
           </div>
 
@@ -135,7 +168,7 @@ const CourseDetails = () => {
           </Button>
 
           <h2 className="text-2xl font-semibold text-gray-800 dark:text-white">Course Details</h2>
-          {courseDetails.map((detail, index) => (
+          {courseDetail.map((detail, index) => (
             <div key={index} className="flex items-center space-x-4">
               <div className="flex-1">
                 <label className="block text-gray-700 dark:text-gray-300 mb-2">Course Detail:</label>
