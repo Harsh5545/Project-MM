@@ -1,4 +1,4 @@
-"use client" 
+"use client"
 import React, { useState, useMemo } from 'react';
 import { useTable, usePagination, useGlobalFilter } from 'react-table';
 import { Input } from "@/components/ui/input";

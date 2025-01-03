@@ -20,14 +20,6 @@ const AddServices = ({ onClose }) => {
     testimonials: {},
   });
 
-  const handleNext = () => {
-    setCurrentStep((prevStep) => Math.min(prevStep + 1, 4)); // Ensure step does not exceed total steps
-  };
-
-  const handlePrev = () => {
-    setCurrentStep((prevStep) => Math.max(prevStep - 1, 1)); // Ensure step does not go below 1
-  };
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
@@ -110,44 +102,6 @@ const AddServices = ({ onClose }) => {
               </div>
             </div>
           )}
-
-          {/* Step 2: Course Details */}
-          {currentStep === 2 && <CourseDetails formData={formData} setFormData={setFormData} />}
-
-          {/* Step 3: Program Details */}
-          {currentStep === 3 && <ProgramDetails formData={formData} setFormData={setFormData} />}
-
-          {/* Step 4: Testimonials */}
-          {currentStep === 4 && <Testimonials formData={formData} setFormData={setFormData} />}
-
-          {/* Navigation Buttons */}
-          <div className="flex justify-between">
-            {currentStep > 1 && (
-              <Button
-                type="button"
-                onClick={handlePrev}
-                className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg"
-              >
-                Previous
-              </Button>
-            )}
-            {currentStep < 4 ? (
-              <Button
-                type="button"
-                onClick={handleNext}
-                className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg"
-              >
-                Next
-              </Button>
-            ) : (
-              <Button
-                type="submit"
-                className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg"
-              >
-                Submit
-              </Button>
-            )}
-          </div>
         </form>
       </div>
     </div>
