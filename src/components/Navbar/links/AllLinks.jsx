@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Navlink from "../navlink/Navlink";
 import { useRouter } from "next/navigation";
 
-const AllLinks = () => {
+const AllLinks = ({onClose}) => {
   const router = useRouter();
   const [openDropdown, setOpenDropdown] = useState(false);
   const [hoveredSubLink, setHoveredSubLink] = useState(null);
@@ -120,7 +120,13 @@ const AllLinks = () => {
       {links.map((link, i) => (
         <div key={i} className="relative">
           {!link.subLinks ? (
-            <Navlink item={link} />
+          <div onClick={()=>{
+            if(isMobile) {
+              onClose()
+            }
+          }}>
+            <Navlink item={link}/>
+          </div>
           ) : (
             <div
               className="inline-block"
@@ -132,6 +138,7 @@ const AllLinks = () => {
                 onClick={() => {
                   if (isMobile) {
                     router.push(link.path); // Directly navigate on mobile
+                    onClose()
                   } else {
                     setOpenDropdown(!openDropdown);
                   }

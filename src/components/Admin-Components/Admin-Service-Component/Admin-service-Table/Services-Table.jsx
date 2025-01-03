@@ -102,7 +102,7 @@ const ServicesTable = () => {
         {showForm && (
           <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center z-50">
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 w-full max-w-6xl max-h-[80vh] overflow-y-auto">
-              <AddServices onSubmit={handleFormSubmit} />
+              <AddServices onClose={()=>setShowForm(false)} />
             </div>
           </div>
         )}

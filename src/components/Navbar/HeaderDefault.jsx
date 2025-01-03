@@ -70,7 +70,7 @@ function HeaderDefault() {
             className={`flex flex-col text-white font-poppins md:flex-row items-center gap-8 md:gap-10 h-[20rem] md:h-0 justify-center ${isMobileMenuOpen ? "block" : "hidden"
               } md:flex`}
           >
-            <AllLinks />
+            <AllLinks onClose={()=>toggleMobileMenu()}/>
           </div>
         </div>
 

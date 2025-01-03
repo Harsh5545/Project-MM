@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
@@ -36,6 +36,7 @@ const AddServices = ({ onClose }) => {
     const handleSelectChange = (value) => {
         setFormData((prevData) => ({ ...prevData, category: value }));
     };
+
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
