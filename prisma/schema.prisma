@@ -73,10 +73,5 @@ model Service {
 enum CategoryStatus {
   ACTIVE
   INACTIVE
-ated
-  updatedAt DateTime @updatedAt // Automatically updated when modified
-ated
-  updatedAt DateTime @updatedAt // Automatically updated when modified
-ated
-  updatedAt DateTime @updatedAt // Automatically updated when modified
+
 }
