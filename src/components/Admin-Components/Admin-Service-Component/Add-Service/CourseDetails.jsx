@@ -131,6 +131,20 @@ const CourseDetails = (props) => {
           {courseHeadings.map((course, index) => (
             <div key={index} className="flex items-center space-x-4">
               <div className="flex-1">
+                  <label className="block text-gray-700 dark:text-gray-300 mb-2">Icon:</label>
+                  <select
+                    value={course.icon}
+                    onChange={(e) => handleCourseHeadingChange(index, 'icon', e.target.value)}
+                    className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                  >
+                    {Object.keys(icons).map((iconKey) => (
+                      <option key={iconKey} value={iconKey}>
+                        {iconKey}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              <div className="flex-1">
                 <label className="block text-gray-700 dark:text-gray-300 mb-2">Course Heading:</label>
                 <Input
                   type="text"
