@@ -151,4 +151,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     signIn: "/sign-in",
     newUser: "/sign-up",
   },
+  trustHost: true,
+  // Optional: Explicitly add trusted hosts if you need to trust more than just the default
+  trustedHosts: [
+    'modernmannerism.com',
+    // Add other trusted domains if needed
+  ],
 });
