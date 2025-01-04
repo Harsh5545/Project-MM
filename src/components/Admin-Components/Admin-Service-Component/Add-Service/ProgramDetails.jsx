@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-const ProgramDetails = () => {
-  const [ageGroups, setAgeGroups] = useState([{ heading: '', subheading: '' }]);
-  const [formats, setFormats] = useState([{ heading: '', subheading: '' }]);
-  const [durations, setDurations] = useState([{ heading: '', subheading: '' }]);
-  const [locations, setLocations] = useState([{ heading: '', subheading: '' }]);
+const ProgramDetails = (props) => {
+  const { formData ,setFormData } = props;
+  const [ageGroups, setAgeGroups] = useState(formData?.programDetails?.ageGroups ||[{ heading: '', subheading: '' }]);
+  const [formats, setFormats] = useState(formData?.programDetails?.formats || [{ heading: '', subheading: '' }]);
+  const [durations, setDurations] = useState(formData?.programDetails?.durations || [{ heading: '', subheading: '' }]);
+  const [locations, setLocations] = useState(formData?.programDetails?.locations || [{ heading: '', subheading: '' }]);
 
   const addAgeGroup = () => {
     setAgeGroups([...ageGroups, { heading: '', subheading: '' }]);
@@ -34,6 +35,34 @@ const ProgramDetails = () => {
     const newState = state.filter((_, i) => i !== index);
     setState(newState);
   };
+
+  useEffect(() => {
+    // On mount: Initialize form data
+    setFormData((prevData) => ({
+      ...prevData,
+      programDetails: {
+        ageGroups,
+        formats,
+        durations,  
+        locations
+
+      },
+    }));
+    return () => {  
+      setFormData((prevData) => ({
+        ...prevData,
+        programDetails: {
+          ageGroups,
+        formats,
+        durations,  
+        locations
+        },
+      }));
+    };
+  }, [ageGroups,
+    formats,
+    durations,  
+    locations]);
 
   return (
     <div className="min-h-screen">

@@ -23,7 +23,7 @@ body {
 
 body{
   background-color: #f4f4f4;
-  color: #33333;
+  color: #333333;
 }
 
 
@@ -148,5 +148,21 @@ body{
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+.circle-animation {
+  animation: bounce-x 1s infinite linear;
+}
+
+@keyframes bounce-x {
+  0% {
+  transform: translateX(0);
+  }
+
+  50% {
+  transform: translateX(5px);
+  }
+  100% {
+  transform: translateX(0);
   }
 }

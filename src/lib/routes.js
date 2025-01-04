@@ -11,7 +11,7 @@ export const PUBLIC_ROUTES = [
    "/blog",
    "/register",
    "/admin-services",
-   "/admin-blog",
+   "/admin-blog-table",
    "/api/auth/register",
    "/api/upload",
    "/api/auth/session",
@@ -19,7 +19,10 @@ export const PUBLIC_ROUTES = [
 
 export const ADMIN_ROUTES = [
    "/admin",
+   "/admin/blog",
+   "/admin/blog/create",
    "/admin/category",
+   "/admin/services",
    "/api/category/add-category",
    "/admin/add-services",
    "/api/category/list",

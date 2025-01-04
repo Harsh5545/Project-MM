@@ -14,7 +14,7 @@ const BlogContainer = ({ title, description, imageSrc, reverse, categories = fal
       "bg-white dark:bg-white dark:bg-opacity-5 shadow-lg rounded-lg hover:shadow-xl transition-shadow duration-300"
     )}>
       <div className='w-full md:hidden flex justify-center'>
-        <ShadcnButton className="flex pointer md:hidden items-center justify-center tracking-wider bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] font-extrabold text-white font-bold p-3 px-6 rounded-xl transition-colors duration-300 ease-in-out">
+        <ShadcnButton className="flex pointer md:hidden items-center justify-center tracking-wider bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] text-white font-bold p-3 px-6 rounded-xl transition-colors duration-300 ease-in-out">
           Read more
         </ShadcnButton>
       </div>
