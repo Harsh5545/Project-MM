@@ -10,7 +10,6 @@ export const PUBLIC_ROUTES = [
    "/service",
    "/blog",
    "/register",
-   "/admin-services",
    "/api/auth/register",
    "/api/upload",
    "/api/auth/session",
