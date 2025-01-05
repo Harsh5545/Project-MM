@@ -181,13 +181,13 @@ export default function AddBlog({ existingBlog }) {
 
             <div>
               <label className="block text-gray-700 dark:text-gray-300 mb-2">Content:</label>
-              <ReactQuill
+              {/* <ReactQuill
                 value={content}
                 onChange={setContent}
                 modules={modules}
                 formats={formats}
                 className="bg-white dark:bg-gray-700 dark:text-white"
-              />
+              /> */}
             </div>
 
             <Button
