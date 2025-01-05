@@ -11,6 +11,7 @@ import {
   Mail,
   Link,
   
+
   Star,
   Tag,
   Users,
@@ -31,6 +32,13 @@ import {
   NotebookPen,
   Hourglass,
   CalendarDays,
+  GroupIcon,
+  Laptop,
+  LaptopMinimal,
+  Check,
+  BadgeHelpIcon,
+  Bell,
+  BellDotIcon,
 } from 'lucide-react';
 
 
@@ -42,7 +50,13 @@ const icons = {
   Handshake: <Handshake className="inline-block w-6 h-6" />,
   Mail: <Mail className="inline-block w-6 h-6" />,
   Link: <Link className="inline-block w-6 h-6" />,
- 
+  BadgeHelpIcon: <BadgeHelpIcon className="inline-block w-6 h-6" />,
+  Bell: <Bell className="inline-block w-6 h-6" />,
+  BellDotIcon: <BellDotIcon className="inline-block w-6 h-6" />,
+ GroupIcon: <GroupIcon className="inline-block w-6 h-6" />,
+ Laptop: <Laptop className="inline-block w-6 h-6" />,
+ LaptopMinimal: <LaptopMinimal className="inline-block w-6 h-6" />,
+ Check: <Check className="inline-block w-6 h-6" />,
   Star: <Star className="inline-block w-6 h-6" />,
   Tag: <Tag className="inline-block w-6 h-6" />,
   Users: <Users className="inline-block w-6 h-6" />,
