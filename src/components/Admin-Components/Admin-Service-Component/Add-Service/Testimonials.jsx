@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import Image from 'next/image';
 
 const Testimonials = (props) => {
   const { formData, setFormData } = props;
@@ -9,6 +10,8 @@ const Testimonials = (props) => {
   const [mmDescription, setMmDescription] = useState(formData?.testimonials?.mmDescription || '');
   const [testimonials, setTestimonials] = useState(formData?.testimonials?.testimonials || [{ comment: '', name: '' }]);
   const [faqs, setFaqs] = useState(formData?.testimonials?.faqs || [{ question: '', answer: '' }]);
+  const [heroImage, setHeroImage] = useState(formData?.testimonials?.heroImage || '');
+  const [outsideImage, setOutsideImage] = useState(formData?.testimonials?.outsideImage || '');
 
   const addTestimonial = () => {
     setTestimonials([...testimonials, { comment: '', name: '' }]);
@@ -37,6 +40,8 @@ const Testimonials = (props) => {
         mmDescription,
         testimonials,
         faqs,
+        heroImage,
+        outsideImage,
       },
     })); return () => {  
       setFormData((prevData) => ({
@@ -46,11 +51,24 @@ const Testimonials = (props) => {
           mmDescription,
           testimonials,
           faqs,
+          heroImage,
+          outsideImage,
         },
       }));
     };
   
-  }, [taglineHeading, mmDescription, testimonials, faqs]);
+  }, [taglineHeading, mmDescription, testimonials, faqs, heroImage, outsideImage]);
+
+  const handleImageChange = (e, setImage) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImage(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   return (
     <div className="min-h-screen">
@@ -77,6 +95,39 @@ const Testimonials = (props) => {
             placeholder="Enter the MM description"
             className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
           />
+        </div>
+
+        {/* Hero Image */}
+        <div>
+          <label className="block text-gray-700 dark:text-gray-300 mb-2">Hero Image:</label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => handleImageChange(e, setHeroImage)}
+            className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+          />
+          {heroImage && (
+            <div className="mt-4">
+              <Image src={heroImage} width={400} height={200} alt="Hero" className=" h-auto rounded-lg shadow-md" />
+            </div>
+          )}
+        </div>
+
+        {/* Outside Image */}
+        <div>
+          <label className="block text-gray-700 dark:text-gray-300 mb-2">Outside Image:</label>
+          <input
+            type="file"
+            accept="image/*"
+            
+            onChange={(e) => handleImageChange(e, setOutsideImage)}
+            className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+          />
+          {outsideImage && (
+            <div className="mt-4">
+              <Image width={400} height={200} src={outsideImage} alt="Outside" className=" h-auto rounded-lg shadow-md" />
+            </div>
+          )}
         </div>
 
         {/* Testimonials */}

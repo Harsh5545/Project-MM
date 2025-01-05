@@ -10,8 +10,6 @@ import {
   Handshake,
   Mail,
   Link,
-  
-
   Star,
   Tag,
   Users,
@@ -40,7 +38,7 @@ import {
   Bell,
   BellDotIcon,
 } from 'lucide-react';
-
+import Image from 'next/image';
 
 const icons = {
   BadgeHelp: <BadgeHelp className="inline-block text-black w-6 h-6" />,
@@ -53,10 +51,10 @@ const icons = {
   BadgeHelpIcon: <BadgeHelpIcon className="inline-block w-6 h-6" />,
   Bell: <Bell className="inline-block w-6 h-6" />,
   BellDotIcon: <BellDotIcon className="inline-block w-6 h-6" />,
- GroupIcon: <GroupIcon className="inline-block w-6 h-6" />,
- Laptop: <Laptop className="inline-block w-6 h-6" />,
- LaptopMinimal: <LaptopMinimal className="inline-block w-6 h-6" />,
- Check: <Check className="inline-block w-6 h-6" />,
+  GroupIcon: <GroupIcon className="inline-block w-6 h-6" />,
+  Laptop: <Laptop className="inline-block w-6 h-6" />,
+  LaptopMinimal: <LaptopMinimal className="inline-block w-6 h-6" />,
+  Check: <Check className="inline-block w-6 h-6" />,
   Star: <Star className="inline-block w-6 h-6" />,
   Tag: <Tag className="inline-block w-6 h-6" />,
   Users: <Users className="inline-block w-6 h-6" />,
@@ -65,7 +63,6 @@ const icons = {
   CalendarSync: <CalendarSync className="inline-block w-6 h-6" />,
   Download: <Download className="inline-block w-6 h-6" />,
   Play: <Play className="inline-block w-6 h-6" />,
-  
   GraduationCap: <GraduationCap className="inline-block w-6 h-6" />,
   TrendingUp: <TrendingUp className="inline-block w-6 h-6" />,
   Speech: <Speech className="inline-block w-6 h-6" />,
@@ -81,7 +78,7 @@ const icons = {
 };
 
 const CourseDetails = (props) => {
-  const { formData ,setFormData } = props;
+  const { formData, setFormData } = props;
   const [courseHeadings, setCourseHeadings] = useState(formData?.courseDetails?.courseHeadings || [{ heading: '', subheading: '' }]);
   const [courseDetail, setCourseDetail] = useState(formData?.courseDetails?.courseDetail || ['']);
   const [programHighlights, setProgramHighlights] = useState(formData?.courseDetails?.programHighlights || [{ icon: 'FaCheckCircle', heading: '', description: '' }]);
@@ -159,8 +156,19 @@ const CourseDetails = (props) => {
         },
       }));
     };
-  }, [courseHeadings, courseDetail, programHighlights, overviewImage,overviewDescription]);
-  
+  }, [courseHeadings, courseDetail, programHighlights, overviewImage, overviewDescription]);
+
+  const handleImageChange = (e, setImage) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImage(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <div className=" ">
       <div className=" bg-white dark:bg-gray-800 rounded-lg space-y-8">
@@ -171,14 +179,12 @@ const CourseDetails = (props) => {
           
           {/* Overview Image Section */}
           <div>
-            <label className="block text-gray-700 dark:text-gray-300 mb-2">Overview Image URL:</label>
-            <Input
-              type="text"
-              value={overviewImage}
-              onChange={(e) => setOverviewImage(e.target.value)}
-              placeholder="Enter the overview image URL"
+            <label className="block text-gray-700 dark:text-gray-300 mb-2">Overview Image:</label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => handleImageChange(e, setOverviewImage)}
               className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
-              required
             />
             {overviewImage && (
               <div className="mt-4">
@@ -201,23 +207,25 @@ const CourseDetails = (props) => {
           <h2 className="text-2xl font-semibold text-gray-800 dark:text-white">Course Type</h2>
           {courseHeadings.map((course, index) => (
             <div key={index} className="flex items-center space-x-4">
-              <div className="flex-1 ">
-                  <label className="block  text-gray-700 dark:text-gray-300 mb-2">Icon:</label>
-                  <div className='flex justify-center items-center'><select
+              <div className="flex-1">
+                <label className="block text-gray-700 dark:text-gray-300 mb-2">Icon:</label>
+                <div className="flex items-center space-x-2">
+                  <select
                     value={course.icon}
                     onChange={(e) => handleCourseHeadingChange(index, 'icon', e.target.value)}
-                    className="w-full p-3 rounded-lg border border-gray-300 text-black dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                    className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                   >
                     {Object.keys(icons).map((iconKey) => (
-                      <option  key={iconKey} value={iconKey} className="flex items-center space-x-2">
-                      {[iconKey]}
-                    </option>
+                      <option key={iconKey} value={iconKey} className="flex items-center space-x-2">
+                        {iconKey}
+                      </option>
                     ))}
                   </select>
                   <div className="ml-2">
                     {icons[course.icon]}
-                  </div></div>
+                  </div>
                 </div>
+              </div>
               <div className="flex-1">
                 <label className="block text-gray-700 dark:text-gray-300 mb-2">Course Heading:</label>
                 <Input
@@ -291,22 +299,23 @@ const CourseDetails = (props) => {
               <div className="flex items-center space-x-4">
                 <div className="flex-1">
                   <label className="block text-gray-700 dark:text-gray-300 mb-2">Icon:</label>
-                <div className='flex justify-center items-center'>  <select
-                    value={highlight.icon}
-                    onChange={(e) => handleProgramHighlightChange(index, 'icon', e.target.value)}
-                    className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
-                  >
-                    {Object.keys(icons).map((iconKey) => (
-                      <option key={iconKey} value={iconKey}>
-                        {iconKey}
-                      </option>
-                    ))}
-                  </select>
-                  <div className="ml-2">
-                    {icons[highlight.icon]}
+                  <div className="flex items-center space-x-2">
+                    <select
+                      value={highlight.icon}
+                      onChange={(e) => handleProgramHighlightChange(index, 'icon', e.target.value)}
+                      className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                    >
+                      {Object.keys(icons).map((iconKey) => (
+                        <option key={iconKey} value={iconKey} className="flex items-center space-x-2">
+                          {iconKey}
+                        </option>
+                      ))}
+                    </select>
+                    <div className="ml-2">
+                      {icons[highlight.icon]}
+                    </div>
                   </div>
-                </div></div>
-                
+                </div>
                 <div className="flex-1">
                   <label className="block text-gray-700 dark:text-gray-300 mb-2">Program Highlight Heading:</label>
                   <Input
