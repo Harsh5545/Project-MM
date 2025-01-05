@@ -2,11 +2,68 @@ import React, { useEffect, useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FaCheckCircle, FaStar, FaHeart } from 'react-icons/fa'; // Importing icons from react-icons
+import {
+  BadgeHelp,
+  CircleHelp,
+  Award,
+  HeartHandshake,
+  Handshake,
+  Mail,
+  Link,
+  
+  Star,
+  Tag,
+  Users,
+  Shell,
+  ArrowBigUpDash,
+  CalendarSync,
+  Download,
+  Play,
+  GraduationCap,
+  TrendingUp,
+  Speech,
+  MessageCircleCode,
+  Heart,
+  Lightbulb,
+  Brain,
+  HandHeart,
+  MessagesSquare,
+  NotebookPen,
+  Hourglass,
+  CalendarDays,
+} from 'lucide-react';
+
 
 const icons = {
-  FaCheckCircle: <FaCheckCircle />,
-  FaStar: <FaStar />,
-  FaHeart: <FaHeart />
+  BadgeHelp: <BadgeHelp className="inline-block text-black w-6 h-6" />,
+  CircleHelp: <CircleHelp className="inline-block w-6 h-6 text-black" />,
+  Award: <Award className="inline-block w-6 h-6 text-black" />,
+  HeartHandshake: <HeartHandshake className="inline-block w-6 h-6" />,
+  Handshake: <Handshake className="inline-block w-6 h-6" />,
+  Mail: <Mail className="inline-block w-6 h-6" />,
+  Link: <Link className="inline-block w-6 h-6" />,
+ 
+  Star: <Star className="inline-block w-6 h-6" />,
+  Tag: <Tag className="inline-block w-6 h-6" />,
+  Users: <Users className="inline-block w-6 h-6" />,
+  Shell: <Shell className="inline-block w-6 h-6" />,
+  ArrowBigUpDash: <ArrowBigUpDash className="inline-block w-6 h-6" />,
+  CalendarSync: <CalendarSync className="inline-block w-6 h-6" />,
+  Download: <Download className="inline-block w-6 h-6" />,
+  Play: <Play className="inline-block w-6 h-6" />,
+  
+  GraduationCap: <GraduationCap className="inline-block w-6 h-6" />,
+  TrendingUp: <TrendingUp className="inline-block w-6 h-6" />,
+  Speech: <Speech className="inline-block w-6 h-6" />,
+  MessageCircleCode: <MessageCircleCode className="inline-block w-6 h-6" />,
+  Heart: <Heart className="inline-block w-6 h-6" />,
+  Lightbulb: <Lightbulb className="inline-block w-6 h-6" />,
+  Brain: <Brain className="inline-block w-6 h-6" />,
+  HandHeart: <HandHeart className="inline-block w-6 h-6" />,
+  MessagesSquare: <MessagesSquare className="inline-block w-6 h-6" />,
+  NotebookPen: <NotebookPen className="inline-block w-6 h-6" />,
+  Hourglass: <Hourglass className="inline-block w-6 h-6" />,
+  CalendarDays: <CalendarDays className="inline-block w-6 h-6" />,
 };
 
 const CourseDetails = (props) => {
@@ -130,19 +187,22 @@ const CourseDetails = (props) => {
           <h2 className="text-2xl font-semibold text-gray-800 dark:text-white">Course Type</h2>
           {courseHeadings.map((course, index) => (
             <div key={index} className="flex items-center space-x-4">
-              <div className="flex-1">
-                  <label className="block text-gray-700 dark:text-gray-300 mb-2">Icon:</label>
-                  <select
+              <div className="flex-1 ">
+                  <label className="block  text-gray-700 dark:text-gray-300 mb-2">Icon:</label>
+                  <div className='flex justify-center items-center'><select
                     value={course.icon}
                     onChange={(e) => handleCourseHeadingChange(index, 'icon', e.target.value)}
-                    className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                    className="w-full p-3 rounded-lg border border-gray-300 text-black dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                   >
                     {Object.keys(icons).map((iconKey) => (
-                      <option key={iconKey} value={iconKey}>
-                        {iconKey}
-                      </option>
+                      <option  key={iconKey} value={iconKey} className="flex items-center space-x-2">
+                      {[iconKey]}
+                    </option>
                     ))}
                   </select>
+                  <div className="ml-2">
+                    {icons[course.icon]}
+                  </div></div>
                 </div>
               <div className="flex-1">
                 <label className="block text-gray-700 dark:text-gray-300 mb-2">Course Heading:</label>
@@ -217,7 +277,7 @@ const CourseDetails = (props) => {
               <div className="flex items-center space-x-4">
                 <div className="flex-1">
                   <label className="block text-gray-700 dark:text-gray-300 mb-2">Icon:</label>
-                  <select
+                <div className='flex justify-center items-center'>  <select
                     value={highlight.icon}
                     onChange={(e) => handleProgramHighlightChange(index, 'icon', e.target.value)}
                     className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
@@ -228,7 +288,11 @@ const CourseDetails = (props) => {
                       </option>
                     ))}
                   </select>
-                </div>
+                  <div className="ml-2">
+                    {icons[highlight.icon]}
+                  </div>
+                </div></div>
+                
                 <div className="flex-1">
                   <label className="block text-gray-700 dark:text-gray-300 mb-2">Program Highlight Heading:</label>
                   <Input

@@ -34,6 +34,8 @@ import Faq from "./Faq";
 import ProgramHighlights from "./ProgramHighlight";
 import ProgramDetails from "./ProgramDetails";
 import Testimonials from "./Testimonial";
+import ServicesHero from "./ServicesHero";
+
 const dm_Sans = DM_Sans({
   subsets: ["latin"],
   weight: ["400"],
@@ -81,14 +83,16 @@ const ServicePage = ({ params }) => {
   const icons = [FaCheckCircle, FaStar, FaHeart]; // Array of icons to use
 
   return (
-    <div className="flex h-full dark:bg-[rgb(0,0,31)] bg-[#FFFFFF] items-center pb-4 md:pb-10 justify-center w-full flex-col  ">
+    <div className="flex h-full dark:bg-[rgb(0,0,31)] bg-[#FFFFFF] items-center pb-4  justify-center w-full flex-col  ">
       {/* Hero Section */}
+     
       <div
-        className=" mt-36 w-full pb-5 bg-cover bg-center flex items-end justify-center"
+        className="  w-full  pb-5 bg-cover bg-center flex items-end justify-center"
       // style={{ backgroundImage: `url(${heroimage})`,}}
-      >
+      > <ServicesHero className="relative"/>
+
         {/* <div className="absolute inset-0 bg-[#793600] opacity-25"></div> */}
-        <div className="relative flex flex-col justify-center items-center text-center text-black">
+        <div className=" flex absolute pb-8 flex-col justify-center items-center text-center text-black">
           <h1 className="text-4xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d]  uppercase">{title}</h1>
           <h2 className={`${dm_Sans.className} mt-4 px-2 text-lg lg:text-xl`}>{headline}</h2>
 

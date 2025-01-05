@@ -118,7 +118,7 @@ const HomeSection = () => {
                       name="message"
                       value={formData.message}
                       onChange={handleInputChange}
-                      placeholder="Write something catchy!"
+                      placeholder="What’s on your mind? We’re listening!"
                       className="w-full border border-gray-300 dark:border-gray-600 rounded-lg p-2"
                       rows={4}
                     ></textarea>
