@@ -15,6 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import Tiptap from '@/components/TipTap';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
@@ -181,6 +182,7 @@ export default function AddBlog({ existingBlog }) {
 
             <div>
               <label className="block text-gray-700 dark:text-gray-300 mb-2">Content:</label>
+              <Tiptap content={content} onChange={(e)=>handleContentChange(e)}/>
               {/* <ReactQuill
                 value={content}
                 onChange={setContent}
