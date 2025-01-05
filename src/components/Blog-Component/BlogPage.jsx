@@ -111,8 +111,8 @@ export default function BlogPage() {
   };
 
   return (
-    <div className="dark:bg-[rgb(0,0,31)] py-24 md:py-36 px-6 md:px-12">
-      <div className="max-w-6xl mx-auto">
+    <div className="dark:bg-[rgb(0,0,31)] py-10 px-6 md:px-36">
+      <div className="max-w-full mx-auto">
         {/* Mobile Filter and Search */}
         <div className="md:hidden flex items-center justify-between mb-6">
           {/* Filter Icon */}
@@ -163,7 +163,7 @@ export default function BlogPage() {
         </div>
 
         {/* Display Filtered Blogs */}
-        <div className="grid gap-10">
+        <div className="grid grid-cols-1 lg:grid-cols-1 gap-8">
           {paginatedBlogs.map((blog, index) => (
             <BlogContainer
               key={index}

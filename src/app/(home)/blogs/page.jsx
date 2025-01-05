@@ -2,7 +2,8 @@
 // import styles from "./blog.module.css";
 // import { getPosts } from "@/lib/data";
 
-import BlogContainer from "@/components/Blog-Component/BlogContainer";
+// import BlogContainer, { BentoGridDemo } from "@/components/Blog-Component/BlogContainer";
+import { BentoGridDemo } from "@/components/Blog-Component/BentoGridDemo";
 import BlogHero from "@/components/Blog-Component/BlogHero";
 import BlogPage from "@/components/Blog-Component/BlogPage";
 
@@ -43,7 +44,7 @@ const page = async () => {
         </div>
       ))} */}
       <BlogHero/>
-      <BlogPage />
+      <BentoGridDemo />
 \
     </div>
   );
