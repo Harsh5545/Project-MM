@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import ShadcnButton from "../Atom/button/ShadcnButton";
 import { Label } from "@/components/ui/label";
@@ -16,14 +16,42 @@ import {
 const HomeConsultation = () => {
   const [formData, setFormData] = useState({
     name: "",
+    countryCode: "",
     phone: "",
     email: "",
     service: "",
     message: "",
   });
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    // Fetch categories from the backend
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch('/api/categories/list'); // Adjust the URL as needed
+        const data = await response.json();
+        setCategories(data);
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+
+    // Validation for name field to not accept numbers
+    if (name === "name" && /[0-9]/.test(value)) {
+      return;
+    }
+
+    // Validation for phone field to not accept alphabets
+    if (name === "phone" && /[a-zA-Z]/.test(value)) {
+      return;
+    }
+
     setFormData((prevState) => ({
       ...prevState,
       [name]: value,
@@ -35,6 +63,7 @@ const HomeConsultation = () => {
     console.log(formData);
     setFormData({
       name: "",
+      countryCode: "",
       phone: "",
       email: "",
       service: undefined, // Reset value
@@ -74,25 +103,47 @@ const HomeConsultation = () => {
                 value={formData.name}
                 onChange={handleInputChange}
                 placeholder="Enter your name"
+                pattern="^[a-zA-Z\s]+$" // Only letters and spaces
+                title="Name should only contain letters and spaces."
                 required
                 className="w-full"
               />
             </div>
-            <div className="w-full">
-              <Label htmlFor="phone" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                Phone *
-              </Label>
-              <Input
-                id="phone"
-                type="tel"
-                name="phone"
-                value={formData.phone}
-                onChange={handleInputChange}
-                placeholder="Enter your phone"
-                pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-                required
-                className="w-full"
-              />
+            <div className="w-full flex gap-2">
+              <div className="w-1/3">
+                <Label htmlFor="countryCode" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Country *
+                </Label>
+                <Input
+                  id="countryCode"
+                  type="text"
+                  name="countryCode"
+                  value={formData.countryCode}
+                  onChange={handleInputChange}
+                  placeholder="+1"
+                  pattern="^\+\d{1,3}$" // Country code pattern
+                  title="Country code should start with + followed by 1 to 3 digits."
+                  required
+                  className="w-full"
+                />
+              </div>
+              <div className="w-2/3">
+                <Label htmlFor="phone" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Phone *
+                </Label>
+                <Input
+                  id="phone"
+                  type="tel"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleInputChange}
+                  placeholder="Enter your phone"
+                  pattern="^\d{3}-\d{3}-\d{4}$" // Phone number pattern
+                  title="Phone number should be in the format: 123-456-7890."
+                  required
+                  className="w-full"
+                />
+              </div>
             </div>
           </div>
           <div className="flex flex-col md:flex-row gap-8 my-4">
@@ -132,27 +183,11 @@ const HomeConsultation = () => {
                   )}
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="Personality Enhancement Programme">
-                    Personality Enhancement Programme
-                  </SelectItem>
-                  <SelectItem value="Business Etiquette & Corporate Image Programme">
-                    Business Etiquette & Corporate Image Programme
-                  </SelectItem>
-                  <SelectItem value="Children’s Etiquette Programme">
-                    Children’s Etiquette Programme
-                  </SelectItem>
-                  <SelectItem value="Ladies Grooming & Image Enhancement Programme">
-                    Ladies Grooming & Image Enhancement Programme
-                  </SelectItem>
-                  <SelectItem value="Fine Dining & Table Etiquette">
-                    Fine Dining & Table Etiquette
-                  </SelectItem>
-                  <SelectItem value="Young Adult Finishing Programme">
-                    Young Adult Finishing Programme
-                  </SelectItem>
-                  <SelectItem value="Communication & Soft Skills Training">
-                    Communication & Soft Skills Training
-                  </SelectItem>
+                  {categories.map((category) => (
+                    <SelectItem key={category._id} value={category.name}>
+                      {category.name}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
