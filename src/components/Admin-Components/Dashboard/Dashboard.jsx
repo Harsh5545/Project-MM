@@ -9,9 +9,11 @@ import { usePathname } from "next/navigation";
 import dynamic from 'next/dynamic';
 import { Suspense } from "react";
 import { useRouter } from "next/navigation";
-import LogoutButton from "@/components/LoginMethod/LogoutButton";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Image from "next/image";
+import { AvatarFallback } from "@radix-ui/react-avatar";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { signOut } from "@/auth";
+import SignOutPage, { SignOut } from "@/components/SignOut";
 
 
 // Create a dynamic import for the main content
@@ -30,7 +32,6 @@ function LoadingSpinner() {
   );
 }
 
-
 export function Dashboard({ children, session }) {
   const pathname = usePathname();
   const router = useRouter();
@@ -39,19 +40,19 @@ export function Dashboard({ children, session }) {
     router.push(url);
   };
 
- 
- const user = {
-    role:"ADMIN"
- } 
   const linkData = {
-    ADMIN: [
+    Admin: [
       { href: "/admin/category", text: "Category", icon: Home },
       { href: "/admin/blog", text: "Blogs", icon: Package },
       { href: "/admin/users", text: "Users", icon: Package },
       { href: "/admin/services", text: "Services", icon: Users },
       { href: "/admin/events", text: "Events", icon: Users },
     ],
-    USER: [
+    User: [
+      { href: "/admin/category", text: "Category", icon: Home },
+      { href: "/admin/blog", text: "Blogs", icon: Package },
+      { href: "/admin/users", text: "Users", icon: Package },
+      { href: "/admin/services", text: "Services", icon: Users },
       { href: "/user", text: "Products", icon: Package },
       { href: "/user/profile", text: "Customers", icon: Users },
       { href: "/user/courses", text: "Analytics", icon: LineChart },
@@ -60,7 +61,6 @@ export function Dashboard({ children, session }) {
 
   const roleLinks = linkData[session?.user?.role] || [];
   const commonLinks = linkData.common;
-  console.log(session?.user?.image)
 
   function getInitials(name) {
     const nameParts = name.split(' ');
@@ -69,25 +69,32 @@ export function Dashboard({ children, session }) {
   }
   console.log(pathname)
   return (
-    <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
-      <div className="hidden border-r bg-muted/40 md:block">
+    <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr] bg-gray-100">
+      <div className="hidden border-r bg-white shadow-md md:block">
         <div className="flex h-full max-h-screen flex-col gap-2">
-          <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
+          <div className="flex h-24 items-center border-b px-4 lg:h-[60px] lg:px-6 bg-gray-50">
             <Link href="/" className="flex items-center gap-2 font-semibold">
-              <Package2 className="h-6 w-6" />
-              <span className="font-bold text-yellow-300">Modern Mannerisim</span>
+              <span className="text-lg">
+                <Image
+                  src="/assets/MM.png"
+                  width={300}
+                  height={300}
+                  className="md:max-w-[8rem] max-w-[6rem]"
+                  alt="ModernMannerism logo"
+                  priority
+                />
+              </span>
             </Link>
-
           </div>
-          <div className="flex-1">
+          <div className="flex-1 overflow-y-auto">
             <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
               {roleLinks.map((link, index) => (
                 <Link
                   key={index}
                   href={link.href}
                   className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${pathname === link.href
-                    ? "bg-red-500 text-primary"
-                    : "text-muted-foreground hover:text-primary"
+                    ? "bg-purple-600 text-white"
+                    : "text-gray-700 hover:bg-gray-200"
                     }`}
                 >
                   <link.icon className="h-4 w-4" />
@@ -104,7 +111,7 @@ export function Dashboard({ children, session }) {
         </div>
       </div>
       <div className="flex flex-col">
-        <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
+        <header className="flex h-14 items-center gap-4 border-b bg-white shadow-md px-4 lg:h-[60px] lg:px-6">
           <Sheet>
             <SheetTrigger asChild>
               <Button
@@ -130,8 +137,8 @@ export function Dashboard({ children, session }) {
                     key={index}
                     href={link.href}
                     className={`mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 transition-colors ${link.isActive
-                      ? "bg-muted text-foreground"
-                      : "text-muted-foreground hover:text-foreground"
+                      ? "bg-gray-200 text-gray-900"
+                      : "text-gray-700 hover:bg-gray-200"
                       }`}
                   >
                     <link.icon className="h-5 w-5" />
@@ -143,44 +150,21 @@ export function Dashboard({ children, session }) {
                     )}
                   </Link>
                 ))}
-
               </nav>
             </SheetContent>
           </Sheet>
           <div className="w-full flex-1">
-            <form>
-
-            </form>
+                <SignOut/>
           </div>
           <Button variant="primary" size="icon" className="border border-primary mx-2 py-2">
             <Avatar>
-              {/* <AvatarFallback>{getInitials(session?.user?.name)}</AvatarFallback> */}
+              <AvatarImage src="https://github.com/shadcn.png" />
+              <AvatarFallback>CN</AvatarFallback>
             </Avatar>
           </Button>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="secondary" size="icon" className="rounded-full border border-primary">
-                <Avatar>
-                  <Image src={session?.user?.image} width={30} height={30} className='w-10 h-10 rounded-full' alt='user image' />
-                  {/* <AvatarFallback>{getInitials(session?.user?.name)}</AvatarFallback> */}
-                </Avatar>
-                <span className="sr-only">Toggle user menu</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={() => handleNavigation('/account')}>My Account</DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => handleNavigation('/account/setting')}>Settings</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => handleNavigation('/account/help-center')}> Support</DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <LogoutButton />
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
         </header>
         <Suspense fallback={<LoadingSpinner />}>
-          <main className="flex-1 p-4">
+          <main className="flex-1 p-4 bg-white shadow-md rounded-lg m-4">
             <DynamicMainContent>{children}</DynamicMainContent>
           </main>
         </Suspense>

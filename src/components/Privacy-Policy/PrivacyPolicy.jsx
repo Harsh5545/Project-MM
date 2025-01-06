@@ -3,8 +3,8 @@ import React from "react";
 
 const PrivacyPolicyPage = () => {
     return (
-        <div className="flex justify-center items-center min-h-screen bg-gray-100 dark:bg-gray-900">
-            <div className="w-full max-w-4xl p-6 md:p-12 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
+        <div className="flex justify-center items-center  my-24 bg-gray-100 dark:bg-gray-900">
+            <div className="w-full max-w-6xl p-6 md:p-12    bg-white dark:bg-gray-800 rounded-lg shadow-lg">
                 <h1 className="text-4xl font-bold text-center text-gray-900 dark:text-gray-100 mb-10">
                     Privacy Policy
                 </h1>
@@ -19,7 +19,7 @@ const PrivacyPolicyPage = () => {
                         </p>
                         <address className="leading-relaxed mt-4 text-gray-600 dark:text-gray-400">
                             Modern Mannerism <br />
-                            802, H-2, Raunak Heights, Kasarwadavali, <br />
+                            Raunak Heights, Kasarwadavali, <br />
                             Near Unnathi Greens, Ghodbunder Road, <br />
                             Thane West- 400615
                         </address>

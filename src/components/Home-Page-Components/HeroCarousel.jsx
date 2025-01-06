@@ -29,7 +29,12 @@ const HeroCarousel = () => {
   const handleSlideChange = (swiper) => {
     setCurrentSlide(swiper.realIndex);
   };
-
+  const scrollToTestimonials = () => {
+    const testimonialSection = document.getElementById("testimonials");
+    if (testimonialSection) {
+      testimonialSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
   const slides = [
     {
       id: 1,
@@ -84,11 +89,11 @@ const HeroCarousel = () => {
 
   const styles = {
     container: `md:h-screen w-full bg-cover z-0 relative`,
-    slide: `md:h-screen h-[65vh] w-full relative`,
-    image: `md:object-cover w-full md:h-full h-[65vh]`,
+    slide: `md:h-screen  h-[65vh] w-full relative`,
+    image: `object-cover  w-full md:h-full h-[65vh]`,
     overlay: `absolute inset-0 dark:bg-[#060507] bg-[#3a4e5d] dark:bg-opacity-60 bg-opacity-50`,
     text: `md:text-4xl ${cormorant.className} dark:text-white text-white font-bold text-2xl text-black lato-font`,
-    button: `px-8 ${dm_Sans.className} py-4 tracking-wider bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] text-md w-[50%] md:w-[20%] text-white rounded-full mt-4 sm:mt-10`,
+    button: `px-8 ${dm_Sans.className} py-5 px-8 tracking-wider bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] text-md lg:text-xl   text-white rounded-full mt-4 sm:mt-10`,
   };
 
   return (
@@ -142,10 +147,10 @@ const HeroCarousel = () => {
             clickable: true,
           }}
           autoplay={{
-            delay: 6000,
+            delay: 60000,
             disableOnInteraction: false,
           }}
-          speed={100}
+          speed={1000}
           loop={true}
           navigation={false}
           modules={[Autoplay, Keyboard, Pagination, Navigation]}
@@ -162,13 +167,13 @@ const HeroCarousel = () => {
                   layout="fill"
                 />
                 <div className={styles.overlay}></div>
-                <div className="absolute text-white flex gap-3 md:gap-8 flex-col text-center items-center justify-center w-full h-full z-10 p-8">
+                <div className="absolute text-white flex gap-5 md:gap-9 flex-col text-center items-center justify-center w-full h-full z-10 p-8">
                   <h1 className={styles.text}>{slide.text}</h1>
-                  <div className="flex flex-col md:w-[50%] text-xs font-medium md:text-lg">
+                  <div className="flex flex-col md:w-[50%] text-sm font-medium md:text-lg">
                     <p>{slide.description}</p>
                     <p>{slide.description2}</p>
                   </div>
-                  <Button className={styles.button}>{slide.button}</Button>
+                  <Button onClick={scrollToTestimonials} className={styles.button}>{slide.button}</Button>
                 </div>
               </div>
             </SwiperSlide>

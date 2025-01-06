@@ -1,91 +1,77 @@
-datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
-}
-
 generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["driverAdapters"]
 }
 
-enum Role {
-  ADMIN
-  USER
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Role {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  users     User[]
 }
 
 model User {
-  id            String          @id @default(cuid())
-  name          String?
-  username      String?         @unique
-  email         String?         @unique
-  emailVerified DateTime?
+  id            Int      @id @default(autoincrement())
+  email         String   @unique
+  first_name    String
+  last_name     String
+  password      String
+  mobile_number String
+  roleId        Int
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
   image         String?
-  accounts      Account[]
-  sessions      Session[]
-  // Optional for WebAuthn support
-  Authenticator Authenticator[]
-  role          Role            @default(USER)
+  role          Role     @relation(fields: [roleId], references: [id])
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  @@index([roleId], map: "User_roleId_fkey")
 }
 
-model Account {
-  id                       String  @id @default(cuid())
-  userId                   String  @unique
-  type                     String
-  provider                 String
-  providerAccountId        String
-  refresh_token            String? @db.Text
-  access_token             String? @db.Text
-  expires_at               Int?
-  token_type               String?
-  scope                    String?
-  id_token                 String? @db.Text
-  session_state            String?
-  refresh_token_expires_in Int?
-  user                     User?   @relation(fields: [userId], references: [id])
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@unique([provider, providerAccountId])
-  @@index([userId])
+model Category {
+  id             Int            @id @default(autoincrement())
+  category_name  String         @unique
+  category_image String?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  status         CategoryStatus @default(ACTIVE)
+  services       Service[]
 }
 
-model Session {
-  id           String   @id @default(cuid())
-  sessionToken String   @unique
-  userId       String
-  expires      DateTime
-  user         User     @relation(fields: [userId], references: [id])
+model Service {
+  id                  Int      @id @default(autoincrement())
+  categoryId          Int
+  heading             String
+  subheading          String
+  testimonial         String?
+  faq                 String?
+  why_choose_program  String?
+  program_details     String?
+  program_highlights  String?
+  what_you_learn      String?
+  overview            String?
+  what_program_offers String?
+  hero_image          String?
+  image               String?
+  slug                String   @unique
+  meta_title          String?
+  meta_description    String?
+  og_title            String?
+  og_image            String?
+  keywords            String?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  category            Category @relation(fields: [categoryId], references: [id])
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([userId])
+  @@index([categoryId], map: "Service_categoryId_fkey")
 }
 
-model VerificationToken {
-  identifier String
-  token      String
-  expires    DateTime
+enum CategoryStatus {
+  ACTIVE
+  INACTIVE
 
-  @@unique([identifier, token])
-}
-
-// Optional for WebAuthn support
-model Authenticator {
-  credentialID         String  @unique
-  userId               String
-  providerAccountId    String
-  credentialPublicKey  String
-  counter              Int
-  credentialDeviceType String
-  credentialBackedUp   Boolean
-  transports           String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@id([userId, credentialID])
 }

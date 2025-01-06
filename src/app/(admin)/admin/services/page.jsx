@@ -1,3 +1,5 @@
+import AddServices from '@/components/Admin-Components/Admin-Service-Component/Add-Service/AddServices'
+import ServicesTable from '@/components/Admin-Components/Admin-Service-Component/Admin-service-Table/Services-Table'
 import React from 'react'
 
 
@@ -9,7 +11,9 @@ export const metadata = {
 
 const page = () => {
   return (
-    <div>services page</div>
+    <div>
+      <ServicesTable/>
+    </div>
   )
 }
 

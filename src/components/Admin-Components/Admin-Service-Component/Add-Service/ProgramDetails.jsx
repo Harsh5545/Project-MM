@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-const ProgramDetails = () => {
-  const [ageGroups, setAgeGroups] = useState([{ heading: '', subheading: '' }]);
-  const [formats, setFormats] = useState([{ heading: '', subheading: '' }]);
-  const [durations, setDurations] = useState([{ heading: '', subheading: '' }]);
-  const [locations, setLocations] = useState([{ heading: '', subheading: '' }]);
+const ProgramDetails = (props) => {
+  const { formData ,setFormData } = props;
+  const [ageGroups, setAgeGroups] = useState(formData?.programDetails?.ageGroups ||[{ heading: '', subheading: '' }]);
+  const [formats, setFormats] = useState(formData?.programDetails?.formats || [{ heading: '', subheading: '' }]);
+  const [durations, setDurations] = useState(formData?.programDetails?.durations || [{ heading: '', subheading: '' }]);
+  const [locations, setLocations] = useState(formData?.programDetails?.locations || [{ heading: '', subheading: '' }]);
 
   const addAgeGroup = () => {
     setAgeGroups([...ageGroups, { heading: '', subheading: '' }]);
@@ -35,9 +36,37 @@ const ProgramDetails = () => {
     setState(newState);
   };
 
+  useEffect(() => {
+    // On mount: Initialize form data
+    setFormData((prevData) => ({
+      ...prevData,
+      programDetails: {
+        ageGroups,
+        formats,
+        durations,  
+        locations
+
+      },
+    }));
+    return () => {  
+      setFormData((prevData) => ({
+        ...prevData,
+        programDetails: {
+          ageGroups,
+        formats,
+        durations,  
+        locations
+        },
+      }));
+    };
+  }, [ageGroups,
+    formats,
+    durations,  
+    locations]);
+
   return (
     <div className="min-h-screen">
-      <div className="max-w-4xl mx-auto bg-white dark:bg-gray-800 rounded-lg space-y-8">
+      <div className="mx-auto bg-white dark:bg-gray-800 rounded-lg space-y-8">
         <h1 className="text-2xl font-bold text-gray-800 dark:text-white text-left">Program Details</h1>
         
         <div className="space-y-6">

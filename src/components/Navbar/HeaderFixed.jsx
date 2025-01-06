@@ -11,7 +11,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import AllLinks from "./links/AllLinks";
-import { ThemeSwitcher } from "../theme/ThemeSwitcher";
 import { Lato } from "next/font/google";
 import ShadcnButton from "../Atom/button/ShadcnButton";
 const dm_Sans = Lato({
@@ -59,7 +58,7 @@ function HeaderFixed() {
             animate="animate"
             exit="exit"
             variants={navVariants}
-            className="fixed z-[999] bg-black bg-opacity-65  nav top-2 left-1/2 -translate-x-1/2 rounded-xl p-2 flex-col border justify-around flex md:flex-row items-center"
+            className="fixed z-[999] bg-black bg-opacity-65  nav top-2 left-1/2 -translate-x-1/2 rounded-xl p-2 md:px-10 flex-col border justify-between flex md:flex-row items-center"
             style={{ width: "90%" }}
         >
             <div className="flex justify-between  items-center w-full md:w-0">
@@ -102,10 +101,10 @@ function HeaderFixed() {
 
             <div className={`${isMobile ? (isMobileMenuOpen ? "block" : "hidden") : "flex items-center gap-2"
                 }`}>
-                <ThemeSwitcher />
+               
                 <ShadcnButton
                     className={`${dm_Sans.className} tracking-wide rounded-full bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] text-white 
-              p-2 px-4 sm:px-6 sm:py-3 md:px-8 md:py-4 lg:px-8 lg:py-3 text-sm sm:text-base md:text-base lg:text-base shadow-lg`}
+              p-2 px-4 sm:px-6 sm:py-2 md:px-8 md:py-2 lg:px-8 lg:py-2  text-sm sm:text-base md:text-base lg:text-base shadow-lg`}
                     onClick={() => {
                         router.push("/contact-us");
                         toggleMobileMenu();
