@@ -6,6 +6,7 @@ import 'react-quill/dist/quill.snow.css'; // Import the styles for the editor
 import { AiOutlineCloudUpload, AiOutlineMobile, AiOutlineLaptop } from 'react-icons/ai';
 import { BsPlusCircle } from 'react-icons/bs';
 import Head from 'next/head';
+import { v4 as uuidv4 } from 'uuid';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -29,25 +30,25 @@ export default function AddBlog({ existingBlog }) {
   const [tagInput, setTagInput] = useState('');
   const [previewMode, setPreviewMode] = useState('laptop'); // 'laptop' or 'mobile'
 
-  // Custom toolbar options
-  const modules = {
-    toolbar: [
-      [{ 'font': [] }, { 'size': [] }],
-      [{ 'header': '1' }, { 'header': '2' }, 'blockquote', 'code-block'],
-      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-      ['bold', 'italic', 'underline', 'strike'],
-      [{ 'color': [] }, { 'background': [] }],
-      [{ 'align': [] }],
-      ['link', 'image'],
-      ['clean']
-    ],
-  };
+    // // Custom toolbar options
+    // const modules = {
+    //   toolbar: [
+    //     [{ 'font': [] }, { 'size': [] }],
+    //     [{ 'header': '1' }, { 'header': '2' }, 'blockquote', 'code-block'],
+    //     [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+    //     ['bold', 'italic', 'underline', 'strike'],
+    //     [{ 'color': [] }, { 'background': [] }],
+    //     [{ 'align': [] }],
+    //     ['link', 'image'],
+    //     ['clean']
+    //   ],
+    // };
 
-  const formats = [
-    'font', 'size', 'header', 'bold', 'italic', 'underline', 'strike',
-    'blockquote', 'code-block', 'list', 'bullet', 'color', 'background',
-    'align', 'link', 'image'
-  ];
+    // const formats = [
+    //   'font', 'size', 'header', 'bold', 'italic', 'underline', 'strike',
+    //   'blockquote', 'code-block', 'list', 'bullet', 'color', 'background',
+    //   'align', 'link', 'image'
+    // ];
 
   const handleImageChange = (e) => {
     setImage(URL.createObjectURL(e.target.files[0]));
@@ -66,6 +67,10 @@ export default function AddBlog({ existingBlog }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const data={
+      id: uuidv4(),
+      content:content
+    }
     console.log({ title, content, image, category, tags });
     
   };
