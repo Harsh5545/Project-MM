@@ -6,6 +6,7 @@ import 'react-quill/dist/quill.snow.css'; // Import the styles for the editor
 import { AiOutlineCloudUpload, AiOutlineMobile, AiOutlineLaptop } from 'react-icons/ai';
 import { BsPlusCircle } from 'react-icons/bs';
 import Head from 'next/head';
+import { v4 as uuidv4 } from 'uuid';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -15,6 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import Tiptap from '@/components/TipTap';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
@@ -28,25 +30,25 @@ export default function AddBlog({ existingBlog }) {
   const [tagInput, setTagInput] = useState('');
   const [previewMode, setPreviewMode] = useState('laptop'); // 'laptop' or 'mobile'
 
-  // Custom toolbar options
-  const modules = {
-    toolbar: [
-      [{ 'font': [] }, { 'size': [] }],
-      [{ 'header': '1' }, { 'header': '2' }, 'blockquote', 'code-block'],
-      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-      ['bold', 'italic', 'underline', 'strike'],
-      [{ 'color': [] }, { 'background': [] }],
-      [{ 'align': [] }],
-      ['link', 'image'],
-      ['clean']
-    ],
-  };
+    // // Custom toolbar options
+    // const modules = {
+    //   toolbar: [
+    //     [{ 'font': [] }, { 'size': [] }],
+    //     [{ 'header': '1' }, { 'header': '2' }, 'blockquote', 'code-block'],
+    //     [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+    //     ['bold', 'italic', 'underline', 'strike'],
+    //     [{ 'color': [] }, { 'background': [] }],
+    //     [{ 'align': [] }],
+    //     ['link', 'image'],
+    //     ['clean']
+    //   ],
+    // };
 
-  const formats = [
-    'font', 'size', 'header', 'bold', 'italic', 'underline', 'strike',
-    'blockquote', 'code-block', 'list', 'bullet', 'color', 'background',
-    'align', 'link', 'image'
-  ];
+    // const formats = [
+    //   'font', 'size', 'header', 'bold', 'italic', 'underline', 'strike',
+    //   'blockquote', 'code-block', 'list', 'bullet', 'color', 'background',
+    //   'align', 'link', 'image'
+    // ];
 
   const handleImageChange = (e) => {
     setImage(URL.createObjectURL(e.target.files[0]));
@@ -65,8 +67,12 @@ export default function AddBlog({ existingBlog }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const data={
+      id: uuidv4(),
+      content:content
+    }
     console.log({ title, content, image, category, tags });
-    // Add logic to save or update the blog post
+    
   };
 
   return (
@@ -181,13 +187,14 @@ export default function AddBlog({ existingBlog }) {
 
             <div>
               <label className="block text-gray-700 dark:text-gray-300 mb-2">Content:</label>
-              <ReactQuill
+              <Tiptap content={content} onChange={(e)=>handleContentChange(e)}/>
+              {/* <ReactQuill
                 value={content}
                 onChange={setContent}
                 modules={modules}
                 formats={formats}
                 className="bg-white dark:bg-gray-700 dark:text-white"
-              />
+              /> */}
             </div>
 
             <Button

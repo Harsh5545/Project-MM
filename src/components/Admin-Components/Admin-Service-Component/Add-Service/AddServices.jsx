@@ -1,14 +1,16 @@
 'use client'
 
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
 import CourseDetails from './CourseDetails';
 import ProgramDetails from './ProgramDetails';
 import Testimonials from './Testimonials';
+import { useToast } from '@/hooks/use-toast';
 
 const AddServices = ({ onClose }) => {
+    const { toast } = useToast();
     const [currentStep, setCurrentStep] = useState(1); // Track the current step of the form
     const [formData, setFormData] = useState({
         mainTitle: '',
@@ -19,6 +21,22 @@ const AddServices = ({ onClose }) => {
         programDetails: {},
         testimonials: {},
     });
+    const [categories, setCategories] = useState([]);
+
+    useEffect(() => {
+        // Fetch categories from the backend
+        const fetchCategories = async () => {
+            try {
+                const response = await fetch('/api/categories'); // Adjust the URL as needed
+                const data = await response.json();
+                setCategories(data);
+            } catch (error) {
+                console.error('Error fetching categories:', error);
+            }
+        };
+
+        fetchCategories();
+    }, []);
 
     const handleNext = () => {
         setCurrentStep((prevStep) => Math.min(prevStep + 1, 4)); // Ensure step does not exceed total steps
@@ -37,10 +55,39 @@ const AddServices = ({ onClose }) => {
         setFormData((prevData) => ({ ...prevData, category: value }));
     };
 
-
-    const handleFormSubmit = (e) => {
+    const handleFormSubmit = async (e) => {
         e.preventDefault();
-        console.log(formData); // Here you can handle form submission, e.g., API call
+        try {
+            const response = await fetch('/api/services/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                toast({
+                    title: "Success",
+                    description: "Service added successfully",
+                });
+                onClose();
+            } else {
+                toast({
+                    title: "Error",
+                    description: result.message,
+                    variant: "destructive",
+                });
+            }
+        } catch (error) {
+            toast({
+                title: "Error",
+                description: "An error occurred while adding the service",
+                variant: "destructive",
+            });
+        }
     };
 
     return (
@@ -59,59 +106,60 @@ const AddServices = ({ onClose }) => {
 
                 <form onSubmit={handleFormSubmit} className="space-y-6">
                     {/* Step 1: Main Title & Subtitle */}
-                    {/* Step 1: Main Title & Subtitle */}
-                              {currentStep === 1 && (
-                                <div className="space-y-6">
-                                  <div>
-                                    <label className="block text-gray-700 dark:text-gray-300 mb-2">Main Title:</label>
-                                    <Input
-                                      type="text"
-                                      placeholder="Enter the main title"
-                                      name="mainTitle"
-                                      value={formData.mainTitle}
-                                      onChange={handleInputChange}
-                                      className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
-                                    />
-                                  </div>
-                    
-                                  <div>
-                                    <label className="block text-gray-700 dark:text-gray-300 mb-2">Sub Title:</label>
-                                    <Input
-                                      type="text"
-                                      placeholder="Enter the sub title"
-                                      name="subTitle"
-                                      value={formData.subTitle}
-                                      onChange={handleInputChange}
-                                      className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
-                                    />
-                                  </div>
-                    
-                                  <div>
-                                    <label className="block text-gray-700 dark:text-gray-300 mb-2">Category:</label>
-                                    <Select onValueChange={handleSelectChange}>
-                                      <SelectTrigger className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white">
+                    {currentStep === 1 && (
+                        <div className="space-y-6">
+                            <div>
+                                <label className="block text-gray-700 dark:text-gray-300 mb-2">Main Title:</label>
+                                <Input
+                                    type="text"
+                                    placeholder="Enter the main title"
+                                    name="mainTitle"
+                                    value={formData.mainTitle}
+                                    onChange={handleInputChange}
+                                    className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block text-gray-700 dark:text-gray-300 mb-2">Sub Title:</label>
+                                <Input
+                                    type="text"
+                                    placeholder="Enter the sub title"
+                                    name="subTitle"
+                                    value={formData.subTitle}
+                                    onChange={handleInputChange}
+                                    className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block text-gray-700 dark:text-gray-300 mb-2">Category:</label>
+                                <Select onValueChange={handleSelectChange}>
+                                    <SelectTrigger className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white">
                                         <SelectValue placeholder="Select a category" />
-                                      </SelectTrigger>
-                                      <SelectContent>
-                                        <SelectItem value="category1">Category 1</SelectItem>
-                                        <SelectItem value="category2">Category 2</SelectItem>
-                                        <SelectItem value="category3">Category 3</SelectItem>
-                                      </SelectContent>
-                                    </Select>
-                                  </div>
-                    
-                                  <div>
-                                    <label className="block text-gray-700 dark:text-gray-300 mb-2">Course Description:</label>
-                                    <textarea
-                                      placeholder="Enter the course description"
-                                      name="courseDescription"
-                                      value={formData.courseDescription}
-                                      onChange={handleInputChange}
-                                      className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white h-32"
-                                    />
-                                  </div>
-                                </div>
-                              )}
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {categories.map((category) => (
+                                            <SelectItem key={category._id} value={category.name}>
+                                                {category.name}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                            </div>
+
+                            <div>
+                                <label className="block text-gray-700 dark:text-gray-300 mb-2">Course Description:</label>
+                                <textarea
+                                    placeholder="Enter the course description"
+                                    name="courseDescription"
+                                    value={formData.courseDescription}
+                                    onChange={handleInputChange}
+                                    className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white h-32"
+                                />
+                            </div>
+                        </div>
+                    )}
 
                     {/* Step 2: Course Details */}
                     {currentStep === 2 && <CourseDetails formData={formData} setFormData={setFormData} />}

@@ -7,7 +7,7 @@ const Faq = (props) => {
   const { faqData } = props;
 
   return (
-    <section className="flex  -[#c3965d] my-16 flex-col md:flex-row gap-8 p-4 md:p-8 lg:px-16 lg:py-36 dark:from-gray-900 dark:to-gray-800 rounded-lg shadow-lg w-full relative z-10">
+    <section className="flex  bg-[#c3965d] my-16 flex-col md:flex-row gap-8 p-4 md:p-8 lg:px-16 lg:py-36 dark:from-gray-900 dark:to-gray-800 rounded-lg shadow-lg w-full relative z-10">
       <div className="absolute inset-0 bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d]  opacity-80 rounded-lg"></div>
       <div className="relative  flex flex-col md:flex-row gap-8 w-full">
         {/* Left Side */}
@@ -15,14 +15,14 @@ const Faq = (props) => {
         <h2 className="text-3xl md:text-4xl font-bold text-center md:text-left bg-clip-text text-white mb-6">
           Why Choose Modern Mannerism?
         </h2>
-        <Card className="dark:bg-gray-800 lg:bg-opacity-0 bg-opacity-20 bg-white md:w-[75%] w-full shadow-md">
+        <Card className="dark:bg-gray-800 lg:bg-opacity-80 bg-opacity-40 bg-white md:w-[75%] w-full shadow-md">
           <CardHeader>
             <CardTitle className="text-gray-700 dark:text-gray-300 text-xl font-bold mb-4">
               Benefits of Modern Mannerism
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-gray-700  dark:text-gray-300">
+            <p className="text-gray-700  dark:text-gray-300"> 
               Modern Mannerism helps you navigate social situations with confidence and grace, making a positive impression in both personal and professional settings.
             </p>
           </CardContent>

@@ -89,7 +89,7 @@ const BlogTable = () => {
         <Button
           type="button"
           className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg"
-          onClick={() => router.push('blog/create')}
+          onClick={() => router.push("blog/create")}
         >
           Add Blog
         </Button>
@@ -97,37 +97,51 @@ const BlogTable = () => {
         <div className="mt-8">
           <Input
             type="text"
-            value={globalFilter || ''}
+            value={globalFilter || ""}
             onChange={(e) => setGlobalFilter(e.target.value)}
             placeholder="Search..."
             className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white mb-4"
           />
-          <table {...getTableProps()} className="min-w-full bg-white dark:bg-gray-800">
+          <table
+            {...getTableProps()}
+            className="min-w-full bg-white dark:bg-gray-800"
+          >
             <thead>
-              {headerGroups.map(headerGroup => (
-                <tr {...headerGroup.getHeaderGroupProps()}>
-                  {headerGroup.headers.map(column => (
-                    <th
-                      {...column.getHeaderProps()}
-                      className="px-4 py-2 border-b-2 border-gray-300 dark:border-gray-600 text-left text-sm font-semibold text-gray-700 dark:text-gray-300"
-                    >
-                      {column.render('Header')}
-                    </th>
-                  ))}
-                </tr>
-              ))}
+              {headerGroups.map((headerGroup) => {
+                const { key, ...restHeaderGroupProps } =
+                  headerGroup.getHeaderGroupProps(); // Extract 'key'
+                return (
+                  <tr key={key} {...restHeaderGroupProps}>
+                    {headerGroup.headers.map((column) => {
+                      const { key: columnKey, ...restColumnProps } =
+                        column.getHeaderProps(); // Extract 'key'
+                      return (
+                        <th
+                          key={columnKey}
+                          {...restColumnProps}
+                          className="px-4 py-2 border-b-2 border-gray-300 dark:border-gray-600 text-left text-sm font-semibold text-gray-700 dark:text-gray-300"
+                        >
+                          {column.render("Header")}
+                        </th>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
             </thead>
+
             <tbody {...getTableBodyProps()}>
-              {page.map(row => {
+              {page.map((row, id) => {
                 prepareRow(row);
                 return (
-                  <tr {...row.getRowProps()}>
-                    {row.cells.map(cell => (
+                  <tr key={id} {...row.getRowProps()}>
+                    {row.cells.map((cell, ind) => (
                       <td
+                        key={ind}
                         {...cell.getCellProps()}
                         className="px-4 py-2 border-b border-gray-300 dark:border-gray-600 text-sm text-gray-700 dark:text-gray-300"
                       >
-                        {cell.render('Cell')}
+                        {cell.render("Cell")}
                       </td>
                     ))}
                   </tr>
