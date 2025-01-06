@@ -67,7 +67,7 @@ export default function AddBlog({ existingBlog }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log({ title, content, image, category, tags });
-    // Add logic to save or update the blog post
+    
   };
 
   return (

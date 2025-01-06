@@ -45,6 +45,7 @@
     "@simplewebauthn/browser": "^9.0.1",
     "@simplewebauthn/server": "^9.0.3",
     "@tabler/icons-react": "^3.26.0",
+    "@tiptap/extension-underline": "^2.11.0",
     "@tiptap/pm": "^2.11.0",
     "@tiptap/react": "^2.11.0",
     "@tiptap/starter-kit": "^2.11.0",

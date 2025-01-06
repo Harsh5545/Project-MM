@@ -93,7 +93,7 @@ const ServicePage = ({ params }) => {
 
         {/* <div className="absolute inset-0 bg-[#793600] opacity-25"></div> */}
         <div className=" flex absolute pb-8 flex-col justify-center items-center text-center text-black">
-          <h1 className="text-4xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d]  uppercase">{title}</h1>
+          <h1 className="text-4xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#9e7033] via-[#c3965d] to-[#9e7033]  uppercase">{title}</h1>
           <h2 className={`${dm_Sans.className} mt-4 px-2 text-lg lg:text-xl`}>{headline}</h2>
 
 
