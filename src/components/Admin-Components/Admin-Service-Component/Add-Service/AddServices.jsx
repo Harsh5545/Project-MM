@@ -22,7 +22,8 @@ const AddServices = ({ onClose }) => {
         testimonials: {},
     });
     const [categories, setCategories] = useState([]);
-
+    
+console.log(formData)
     useEffect(() => {
         // Fetch categories from the backend
         const fetchCategories = async () => {
