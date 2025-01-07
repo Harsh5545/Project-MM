@@ -10,7 +10,7 @@ export async function doCredentialLogin(formData) {
             password: formData.get("password"),
             redirect: false,
         });
-        redirect('/')
+        redirect('/sign-in')
     } catch (err) {
         throw err;
     }

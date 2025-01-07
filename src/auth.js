@@ -16,6 +16,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
+        console.log(credentials,'CREDENTAILS')
         if (!credentials) return null;
 
         try {
@@ -24,13 +25,17 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             include: { role: true },
           });
 
+          console.log("USER", user)
+
           if (!user) {
-            throw new Error("User not found");
+            throw new Error("This Email is Not register with us. Please register");
           }
 
-          const isMatch = bcrypt.compare(credentials.password, user.password);
+          const isMatch = await bcrypt.compareSync(credentials.password, user.password);
+          console.log(isMatch,"IS---MATCH");
+
           if (!isMatch) {
-            throw new Error("Invalid email or password");
+            throw new Error("Invalid password");
           }
 
           return {
