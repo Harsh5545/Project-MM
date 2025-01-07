@@ -60,5 +60,5 @@ export async function middleware(request) {
 }
 
 export const config = {
-    matcher: ["/((?!.+\\.[\\w]+$|_next|_next/image|_next/static|favicon.ico).*)", "/", "/(api|trpc)(.*)"]
+    matcher: ["/((?!.+\\.[\\w]+$|_next|_next/image|_next/static|favicon.ico).*)", "/", "/(!api|trpc)(.*)"]
 };
