@@ -15,7 +15,6 @@ export const PUBLIC_ROUTES = [
    "/api/auth/session",
    "/privacy-policy",
    "/terms",
-   "/login",
 
 ];
 
