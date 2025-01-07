@@ -141,7 +141,7 @@ const ContactPage = () => {
 
             <button
               type="submit"
-              className="w-full py-3 text-white bg-[#933469] hover:bg-[#721a53] rounded-md transition-colors duration-300"
+              className="w-full py-3 tracking-wide rounded-full bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] text-white transition-colors duration-300"
             >
               Send
             </button>
@@ -157,10 +157,10 @@ const ContactPage = () => {
             <p>Our team will reach you as soon as possible.</p>
             <button
               onClick={handleCloseDialog}
-              className="mt-4 py-2 px-4 bg-[#933469] text-white rounded-md"
+              className="mt-4 py-2 px-4  tracking-wide rounded-full bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] text-white"
             >
               Close
-            </button>
+            </button> 
           </div>
         </div>
       )}
