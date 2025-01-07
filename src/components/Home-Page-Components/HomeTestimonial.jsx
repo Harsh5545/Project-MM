@@ -35,9 +35,9 @@ const HomeTestimonial = () => {
       <div className="absolute inset-0 bg-opacity-25 dark:bg-opacity-30 dark:bg-[#060507] bg-[#FAE7F3]"></div>
       {/* Content */}
       <div className="flex h-auto md:h-[90vh] gap-5 flex-col p-5 justify-center items-center z-10 relative">
-        <h5 className="font-semibold text-xl md:text-4xl w-[100%] md:w-[100%] text-center text-white">
+        <h6 className="font-semibold text-xl md:text-4xl w-[100%] md:w-[100%] text-center text-white">
         Testimonials
-        </h5>
+        </h6>
         <div
           className={`bg-white w-[95%] md:w-[60%] shadow-2xl shadow-slate-400 dark:shadow-[#060507] dark:bg-[#00001F] relative p-6 md:p-16 rounded-xl ${styles.testimonialContainer}`}
           style={{ maxWidth: "100%", overflowX: "hidden" }}
@@ -71,9 +71,9 @@ const HomeTestimonial = () => {
                       className="rounded-full  shadow-lg mb-3"
                     />
 
-                    <h3 className="text-lg font-semibold text-center dark:text-white text-[#06273A]">
+                    <p className="text-lg font-semibold text-center dark:text-white text-[#06273A]">
                       {testimonial.Name}
-                    </h3>
+                    </p>
                     {/* <h4 className="text-md font-medium text-center dark:text-white text-[#7f8c8d]">
                       {testimonial.City}
                     </h4> */}

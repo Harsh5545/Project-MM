@@ -8,9 +8,9 @@ function Aboutpage() {
         <div className="flex-1 flex-col flex text-center gap-5 ">
           <div className="px-2 md:w-[90%] w-full flex text-center flex-col gap-4">
             <div className="flex md:pb-5 pb-2 lg:pb-10 flex-col items-center gap-2 justify-center">
-              <h2 className=" text-black text-xl md:text-4xl font-semibold dark:text-white">
+              <h1 className=" text-black text-xl md:text-4xl font-semibold dark:text-white">
                 ABOUT MODERN MANNERISM
-              </h2>
+              </h1>
               <hr className="h-1 bg-gradient-to-r  from-[#c3965d] via-[#eabf91] to-[#c3965d] w-24" />
             </div>
 

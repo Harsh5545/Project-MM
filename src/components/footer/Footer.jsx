@@ -31,19 +31,19 @@ const Footer = () => {
 
             {/* Phone Section */}
             <div className="text-center flex flex-col items-center md:w-1/4">
-              <h5 className="text-lg font-semibold mb-10">Phone</h5>
+              <span className="text-lg font-semibold mb-10">Phone</span>
               <p className="text-lg font-medium">+91 9867831324</p>
             </div>
 
             {/* Email Section */}
             <div className="text-center flex flex-col items-center md:w-1/4">
-              <h5 className="text-lg font-semibold mb-10">Email</h5>
+              <span className="text-lg font-semibold mb-10">Email</span>
               <p className="text-lg font-medium">modernmannerism@gmail.com</p>
             </div>
 
             {/* Social Media Section */}
             <div className="text-center flex flex-col items-center md:w-1/4">
-              <h5 className="text-lg font-semibold mb-1">Social</h5>
+              <span className="text-lg font-semibold mb-1">Social</span>
               {/* <div className="flex justify-center mt-1">
                 <SocialButtons />
               </div> */}
