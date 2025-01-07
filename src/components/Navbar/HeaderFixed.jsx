@@ -69,7 +69,7 @@ function HeaderFixed() {
             width={300}
             height={300}
             src="/assets/MM.png"
-            className="md:max-w-40 max-w-16"
+            className="md:max-w-[10rem] max-w-[5rem]"
             alt="ModernMannerism institute logo"
           />
 
