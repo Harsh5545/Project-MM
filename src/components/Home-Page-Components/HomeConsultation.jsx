@@ -138,7 +138,7 @@ const HomeConsultation = () => {
                   value={formData.phone}
                   onChange={handleInputChange}
                   placeholder="Enter your phone"
-                  pattern="^\d{3}-\d{3}-\d{4}$" // Phone number pattern
+                  pattern="^\d{3}-\d{3}-\d{4}$" 
                   title="Phone number should be in the format: 123-456-7890."
                   required
                   className="w-full"
