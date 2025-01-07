@@ -21,7 +21,7 @@ const HomeAbout = () => {
               width={500}
               height={400}
               alt="modern Mannerism image"
-              src="/assets/AboutUsModernMannerism.webp"
+              src="/assets/AboutUsModernMannerism.jpg"
               className="shadow-2xl object-contain p-0 lg:p-0.5 shadow-[#859199]"
               style={{
                 boxShadow:
