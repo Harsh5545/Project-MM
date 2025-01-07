@@ -38,7 +38,7 @@ function Aboutpage() {
         </div>
         <div className="flex-1 w-full flex items-center justify-center ">
           <Image
-            src="/assets/AboutUsModernMannerism.webp"
+            src="/assets/AboutUsModernMannerism.jpg"
             height={300}
             width={500}
             className="border-[#06273A] dark:border-[#fff] border-5"
