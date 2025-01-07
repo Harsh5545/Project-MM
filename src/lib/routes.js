@@ -1,4 +1,4 @@
-export const LOGIN = "/login";
+export const LOGIN = "/sign-in";
 
 export const ROOT = "/";
 
@@ -16,7 +16,7 @@ export const PUBLIC_ROUTES = [
    "/privacy-policy",
    "/terms",
    "/login",
-   
+
 ];
 
 export const ADMIN_ROUTES = [
