@@ -15,7 +15,8 @@ export default function UserProfile({data}) {
     name: data?.user?.name,
     email: data?.user?.email,
     bio: 'I am a software developer.',
-    avatar: data?.user?.image
+    avatar: data?.user?.image,
+    id:data?.user?.id
   });
 
   const { toast } = useToast();
@@ -47,14 +48,14 @@ export default function UserProfile({data}) {
 
 
         const profileData = new FormData();
-        profileData.append('userId', 1);
+        profileData.append('userId',);
         profileData.append('image', data?.url)
         const res = await fetch('/api/profile/update-profile-picture', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ 'userId':1,'image':data?.url }),
+          body: JSON.stringify({ 'userId':user?.id,'image':data?.url }),
         });
 
 
