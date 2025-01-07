@@ -12,29 +12,30 @@ import {
 const SocialMobile = () => {
   const links = [
     {
+     
       title: "LinkedIn",
       icon: <IconBrandLinkedin className="h-10 w-10 text-neutral-500 dark:text-neutral-300" />,
-      href: "https://www.linkedin.com",
+      href: "https://www.linkedin.com/in/k-manasi/",
     },
     {
       title: "Instagram",
       icon: <IconBrandInstagram className="h-10 w-10 text-neutral-500 dark:text-neutral-300" />,
-      href: "https://www.instagram.com",
+      href: "https://www.instagram.com/modernmannerism/",
     },
     {
       title: "Facebook",
       icon: <IconBrandFacebook className="h-10 w-10 text-neutral-500 dark:text-neutral-300" />,
-      href: "https://www.facebook.com",
+      href: "https://www.facebook.com/modernmannerism/",
     },
     {
       title: "YouTube",
       icon: <IconBrandYoutube className="h-10 w-10 text-neutral-500 dark:text-neutral-300" />,
-      href: "https://www.youtube.com",
+      href: "www.youtube.com/@modernmannerism",
     },
     {
       title: "Medium",
       icon: <IconBrandMedium className="h-10 w-10 text-neutral-500 dark:text-neutral-300" />,
-      href: "https://www.medium.com",
+      href: "https://medium.com/@modernmannerism",
     },
     
   ];
