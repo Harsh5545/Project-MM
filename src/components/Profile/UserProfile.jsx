@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { useToast } from '@/hooks/use-toast'
+import Image from 'next/image'
 
 export default function UserProfile({ data }) {
   const [user, setUser] = useState({
@@ -204,7 +205,8 @@ export default function UserProfile({ data }) {
             <div className="flex justify-center">
               <div className="relative">
                 <Avatar className="w-32 h-32">
-                  <AvatarImage src={user?.avatar} alt={user.name} />
+                  {/* <AvatarImage src={user?.avatar} alt={user.name} /> */}
+                  <Image src={user?.avatar} alt={user.name}/>
                   <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
                 </Avatar>
                 <Label htmlFor="avatar-upload" className={`absolute bottom-0 right-0 bg-primary text-primary-foreground rounded-full p-2 cursor-pointer hover:bg-primary/90 transition-colors ${isUploading ? 'opacity-50 cursor-not-allowed' : ''}`}>
