@@ -29,7 +29,8 @@ export const POST = async (req) => {
         fs.writeFileSync(filePath, buffer);
 
         // Generate the full URL to access the uploaded file
-        const fullUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/upload/${folder}/${file.name}`;
+        // const fullUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/upload/${folder}/${file.name}`;
+        const fullUrl = `/upload/${folder}/${file.name}`;
 
         // Return a response with the success status and the file URL
         return NextResponse.json({
