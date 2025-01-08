@@ -3,8 +3,7 @@ export default function robots() {
         rules: {
             userAgent: '*',
             allow: '/',
-            disallow: '/admin/',
-            disallow: '/user/',
+            disallow: ['/admin/','/user/'],
         },
         sitemap: 'https://modernmannerism.com/sitemap.xml',
     }
