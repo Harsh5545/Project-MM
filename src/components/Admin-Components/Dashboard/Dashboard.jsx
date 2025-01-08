@@ -154,14 +154,27 @@ export function Dashboard({ children, session }) {
             </SheetContent>
           </Sheet>
           <div className="w-full flex-1">
-                <SignOut/>
+            
           </div>
-          <Button variant="primary" size="icon" className="border border-primary mx-2 py-2">
-            <Avatar>
+          <DropdownMenu>
+            <DropdownMenuTrigger><Avatar>
               <AvatarImage src="https://github.com/shadcn.png" />
               <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
-          </Button>
+            </Avatar></DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuLabel>
+                <Link href={'#'}></Link>
+              </DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>
+                <Link href={'/admin/profile'}>Profile</Link>
+                </DropdownMenuItem>
+              <DropdownMenuItem>Billing</DropdownMenuItem>
+              <DropdownMenuItem>Team</DropdownMenuItem>
+              <DropdownMenuItem><SignOut /></DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
         </header>
         <Suspense fallback={<LoadingSpinner />}>
           <main className="flex-1 p-4 bg-white shadow-md rounded-lg m-4">
