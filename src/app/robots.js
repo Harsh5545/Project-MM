@@ -6,6 +6,6 @@ export default function robots() {
             disallow: '/admin/',
             disallow: '/user/',
         },
-        sitemap: 'https://acme.com/sitemap.xml',
+        sitemap: 'https://modernmannerism.com/sitemap.xml',
     }
 }
