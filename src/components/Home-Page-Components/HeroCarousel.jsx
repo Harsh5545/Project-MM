@@ -47,7 +47,7 @@ const HeroCarousel = () => {
     },
     {
       id: 2,
-      image: "/assets/One-on-One Consulting.jpeg",
+      image: "/assets/OneonOneConsulting.jpeg",
       text: "One-on-One Consulting",
       description:
         "Help individuals refine their personal and professional image, develop strong communication skills, and boost their confidence. Our one-on-one sessions are customized to meet the unique needs of each client.",
@@ -55,7 +55,7 @@ const HeroCarousel = () => {
     },
     {
       id: 3,
-      image: "/assets/Corporate Workshops & Training.jpeg",
+      image: "/assets/CorporateWorkshops&Training.jpeg",
       text: "Corporate Workshops & Training",
       description:
         "We offer customized training programs designed to improve workplace professionalism, communication, and team dynamics. These workshops are perfect for teams, managers, and executives who want to refine their professional image and etiquette.",
@@ -63,7 +63,7 @@ const HeroCarousel = () => {
     },
     {
       id: 4,
-      image: "/assets/Young Adult Grooming Programme.jpeg",
+      image: "/assets/YoungAdultGroomingProgramme.jpeg",
       text: "Young Adult Grooming Programmee",
       description:
         "Prepare teens and young adults for success by teaching them essential grooming, communication, and etiquette skills. This program is ideal for young adults entering the workforce, preparing for interviews, or simply wanting to build confidence in their daily lives.",
@@ -71,7 +71,7 @@ const HeroCarousel = () => {
     },
     {
       id: 5,
-      image: "/assets/Children's Etiquette Programme.jpeg",
+      image: "/assets/ChildrenEtiquetteProgramme.jpeg",
       text: "Children's Etiquette Programmee",
       description:
         "Help children learn good manners, respect, and social skills in a fun and engaging way. This program focuses on building the foundation for positive behavior and respectful interactions, preparing children for both social and school environments.",
@@ -79,7 +79,7 @@ const HeroCarousel = () => {
     },
     {
       id: 6,
-      image: "/assets/Online Courses & Workshops.jpeg",
+      image: "/assets/OnlineCoursesWorkshops.jpeg",
       text: "Online Courses & Webinars",
       description:
         "Our online offerings allow you to learn at your own pace or join live sessions to enhance your skills in image, etiquette, and communication.",
@@ -168,7 +168,7 @@ const HeroCarousel = () => {
                 />
                 <div className={styles.overlay}></div>
                 <div className="absolute text-white flex gap-5 md:gap-9 flex-col text-center items-center justify-center w-full h-full z-10 p-8">
-                  <h1 className={styles.text}>{slide.text}</h1>
+                  <span className={styles.text}>{slide.text}</span>
                   <div className="flex flex-col md:w-[50%] text-sm font-medium md:text-lg">
                     <p>{slide.description}</p>
                     <p>{slide.description2}</p>

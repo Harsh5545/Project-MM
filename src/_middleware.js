@@ -7,6 +7,7 @@ const secret = process.env.NEXTAUTH_SECRET;
 
 export async function middleware(request) {
     const token = await getToken({ req: request, secret });
+    console.log(token,'token')
     const { nextUrl } = request;
     const isAuthenticated = !!token;
     const isPublicRoute = PUBLIC_ROUTES.some(route => nextUrl.pathname.startsWith(route)) || nextUrl.pathname === ROOT;
@@ -59,5 +60,5 @@ export async function middleware(request) {
 }
 
 export const config = {
-    matcher: ["/((?!.+\\.[\\w]+$|_next|_next/image|_next/static|favicon.ico).*)", "/", "/(api|trpc)(.*)"]
+    matcher: ["/((?!.+\\.[\\w]+$|_next|_next/image|_next/static|favicon.ico).*)", "/", "/(!api|trpc)(.*)"]
 };

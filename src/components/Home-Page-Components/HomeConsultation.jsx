@@ -73,10 +73,10 @@ const HomeConsultation = () => {
 
   return (
     <div className="flex flex-col items-center dark:bg-[#00001F] p-8 md:py-36 md:px-16 gap-10 justify-center">
-      <h1 className="text-2xl md:text-4xl text-center font-semibold text-gray-800 dark:text-white">
+      <h3 className="text-2xl md:text-4xl text-center font-semibold text-gray-800 dark:text-white">
         Book Your Consultation Now
         <hr className="border-t-2  border-[#eabf91] w-1/4 mx-auto mt-2" />
-      </h1>
+      </h3>
 
       <div className="flex flex-col md:flex-row items-center justify-between w-full max-w-5xl gap-8">
         <Image
@@ -138,7 +138,7 @@ const HomeConsultation = () => {
                   value={formData.phone}
                   onChange={handleInputChange}
                   placeholder="Enter your phone"
-                  pattern="^\d{3}-\d{3}-\d{4}$" // Phone number pattern
+                  pattern="^\d{3}-\d{3}-\d{4}$" 
                   title="Phone number should be in the format: 123-456-7890."
                   required
                   className="w-full"

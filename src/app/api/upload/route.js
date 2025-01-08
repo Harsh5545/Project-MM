@@ -3,13 +3,13 @@ import path from "path";
 import fs from "fs";
 
 // The base directory where files will be stored (inside the public folder)
-const BASE_UPLOAD_DIR = path.resolve(process.env.ROOT_PATH ?? "", "public/uploads");
+const BASE_UPLOAD_DIR = path.resolve(process.env.ROOT_PATH ?? "", "public/upload");
 
 export const POST = async (req) => {
     const formData = await req.formData();
     const body = Object.fromEntries(formData);
     const file = body.file || null;
-    const folder = body.folder || "uploads"; // Default to 'uploads' if no folder is provided
+    const folder = body.folder || "upload"; // Default to 'uploads' if no folder is provided
 
     if (file) {
         const buffer = Buffer.from(await file.arrayBuffer());
@@ -29,7 +29,7 @@ export const POST = async (req) => {
         fs.writeFileSync(filePath, buffer);
 
         // Generate the full URL to access the uploaded file
-        const fullUrl = `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/uploads/${folder}/${file.name}`;
+        const fullUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/upload/${folder}/${file.name}`;
 
         // Return a response with the success status and the file URL
         return NextResponse.json({

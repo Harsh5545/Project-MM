@@ -1,192 +1,174 @@
 "use client"
-
-import React, { useState, useEffect } from 'react';
-import { useToast } from '@/hooks/use-toast';
+import React, { useState, useMemo } from 'react';
+import { useTable, usePagination, useGlobalFilter } from 'react-table';
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import AddServices from '../Add-Service/AddServices';
 
 const ServicesTable = () => {
-  const { toast } = useToast();
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [sortOrder, setSortOrder] = useState('asc'); // Sorting order (asc or desc)
-  const [sortColumn, setSortColumn] = useState('heading'); // Default column to sort
-  const [pageIndex, setPageIndex] = useState(0); // Current page index
-  const [pageSize, setPageSize] = useState(10); // Number of items per page
+  const [services, setServices] = useState([]);
+  const [showForm, setShowForm] = useState(false);
 
-  const fetchData = async () => {
-    const response = await fetch('/api/services/list');
-    const result = await response.json();
-    setData(result.data);
-    setLoading(false);
+  const handleFormSubmit = (formData) => {
+    setServices([...services, formData]);
+    setShowForm(false);
   };
 
-  // Sorting function
-  const handleSort = (column) => {
-    const newSortOrder = sortColumn === column && sortOrder === 'asc' ? 'desc' : 'asc';
-    setSortColumn(column);
-    setSortOrder(newSortOrder);
+  const handleDelete = (index) => {
+    const newServices = services.filter((_, i) => i !== index);
+    setServices(newServices);
   };
 
-  // Sorting the data based on the selected column and order
-  const sortedData = data.sort((a, b) => {
-    if (a[sortColumn] < b[sortColumn]) return sortOrder === 'asc' ? -1 : 1;
-    if (a[sortColumn] > b[sortColumn]) return sortOrder === 'asc' ? 1 : -1;
-    return 0;
-  });
-
-  // Pagination: Slice data based on current page and page size
-  const paginatedData = sortedData.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize);
-
-  // Handle pagination controls
-  const handlePageChange = (newPageIndex) => {
-    setPageIndex(newPageIndex);
-  };
-
-  // Handle page size change
-  const handlePageSizeChange = (e) => {
-    setPageSize(Number(e.target.value));
-    setPageIndex(0); // Reset to first page when page size changes
-  };
-
-  const handleDelete = async (id) => {
-    const response = await fetch('/api/services/delete', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
+  const columns = useMemo(
+    () => [
+      {
+        Header: 'Image',
+        accessor: 'image', // Assuming you have an image field in formData
+        Cell: ({ value }) => <img src={value} alt="Service" className="w-16 h-16 object-cover" />,
       },
-      body: JSON.stringify({ id }),
-    });
-    const result = await response.json();
-    if (result.success) {
-      toast({
-        title: "Success",
-        description: result.message,
-      });
-      fetchData();
-    } else {
-      toast({
-        title: "Error",
-        description: result.message,
-        variant: "destructive",
-      });
-    }
-  };
+      {
+        Header: 'Title',
+        accessor: 'mainTitle',
+      },
+      {
+        Header: 'Category',
+        accessor: 'category',
+      },
+      {
+        Header: 'Actions',
+        Cell: ({ row: { index } }) => (
+          <div className="flex space-x-2">
+            <Button
+              type="button"
+              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg"
+              onClick={() => console.log('Edit', index)}
+            >
+              Edit
+            </Button>
+            <Button
+              type="button"
+              className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg"
+              onClick={() => handleDelete(index)}
+            >
+              Delete
+            </Button>
+          </div>
+        ),
+      },
+    ],
+    [services]
+  );
 
-  // Handle edit action
-  const handleEdit = (id) => {
-    console.log(`Edit service with id: ${id}`);
-  };
+  const data = useMemo(() => services, [services]);
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  if (loading) return <div>Loading...</div>;
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    page,
+    prepareRow,
+    setGlobalFilter,
+    state: { globalFilter, pageIndex, pageSize },
+    canPreviousPage,
+    canNextPage,
+    pageOptions,
+    nextPage,
+    previousPage,
+  } = useTable(
+    {
+      columns,
+      data,
+      initialState: { pageIndex: 0 },
+    },
+    useGlobalFilter,
+    usePagination
+  );
 
   return (
-    <div className="overflow-x-auto p-4">
-      <table className="min-w-full table-auto border-collapse bg-white shadow-md rounded-lg">
-        <thead className="text-left">
-          <tr className="bg-gray-200">
-            <th
-              className="px-4 py-2 border-b cursor-pointer"
-              onClick={() => handleSort('heading')}
-            >
-              Heading
-              {sortColumn === 'heading' && (
-                <span>{sortOrder === 'asc' ? ' 🔼' : ' 🔽'}</span>
-              )}
-            </th>
-            <th
-              className="px-4 py-2 border-b cursor-pointer"
-              onClick={() => handleSort('category')}
-            >
-              Category
-              {sortColumn === 'category' && (
-                <span>{sortOrder === 'asc' ? ' 🔼' : ' 🔽'}</span>
-              )}
-            </th>
-            <th className="px-4 py-2 border-b">Created At</th>
-            <th className="px-4 py-2 border-b">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {paginatedData.map((row) => (
-            <tr key={row.id} className="hover:bg-gray-100">
-              <td className="px-4 py-2 border-b">{row.heading}</td>
-              <td className="px-4 py-2 border-b">{row.category}</td>
-              <td className="px-4 py-2 border-b">{new Date(row.createdAt).toLocaleDateString()}</td>
-              <td className="px-4 py-2 border-b flex space-x-2">
-                <button
-                  type="button"
-                  className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg"
-                  onClick={() => handleEdit(row.id)}
-                >
-                  Edit
-                </button>
-                <button
-                  type="button"
-                  className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg"
-                  onClick={() => handleDelete(row.id)}
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div className="bg-gradient-to-r from-gray-200 to-gray-100 ">
+      <div className="w-full mx-auto bg-white dark:bg-gray-800  p-8 space-y-8">
+        <h1 className="text-3xl font-bold text-gray-800 dark:text-white text-center">
+          Services Table
+        </h1>
 
-      {/* Pagination Controls */}
-      <div className="mt-4 flex items-center justify-between">
-        <div className="flex items-center space-x-2">
-          <button
-            onClick={() => handlePageChange(0)}
-            disabled={pageIndex === 0}
-            className="px-4 py-2 bg-blue-500 text-white rounded disabled:bg-gray-400"
-          >
-            {'<<'}
-          </button>
-          <button
-            onClick={() => handlePageChange(pageIndex - 1)}
-            disabled={pageIndex === 0}
-            className="px-4 py-2 bg-blue-500 text-white rounded disabled:bg-gray-400"
-          >
-            {'<'}
-          </button>
-          <span>
-            Page {pageIndex + 1} of {Math.ceil(data.length / pageSize)}
-          </span>
-          <button
-            onClick={() => handlePageChange(pageIndex + 1)}
-            disabled={pageIndex >= Math.ceil(data.length / pageSize) - 1}
-            className="px-4 py-2 bg-blue-500 text-white rounded disabled:bg-gray-400"
-          >
-            {'>'}
-          </button>
-          <button
-            onClick={() => handlePageChange(Math.ceil(data.length / pageSize) - 1)}
-            disabled={pageIndex >= Math.ceil(data.length / pageSize) - 1}
-            className="px-4 py-2 bg-blue-500 text-white rounded disabled:bg-gray-400"
-          >
-            {'>>'}
-          </button>
-        </div>
+        <Button
+          type="button"
+          className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg"
+          onClick={() => setShowForm(!showForm)}
+        >
+          {showForm ? 'Close Form' : 'Add Service'}
+        </Button>
 
-        {/* Page Size Control */}
-        <div className="flex items-center space-x-2">
-          <label htmlFor="pageSize" className="text-gray-700">Show</label>
-          <select
-            id="pageSize"
-            value={pageSize}
-            onChange={handlePageSizeChange}
-            className="px-4 py-2 border rounded"
-          >
-            {[10, 25, 50, 100].map((size) => (
-              <option key={size} value={size}>
-                {size}
-              </option>
-            ))}
-          </select>
+        {showForm && (
+          <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center z-50">
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 w-full max-w-6xl max-h-[80vh] overflow-y-auto">
+              <AddServices onClose={()=>setShowForm(false)} />
+            </div>
+          </div>
+        )}
+
+        <div className="mt-8">
+          <Input
+            type="text"
+            value={globalFilter || ''}
+            onChange={(e) => setGlobalFilter(e.target.value)}
+            placeholder="Search..."
+            className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white mb-4"
+          />
+          <table {...getTableProps()} className="min-w-full bg-white dark:bg-gray-800">
+            <thead>
+              {headerGroups.map((headerGroup,ind) => (
+                <tr key={ind} {...headerGroup.getHeaderGroupProps()}>
+                  {headerGroup.headers.map((column,index) => (
+                    <th key={index}
+                      {...column.getHeaderProps()}
+                      className="px-4 py-2 border-b-2 border-gray-300 dark:border-gray-600 text-left text-sm font-semibold text-gray-700 dark:text-gray-300"
+                    >
+                      {column.render('Header')}
+                    </th>
+                  ))}
+                </tr>
+              ))}
+            </thead>
+            <tbody {...getTableBodyProps()}>
+              {page.map((row,key) => {
+                prepareRow(row);
+                return (
+                  <tr key={key} {...row.getRowProps()}>
+                    {row.cells.map((cell,ind) => (
+                      <td key={ind}
+                        {...cell.getCellProps()}
+                        className="px-4 py-2 border-b border-gray-300 dark:border-gray-600 text-sm text-gray-700 dark:text-gray-300"
+                      >
+                        {cell.render('Cell')}
+                      </td>
+                    ))}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+          <div className="flex justify-between items-center mt-4">
+            <div>
+              <Button
+                onClick={() => previousPage()}
+                disabled={!canPreviousPage}
+                className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg"
+              >
+                Previous
+              </Button>
+              <Button
+                onClick={() => nextPage()}
+                disabled={!canNextPage}
+                className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg ml-2"
+              >
+                Next
+              </Button>
+            </div>
+            <div>
+              Page {pageIndex + 1} of {pageOptions.length}
+            </div>
+          </div>
         </div>
       </div>
     </div>
