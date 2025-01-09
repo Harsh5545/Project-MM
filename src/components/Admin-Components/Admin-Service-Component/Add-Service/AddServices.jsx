@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
@@ -47,14 +47,14 @@ console.log(formData)
         setCurrentStep((prevStep) => Math.max(prevStep - 1, 1)); // Ensure step does not go below 1
     };
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormData((prevData) => ({ ...prevData, [name]: value }));
-    };
+      const handleInputChange = useCallback((e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  }, []);
 
-    const handleSelectChange = (value) => {
-        setFormData((prevData) => ({ ...prevData, category: value }));
-    };
+  const handleSelectChange = useCallback((value) => {
+    setFormData((prevData) => ({ ...prevData, category: value }));
+  }, []);
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
