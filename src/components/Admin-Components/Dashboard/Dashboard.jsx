@@ -154,13 +154,15 @@ export function Dashboard({ children, session }) {
             </SheetContent>
           </Sheet>
           <div className="w-full flex-1">
-            
+
           </div>
           <DropdownMenu>
-            <DropdownMenuTrigger><Avatar>
-              <AvatarImage src="https://github.com/shadcn.png" />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar></DropdownMenuTrigger>
+            <DropdownMenuTrigger asChild>
+              <Avatar>
+                <AvatarImage src={session?.user?.image} />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar>
+            </DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuLabel>
                 <Link href={'#'}></Link>
@@ -168,7 +170,7 @@ export function Dashboard({ children, session }) {
               <DropdownMenuSeparator />
               <DropdownMenuItem>
                 <Link href={'/admin/profile'}>Profile</Link>
-                </DropdownMenuItem>
+              </DropdownMenuItem>
               <DropdownMenuItem>Billing</DropdownMenuItem>
               <DropdownMenuItem>Team</DropdownMenuItem>
               <DropdownMenuItem><SignOut /></DropdownMenuItem>

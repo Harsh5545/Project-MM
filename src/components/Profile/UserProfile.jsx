@@ -9,6 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { useToast } from '@/hooks/use-toast'
 import Image from 'next/image'
 import UploadFile from '../upload/UploadFile'
+import { Loader } from 'lucide-react'
 
 export default function UserProfile({ data }) {
   const [user, setUser] = useState({
@@ -190,7 +191,7 @@ export default function UserProfile({ data }) {
                 />
               </div>
               <Button type="submit" disabled={isUpdating}>
-                {isUpdating ? 'Updating...' : 'Update Name'}
+                {isUpdating ? <Loader className="mr-2 h-4 w-4 animate-spin" />   : 'Update Name'}
               </Button>
             </form>
 
@@ -230,7 +231,7 @@ export default function UserProfile({ data }) {
                 />
               </div>
               <Button type="submit" disabled={isUpdating}>
-                {isUpdating ? 'Changing Password...' : 'Change Password'}
+                {isUpdating ? <Loader className="mr-2 h-4 w-4 animate-spin" />  : 'Change Password'}
               </Button>
             </form>
           </div>
