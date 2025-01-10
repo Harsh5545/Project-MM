@@ -1,5 +1,5 @@
+'use client';
 import React from 'react';
-import { Editor } from '@tiptap/react';
 import {
   Bold,
   Strikethrough,
@@ -14,83 +14,175 @@ import {
   Code,
   ImageIcon,
   Link,
+  AlignLeft,
+  AlignCenter,
+  AlignRight,
+  Paintbrush,
+  TextSize,
 } from 'lucide-react';
 
-const Toolbar = ({ editor }) => { 
+const Toolbar = ({ editor, isMobile }) => {
   if (!editor) {
     return null;
   }
-  const uploadImage = async (event) => {
-    const file = event.target.files[0];
+
+  const uploadImage = (event) => {
+    const file = event.target.files?.[0];
     if (file) {
       const reader = new FileReader();
-
       reader.onload = () => {
         const base64 = reader.result;
         editor.chain().focus().setImage({ src: base64 }).run();
       };
-
-      reader.readAsDataURL(file); // Convert the file to Base64
+      reader.readAsDataURL(file);
     }
   };
 
   const addLink = () => {
-    const url = prompt('Enter the URL');
+    const url = window.prompt('Enter the URL');
     if (url) {
-      editor.chain().focus().toggleLink({ href: url }).run();
+      editor.chain().focus().setLink({ href: url }).run();
     }
   };
 
+  const setFontSize = (size) => {
+    editor.chain().focus().setMark('textStyle', { fontSize: `${size}px` }).run();
+  };
+
+  const setFontColor = (color) => {
+    editor.chain().focus().setMark('textStyle', { color }).run();
+  };
+
+  const ToolbarButton = ({ onClick, isActive, children }) => (
+    <button
+      onClick={onClick}
+      className={`p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 ${
+        isActive ? 'bg-gray-200 dark:bg-gray-700' : ''
+      }`}
+    >
+      {children}
+    </button>
+  );
+
+  const toolbarItems = [
+    {
+      icon: <Bold size={18} />,
+      action: () => editor.chain().focus().toggleBold().run(),
+      isActive: editor.isActive('bold'),
+    },
+    {
+      icon: <Italic size={18} />,
+      action: () => editor.chain().focus().toggleItalic().run(),
+      isActive: editor.isActive('italic'),
+    },
+    {
+      icon: <Underline size={18} />,
+      action: () => editor.chain().focus().toggleUnderline().run(),
+      isActive: editor.isActive('underline'),
+    },
+    {
+      icon: <Strikethrough size={18} />,
+      action: () => editor.chain().focus().toggleStrike().run(),
+      isActive: editor.isActive('strike'),
+    },
+    {
+      icon: <Code size={18} />,
+      action: () => editor.chain().focus().toggleCode().run(),
+      isActive: editor.isActive('code'),
+    },
+    {
+      icon: <Heading2 size={18} />,
+      action: () => editor.chain().focus().toggleHeading({ level: 2 }).run(),
+      isActive: editor.isActive('heading', { level: 2 }),
+    },
+    {
+      icon: <List size={18} />,
+      action: () => editor.chain().focus().toggleBulletList().run(),
+      isActive: editor.isActive('bulletList'),
+    },
+    {
+      icon: <ListOrdered size={18} />,
+      action: () => editor.chain().focus().toggleOrderedList().run(),
+      isActive: editor.isActive('orderedList'),
+    },
+    {
+      icon: <Quote size={18} />,
+      action: () => editor.chain().focus().toggleBlockquote().run(),
+      isActive: editor.isActive('blockquote'),
+    },
+    {
+      icon: <AlignLeft size={18} />,
+      action: () => editor.chain().focus().setTextAlign('left').run(),
+      isActive: editor.isActive({ textAlign: 'left' }),
+    },
+    {
+      icon: <AlignCenter size={18} />,
+      action: () => editor.chain().focus().setTextAlign('center').run(),
+      isActive: editor.isActive({ textAlign: 'center' }),
+    },
+    {
+      icon: <AlignRight size={18} />,
+      action: () => editor.chain().focus().setTextAlign('right').run(),
+      isActive: editor.isActive({ textAlign: 'right' }),
+    },
+    {
+      icon: <ImageIcon size={18} />,
+      action: () => document.getElementById('image-upload')?.click(),
+      isActive: false,
+      extraElement: (
+        <input
+          id="image-upload"
+          type="file"
+          accept="image/*"
+          className="hidden"
+          onChange={uploadImage}
+        />
+      ),
+    },
+    {
+      icon: <Link size={18} />,
+      action: addLink,
+      isActive: editor.isActive('link'),
+    },
+    {
+      icon: <Undo size={18} />,
+      action: () => editor.chain().focus().undo().run(),
+    },
+    {
+      icon: <Redo size={18} />,
+      action: () => editor.chain().focus().redo().run(),
+    },
+  ];
+
   return (
-    <div className="px-2 py-3 rounded-tl-md rounded-tr-md flex justify-start items-start gap-5 w-full flex-wrap border border-gray-700">
-    <button onClick={() => editor.chain().focus().toggleBold().run()} className={`p-2 ${editor.isActive('bold') ? 'bg-gray-300' : ''}`}>
-      <Bold />
-    </button>
-    <button onClick={() => editor.chain().focus().toggleItalic().run()} className={`p-2 ${editor.isActive('italic') ? 'bg-gray-300' : ''}`}>
-      <Italic />
-    </button>
-    <button onClick={() => editor.chain().focus().toggleUnderline().run()} className={`p-2 ${editor.isActive('underline') ? 'bg-gray-300' : ''}`}>
-      <Underline />
-    </button>
-    <button onClick={() => editor.chain().focus().toggleStrike().run()} className={`p-2 ${editor.isActive('strike') ? 'bg-gray-300' : ''}`}>
-      <Strikethrough />
-    </button>
-    <button onClick={() => editor.chain().focus().toggleCode().run()} className={`p-2 ${editor.isActive('code') ? 'bg-gray-300' : ''}`}>
-      <Code />
-    </button>
-    <button onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()} className={`p-2 ${editor.isActive('heading', { level: 2 }) ? 'bg-gray-300' : ''}`}>
-      <Heading2 />
-    </button>
-    <button onClick={() => editor.chain().focus().toggleBulletList().run()} className={`p-2 ${editor.isActive('bulletList') ? 'bg-gray-300' : ''}`}>
-      <List />
-    </button>
-    <button onClick={() => editor.chain().focus().toggleOrderedList().run()} className={`p-2 ${editor.isActive('orderedList') ? 'bg-gray-300' : ''}`}>
-      <ListOrdered />
-    </button>
-    <button onClick={() => editor.chain().focus().toggleBlockquote().run()} className={`p-2 ${editor.isActive('blockquote') ? 'bg-gray-300' : ''}`}>
-      <Quote />
-    </button>
-    <button className="p-2">
-        <label className="cursor-pointer">
-          <ImageIcon />
-          <input
-            type="file"
-            accept="image/*"
-            className="hidden"
-            onChange={uploadImage}
-          />
-        </label>
+    <div className="bg-gray-100 dark:bg-gray-900 p-2 flex flex-wrap gap-1 justify-center sm:justify-start items-center border-b border-gray-300 dark:border-gray-600">
+      {toolbarItems.map((item, index) => (
+        <React.Fragment key={index}>
+          <ToolbarButton onClick={item.action} isActive={item.isActive}>
+            {item.icon}
+          </ToolbarButton>
+          {item.extraElement}
+        </React.Fragment>
+      ))}
+      {/* Font Size Dropdown */}
+      <select
+        onChange={(e) => setFontSize(e.target.value)}
+        className="p-2 rounded bg-gray-200 dark:bg-gray-700"
+      >
+        <option value="">Font Size</option>
+        <option value="12">12px</option>
+        <option value="14">14px</option>
+        <option value="16">16px</option>
+        <option value="18">18px</option>
+        <option value="20">20px</option>
+      </select>
+      {/* Font Color */}
+      <button
+        onClick={() => setFontColor(prompt('Enter color (e.g., #000 or red)'))}
+        className="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700"
+      >
+        <Paintbrush size={18} />
       </button>
-    <button onClick={addLink} className="p-2">
-      <Link />
-    </button>
-    <button onClick={() => editor.chain().focus().undo().run()} className="p-2">
-      <Undo />
-    </button>
-    <button onClick={() => editor.chain().focus().redo().run()} className="p-2">
-      <Redo />
-    </button>
-  
     </div>
   );
 };
