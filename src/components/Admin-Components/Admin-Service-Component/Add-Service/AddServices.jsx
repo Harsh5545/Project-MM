@@ -94,13 +94,13 @@ console.log(formData)
     return (
         <div className="bg-gradient-to-r from-gray-200 to-gray-100 ">
             <div className="w-full mx-auto bg-white dark:bg-gray-800 rounded-lg p-8 space-y-8 relative">
-                <button
+                {/* <button
                     type="button"
                     className="absolute top-4 right-4 bg-red-600 hover:bg-red-700 text-white px-2 py-1 rounded-lg"
                     onClick={onClose}
                 >
                     &times;
-                </button>
+                </button> */}
                 <h1 className="text-3xl font-bold text-gray-800 dark:text-white text-center">
                     Add New Service
                 </h1>
