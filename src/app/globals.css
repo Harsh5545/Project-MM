@@ -166,3 +166,21 @@ body{
   transform: translateX(0);
   }
 }
+
+
+@keyframes glow {
+  0% {
+    box-shadow: 0 0 2px #FFD700, 0 0 3px #FFD700;
+  }
+  50% {
+    box-shadow: 0 0 4px #FFD700, 0 0 6px #FFD700;
+  }
+  100% {
+    box-shadow: 0 0 2px #FFD700, 0 0 3px #FFD700;
+  }
+}
+
+.animate-glow {
+  animation: glow 1.5s infinite ease-in-out;
+}
+
