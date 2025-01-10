@@ -1,120 +1,173 @@
-
 "use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useMediaQuery } from "react-responsive";
-
-import "./navbar.module.css";
-import "./Header.css"
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import AllLinks from "./links/AllLinks";
-import { Lato } from "next/font/google";
+import { Lato } from 'next/font/google';
 import ShadcnButton from "../Atom/button/ShadcnButton";
+import Loading from "../app/loading";
+import { Menu, X } from 'lucide-react';
+
 const dm_Sans = Lato({
-    subsets: ["latin"],
-    weight: ["400"],
-    // Add weights if needed
+  subsets: ["latin"],
+  weight: ["400"],
 });
+
 const navVariants = {
-    initial: {
-        y: "-50%",
-        x: "-50%",
+  hidden: {
+    y: "-100%",
+    opacity: 0,
+  },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.5,
     },
-    animate: {
-        y: 0,
-        x: "-50%",
-        transition: {
-            duration: 1.5,
-        },
-    },
-    exit: {
-        y: -50,
-    },
+  },
 };
 
 function HeaderFixed() {
-    const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const [navInput, setNavInput] = useState(false);
+  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
+  const isTablet = useMediaQuery({ query: "(min-width: 768px) and (max-width: 1023px)" });
+  const router = useRouter();
 
-    const toggleMobileMenu = () => {
-        setMobileMenuOpen((prev) => !prev);
-        setNavInput((prev) => !prev);
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
     };
 
-    const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-    const handleNavLinkClick = () => {
-        window.scrollTo(0, 0);
-        toggleMobileMenu();
-    };
-    const router = useRouter()
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen((prev) => !prev);
+  };
 
-    return (
-        <motion.div
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            variants={navVariants}
-            className="fixed z-[999] bg-black bg-opacity-65  nav top-2 left-1/2 -translate-x-1/2 rounded-xl p-2 md:px-10 flex-col border justify-between flex md:flex-row items-center"
-            style={{ width: "90%" }}
-        >
-            <div className="flex justify-between  items-center w-full md:w-0">
-            <span className="text-xl">
-      <Link href="/" passHref>
-        
-          <Image
-            width={300}
-            height={300}
-            src="/assets/MM.png"
-            className="md:max-w-[10rem] max-w-[6rem]"
-            alt="ModernMannerism institute logo"
-          />
+  const handleNavigation = (path) => {
+    setIsLoading(true);
+    router.push(path);
+  };
 
-
-      </Link>
-    </span>
-                <div className="md:hidden">
-                    <label className="hamburger">
-                        <input type="checkbox" onChange={toggleMobileMenu} checked={navInput} />
-                        <svg viewBox="0 0 32 32">
-                            <path
-                                className="line line-top-bottom"
-                                d="M27 10 13 10C10.8 10 9 8.2 9 6 9 3.5 10.8 2 13 2 15.2 2 17 3.8 17 6L17 26C17 28.2 18.8 30 21 30 23.2 30 25 28.2 25 26 25 23.8 23.2 22 21 22L7 22"
-                            ></path>
-                            <path className="line" d="M7 16 27 16"></path>
-                        </svg>
-                    </label>
-                </div>
-                
+  return (
+    <>
+      <motion.header
+        initial="hidden"
+        animate="visible"
+        variants={navVariants}
+        className={`fixed z-[999] w-full transition-all duration-300 ${
+          isScrolled ? "bg-white dark:bg-gray-900 shadow-md" : "bg-transparent"
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center py-4 md:justify-start md:space-x-10">
+            <div className="flex justify-start lg:w-0 lg:flex-1">
+              <Link href="/" passHref onClick={() => handleNavigation("/")}>
+                <Image
+                  width={isMobile ? 150 : 200}
+                  height={isMobile ? 50 : 66}
+                  src="/assets/MM.png"
+                  className="h-8 w-auto sm:h-10"
+                  alt="ModernMannerism institute logo"
+                />
+              </Link>
             </div>
-
-            <div className="flex flex-col items-start">
-                <div
-                    className={`flex flex-col-reverse text-white md:flex-row font-poppins items-center gap-8 md:gap-4 h-[20rem] md:h-0 justify-center  font-medium ${isMobile ? (isMobileMenuOpen ? "block" : "hidden") : "flex"}`}
-                >
-                    <AllLinks />
-                </div>
+            <div className="-mr-2 -my-2 md:hidden">
+              <button
+                type="button"
+                className="bg-white dark:bg-gray-800 rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+                onClick={toggleMobileMenu}
+              >
+                <span className="sr-only">Open menu</span>
+                {isMobileMenuOpen ? (
+                  <X className="h-6 w-6" aria-hidden="true" />
+                ) : (
+                  <Menu className="h-6 w-6" aria-hidden="true" />
+                )}
+              </button>
             </div>
+            <nav className="hidden md:flex space-x-10">
+              <AllLinks onNavigate={handleNavigation} />
+            </nav>
+            <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
+              <ShadcnButton
+                className={`${dm_Sans.className} ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700`}
+                onClick={() => handleNavigation("/contact-us")}
+              >
+                CONTACT US
+              </ShadcnButton>
+            </div>
+          </div>
+        </div>
 
-            <div className={`${isMobile ? (isMobileMenuOpen ? "block" : "hidden") : "flex items-center gap-2"
-                }`}>
-               
-                <ShadcnButton
-                    className={`${dm_Sans.className} tracking-wide rounded-full bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] text-white 
-              p-2 px-4 sm:px-6 sm:py-2 md:px-8 md:py-2 lg:px-8 lg:py-2  text-sm sm:text-base md:text-base lg:text-base shadow-lg`}
-                    onClick={() => {
-                        router.push("/contact-us");
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.2 }}
+              className="absolute top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden"
+            >
+              <div className="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-white dark:bg-gray-800 divide-y-2 divide-gray-50">
+                <div className="pt-5 pb-6 px-5">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <Image
+                        width={150}
+                        height={50}
+                        className="h-8 w-auto"
+                        src="/assets/MM.png"
+                        alt="ModernMannerism"
+                      />
+                    </div>
+                    <div className="-mr-2">
+                      <button
+                        type="button"
+                        className="bg-white dark:bg-gray-800 rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+                        onClick={toggleMobileMenu}
+                      >
+                        <span className="sr-only">Close menu</span>
+                        <X className="h-6 w-6" aria-hidden="true" />
+                      </button>
+                    </div>
+                  </div>
+                  <div className="mt-6">
+                    <nav className="grid gap-y-8">
+                      <AllLinks onClose={toggleMobileMenu} onNavigate={handleNavigation} />
+                    </nav>
+                  </div>
+                </div>
+                <div className="py-6 px-5 space-y-6">
+                  <div>
+                    <ShadcnButton
+                      className={`${dm_Sans.className} w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700`}
+                      onClick={() => {
+                        handleNavigation("/contact-us");
                         toggleMobileMenu();
-                    }}
-                >
-                    CONTACT US
-                </ShadcnButton>
-            </div>
-        </motion.div>
-    );
+                      }}
+                    >
+                      CONTACT US
+                    </ShadcnButton>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.header>
+      {isLoading && <Loading />}
+    </>
+  );
 }
 
 export default HeaderFixed;
+
