@@ -119,20 +119,22 @@ export default function BlogTable() {
 
   return (
     <div className="container mx-auto py-10">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold">Blog Management</h1>
-        <Button onClick={() => router.push("blog/create")}>
-          Add New Blog
-        </Button>
-      </div>
+        <h1 className="text-3xl mb-5 font-bold">Manage Blog</h1>
 
+      <div className="flex justify-between items-center mb-6">
       <Input
         type="text"
         placeholder="Search blogs..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        className="mb-4"
+        className="max-w-sm"
       />
+        <Button onClick={() => router.push("blog/create")}>
+          Add New Blog
+        </Button>
+      </div>
+
+     
 
       <Table>
         <TableHeader>

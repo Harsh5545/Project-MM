@@ -229,8 +229,9 @@ const CategoryManagement = () => {
   )
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4"><h1 className="text-4xl font-bold">Manage category </h1>
       <div className="flex justify-between items-center mb-4">
+      
         <div className="flex items-center space-x-2">
           <Input
             placeholder="Search categories..."

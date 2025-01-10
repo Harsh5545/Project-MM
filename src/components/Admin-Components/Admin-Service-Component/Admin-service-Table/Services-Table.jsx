@@ -140,7 +140,7 @@ const ServicesTable = () => {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-4xl font-bold">Services Table</h1>
+        <h1 className="text-4xl font-bold">Manage Services </h1>
         <Dialog open={showForm} onOpenChange={setShowForm}>
           <DialogTrigger asChild>
             <Button>Add Service</Button>
