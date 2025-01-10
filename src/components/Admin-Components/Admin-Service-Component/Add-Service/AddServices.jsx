@@ -22,22 +22,34 @@ const AddServices = ({ onClose }) => {
         testimonials: {},
     });
     const [categories, setCategories] = useState([]);
+    const [loading, setLoading] = useState(true);
+    console.log(formData)
     
-console.log(formData)
     useEffect(() => {
-        // Fetch categories from the backend
         const fetchCategories = async () => {
+            setLoading(true);
             try {
-                const response = await fetch('/api/categories'); // Adjust the URL as needed
-                const data = await response.json();
-                setCategories(data);
+                const response = await fetch('/api/category/list');
+                const result = await response.json();
+                if (result.data) {
+                    setCategories(result.data);
+                } else {
+                    throw new Error('Failed to fetch categories');
+                }
             } catch (error) {
                 console.error('Error fetching categories:', error);
+                toast({
+                    title: "Error",
+                    description: "Failed to fetch categories. Please try again.",
+                    variant: "destructive",
+                });
+            } finally {
+                setLoading(false);
             }
         };
 
         fetchCategories();
-    }, []);
+    }, [toast]);
 
     const handleNext = () => {
         setCurrentStep((prevStep) => Math.min(prevStep + 1, 4)); // Ensure step does not exceed total steps
@@ -47,14 +59,14 @@ console.log(formData)
         setCurrentStep((prevStep) => Math.max(prevStep - 1, 1)); // Ensure step does not go below 1
     };
 
-      const handleInputChange = useCallback((e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
-  }, []);
+    const handleInputChange = useCallback((e) => {
+        const { name, value } = e.target;
+        setFormData((prevData) => ({ ...prevData, [name]: value }));
+    }, []);
 
-  const handleSelectChange = useCallback((value) => {
-    setFormData((prevData) => ({ ...prevData, category: value }));
-  }, []);
+    const handleSelectChange = useCallback((value) => {
+        setFormData((prevData) => ({ ...prevData, category: value }));
+    }, []);
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
@@ -135,14 +147,14 @@ console.log(formData)
 
                             <div>
                                 <label className="block text-gray-700 dark:text-gray-300 mb-2">Category:</label>
-                                <Select onValueChange={handleSelectChange}>
+                                <Select onValueChange={handleSelectChange} disabled={loading}>
                                     <SelectTrigger className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white">
-                                        <SelectValue placeholder="Select a category" />
+                                        <SelectValue placeholder={loading ? "Loading categories..." : "Select a category"} />
                                     </SelectTrigger>
                                     <SelectContent>
                                         {categories.map((category) => (
-                                            <SelectItem key={category._id} value={category.name}>
-                                                {category.name}
+                                            <SelectItem key={category._id} value={category.category_name}>
+                                                {category.category_name}
                                             </SelectItem>
                                         ))}
                                     </SelectContent>
