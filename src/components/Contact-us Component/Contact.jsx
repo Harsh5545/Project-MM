@@ -51,8 +51,8 @@ const ContactPage = () => {
       }`}
       style={{
         backgroundImage: `url("/assets/${
-          theme === "dark" ? "dark-image.jpg" : "Contact-us-pink.jpg"
-        }")`,
+          theme === "dark" ? "dark-image.jpg" : "ContactUsBg.jpg"
+        }")`
       }}
     >
       <div className="flex flex-col justify-between m-2 md:flex-row w-full md:max-w-6xl bg-opacity-80 bg-white dark:bg-opacity-90 dark:bg-[#06273A] rounded-lg shadow-lg">
