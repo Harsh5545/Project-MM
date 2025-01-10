@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import {
   Table,
   TableBody,
@@ -22,13 +22,13 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
 
 export default function BlogTable() {
   const [blogs, setBlogs] = useState([]);
-  const [filteredBlogs, setFilteredBlogs] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const blogsPerPage = 5;
+  const [pageIndex, setPageIndex] = useState(0);
+  const [pageSize, setPageSize] = useState(5);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [blogToDelete, setBlogToDelete] = useState(null);
   const { toast } = useToast();
@@ -37,16 +37,6 @@ export default function BlogTable() {
   useEffect(() => {
     fetchBlogs();
   }, []);
-
-  useEffect(() => {
-    const filtered = blogs.filter(
-      (blog) =>
-        blog.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        blog.category.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setFilteredBlogs(filtered);
-    setCurrentPage(1);
-  }, [searchTerm, blogs]);
 
   const fetchBlogs = async () => {
     try {
@@ -65,6 +55,19 @@ export default function BlogTable() {
       });
     }
   };
+
+  const filteredBlogs = useMemo(() => {
+    return blogs.filter(
+      (blog) =>
+        blog.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        blog.category.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }, [blogs, searchTerm]);
+
+  const paginatedBlogs = useMemo(() => {
+    const startIndex = pageIndex * pageSize;
+    return filteredBlogs.slice(startIndex, startIndex + pageSize);
+  }, [filteredBlogs, pageIndex, pageSize]);
 
   const handleDelete = (blog) => {
     setBlogToDelete(blog);
@@ -105,12 +108,14 @@ export default function BlogTable() {
     router.push(`/blog/edit/${blog.id}`);
   };
 
-  // Pagination
-  const indexOfLastBlog = currentPage * blogsPerPage;
-  const indexOfFirstBlog = indexOfLastBlog - blogsPerPage;
-  const currentBlogs = filteredBlogs.slice(indexOfFirstBlog, indexOfLastBlog);
+  const handlePageChange = (newPageIndex) => {
+    setPageIndex(newPageIndex);
+  };
 
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const handlePageSizeChange = (newPageSize) => {
+    setPageSize(newPageSize);
+    setPageIndex(0);
+  };
 
   return (
     <div className="container mx-auto py-10">
@@ -139,7 +144,7 @@ export default function BlogTable() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {currentBlogs.map((blog) => (
+          {paginatedBlogs.map((blog) => (
             <TableRow key={blog.id}>
               <TableCell>
                 <Image
@@ -172,24 +177,56 @@ export default function BlogTable() {
         </TableBody>
       </Table>
 
-      <div className="flex justify-between items-center mt-4">
-        <Button
-          onClick={() => paginate(currentPage - 1)}
-          disabled={currentPage === 1}
-        >
-          Previous
-        </Button>
-        <span>
-          Page {currentPage} of {Math.ceil(filteredBlogs.length / blogsPerPage)}
-        </span>
-        <Button
-          onClick={() => paginate(currentPage + 1)}
-          disabled={
-            currentPage === Math.ceil(filteredBlogs.length / blogsPerPage)
-          }
-        >
-          Next
-        </Button>
+      <div className="flex justify-center items-center border-t pt-4 space-x-2 mt-4">
+        <div className="flex items-center space-x-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => handlePageChange(0)}
+            disabled={pageIndex === 0}
+          >
+            <ChevronsLeft className="h-4 w-4" />
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => handlePageChange(pageIndex - 1)}
+            disabled={pageIndex === 0}
+          >
+            <ChevronLeft className="h-4 w-4" />
+          </Button>
+          <span className="text-sm font-medium">
+            Page {pageIndex + 1} of {Math.ceil(filteredBlogs.length / pageSize)}
+          </span>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => handlePageChange(pageIndex + 1)}
+            disabled={pageIndex >= Math.ceil(filteredBlogs.length / pageSize) - 1}
+          >
+            <ChevronRight className="h-4 w-4" />
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => handlePageChange(Math.ceil(filteredBlogs.length / pageSize) - 1)}
+            disabled={pageIndex >= Math.ceil(filteredBlogs.length / pageSize) - 1}
+          >
+            <ChevronsRight className="h-4 w-4" />
+          </Button>
+        </div>
+        <div className="flex items-center space-x-2 ml-4">
+          {[5, 10, 20, 30, 50].map((size) => (
+            <Button
+              key={size}
+              variant={pageSize === size ? "default" : "outline"}
+              size="sm"
+              onClick={() => handlePageSizeChange(size)}
+            >
+              {size}
+            </Button>
+          ))}
+        </div>
       </div>
 
       <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
@@ -217,3 +254,4 @@ export default function BlogTable() {
     </div>
   );
 }
+
