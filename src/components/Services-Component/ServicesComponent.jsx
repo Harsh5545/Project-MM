@@ -97,15 +97,13 @@ function ServicesComponent({ data }) {
 
             {filteredCourses?.length > 0 ? (
               filteredCourses?.map((course, index) => (
-                <Link href={`/services/${course?.slug}`}>
+                <Link key={course?.id} href={`/services/${course?.slug}`}>
                   <motion.div
-                    key={course.id}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: index * 0.4 }}
                     className="group relative flex flex-col bg-white dark:bg-[#1a1a2e] rounded-3xl shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300 ease-in-out"
                   >
-                    {/* Image Section */}
                     <div className="relative w-full h-60">
                       <Image
                         alt={course.title}
@@ -121,7 +119,7 @@ function ServicesComponent({ data }) {
                         {course.title}
                       </h5>
                       <p className="text-gray-700 dark:text-gray-400 mt-4 flex-grow">
-                        {course.description}
+                        {course?.description}
                       </p>
 
                       {/* Button */}
