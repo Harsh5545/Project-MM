@@ -16,6 +16,7 @@ import {
 import { Loader2, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, ArrowUpDown } from 'lucide-react'
 import { Shimmer } from '@/components/ui/shimmer'
 import AddServiceForm from '../Add-Service/AddServices'
+import Image from 'next/image'
 
 const ServicesTable = () => {
   const { toast } = useToast()
@@ -34,7 +35,7 @@ const ServicesTable = () => {
       const response = await fetch(`/api/services/list?page=${pageIndex + 1}&pageSize=${pageSize}&searchTerm=${searchTerm}&sortBy=${sortColumn}&sortOrder=${sortOrder}`)
       const result = await response.json()
 
-      if (result.success) {
+      if (result.Success) {
         setServices(result.data)
       } else {
         toast({
@@ -140,10 +141,10 @@ const ServicesTable = () => {
               services.map((service, index) => (
                 <TableRow key={index}>
                   <TableCell>
-                    <img src={service.image} alt="Service" className="w-16 h-16 object-cover rounded-full" />
+                    <img  src={service.image|| 'https://ik.imagekit.io/giol62jyf/mypic_VLj2nrRSs.jpg'} width={16} height={16} alt="Service" className="w-16 h-16 object-cover rounded-full" />
                   </TableCell>
-                  <TableCell>{service.mainTitle}</TableCell>
-                  <TableCell>{service.category}</TableCell>
+                  <TableCell>{service.heading}</TableCell>
+                  <TableCell>{service?.category?.category_name}</TableCell>
                   <TableCell>
                     <div className="flex space-x-2">
                       <Button variant="outline" onClick={() => console.log('Edit', index)}>

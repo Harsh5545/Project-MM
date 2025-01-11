@@ -164,6 +164,13 @@ export async function GET(req) {
     const services = await prisma.service.findMany({
       ...filterOptions,
       ...sortOptions,
+      include: {
+        category: {
+          select: {
+            category_name: true,
+          },
+        },
+      },
       skip: (page - 1) * pageSize,
       take: pageSize,
     });
