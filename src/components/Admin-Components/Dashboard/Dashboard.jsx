@@ -128,14 +128,14 @@ function Sidebar({ roleLinks, pathname, closeSidebar }) {
           />
         </Link>
       </div>
-      <nav className="flex-1 overflow-y-auto p-4 space-y-2">
+      <nav className="flex-1 overflow-y-auto p-4 space-y-6">
         {roleLinks.map((link, index) => (
           <Link
             key={index}
             href={link.href}
             className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all transform duration-300 ease-in-out relative ${
               pathname === link.href
-                ? "bg-[#b2ec5d] text-black border-2 border-[#FFD700] animate-glow scale-105" 
+                ? " text-black border-2 border-[#FFD700] animate-glow scale-105" 
                 : "text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
             }`}
             onClick={closeSidebar}
