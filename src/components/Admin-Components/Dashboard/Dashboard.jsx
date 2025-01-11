@@ -126,7 +126,7 @@ function Sidebar({ roleLinks, pathname, closeSidebar }) {
           />
         </Link>
       </div>
-      <nav className="flex-1 overflow-y-auto p-4 space-y-2">
+      <nav className="flex-1 overflow-y-auto p-4 space-y-6">
         {roleLinks.map((link, index) => (
           <Link
             key={index}

@@ -88,7 +88,7 @@ const ServicesTable = () => {
           </DialogTrigger>
           <DialogContent className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 w-full max-w-6xl max-h-[80vh] overflow-y-auto">
             <DialogHeader>
-              <DialogTitle>Add New Service</DialogTitle>
+              <DialogTitle className="text-center text-xl lg:text-3xl">Add New Service</DialogTitle>
             </DialogHeader>
             <AddServiceForm onSubmit={fetchServices} onClose={() => setShowForm(false)} />
           </DialogContent>

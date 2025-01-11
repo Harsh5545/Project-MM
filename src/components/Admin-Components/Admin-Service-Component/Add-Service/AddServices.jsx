@@ -106,9 +106,16 @@ const AddServices = ({ onClose }) => {
     return (
         <div className="bg-gradient-to-r from-gray-200 to-gray-100 ">
             <div className="w-full mx-auto bg-white dark:bg-gray-800 rounded-lg p-8 space-y-8 relative">
-                <h1 className="text-3xl font-bold text-gray-800 dark:text-white text-center">
+                {/* <button
+                    type="button"
+                    className="absolute top-4 right-4 bg-red-600 hover:bg-red-700 text-white px-2 py-1 rounded-lg"
+                    onClick={onClose}
+                >
+                    &times;
+                </button> */}
+                {/* <h1 className="text-3xl font-bold text-gray-800 dark:text-white text-center">
                     Add New Service
-                </h1>
+                </h1> */}
 
                 <form onSubmit={handleFormSubmit} className="space-y-6">
                     {/* Step 1: Main Title & Subtitle */}
@@ -195,14 +202,14 @@ const AddServices = ({ onClose }) => {
                             <Button
                                 type="button"
                                 onClick={handleNext}
-                                className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg"
+                                className="bg-black text-white px-4 py-2 rounded-lg"
                             >
                                 Next
                             </Button>
                         ) : (
                             <Button
                                 type="submit"
-                                className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg"
+                                className="bg-black text-white px-4 py-2 rounded-lg"
                             >
                                 Submit
                             </Button>

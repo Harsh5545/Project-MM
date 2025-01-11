@@ -1,6 +1,4 @@
-
-"use client"
-
+"use client";
 
 import { useRouter } from "next/navigation";
 import Socials from "./SocialIcons";
@@ -16,6 +14,7 @@ const Footer = () => {
   const navigateToTerms = () => {
     router.push('/terms');
   };
+
   return (
     <>
       <footer className="dark:bg-[#00001F] bg-gray-50 text-black dark:text-white p-5 border-t-10 flex flex-col relative h-[80vh]">
@@ -32,22 +31,29 @@ const Footer = () => {
             {/* Phone Section */}
             <div className="text-center flex flex-col items-center md:w-1/4">
               <span className="text-lg font-semibold mb-10">Phone</span>
-              <p className="text-lg font-medium">+91 9867831324</p>
+              <a
+                href="tel:+919867831324"
+                className="text-lg font-medium  hover:underline"
+              >
+                +91 9867831324
+              </a>
             </div>
 
             {/* Email Section */}
             <div className="text-center flex flex-col items-center md:w-1/4">
               <span className="text-lg font-semibold mb-10">Email</span>
-              <p className="text-lg font-medium">modernmannerism@gmail.com</p>
+              <a
+                href="mailto:modernmannerism@gmail.com"
+                className="text-lg font-medium hover:underline"
+              >
+                modernmannerism@gmail.com
+              </a>
             </div>
 
             {/* Social Media Section */}
             <div className="text-center flex flex-col items-center md:w-1/4">
               <span className="text-lg font-semibold mb-1">Social</span>
-              {/* <div className="flex justify-center mt-1">
-                <SocialButtons />
-              </div> */}
-              <div className="flex justify-center  items-center mt-1">
+              <div className="flex justify-center items-center mt-1">
                 <Socials />
                 <SocialMobile />
               </div>
