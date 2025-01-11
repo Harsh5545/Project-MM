@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import Image from 'next/image';
 import UploadServices from './UploadServices';
 
-const Testimonials = ({ testimonials, onTestimonialsChange, onImageUpload }) => {
+const Testimonials = ({ testimonials, onTestimonialsChange, formData, setFormData }) => {
   const handleInputChange = (field, value) => {
     onTestimonialsChange({ [field]: value });
   };
@@ -60,14 +60,14 @@ const Testimonials = ({ testimonials, onTestimonialsChange, onImageUpload }) => 
           <div className="flex items-center space-x-2">
             <UploadServices
               formData={testimonials}
-              setFormData={(newData) => onTestimonialsChange(newData)}
+              setFormData={setFormData}
               type="heroImage"
             />
             <span className="text-sm text-gray-500">Click to upload hero image</span>
           </div>
-          {testimonials.heroImage && (
+          {formData?.testimonials?.heroImage && (
             <div className="mt-4">
-              <Image src={testimonials.heroImage} width={400} height={200} alt="Hero" className="h-auto rounded-lg shadow-md" />
+              <Image src={formData.testimonials.heroImage} width={400} height={200} alt="Hero" className="h-auto rounded-lg shadow-md" />
             </div>
           )}
         </div>

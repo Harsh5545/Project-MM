@@ -158,15 +158,15 @@ const AddServices = ({ onClose }) => {
         }));
     }, []);
 
-    const handleImageUpload = useCallback((imageType, imageData) => {
-        setFormData(prevData => ({
-            ...prevData,
-            testimonials: {
-                ...prevData.testimonials,
-                [imageType]: imageData
-            }
-        }));
-    }, []);
+    // const handleImageUpload = useCallback((imageType, imageData) => {
+    //     setFormData(prevData => ({
+    //         ...prevData,
+    //         testimonials: {
+    //             ...prevData.testimonials,
+    //             [imageType]: imageData
+    //         }
+    //     }));
+    // }, []);
 
     return (
         <div className="bg-gradient-to-r from-gray-200 to-gray-100 ">
@@ -200,7 +200,9 @@ const AddServices = ({ onClose }) => {
                                 />
                             </div>
                             <UploadServices formData={formData} setFormData={setFormData} type={"image"} />
-                            <Image width={300} height={300} src={formData.image} alt="service image" />
+                            {formData.image && (
+                                <Image width={300} height={300} src={formData.image} alt="service image" />
+                            )}
                             <div>
                                 <label className="block text-gray-700 dark:text-gray-300 mb-2">Category:</label>
                                 <Select onValueChange={handleSelectChange} disabled={loading} value={formData.category} >
@@ -257,7 +259,7 @@ const AddServices = ({ onClose }) => {
                         <Testimonials
                             testimonials={formData.testimonials}
                             onTestimonialsChange={handleTestimonialsChange}
-                            onImageUpload={handleImageUpload}
+                           
                         />
                     )}
                     {/* Navigation Buttons */}

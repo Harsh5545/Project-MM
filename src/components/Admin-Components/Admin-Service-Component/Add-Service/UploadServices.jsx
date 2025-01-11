@@ -38,7 +38,8 @@ export default function UploadServices({ formData, setFormData, type }) {
 
         if (type === "image") {
             setFormData({ ...formData, image: res.url });
-        } else if (type === "overviewImage") {
+        }
+        if (type === "overviewImage") {
             setFormData(prevData => ({
                 ...prevData,
                 courseDetails: {
@@ -46,10 +47,14 @@ export default function UploadServices({ formData, setFormData, type }) {
                     overviewImage: res.url,
                 },
             }));
-        } else if (type === "heroImage" || type === "outsideImage") {
+        }
+        if (type === "heroImage") {
             setFormData(prevData => ({
                 ...prevData,
-                [type]: res.url,
+                testimonials: {
+                    ...prevData.testimonials,
+                    heroImage: res.url,
+                }
             }));
         }
         setLoading(false);
@@ -69,7 +74,7 @@ export default function UploadServices({ formData, setFormData, type }) {
             <ImageKitProvider publicKey={publicKey} urlEndpoint={urlEndpoint} authenticator={authenticator}>
                 {/* Hidden upload component */}
                 <IKUpload
-                    customCoordinates={"10,10,10,10"}
+                    customCoordinates={"20,20,20,20"}
                     isPrivateFile={false}
                     useUniqueFileName={true}
                     responseFields={["tags"]}

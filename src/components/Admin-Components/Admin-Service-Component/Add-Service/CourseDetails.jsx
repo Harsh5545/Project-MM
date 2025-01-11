@@ -6,86 +6,86 @@ import Image from 'next/image';
 import UploadServices from './UploadServices';
 
 const CourseDetails = ({ courseDetails, onCourseDetailsChange, formData, setFormData }) => {
-    const addCourseHeading = () => {
-        onCourseDetailsChange({
-            courseHeadings: [...courseDetails.courseHeadings, { heading: '', subheading: '', icon: '' }]
-        });
-    };
+  const addCourseHeading = () => {
+    onCourseDetailsChange({
+      courseHeadings: [...courseDetails.courseHeadings, { heading: '', subheading: '', icon: '' }]
+    });
+  };
 
-    const addCourseDetail = () => {
-        onCourseDetailsChange({
-            courseDetail: [...courseDetails.courseDetail, '']
-        });
-    };
+  const addCourseDetail = () => {
+    onCourseDetailsChange({
+      courseDetail: [...courseDetails.courseDetail, '']
+    });
+  };
 
-    const addProgramHighlight = () => {
-        onCourseDetailsChange({
-            programHighlights: [...courseDetails.programHighlights, { icon: 'FaCheckCircle', heading: '', description: '' }]
-        });
-    };
+  const addProgramHighlight = () => {
+    onCourseDetailsChange({
+      programHighlights: [...courseDetails.programHighlights, { icon: 'FaCheckCircle', heading: '', description: '' }]
+    });
+  };
 
-    const handleCourseHeadingChange = (index, field, value) => {
-        const newCourseHeadings = [...courseDetails.courseHeadings];
-        newCourseHeadings[index][field] = value;
-        onCourseDetailsChange({ courseHeadings: newCourseHeadings });
-    };
+  const handleCourseHeadingChange = (index, field, value) => {
+    const newCourseHeadings = [...courseDetails.courseHeadings];
+    newCourseHeadings[index][field] = value;
+    onCourseDetailsChange({ courseHeadings: newCourseHeadings });
+  };
 
-    const handleCourseDetailChange = (index, value) => {
-        const newCourseDetails = [...courseDetails.courseDetail];
-        newCourseDetails[index] = value;
-        onCourseDetailsChange({ courseDetail: newCourseDetails });
-    };
+  const handleCourseDetailChange = (index, value) => {
+    const newCourseDetails = [...courseDetails.courseDetail];
+    newCourseDetails[index] = value;
+    onCourseDetailsChange({ courseDetail: newCourseDetails });
+  };
 
-    const handleProgramHighlightChange = (index, field, value) => {
-        const newProgramHighlights = [...courseDetails.programHighlights];
-        newProgramHighlights[index][field] = value;
-        onCourseDetailsChange({ programHighlights: newProgramHighlights });
-    };
+  const handleProgramHighlightChange = (index, field, value) => {
+    const newProgramHighlights = [...courseDetails.programHighlights];
+    newProgramHighlights[index][field] = value;
+    onCourseDetailsChange({ programHighlights: newProgramHighlights });
+  };
 
-    const removeCourseHeading = (index) => {
-        const newCourseHeadings = courseDetails.courseHeadings.filter((_, i) => i !== index);
-        onCourseDetailsChange({ courseHeadings: newCourseHeadings });
-    };
+  const removeCourseHeading = (index) => {
+    const newCourseHeadings = courseDetails.courseHeadings.filter((_, i) => i !== index);
+    onCourseDetailsChange({ courseHeadings: newCourseHeadings });
+  };
 
-    const removeCourseDetail = (index) => {
-        const newCourseDetails = courseDetails.courseDetail.filter((_, i) => i !== index);
-        onCourseDetailsChange({ courseDetail: newCourseDetails });
-    };
+  const removeCourseDetail = (index) => {
+    const newCourseDetails = courseDetails.courseDetail.filter((_, i) => i !== index);
+    onCourseDetailsChange({ courseDetail: newCourseDetails });
+  };
 
-    const removeProgramHighlight = (index) => {
-        const newProgramHighlights = courseDetails.programHighlights.filter((_, i) => i !== index);
-        onCourseDetailsChange({ programHighlights: newProgramHighlights });
-    };
+  const removeProgramHighlight = (index) => {
+    const newProgramHighlights = courseDetails.programHighlights.filter((_, i) => i !== index);
+    onCourseDetailsChange({ programHighlights: newProgramHighlights });
+  };
 
-    return (
-        <div className="">
-            <div className="bg-white dark:bg-gray-800 rounded-lg space-y-8">
-                <h1 className="text-2xl font-bold text-gray-700 dark:text-white text-left">Course Details</h1>
-                
-                <div className="space-y-6">
-                    <h2 className="text-2xl font-semibold text-gray-800 dark:text-white">Overview</h2>
-                    
-                    {/* Overview Image Section */}
-                    <div>
-                        <label className="block text-gray-700 dark:text-gray-300 mb-2">Overview Image:</label>
-                        <UploadServices formData={formData} setFormData={setFormData} type="overviewImage" />
-                        {formData?.courseDetails?.overviewImage && (
-                            <div className="mt-4">
-                                <Image width={300} height={300} src={formData.courseDetails.overviewImage} alt="Overview" className="w-[20rem] h-auto rounded-lg shadow-md" />
-                            </div>
-                        )}
-                    </div>
+  return (
+    <div className="">
+      <div className="bg-white dark:bg-gray-800 rounded-lg space-y-8">
+        <h1 className="text-2xl font-bold text-gray-700 dark:text-white text-left">Course Details</h1>
 
-                    <div>
-                        <label className="block text-gray-700 dark:text-gray-300 mb-2">Overview Description:</label>
-                        <Input
-                            type="text"
-                            value={courseDetails.overviewDescription}
-                            placeholder="Enter the overview description"
-                            className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
-                            onChange={(e) => onCourseDetailsChange({ overviewDescription: e.target.value })}
-                        />
-                    </div>
+        <div className="space-y-6">
+          <h2 className="text-2xl font-semibold text-gray-800 dark:text-white">Overview</h2>
+
+          {/* Overview Image Section */}
+          <div>
+            <label className="block text-gray-700 dark:text-gray-300 mb-2">Overview Image:</label>
+            <UploadServices formData={formData} setFormData={setFormData} type="overviewImage" />
+            {formData?.courseDetails?.overviewImage && (
+              <div className="mt-4">
+                <Image width={300} height={300} src={formData.courseDetails.overviewImage} alt="Overview" className="w-[20rem] h-auto rounded-lg shadow-md" />
+              </div>
+            )}
+          </div>
+
+          <div>
+            <label className="block text-gray-700 dark:text-gray-300 mb-2">Overview Description:</label>
+            <Input
+              type="text"
+              value={courseDetails.overviewDescription}
+              placeholder="Enter the overview description"
+              className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+              onChange={(e) => onCourseDetailsChange({ overviewDescription: e.target.value })}
+            />
+          </div>
 
           <h2 className="text-2xl font-semibold text-gray-800 dark:text-white">Course Type</h2>
           {courseDetails.courseHeadings.map((course, index) => (
