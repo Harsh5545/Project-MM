@@ -7,10 +7,10 @@ import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@
 import CourseDetails from './CourseDetails';
 import ProgramDetails from './ProgramDetails';
 import Testimonials from './Testimonials';
+import SeoComponent from './Seo';
 import { useToast } from '@/hooks/use-toast';
 import UploadServices from './UploadServices';
 import Image from 'next/image';
-
 
 const AddServices = ({ onClose }) => {
     const { toast } = useToast();
@@ -21,8 +21,6 @@ const AddServices = ({ onClose }) => {
         courseDescription: '',
         image: '',
         category: '',
-        seoKeywords: '',
-        seoDescription: '',
         courseDetails: {
             courseHeadings: [{ heading: '', subheading: '', icon: '' }],
             courseDetail: [''],
@@ -36,7 +34,6 @@ const AddServices = ({ onClose }) => {
             durations: [{ heading: '', subheading: '' }],
             locations: [{ heading: '', subheading: '' }],
         },
-
         testimonials: {
             taglineHeading: '',
             mmDescription: '',
@@ -45,11 +42,17 @@ const AddServices = ({ onClose }) => {
             heroImage: '',
             outsideImage: '',
         },
+        seo: {
+            meta_title: '',
+            meta_description: '',
+            og_title: '',
+            og_image: '',
+            keywords: [],
+        },
     });
     
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
-    console.log(formData)
 
     useEffect(() => {
         const fetchCategories = async () => {
@@ -77,13 +80,13 @@ const AddServices = ({ onClose }) => {
         fetchCategories();
     }, [toast]);
 
-    const handleNext = () => {
-        setCurrentStep((prevStep) => Math.min(prevStep + 1, 4));
-    };
+    const handleNext = useCallback(() => {
+        setCurrentStep((prevStep) => Math.min(prevStep + 1, 5));
+    }, []);
 
-    const handlePrev = () => {
+    const handlePrev = useCallback(() => {
         setCurrentStep((prevStep) => Math.max(prevStep - 1, 1));
-    };
+    }, []);
 
     const handleInputChange = useCallback((e) => {
         const { name, value } = e.target;
@@ -96,6 +99,10 @@ const AddServices = ({ onClose }) => {
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
+        if (currentStep !== 5) {
+            handleNext();
+            return;
+        }
         try {
             const response = await fetch('/api/services/add-service', {
                 method: 'POST',
@@ -128,6 +135,7 @@ const AddServices = ({ onClose }) => {
             });
         }
     };
+
     const handleCourseDetailsChange = useCallback((newCourseDetails) => {
         setFormData(prevData => ({
             ...prevData,
@@ -168,104 +176,123 @@ const AddServices = ({ onClose }) => {
         }));
     }, []);
 
-    return (
-        <div className="bg-gradient-to-r from-gray-200 to-gray-100 ">
-            <div className="w-full mx-auto bg-white dark:bg-gray-800 rounded-lg p-8 space-y-8 relative">
+    const handleSeoChange = useCallback((newSeoData) => {
+        setFormData(prevData => ({
+            ...prevData,
+            seo: {
+                ...prevData.seo,
+                ...newSeoData
+            }
+        }));
+    }, []);
 
-                <form onSubmit={handleFormSubmit} className="space-y-6">
-                    {/* Step 1: Main Title & Subtitle */}
-                    {currentStep === 1 && (
-                        <div className="space-y-6">
-                            <div>
-                                <label className="block text-gray-700 dark:text-gray-300 mb-2">Main Title:</label>
-                                <Input
-                                    type="text"
-                                    placeholder="Enter the main title"
-                                    name="mainTitle"
-                                    value={formData.mainTitle}
-                                    onChange={handleInputChange}
-                                    className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
-                                />
-                            </div>
-
-                            <div>
-                                <label className="block text-gray-700 dark:text-gray-300 mb-2">Sub Title:</label>
-                                <Input
-                                    type="text"
-                                    placeholder="Enter the sub title"
-                                    name="subTitle"
-                                    value={formData.subTitle}
-                                    onChange={handleInputChange}
-                                    className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
-                                />
-                            </div>
-                            <UploadServices formData={formData} setFormData={setFormData} type={"image"} />
-                            {formData.image && (
-                                <Image width={300} height={300} src={formData.image} alt="service image" />
-                            )}
-                            <div>
-                                <label className="block text-gray-700 dark:text-gray-300 mb-2">Category:</label>
-                                <Select onValueChange={handleSelectChange} disabled={loading} value={formData.category} >
-                                    <SelectTrigger className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white">
-                                        <SelectValue placeholder={loading ? "Loading categories..." : "Select a category"}>
-                                            {formData.category && categories.length > 0
-                                                ? categories.find((cat) => cat.id == formData.category)?.category_name
-                                                : "Select a category"}
-                                        </SelectValue>
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        {categories.map((category) => (
-                                            <SelectItem key={category.id} value={category.id}>
-                                                {category.category_name}
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
-                            </div>
-
-                            <div>
-                                <label className="block text-gray-700 dark:text-gray-300 mb-2">Course Description:</label>
-                                <textarea
-                                    placeholder="Enter the course description"
-                                    name="courseDescription"
-                                    value={formData.courseDescription}
-                                    onChange={handleInputChange}
-                                    className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white h-32"
-                                />
-                            </div>
+    const renderStep = () => {
+        switch (currentStep) {
+            case 1:
+                return (
+                    <div className="space-y-6">
+                        <div>
+                            <label className="block text-gray-700 dark:text-gray-300 mb-2">Main Title:</label>
+                            <Input
+                                type="text"
+                                placeholder="Enter the main title"
+                                name="mainTitle"
+                                value={formData.mainTitle}
+                                onChange={handleInputChange}
+                                className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                            />
                         </div>
-                    )}
+                        <div>
+                            <label className="block text-gray-700 dark:text-gray-300 mb-2">Sub Title:</label>
+                            <Input
+                                type="text"
+                                placeholder="Enter the sub title"
+                                name="subTitle"
+                                value={formData.subTitle}
+                                onChange={handleInputChange}
+                                className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                            />
+                        </div>
+                        <UploadServices formData={formData} setFormData={setFormData} type="image" />
+                        {formData.image && (
+                            <Image width={300} height={300} src={formData.image} alt="service image" />
+                        )}
+                        <div>
+                            <label className="block text-gray-700 dark:text-gray-300 mb-2">Category:</label>
+                            <Select onValueChange={handleSelectChange} disabled={loading} value={formData.category}>
+                                <SelectTrigger className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white">
+                                    <SelectValue placeholder={loading ? "Loading categories..." : "Select a category"}>
+                                        {formData.category && categories.length > 0
+                                            ? categories.find((cat) => cat.id == formData.category)?.category_name
+                                            : "Select a category"}
+                                    </SelectValue>
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {categories.map((category) => (
+                                        <SelectItem key={category.id} value={category.id}>
+                                            {category.category_name}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                        </div>
+                        <div>
+                            <label className="block text-gray-700 dark:text-gray-300 mb-2">Course Description:</label>
+                            <textarea
+                                placeholder="Enter the course description"
+                                name="courseDescription"
+                                value={formData.courseDescription}
+                                onChange={handleInputChange}
+                                className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white h-32"
+                            />
+                        </div>
+                    </div>
+                );
+            case 2:
+                return (
+                    <CourseDetails
+                        courseDetails={formData.courseDetails}
+                        onCourseDetailsChange={handleCourseDetailsChange}
+                        formData={formData}
+                        setFormData={setFormData}
+                    />
+                );
+            case 3:
+                return (
+                    <ProgramDetails
+                        programDetails={formData.programDetails}
+                        onProgramDetailsChange={handleProgramDetailsChange}
+                    />
+                );
+            case 4:
+                return (
+                    <Testimonials
+                        testimonials={formData.testimonials}
+                        onTestimonialsChange={handleTestimonialsChange}
+                        handleImageUpload={handleImageUpload}
+                        formData={formData}
+                        setFormData={setFormData}
+                    />
+                );
+            case 5:
+                return (
+                    <SeoComponent
+                        seoData={formData.seo}
+                        onSeoChange={handleSeoChange}
+                        formData={formData}
+                        setFormData={setFormData}
+                    />
+                );
+            default:
+                return null;
+        }
+    };
 
-                    {/* Step 2: Course Details */}
-                    {currentStep === 2 && (
-                        <CourseDetails
-                            courseDetails={formData.courseDetails}
-                            onCourseDetailsChange={handleCourseDetailsChange}
-                            formData={formData}
-                            setFormData={setFormData}
-                        />
-                    )}
-
-                    {/* Step 3: Program Details */}
-                    {currentStep === 3 && (
-                        <ProgramDetails
-                            programDetails={formData.programDetails}
-                            onProgramDetailsChange={handleProgramDetailsChange}
-                        />
-                    )}
-
-                    {/* Step 4: Testimonials */}
-                    {currentStep === 4 && (
-                        <Testimonials
-                            testimonials={formData.testimonials}
-                            onTestimonialsChange={handleTestimonialsChange}
-                            handleImageUpload={handleImageUpload}
-                            formData={formData}
-                            setFormData={setFormData}
-                           
-                        />
-                    )}
-                    {/* Navigation Buttons */}
+    return (
+        <div className="bg-gradient-to-r from-gray-200 to-gray-100">
+            <div className="w-full mx-auto bg-white dark:bg-gray-800 rounded-lg p-8 space-y-8 relative">
+                <form onSubmit={handleFormSubmit} className="space-y-6">
+                    {renderStep()}
                     <div className="flex justify-between">
                         {currentStep > 1 && (
                             <Button
@@ -276,7 +303,7 @@ const AddServices = ({ onClose }) => {
                                 Previous
                             </Button>
                         )}
-                        {currentStep < 4 ? (
+                        {currentStep < 5 ? (
                             <Button
                                 type="button"
                                 onClick={handleNext}
@@ -300,3 +327,4 @@ const AddServices = ({ onClose }) => {
 };
 
 export default AddServices;
+

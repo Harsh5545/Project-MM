@@ -57,6 +57,15 @@ export default function UploadServices({ formData, setFormData, type }) {
                 }
             }));
         }
+        if (type === "og_image") {
+            setFormData(prevData => ({
+                ...prevData,
+                seo: {
+                    ...prevData.seo,
+                    og_image: res.url,
+                }
+            }));
+        }
         setLoading(false);
     };
 
