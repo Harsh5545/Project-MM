@@ -258,7 +258,7 @@ const CourseDetails = (props) => {
           <Button
             type="button"
             onClick={addCourseHeading}
-            className="mt-4 bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg"
+            className="mt-4 bg-black text-white py-2 px-4 rounded-lg"
           >
             + Add Course Heading
           </Button>
@@ -288,7 +288,7 @@ const CourseDetails = (props) => {
           <Button
             type="button"
             onClick={addCourseDetail}
-            className="mt-4 bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg"
+            className="mt-4 bg-black text-white py-2 px-4 rounded-lg"
           >
             + Add Course Detail
           </Button>
@@ -349,7 +349,7 @@ const CourseDetails = (props) => {
           <Button
             type="button"
             onClick={addProgramHighlight}
-            className="mt-4 bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg"
+            className="mt-4 bg-black text-white py-2 px-4 rounded-lg"
           >
             + Add Program Highlight
           </Button>

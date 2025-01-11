@@ -113,9 +113,9 @@ const AddServices = ({ onClose }) => {
                 >
                     &times;
                 </button> */}
-                <h1 className="text-3xl font-bold text-gray-800 dark:text-white text-center">
+                {/* <h1 className="text-3xl font-bold text-gray-800 dark:text-white text-center">
                     Add New Service
-                </h1>
+                </h1> */}
 
                 <form onSubmit={handleFormSubmit} className="space-y-6">
                     {/* Step 1: Main Title & Subtitle */}
@@ -153,7 +153,7 @@ const AddServices = ({ onClose }) => {
                                     </SelectTrigger>
                                     <SelectContent>
                                         {categories.map((category) => (
-                                            <SelectItem key={category._id} value={category.category_name}>
+                                            <SelectItem key={category.id} value={category.id}>
                                                 {category.category_name}
                                             </SelectItem>
                                         ))}
@@ -198,14 +198,14 @@ const AddServices = ({ onClose }) => {
                             <Button
                                 type="button"
                                 onClick={handleNext}
-                                className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg"
+                                className="bg-black text-white px-4 py-2 rounded-lg"
                             >
                                 Next
                             </Button>
                         ) : (
                             <Button
                                 type="submit"
-                                className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg"
+                                className="bg-black text-white px-4 py-2 rounded-lg"
                             >
                                 Submit
                             </Button>
