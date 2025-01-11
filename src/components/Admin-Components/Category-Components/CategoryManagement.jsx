@@ -16,7 +16,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { Loader2, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, ArrowUpDown } from 'lucide-react'
+import { Loader2, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, ArrowUpDown, Loader } from 'lucide-react'
 import { Shimmer } from '@/components/ui/shimmer'
 
 
@@ -108,8 +108,7 @@ const AddCategoryDialog = ({ onCategoryAdded }) => {
           <Button type="submit" className="ml-auto" disabled={isLoading}>
             {isLoading ? (
               <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Adding...
+                <Loader className="mr-2 h-4 w-4 animate-spin" />  
               </>
             ) : (
               'Add Category'

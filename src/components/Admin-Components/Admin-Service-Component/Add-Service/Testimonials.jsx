@@ -166,7 +166,7 @@ const Testimonials = (props) => {
         <Button
           type="button"
           onClick={addTestimonial}
-          className="mt-4 bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg"
+          className="mt-4 bg-black text-white py-2 px-4 rounded-lg"
         >
           + Add Testimonial
         </Button>
@@ -207,7 +207,7 @@ const Testimonials = (props) => {
         <Button
           type="button"
           onClick={addFaq}
-          className="mt-4 bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg"
+          className="mt-4 bg-black text-white py-2 px-4 rounded-lg"
         >
           + Add FAQ
         </Button>

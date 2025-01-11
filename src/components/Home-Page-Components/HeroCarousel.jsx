@@ -164,7 +164,7 @@ const HeroCarousel = () => {
                   src={slide.image}
                   alt={slide.text}
                   className={styles.image}
-                  layout="fill"
+                  fill
                 />
                 <div className={styles.overlay}></div>
                 <div className="absolute text-white flex gap-5 md:gap-9 flex-col text-center items-center justify-center w-full h-full z-10 p-8">
