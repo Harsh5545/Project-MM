@@ -76,6 +76,7 @@ export default function UploadFile({ userId, toast, setUser }) {
     const onSuccess = (res, userId, toast, setUser) => {
         console.log("Success", res);
         updateProfilePicture(userId, res?.url, toast, setUser);
+        
         setLoading(false)
     };
 

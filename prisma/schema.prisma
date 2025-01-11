@@ -47,14 +47,14 @@ model Service {
   categoryId          Int
   heading             String
   subheading          String
-  testimonial         String?
-  faq                 String?
-  why_choose_program  String?
-  program_details     String?
-  program_highlights  String?
-  what_you_learn      String?
-  overview            String?
-  what_program_offers String?
+  testimonial         String? @db.Text
+  faq                 String? @db.Text
+  why_choose_program  String? @db.Text 
+  program_details     String? @db.Text 
+  program_highlights  String? @db.Text 
+  what_you_learn      String? @db.Text 
+  overview            String? @db.Text 
+  what_program_offers String? @db.Text 
   hero_image          String?
   image               String?
   slug                String   @unique
@@ -65,7 +65,7 @@ model Service {
   keywords            String?
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
-  category            Category @relation(fields: [categoryId], references: [id])
+  category            Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 
   @@index([categoryId], map: "Service_categoryId_fkey")
 }

@@ -31,10 +31,18 @@ const ServicesTable = () => {
   const fetchServices = async () => {
     setLoading(true)
     try {
-      // Replace this with your actual API call
-      const response = await fetch('/api/services')
+      const response = await fetch(`/api/services/list?page=${pageIndex + 1}&pageSize=${pageSize}&searchTerm=${searchTerm}&sortBy=${sortColumn}&sortOrder=${sortOrder}`)
       const result = await response.json()
-      setServices(result.data)
+
+      if (result.success) {
+        setServices(result.data)
+      } else {
+        toast({
+          title: "Error",
+          description: result.error || "Failed to fetch services. Please try again.",
+          variant: "destructive",
+        })
+      }
     } catch (error) {
       console.error('Error fetching services:', error)
       toast({
@@ -49,79 +57,12 @@ const ServicesTable = () => {
 
   useEffect(() => {
     fetchServices()
-  }, [])
+  }, [pageIndex, pageSize, searchTerm, sortColumn, sortOrder])
 
   const handleSort = (column) => {
     const newSortOrder = sortColumn === column && sortOrder === 'asc' ? 'desc' : 'asc'
     setSortColumn(column)
     setSortOrder(newSortOrder)
-  }
-
-  const sortedData = useMemo(() => {
-    return services
-      .filter(item => 
-        item.mainTitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        item.category.toLowerCase().includes(searchTerm.toLowerCase())
-      )
-      .sort((a, b) => {
-        if (a[sortColumn] < b[sortColumn]) return sortOrder === 'asc' ? -1 : 1
-        if (a[sortColumn] > b[sortColumn]) return sortOrder === 'asc' ? 1 : -1
-        return 0
-      })
-  }, [services, searchTerm, sortColumn, sortOrder])
-
-  const paginatedData = sortedData.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize)
-
-  const handlePageChange = (newPageIndex) => {
-    setPageIndex(newPageIndex)
-  }
-
-  const handlePageSizeChange = (newPageSize) => {
-    setPageSize(newPageSize)
-    setPageIndex(0)
-  }
-
-  const handleDelete = async (index) => {
-    try {
-      // Replace this with your actual delete API call
-      await fetch(`/api/services/${services[index].id}`, { method: 'DELETE' })
-      toast({
-        title: "Success",
-        description: "Service deleted successfully",
-      })
-      fetchServices()
-    } catch (error) {
-      console.error('Error:', error)
-      toast({
-        title: "Error",
-        description: "Failed to delete service. Please try again.",
-        variant: "destructive",
-      })
-    }
-  }
-
-  const handleFormSubmit = async (formData) => {
-    try {
-      // Replace this with your actual add service API call
-      await fetch('/api/services', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      })
-      setShowForm(false)
-      toast({
-        title: "Success",
-        description: "Service added successfully",
-      })
-      fetchServices()
-    } catch (error) {
-      console.error('Error:', error)
-      toast({
-        title: "Error",
-        description: "Failed to add service. Please try again.",
-        variant: "destructive",
-      })
-    }
   }
 
   const TableShimmer = () => (
@@ -149,7 +90,7 @@ const ServicesTable = () => {
             <DialogHeader>
               <DialogTitle>Add New Service</DialogTitle>
             </DialogHeader>
-            <AddServiceForm onSubmit={handleFormSubmit} onClose={() => setShowForm(false)} />
+            <AddServiceForm onSubmit={fetchServices} onClose={() => setShowForm(false)} />
           </DialogContent>
         </Dialog>
       </div>
@@ -196,7 +137,7 @@ const ServicesTable = () => {
                 </TableCell>
               </TableRow>
             ) : (
-              paginatedData.map((service, index) => (
+              services.map((service, index) => (
                 <TableRow key={index}>
                   <TableCell>
                     <img src={service.image} alt="Service" className="w-16 h-16 object-cover rounded-full" />
@@ -205,16 +146,10 @@ const ServicesTable = () => {
                   <TableCell>{service.category}</TableCell>
                   <TableCell>
                     <div className="flex space-x-2">
-                      <Button
-                        variant="outline"
-                        onClick={() => console.log('Edit', index)}
-                      >
+                      <Button variant="outline" onClick={() => console.log('Edit', index)}>
                         Edit
                       </Button>
-                      <Button
-                        variant="destructive"
-                        onClick={() => handleDelete(index)}
-                      >
+                      <Button variant="destructive" onClick={() => console.log('Delete', index)}>
                         Delete
                       </Button>
                     </div>
@@ -228,50 +163,35 @@ const ServicesTable = () => {
 
       <div className="flex justify-center items-center border-t pt-4 space-x-2">
         <div className="flex items-center space-x-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => handlePageChange(0)}
-            disabled={pageIndex === 0}
-          >
+          <Button variant="outline" size="sm" onClick={() => setPageIndex(0)} disabled={pageIndex === 0}>
             <ChevronsLeft className="h-4 w-4" />
           </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => handlePageChange(pageIndex - 1)}
-            disabled={pageIndex === 0}
-          >
+          <Button variant="outline" size="sm" onClick={() => setPageIndex(pageIndex - 1)} disabled={pageIndex === 0}>
             <ChevronLeft className="h-4 w-4" />
           </Button>
           <span className="text-sm font-medium">
-            Page {pageIndex + 1} of {Math.ceil(sortedData.length / pageSize)}
+            Page {pageIndex + 1} of {Math.ceil(services.length / pageSize)}
           </span>
           <Button
             variant="outline"
             size="sm"
-            onClick={() => handlePageChange(pageIndex + 1)}
-            disabled={pageIndex >= Math.ceil(sortedData.length / pageSize) - 1}
+            onClick={() => setPageIndex(pageIndex + 1)}
+            disabled={pageIndex >= Math.ceil(services.length / pageSize) - 1}
           >
             <ChevronRight className="h-4 w-4" />
           </Button>
           <Button
             variant="outline"
             size="sm"
-            onClick={() => handlePageChange(Math.ceil(sortedData.length / pageSize) - 1)}
-            disabled={pageIndex >= Math.ceil(sortedData.length / pageSize) - 1}
+            onClick={() => setPageIndex(Math.ceil(services.length / pageSize) - 1)}
+            disabled={pageIndex >= Math.ceil(services.length / pageSize) - 1}
           >
             <ChevronsRight className="h-4 w-4" />
           </Button>
         </div>
         <div className="flex items-center space-x-2 ml-4">
           {[10, 20, 30, 40, 50].map((size) => (
-            <Button
-              key={size}
-              variant={pageSize === size ? "default" : "outline"}
-              size="sm"
-              onClick={() => handlePageSizeChange(size)}
-            >
+            <Button key={size} variant={pageSize === size ? 'default' : 'outline'} size="sm" onClick={() => setPageSize(size)}>
               {size}
             </Button>
           ))}
@@ -282,4 +202,3 @@ const ServicesTable = () => {
 }
 
 export default ServicesTable
-
