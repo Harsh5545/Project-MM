@@ -78,11 +78,11 @@ const AddServices = ({ onClose }) => {
     }, [toast]);
 
     const handleNext = () => {
-        setCurrentStep((prevStep) => Math.min(prevStep + 1, 4)); // Ensure step does not exceed total steps
+        setCurrentStep((prevStep) => Math.min(prevStep + 1, 4));
     };
 
     const handlePrev = () => {
-        setCurrentStep((prevStep) => Math.max(prevStep - 1, 1)); // Ensure step does not go below 1
+        setCurrentStep((prevStep) => Math.max(prevStep - 1, 1));
     };
 
     const handleInputChange = useCallback((e) => {
@@ -97,7 +97,7 @@ const AddServices = ({ onClose }) => {
     const handleFormSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('/api/services/add', {
+            const response = await fetch('/api/services/add-service', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -203,9 +203,13 @@ const AddServices = ({ onClose }) => {
                             <Image width={300} height={300} src={formData.image} alt="service image" />
                             <div>
                                 <label className="block text-gray-700 dark:text-gray-300 mb-2">Category:</label>
-                                <Select onValueChange={handleSelectChange} disabled={loading}>
+                                <Select onValueChange={handleSelectChange} disabled={loading} value={formData.category} >
                                     <SelectTrigger className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white">
-                                        <SelectValue placeholder={loading ? "Loading categories..." : "Select a category"} />
+                                        <SelectValue placeholder={loading ? "Loading categories..." : "Select a category"}>
+                                            {formData.category && categories.length > 0
+                                                ? categories.find((cat) => cat.id == formData.category)?.category_name
+                                                : "Select a category"}
+                                        </SelectValue>
                                     </SelectTrigger>
                                     <SelectContent>
                                         {categories.map((category) => (

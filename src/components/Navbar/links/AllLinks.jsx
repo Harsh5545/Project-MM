@@ -15,62 +15,62 @@ const AllLinks = ({onClose}) => {
     {
       title: "Services",
       path: "/services",
-      subLinks: [
-        { title: "Consultation", path: "/servicestation" },
-        {
-          title: "Personality Transformation",
-          path: "/servicesality-transformation",
-          subLinks: [
-            {
-              title: "Personality Transformation for Men",
-              path: "/servicesality-transformation/Men",
-            },
-            {
-              title: "Personality Transformation for Women",
-              path: "/servicesality-transformation/Women",
-            },
-          ],
-        },
-        {
-          title: "Corporate Grooming",
-          path: "/servicesate-grooming",
-          subLinks: [
-            {
-              title: "Bespoke Business Etiquette & Corporate Grooming",
-              path: "/servicese-business-etiquette-&-corporate-grooming",
-            },
-            {
-              title: "In-house Corporate Training",
-              path: "/servicesse-Corporate-Training",
-            },
-          ],
-        },
-        { title: "Children's Etiquette", path: "/services/3"},
-        { title: "Young Adult Etiquette", path: "/servicesadult-etiquette" },
-        {
-          title: "Latest Workshop",
-          path: "/services-workshop",
-          subLinks: [
-            {
-              title: "Ladies Grooming & Social Etiquette Programme",
-              path: "/services-workshop/ladies-grooming",
-            },
-            {
-              title: "Young Adult-Grooming & Etiquette",
-              path: "/services-workshop/young-adult-grooming",
-            },
-            {
-              title: "Young Adult Training",
-              path: "/services-workshop/young-adult",
-            },
-            {
-              title: "Dining Etiquette Workshop",
-              path: "/services-workshop/dining-etiquette",
-            },
-          ],
-        },
-        // { title: "Train the Trainer", path: "/service/train-the-trainer" },
-      ],
+      // subLinks: [
+      //   { title: "Consultation", path: "/servicestation" },
+      //   {
+      //     title: "Personality Transformation",
+      //     path: "/servicesality-transformation",
+      //     subLinks: [
+      //       {
+      //         title: "Personality Transformation for Men",
+      //         path: "/servicesality-transformation/Men",
+      //       },
+      //       {
+      //         title: "Personality Transformation for Women",
+      //         path: "/servicesality-transformation/Women",
+      //       },
+      //     ],
+      //   },
+      //   {
+      //     title: "Corporate Grooming",
+      //     path: "/servicesate-grooming",
+      //     subLinks: [
+      //       {
+      //         title: "Bespoke Business Etiquette & Corporate Grooming",
+      //         path: "/servicese-business-etiquette-&-corporate-grooming",
+      //       },
+      //       {
+      //         title: "In-house Corporate Training",
+      //         path: "/servicesse-Corporate-Training",
+      //       },
+      //     ],
+      //   },
+      //   { title: "Children's Etiquette", path: "/services/3"},
+      //   { title: "Young Adult Etiquette", path: "/servicesadult-etiquette" },
+      //   {
+      //     title: "Latest Workshop",
+      //     path: "/services-workshop",
+      //     subLinks: [
+      //       {
+      //         title: "Ladies Grooming & Social Etiquette Programme",
+      //         path: "/services-workshop/ladies-grooming",
+      //       },
+      //       {
+      //         title: "Young Adult-Grooming & Etiquette",
+      //         path: "/services-workshop/young-adult-grooming",
+      //       },
+      //       {
+      //         title: "Young Adult Training",
+      //         path: "/services-workshop/young-adult",
+      //       },
+      //       {
+      //         title: "Dining Etiquette Workshop",
+      //         path: "/services-workshop/dining-etiquette",
+      //       },
+      //     ],
+      //   },
+      //   // { title: "Train the Trainer", path: "/service/train-the-trainer" },
+      // ],
     },
     { title: "Blog", path: "/blogs" },
   ];
@@ -165,7 +165,7 @@ const AllLinks = ({onClose}) => {
                       key={j}
                       className="relative group"
                       onMouseEnter={() => handleSubLinkMouseEnter(subLink.title)}
-                      onMouseLeave={handleSubLinkMouseLeave}
+                      // onMouseLeave={handleSubLinkMouseLeave}
                     >
                       <button
                         className="block px-4 py-2 text-sm font-semibold text-left w-full text-nowrap"

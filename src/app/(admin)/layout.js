@@ -3,6 +3,7 @@ import { Dashboard } from "@/components/Admin-Components/Dashboard/Dashboard";
 import { auth } from "@/auth";
 import "../globals.css";
 import { redirect } from "next/navigation";
+import { ThemeProvider } from "next-themes";
 const geistSans = Geist({
     variable: "--font-geist-sans",
     subsets: ["latin"],
@@ -28,12 +29,20 @@ export default async function Layout({ children }) {
     }
     return (
         <html lang="en">
-            <body
+            <body 
                 className={`${geistSans.variable} ${geistMono.variable} antialiased`}
             >
-                <Dashboard session={session}>
-                    {children}
-                </Dashboard>
+                {/* <ThemeProvider
+                    attribute="class"
+                    defaultTheme="system"
+                    enableSystem
+                    disableTransitionOnChange
+                    suppressHydrationWarning={true}
+                > */}
+                    <Dashboard session={session}>
+                        {children}
+                    </Dashboard>
+                {/* </ThemeProvider> */}
             </body>
         </html>
     );

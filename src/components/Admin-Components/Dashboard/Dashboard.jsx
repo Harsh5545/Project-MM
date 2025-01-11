@@ -6,16 +6,14 @@ import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import { Suspense } from "react";
 import dynamic from 'next/dynamic';
-import { signOut } from "@/auth";
 import { useTheme } from "next-themes";
 import { CircleUser, Home, LineChart, Menu, Package, Package2, Users, Sun, Moon, Settings, Bell, Search, LogOut, Calendar, BookOpen } from 'lucide-react';
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu, DropdownMenuContent, DropdownMenuItem,
   DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -133,11 +131,10 @@ function Sidebar({ roleLinks, pathname, closeSidebar }) {
           <Link
             key={index}
             href={link.href}
-            className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all transform duration-300 ease-in-out relative ${
-              pathname === link.href
-                ? " text-black border-2 border-[#FFD700] animate-glow scale-105" 
-                : "text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
-            }`}
+            className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all transform duration-300 ease-in-out relative ${pathname === link.href
+              ? "bg-[#b2ec5d] text-black border-2 border-[#FFD700] animate-glow scale-105"
+              : "text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
+              }`}
             onClick={closeSidebar}
           >
             <link.icon className="h-5 w-5" />
