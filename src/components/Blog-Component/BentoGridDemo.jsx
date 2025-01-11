@@ -114,7 +114,7 @@ export function BentoGridDemo() {
   );
 
   return (
-    <div className="flex flex-col md:flex-row max-w-7xl my-8 mx-auto gap-6 px-4 md:px-0">
+    <div className="flex flex-col md:flex-row max-w-[90%] my-8 mx-auto gap-6 px-4 md:px-0">
       {/* Sidebar for Desktop View */}
       <aside className="hidden md:block md:w-1/3 lg:w-1/4 space-y-6">
         <BackgroundGradient className="rounded-[22px] p-4 sm:p-10 bg-white dark:bg-zinc-900">
@@ -182,13 +182,13 @@ export function BentoGridDemo() {
               title={item.title}
               description={item.description}
               header={
-                <BackgroundGradient className="rounded-[22px] max-w-sm h-full">
+                <div className="rounded-[22px] max-w-sm h-full">
                   <img
                     src={item.imgSrc}
                     alt={item.title}
-                    className="object-cover w-full h-full rounded-[22px]"
+                    className="object-cover w-full h-auto rounded-[22px]"
                   />
-                </BackgroundGradient>
+                </div>
               }
               icon={item.icon}
               className={i === 3 || i === 6 ? "md:col-span-2" : ""}

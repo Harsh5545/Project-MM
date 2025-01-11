@@ -8,23 +8,49 @@ import CourseDetails from './CourseDetails';
 import ProgramDetails from './ProgramDetails';
 import Testimonials from './Testimonials';
 import { useToast } from '@/hooks/use-toast';
+import UploadServices from './UploadServices';
+import Image from 'next/image';
+
 
 const AddServices = ({ onClose }) => {
     const { toast } = useToast();
-    const [currentStep, setCurrentStep] = useState(1); // Track the current step of the form
+    const [currentStep, setCurrentStep] = useState(1);
     const [formData, setFormData] = useState({
         mainTitle: '',
         subTitle: '',
         courseDescription: '',
+        image: '',
         category: '',
-        courseDetails: {},
-        programDetails: {},
-        testimonials: {},
+        seoKeywords: '',
+        seoDescription: '',
+        courseDetails: {
+            courseHeadings: [{ heading: '', subheading: '', icon: '' }],
+            courseDetail: [''],
+            programHighlights: [{ icon: 'FaCheckCircle', heading: '', description: '' }],
+            overviewImage: '',
+            overviewDescription: '',
+        },
+        programDetails: {
+            ageGroups: [{ heading: '', subheading: '' }],
+            formats: [{ heading: '', subheading: '' }],
+            durations: [{ heading: '', subheading: '' }],
+            locations: [{ heading: '', subheading: '' }],
+        },
+
+        testimonials: {
+            taglineHeading: '',
+            mmDescription: '',
+            testimonials: [{ comment: '', name: '' }],
+            faqs: [{ question: '', answer: '' }],
+            heroImage: '',
+            outsideImage: '',
+        },
     });
+    
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
     console.log(formData)
-    
+
     useEffect(() => {
         const fetchCategories = async () => {
             setLoading(true);
@@ -102,20 +128,49 @@ const AddServices = ({ onClose }) => {
             });
         }
     };
+    const handleCourseDetailsChange = useCallback((newCourseDetails) => {
+        setFormData(prevData => ({
+            ...prevData,
+            courseDetails: {
+                ...prevData.courseDetails,
+                ...newCourseDetails
+            }
+        }));
+    }, []);
+
+    const handleProgramDetailsChange = useCallback((field, value) => {
+        setFormData(prevData => ({
+            ...prevData,
+            programDetails: {
+                ...prevData.programDetails,
+                [field]: value
+            }
+        }));
+    }, []);
+
+    const handleTestimonialsChange = useCallback((newTestimonials) => {
+        setFormData(prevData => ({
+            ...prevData,
+            testimonials: {
+                ...prevData.testimonials,
+                ...newTestimonials
+            }
+        }));
+    }, []);
+
+    const handleImageUpload = useCallback((imageType, imageData) => {
+        setFormData(prevData => ({
+            ...prevData,
+            testimonials: {
+                ...prevData.testimonials,
+                [imageType]: imageData
+            }
+        }));
+    }, []);
 
     return (
         <div className="bg-gradient-to-r from-gray-200 to-gray-100 ">
             <div className="w-full mx-auto bg-white dark:bg-gray-800 rounded-lg p-8 space-y-8 relative">
-                {/* <button
-                    type="button"
-                    className="absolute top-4 right-4 bg-red-600 hover:bg-red-700 text-white px-2 py-1 rounded-lg"
-                    onClick={onClose}
-                >
-                    &times;
-                </button> */}
-                {/* <h1 className="text-3xl font-bold text-gray-800 dark:text-white text-center">
-                    Add New Service
-                </h1> */}
 
                 <form onSubmit={handleFormSubmit} className="space-y-6">
                     {/* Step 1: Main Title & Subtitle */}
@@ -144,7 +199,8 @@ const AddServices = ({ onClose }) => {
                                     className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                                 />
                             </div>
-
+                            <UploadServices formData={formData} setFormData={setFormData} type={"image"} />
+                            <Image width={300} height={300} src={formData.image} alt="service image" />
                             <div>
                                 <label className="block text-gray-700 dark:text-gray-300 mb-2">Category:</label>
                                 <Select onValueChange={handleSelectChange} disabled={loading}>
@@ -175,14 +231,31 @@ const AddServices = ({ onClose }) => {
                     )}
 
                     {/* Step 2: Course Details */}
-                    {currentStep === 2 && <CourseDetails formData={formData} setFormData={setFormData} />}
+                    {currentStep === 2 && (
+                        <CourseDetails
+                            courseDetails={formData.courseDetails}
+                            onCourseDetailsChange={handleCourseDetailsChange}
+                            formData={formData}
+                            setFormData={setFormData}
+                        />
+                    )}
 
                     {/* Step 3: Program Details */}
-                    {currentStep === 3 && <ProgramDetails formData={formData} setFormData={setFormData} />}
+                    {currentStep === 3 && (
+                        <ProgramDetails
+                            programDetails={formData.programDetails}
+                            onProgramDetailsChange={handleProgramDetailsChange}
+                        />
+                    )}
 
                     {/* Step 4: Testimonials */}
-                    {currentStep === 4 && <Testimonials formData={formData} setFormData={setFormData} />}
-
+                    {currentStep === 4 && (
+                        <Testimonials
+                            testimonials={formData.testimonials}
+                            onTestimonialsChange={handleTestimonialsChange}
+                            onImageUpload={handleImageUpload}
+                        />
+                    )}
                     {/* Navigation Buttons */}
                     <div className="flex justify-between">
                         {currentStep > 1 && (

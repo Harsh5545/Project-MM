@@ -1,73 +1,30 @@
-import React, { useState, useEffect } from 'react';
+'use client';
+
+import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Image from 'next/image';
+import UploadServices from './UploadServices';
 
-const Testimonials = (props) => {
-  const { formData, setFormData } = props;
-
-  const [taglineHeading, setTaglineHeading] = useState(formData?.testimonials?.taglineHeading || '');
-  const [mmDescription, setMmDescription] = useState(formData?.testimonials?.mmDescription || '');
-  const [testimonials, setTestimonials] = useState(formData?.testimonials?.testimonials || [{ comment: '', name: '' }]);
-  const [faqs, setFaqs] = useState(formData?.testimonials?.faqs || [{ question: '', answer: '' }]);
-  const [heroImage, setHeroImage] = useState(formData?.testimonials?.heroImage || '');
-  const [outsideImage, setOutsideImage] = useState(formData?.testimonials?.outsideImage || '');
-
-  const addTestimonial = () => {
-    setTestimonials([...testimonials, { comment: '', name: '' }]);
+const Testimonials = ({ testimonials, onTestimonialsChange, onImageUpload }) => {
+  const handleInputChange = (field, value) => {
+    onTestimonialsChange({ [field]: value });
   };
 
-  const addFaq = () => {
-    setFaqs([...faqs, { question: '', answer: '' }]);
+  const handleArrayInputChange = (index, field, subfield, value) => {
+    const newArray = [...testimonials[field]];
+    newArray[index][subfield] = value;
+    onTestimonialsChange({ [field]: newArray });
   };
 
-  const handleInputChange = (index, field, value, setState, state) => {
-    const newState = [...state];
-    newState[index][field] = value;
-    setState(newState);
+  const addItem = (field) => {
+    const newArray = [...testimonials[field], field === 'testimonials' ? { comment: '', name: '' } : { question: '', answer: '' }];
+    onTestimonialsChange({ [field]: newArray });
   };
 
-  const removeInput = (index, setState, state) => {
-    const newState = state.filter((_, i) => i !== index);
-    setState(newState);
-  };
-
-  useEffect(() => {
-    setFormData((prevData) => ({
-      ...prevData,
-      testimonials: {
-        taglineHeading,
-        mmDescription,
-        testimonials,
-        faqs,
-        heroImage,
-        outsideImage,
-      },
-    })); return () => {  
-      setFormData((prevData) => ({
-        ...prevData,
-        testimonials: {
-          taglineHeading,
-          mmDescription,
-          testimonials,
-          faqs,
-          heroImage,
-          outsideImage,
-        },
-      }));
-    };
-  
-  }, [taglineHeading, mmDescription, testimonials, faqs, heroImage, outsideImage]);
-
-  const handleImageChange = (e, setImage) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImage(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
+  const removeItem = (field, index) => {
+    const newArray = testimonials[field].filter((_, i) => i !== index);
+    onTestimonialsChange({ [field]: newArray });
   };
 
   return (
@@ -78,8 +35,8 @@ const Testimonials = (props) => {
           <label className="block text-gray-700 dark:text-gray-300 mb-2">Tagline Heading:</label>
           <Input
             type="text"
-            value={taglineHeading}
-            onChange={(e) => setTaglineHeading(e.target.value)}
+            value={testimonials.taglineHeading}
+            onChange={(e) => handleInputChange('taglineHeading', e.target.value)}
             placeholder="Enter the tagline heading"
             className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
           />
@@ -90,8 +47,8 @@ const Testimonials = (props) => {
           <label className="block text-gray-700 dark:text-gray-300 mb-2">MM Description:</label>
           <Input
             type="text"
-            value={mmDescription}
-            onChange={(e) => setMmDescription(e.target.value)}
+            value={testimonials.mmDescription}
+            onChange={(e) => handleInputChange('mmDescription', e.target.value)}
             placeholder="Enter the MM description"
             className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
           />
@@ -100,15 +57,17 @@ const Testimonials = (props) => {
         {/* Hero Image */}
         <div>
           <label className="block text-gray-700 dark:text-gray-300 mb-2">Hero Image:</label>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={(e) => handleImageChange(e, setHeroImage)}
-            className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
-          />
-          {heroImage && (
+          <div className="flex items-center space-x-2">
+            <UploadServices
+              formData={testimonials}
+              setFormData={(newData) => onTestimonialsChange(newData)}
+              type="heroImage"
+            />
+            <span className="text-sm text-gray-500">Click to upload hero image</span>
+          </div>
+          {testimonials.heroImage && (
             <div className="mt-4">
-              <Image src={heroImage} width={400} height={200} alt="Hero" className=" h-auto rounded-lg shadow-md" />
+              <Image src={testimonials.heroImage} width={400} height={200} alt="Hero" className="h-auto rounded-lg shadow-md" />
             </div>
           )}
         </div>
@@ -116,30 +75,31 @@ const Testimonials = (props) => {
         {/* Outside Image */}
         <div>
           <label className="block text-gray-700 dark:text-gray-300 mb-2">Outside Image:</label>
-          <input
-            type="file"
-            accept="image/*"
-            
-            onChange={(e) => handleImageChange(e, setOutsideImage)}
-            className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
-          />
-          {outsideImage && (
+          <div className="flex items-center space-x-2">
+            <UploadServices
+              formData={testimonials}
+              setFormData={(newData) => onTestimonialsChange(newData)}
+              type="outsideImage"
+            />
+            <span className="text-sm text-gray-500">Click to upload outside image</span>
+          </div>
+          {testimonials.outsideImage && (
             <div className="mt-4">
-              <Image width={400} height={200} src={outsideImage} alt="Outside" className=" h-auto rounded-lg shadow-md" />
+              <Image width={400} height={200} src={testimonials.outsideImage} alt="Outside" className="h-auto rounded-lg shadow-md" />
             </div>
           )}
         </div>
 
         {/* Testimonials */}
         <h2 className="text-2xl font-semibold text-gray-800 dark:text-white">Testimonials</h2>
-        {testimonials.map((testimonial, index) => (
+        {testimonials.testimonials.map((testimonial, index) => (
           <div key={index} className="flex items-center space-x-4">
             <div className="flex-1">
               <label className="block text-gray-700 dark:text-gray-300 mb-2">Comment:</label>
               <Input
                 type="text"
                 value={testimonial.comment}
-                onChange={(e) => handleInputChange(index, 'comment', e.target.value, setTestimonials, testimonials)}
+                onChange={(e) => handleArrayInputChange(index, 'testimonials', 'comment', e.target.value)}
                 placeholder="Enter the comment"
                 className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
               />
@@ -149,14 +109,14 @@ const Testimonials = (props) => {
               <Input
                 type="text"
                 value={testimonial.name}
-                onChange={(e) => handleInputChange(index, 'name', e.target.value, setTestimonials, testimonials)}
+                onChange={(e) => handleArrayInputChange(index, 'testimonials', 'name', e.target.value)}
                 placeholder="Enter the name"
                 className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
               />
             </div>
             <Button
               type="button"
-              onClick={() => removeInput(index, setTestimonials, testimonials)}
+              onClick={() => removeItem('testimonials', index)}
               className="mt-6 bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg"
             >
               Delete
@@ -165,7 +125,7 @@ const Testimonials = (props) => {
         ))}
         <Button
           type="button"
-          onClick={addTestimonial}
+          onClick={() => addItem('testimonials')}
           className="mt-4 bg-black text-white py-2 px-4 rounded-lg"
         >
           + Add Testimonial
@@ -173,14 +133,14 @@ const Testimonials = (props) => {
 
         {/* FAQ Section */}
         <h2 className="text-2xl font-semibold text-gray-800 dark:text-white">FAQ</h2>
-        {faqs.map((faq, index) => (
+        {testimonials.faqs.map((faq, index) => (
           <div key={index} className="flex items-center space-x-4">
             <div className="flex-1">
               <label className="block text-gray-700 dark:text-gray-300 mb-2">Question:</label>
               <Input
                 type="text"
                 value={faq.question}
-                onChange={(e) => handleInputChange(index, 'question', e.target.value, setFaqs, faqs)}
+                onChange={(e) => handleArrayInputChange(index, 'faqs', 'question', e.target.value)}
                 placeholder="Enter the question"
                 className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
               />
@@ -190,14 +150,14 @@ const Testimonials = (props) => {
               <Input
                 type="text"
                 value={faq.answer}
-                onChange={(e) => handleInputChange(index, 'answer', e.target.value, setFaqs, faqs)}
+                onChange={(e) => handleArrayInputChange(index, 'faqs', 'answer', e.target.value)}
                 placeholder="Enter the answer"
                 className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
               />
             </div>
             <Button
               type="button"
-              onClick={() => removeInput(index, setFaqs, faqs)}
+              onClick={() => removeItem('faqs', index)}
               className="mt-6 bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg"
             >
               Delete
@@ -206,7 +166,7 @@ const Testimonials = (props) => {
         ))}
         <Button
           type="button"
-          onClick={addFaq}
+          onClick={() => addItem('faqs')}
           className="mt-4 bg-black text-white py-2 px-4 rounded-lg"
         >
           + Add FAQ
@@ -217,3 +177,4 @@ const Testimonials = (props) => {
 };
 
 export default Testimonials;
+
