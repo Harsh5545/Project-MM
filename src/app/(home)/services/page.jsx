@@ -1,15 +1,18 @@
+import ServicesComponent from '@/components/Services-Component/ServicesComponent';
+import ServicesHero from '@/components/Services-Component/servicesHero';
 
-import ServicesComponent from '@/components/Services-Component/ServicesComponent'
-import ServicesHero from '@/components/Services-Component/servicesHero'
-import React from 'react'
+const Page = async () => {
+  // Fetch data from your API endpoint
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/services/frontend-list`);
+  const result = await response.json();
+  console.log(result.data)
 
-function page() {
   return (
     <div>
       <ServicesHero />
-      <ServicesComponent />
+      <ServicesComponent data={result?.data} />
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default Page;
