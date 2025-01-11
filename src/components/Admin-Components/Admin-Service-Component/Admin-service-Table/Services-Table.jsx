@@ -17,6 +17,7 @@ import { Loader2, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, ArrowU
 import { Shimmer } from '@/components/ui/shimmer'
 import AddServiceForm from '../Add-Service/AddServices'
 import Image from 'next/image'
+import Link from 'next/link'
 
 const ServicesTable = () => {
   const { toast } = useToast()
@@ -83,17 +84,19 @@ const ServicesTable = () => {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h1 className="text-4xl font-bold">Manage Services </h1>
-        <Dialog open={showForm} onOpenChange={setShowForm}>
-          <DialogTrigger asChild>
-            <Button>Add Service</Button>
-          </DialogTrigger>
-          <DialogContent className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 w-full max-w-6xl max-h-[80vh] overflow-y-auto">
+        {/* <Dialog open={showForm} onOpenChange={setShowForm}> */}
+          {/* <DialogTrigger asChild> */}
+          <Button asChild>
+            <Link href={'/admin/services/add-service'}>Add Service</Link>
+          </Button>
+          {/* </DialogTrigger> */}
+          {/* <DialogContent className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 w-full max-w-6xl max-h-[80vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle className="text-center text-4xl">Add New Service</DialogTitle>
             </DialogHeader>
             <AddServiceForm onSubmit={fetchServices} onClose={() => setShowForm(false)} />
           </DialogContent>
-        </Dialog>
+        </Dialog> */}
       </div>
 
       <div className="flex justify-between items-center mb-4">
