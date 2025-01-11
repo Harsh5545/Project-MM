@@ -158,15 +158,15 @@ const AddServices = ({ onClose }) => {
         }));
     }, []);
 
-    // const handleImageUpload = useCallback((imageType, imageData) => {
-    //     setFormData(prevData => ({
-    //         ...prevData,
-    //         testimonials: {
-    //             ...prevData.testimonials,
-    //             [imageType]: imageData
-    //         }
-    //     }));
-    // }, []);
+    const handleImageUpload = useCallback((imageType, imageData) => {
+        setFormData(prevData => ({
+            ...prevData,
+            testimonials: {
+                ...prevData.testimonials,
+                [imageType]: imageData
+            }
+        }));
+    }, []);
 
     return (
         <div className="bg-gradient-to-r from-gray-200 to-gray-100 ">
@@ -259,6 +259,9 @@ const AddServices = ({ onClose }) => {
                         <Testimonials
                             testimonials={formData.testimonials}
                             onTestimonialsChange={handleTestimonialsChange}
+                            handleImageUpload={handleImageUpload}
+                            formData={formData}
+                            setFormData={setFormData}
                            
                         />
                     )}
