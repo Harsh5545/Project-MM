@@ -25,7 +25,11 @@ const Tiptap = ({ onChange, content }) => {
     extensions: [
       StarterKit,
       Underline,
-      BulletList,           // Explicitly add BulletList extension
+      BulletList.configure({
+        itemTypeName: 'listItem',
+        keepMarks: true,
+        
+      }),          // Explicitly add BulletList extension
       ListItem,       
       Image.configure({
         inline: false,
