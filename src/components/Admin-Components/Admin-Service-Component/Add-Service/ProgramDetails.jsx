@@ -72,7 +72,7 @@ const ProgramDetails = ({ programDetails, onProgramDetailsChange }) => {
           <Button
             type="button"
             onClick={addAgeGroup}
-            className="mt-4 bg-b text-white py-2 px-4 rounded-lg"
+            className="mt-4 bg-black text-white py-2 px-4 rounded-lg"
           >
             + Add Age Group
           </Button>
@@ -112,7 +112,7 @@ const ProgramDetails = ({ programDetails, onProgramDetailsChange }) => {
           <Button
             type="button"
             onClick={addFormat}
-            className="mt-4 bg-b text-white py-2 px-4 rounded-lg"
+            className="mt-4 bg-black text-white py-2 px-4 rounded-lg"
           >
             + Add Format
           </Button>
@@ -152,7 +152,7 @@ const ProgramDetails = ({ programDetails, onProgramDetailsChange }) => {
           <Button
             type="button"
             onClick={addDuration}
-            className="mt-4 bg-b text-white py-2 px-4 rounded-lg"
+            className="mt-4 bg-black text-white py-2 px-4 rounded-lg"
           >
             + Add Duration
           </Button>
@@ -192,7 +192,7 @@ const ProgramDetails = ({ programDetails, onProgramDetailsChange }) => {
           <Button
             type="button"
             onClick={addLocation}
-            className="mt-4 bg-b text-white py-2 px-4 rounded-lg"
+            className="mt-4 bg-black text-white py-2 px-4 rounded-lg"
           >
             + Add Location
           </Button>
