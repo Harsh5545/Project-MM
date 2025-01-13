@@ -13,39 +13,10 @@ const dm_Sans = Cormorant_Garamond({
 });
 
 function ServicesComponent({ data }) {
-  // const courses = [
-  //   {
-  //     id: "1",
-  //     image: "/assets/PD.jpg",
-  //     title: "Personality Enhancement Programme",
-  //     description:
-  //       "Unlock your full potential with our Personality Enhancement Programme.",
-  //     isBestSelling: false,
-  //   },
-  //   {
-  //     id: "2",
-  //     image: "/assets/BusinessHandshake.jpg",
-  //     title: "Business Etiquette & Corporate Image Programme",
-  //     description:
-  //       "Master the art of business etiquette and elevate your corporate image.",
-  //     isBestSelling: true,
-  //   },
-  //   {
-  //     id: "3",
-  //     image: "/assets/Etiquettechildren.jpg",
-  //     title: "Children’s Etiquette Programme",
-  //     description:
-  //       "Teach your children essential etiquette skills in a fun and engaging way.",
-  //     isBestSelling: false,
-  //   },
-  // ];
 
- 
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Filter courses based on search term
   const filteredCourses = data.filter((course) => {
-    // Ensure both title and description exist before filtering
     const title = course?.mainTitle || "";
     const description = course?.courseDescription || "";
 
@@ -54,7 +25,7 @@ function ServicesComponent({ data }) {
       description.toLowerCase().includes(searchTerm.toLowerCase())
     );
   });
- 
+
 
   // courses.filter(
   //   (course) =>

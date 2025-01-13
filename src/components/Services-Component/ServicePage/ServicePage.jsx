@@ -25,29 +25,26 @@ const ServicePage = ({ data }) => {
 
   const {
     heading,
-    headline,
     subheading,
     overview,
-    programOptions,
+    program_highlights,
+    program_details,
+    testimonial,
     
-    highlights,
-    testimonials,
-    faqData,
-    heroimage,
   } = data;
 
-  console.log(data, 'dkfjk')
+  console.log(data, 'harsh')
   if (!data) {
     return <div>Loading...</div>;
-}
-  // const icons = [FaCheckCircle, FaStar, FaHeart];
-  // const { learningPoints = [] } = data || {};
+  }
+  const icons = [FaCheckCircle, FaStar, FaHeart];
+
   return (
     <div className="flex h-full dark:bg-[rgb(0,0,31)] bg-[#FFFFFF] items-center pb-4  justify-center w-full flex-col  ">
 
 
       <div className="  w-full  pb-5 bg-cover bg-center flex items-end justify-center">
-        <ServicesHero className="relative" />
+        <ServicesHero data={testimonial.heroImage} className="relative" />
 
         <div className=" flex absolute pb-8 flex-col justify-center items-center text-center text-black">
           <h1 className="text-4xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#9e7033] via-[#c3965d] to-[#9e7033]  uppercase">{heading}</h1>
@@ -62,40 +59,40 @@ const ServicePage = ({ data }) => {
             <p className={`${dm_Sans.className} text-center text-gray-900 text-base  mx-2 lg:text-lg  `}>{subheading}</p>
           </section>
 
-          <Overview programOptions={programOptions} overview={overview} />
-          {/* <ProgramHighlights programDetailsData={highlights} /> */}
+          <Overview overview={overview} />
+          <ProgramHighlights data={program_highlights} />
 
-          {/* <section className="mt-8 py-8 px-4 md:px-8 lg:px-16 bg-gradient-to-b from-gray-100 to-white dark:from-gray-800 dark:to-gray-900 rounded-lg shadow-lg">
+          <section className="mt-8 py-8 px-4 md:px-8 lg:px-16 bg-gradient-to-b from-gray-100 to-white dark:from-gray-800 dark:to-gray-900 rounded-lg shadow-lg">
             <h2 className=" text-4xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] pb-6">What They’ll Learn</h2>
             <div className={`${dm_Sanss.className} mt-8 grid grid-cols-1 md:grid-cols-2 gap-4`}>
-              {Array.isArray(learningPoints) && learningPoints.map((point, index) => {
-    const IconComponent = icons[index % icons.length];
-    return (
-        <motion.div
-            key={index}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="flex items-center gap-4 p-4 bg-white dark:bg-gray-800 rounded-lg shadow-md"
-        >
-            <div className="flex justify-center items-center w-7 h-7 bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] rounded-full shadow-lg">
-                <IconComponent className="text-white w-4 h-4" />
+              {overview?.courseDetail?.map((point, index) => {
+                const IconComponent = icons[index % icons.length];
+                return (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="flex items-center gap-4 p-4 bg-white dark:bg-gray-800 rounded-lg shadow-md"
+                  >
+                    <div className="flex justify-center items-center w-7 h-7 bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] rounded-full shadow-lg">
+                      <IconComponent className="text-white w-4 h-4" />
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-lg font-normal text-gray-900 dark:text-white">
+                        {point || 'No Heading Available'}
+                      </span>
+                    </div>
+                  </motion.div>
+                );
+              })}
             </div>
-            <div className="flex flex-col">
-                <span className="text-lg font-normal text-gray-900 dark:text-white">
-                    {point?.heading || 'No Heading Available'}
-                </span>
-            </div>
-        </motion.div>
-    );
-})}
-            </div>
-          </section> */}
-          {/* <ProgramDetails /> */}
+          </section>
+          <ProgramDetails data={program_details} />
           {/* Call to Action */}
-          {/* <section className="my-14 py-4 bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] opacity-90 rounded-lg text-center">
+          <section className="my-14 py-4 bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] opacity-90 rounded-lg text-center">
             <h2 className="lg:text-4xl text-2xl mb-6 font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-50">
-              Help Your Child Shine with Confidence and Polished Manners!
+            {testimonial?.taglineHeading || 'No Heading Available'}
             </h2>
             <ShadcnButton
               variant="contained"
@@ -103,10 +100,10 @@ const ServicePage = ({ data }) => {
             >
               Register Now
             </ShadcnButton>
-          </section> */}
-{/* 
-          <Testimonials />
-          <Faq faqData={faqData} /> */}
+          </section>
+          
+          <Testimonials data={testimonial}/>
+          <Faq data={testimonial} /> 
         </div></div>
     </div>
   );

@@ -11,7 +11,7 @@ const dm_Sans = Cormorant_Garamond({
 });
 
 const Overview = (props) => {
-    const { overview, programOptions } = props
+    const { overview } = props
     return (
         <div className="flex  bg-slate-50 rounded-2xl flex-col py-6 md:py-16 w-full">
             {/* Main Content */}
@@ -25,7 +25,7 @@ const Overview = (props) => {
                         <Image
                             width={400}
                             height={500}
-                            alt="modern Mannerism image"
+                            alt={`${overview?.overviewDescription.slice(0, 3)}`}
                             src={overview.overviewImage}
                             className="shadow-2xl h-auto lg:h-[60vh] rounded-2xl  object-cover p-0 lg:p-0.5 shadow-[#d1d9df]"
                             style={{

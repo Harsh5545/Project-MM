@@ -25,13 +25,13 @@ const programDetailsData = {
 };
 
 const icons = {
-  age: <ClipboardCopy className="h-6 w-6 text-primary" />,
-  format: <FilePen className="h-6 w-6 text-primary" />,
-  duration: <Signature className="h-6 w-6 text-primary" />,
-  location: <TableColumnsSplit className="h-6 w-6 text-primary" />,
+  ageGroups: <ClipboardCopy className="h-6 w-6 text-primary" />,
+  durations: <Signature className="h-6 w-6 text-primary" />,
+  formats: <FilePen className="h-6 w-6 text-primary" />,
+  locations: <TableColumnsSplit className="h-6 w-6 text-primary" />,
 };
 
-const ProgramDetails = () => {
+const ProgramDetails = ({data}) => {
   const [selectedDetail, setSelectedDetail] = useState("age");
 
   return (
@@ -42,7 +42,7 @@ const ProgramDetails = () => {
 
       {/* Vertical Layout for PC View */}
       <div className="hidden md:flex flex-col gap-8">
-        {Object.keys(programDetailsData).map((detail, index) => (
+        {Object.keys(data).map((detail, index) => (
           <div
             key={index}
             className="flex gap-4 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md"
@@ -55,17 +55,17 @@ const ProgramDetails = () => {
                 {detail}
               </h3>
               <div className="mt-2">
-                {Array.isArray(programDetailsData[detail]) ? (
+                {Array.isArray(data[detail]) ? (
                   <ul className="space-y-2">
-                    {programDetailsData[detail].map((item, idx) => (
+                    {data[detail].map((item, idx) => (
                       <li key={idx} className="text-gray-700 dark:text-gray-300">
-                        <strong>{item.title}:</strong> {item.subtitle}
+                        <strong>{item.heading}:</strong> {item.subheading}
                       </li>
                     ))}
                   </ul>
                 ) : (
                   <p className="text-gray-700 dark:text-gray-300">
-                    {programDetailsData[detail]}
+                    {data[detail]}
                   </p>
                 )}
               </div>
@@ -76,7 +76,7 @@ const ProgramDetails = () => {
 
       {/* Accordion for Mobile View */}
       <div className="md:hidden">
-        {Object.keys(programDetailsData).map((detail, index) => (
+        {Object.keys(data).map((detail, index) => (
           <div key={index} className="mb-4">
             <motion.div
               whileHover={{ scale: 1.05 }}
@@ -96,23 +96,23 @@ const ProgramDetails = () => {
                 transition={{ duration: 0.5 }}
                 className="p-4 mt-2 bg-white dark:bg-gray-800 rounded-lg shadow-md"
               >
-                {Array.isArray(programDetailsData[selectedDetail]) ? (
-                  programDetailsData[selectedDetail].map((item, idx) => (
+                {Array.isArray(data[selectedDetail]) ? (
+                  data[selectedDetail].map((item, idx) => (
                     <div
                       key={idx}
                       className="mb-4 bg-gray-100 dark:bg-gray-700 p-2 rounded-lg"
                     >
                       <h3 className="text-md font-semibold text-gray-900 dark:text-white">
-                        {item.title}
+                        {item.heading}
                       </h3>
                       <p className="text-gray-700 dark:text-gray-300">
-                        {item.subtitle}
+                        {item.subheading}
                       </p>
                     </div>
                   ))
                 ) : (
                   <p className="text-gray-700 dark:text-gray-300">
-                    {programDetailsData[selectedDetail]}
+                    {data[selectedDetail]}
                   </p>
                 )}
               </motion.div>

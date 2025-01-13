@@ -3,18 +3,11 @@ import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { FaCheckCircle, FaStar, FaHeart } from 'react-icons/fa'; // Importing icons from react-icons
 
-const programHighlightsData = [
-  { icon: FaCheckCircle, heading: "Interactive Activities", description: "Hands-on exercises that keep children engaged." },
-  { icon: FaCheckCircle, heading: "Role-Playing Scenarios", description: "Real-life simulations to practice manners and etiquette." },
-  { icon: FaCheckCircle, heading: "Tailored Learning", description: "Content adapted to suit group dynamics or individual needs." },
-  { icon: FaCheckCircle, heading: "Parental Involvement", description: "Progress updates to help parents reinforce learning at home." },
-  { icon: FaCheckCircle, heading: "Certification", description: "Completion certificates to acknowledge children’s achievements." },
+import icons from "@/hooks/icons";
 
-  // Add more highlights as needed
-];
-
-const ProgramHighlights = () => {
+const ProgramHighlights = ({data}) => {
   const [isMobile, setIsMobile] = useState(false);
+  
 
   useEffect(() => {
     const handleResize = () => {
@@ -36,7 +29,7 @@ const ProgramHighlights = () => {
       </h2>
       <div className="relative">
         <div className={`grid gap-4 ${isMobile ? 'grid-cols-1 sm:grid-cols-2' : 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'}`}>
-          {programHighlightsData.map((highlight, index) => {
+          {data?.programHighlights?.map((highlight, index) => {
             const IconComponent = highlight.icon;
             return (
               <motion.div
@@ -48,10 +41,11 @@ const ProgramHighlights = () => {
               >
                 <Card className="h-auto transition-all duration-100 hover:bg-gradient-to-r hover:from-[#c3965d] hover:via-[#eabf91] hover:to-[#c3965d] hover:text-white group">
                   <div className="flex justify-center pt-12 items-center pb-4 px-4">
-                    <IconComponent className="w-10 h-10 text-gray-700 dark:text-gray-300 transition-all duration-100 group-hover:text-white" />
+                  {icons[highlight.icon] ? React.cloneElement(icons[highlight.icon], { size: 40, color: "#eabf91" }) : null}
+                                  
                   </div>
                   <CardHeader className="text-center py-2 space-y-1 px-4">
-                    <CardTitle className="text-base lg:text-lg font-bold transition-all duration-100 group-hover:text-white">{highlight.heading}</CardTitle>
+                    <CardTitle className="text-base lg:text-lg font-bold transition-all duration-100 group-hover:text-white">{highlight?.heading}</CardTitle>
                   </CardHeader>
                   <CardContent className="text-center pb-6 px-4">
                     <p className="transition-all text-sm duration-100 group-hover:text-white">{highlight.description}</p>

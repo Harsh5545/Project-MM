@@ -14,7 +14,7 @@ const CourseDetails = ({ courseDetails, onCourseDetailsChange, formData, setForm
 
   const addCourseDetail = () => {
     onCourseDetailsChange({
-      courseDetail: [...courseDetails.courseDetail, '']
+      courseDetail: [...courseDetails.courseDetail, { icon: 'FaCheckCircle', description: '' }]
     });
   };
 
@@ -30,9 +30,9 @@ const CourseDetails = ({ courseDetails, onCourseDetailsChange, formData, setForm
     onCourseDetailsChange({ courseHeadings: newCourseHeadings });
   };
 
-  const handleCourseDetailChange = (index, value) => {
+  const handleCourseDetailChange = (index, value,field) => {
     const newCourseDetails = [...courseDetails.courseDetail];
-    newCourseDetails[index] = value;
+    newCourseDetails[index][field] = value;
     onCourseDetailsChange({ courseDetail: newCourseDetails });
   };
 
@@ -150,10 +150,29 @@ const CourseDetails = ({ courseDetails, onCourseDetailsChange, formData, setForm
           {courseDetails.courseDetail.map((detail, index) => (
             <div key={index} className="flex items-center space-x-4">
               <div className="flex-1">
+                  <label className="block text-gray-700 dark:text-gray-300 mb-2">Icon:</label>
+                  <div className="flex items-center space-x-2">
+                    <select
+                      value={detail.icon}
+                      onChange={(e) => handleProgramHighlightChange(index, 'icon', e.target.value)}
+                      className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                    >
+                      {Object.keys(icons).map((iconKey) => (
+                        <option key={iconKey} value={iconKey} className="flex items-center space-x-2">
+                          {iconKey}
+                        </option>
+                      ))}
+                    </select>
+                    <div className="ml-2">
+                      {icons[detail.icon]}
+                    </div>
+                  </div>
+                </div>
+              <div className="flex-1">
                 <label className="block text-gray-700 dark:text-gray-300 mb-2">Course Detail:</label>
                 <Input
                   type="text"
-                  value={detail}
+                  value={detail.description}
                   onChange={(e) => handleCourseDetailChange(index, e.target.value)}
                   placeholder="Enter the course detail"
                   className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
