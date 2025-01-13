@@ -92,8 +92,8 @@ export async function POST(req) {
     // Extract the necessary data for Prisma insertion
     const newService = await prisma.service.create({
       data: {
-        heading: parsedData.mainTitle,
-        subheading: parsedData.subTitle,
+        heading: parsedData.heading,
+        subheading: parsedData.subheading,
         testimonial: parsedData.testimonials ? JSON.stringify(parsedData.testimonials) : null,
         faq: parsedData.courseDetails ? JSON.stringify(parsedData.courseDetails) : null,
         why_choose_program: parsedData.courseDescription,  // Assuming "courseDescription" maps here

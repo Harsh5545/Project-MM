@@ -1,6 +1,5 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
 import { Cormorant_Garamond, DM_Sans } from "next/font/google";
 import { motion } from "framer-motion";
 import ShadcnButton from "@/components/Atom/button/ShadcnButton";
@@ -25,12 +24,12 @@ const dm_Sanss = Cormorant_Garamond({
 const ServicePage = ({ data }) => {
 
   const {
-    title,
+    heading,
     headline,
     subheadline,
     overview,
     programOptions,
-    learningPoints,
+    
     highlights,
     testimonials,
     faqData,
@@ -38,14 +37,11 @@ const ServicePage = ({ data }) => {
   } = data;
 
   console.log(data, 'dkfjk')
-
-  const carouselResponsive = {
-    superLargeDesktop: { breakpoint: { max: 4000, min: 1024 }, items: 1 },
-    desktop: { breakpoint: { max: 1024, min: 768 }, items: 1 },
-    mobile: { breakpoint: { max: 768, min: 0 }, items: 1 },
-  };
+  if (!data) {
+    return <div>Loading...</div>;
+}
   const icons = [FaCheckCircle, FaStar, FaHeart];
-
+  const { learningPoints = [] } = data || {};
   return (
     <div className="flex h-full dark:bg-[rgb(0,0,31)] bg-[#FFFFFF] items-center pb-4  justify-center w-full flex-col  ">
 
@@ -54,7 +50,7 @@ const ServicePage = ({ data }) => {
         <ServicesHero className="relative" />
 
         <div className=" flex absolute pb-8 flex-col justify-center items-center text-center text-black">
-          <h1 className="text-4xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#9e7033] via-[#c3965d] to-[#9e7033]  uppercase">{title}</h1>
+          <h1 className="text-4xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#9e7033] via-[#c3965d] to-[#9e7033]  uppercase">{heading}</h1>
           <h2 className={`${dm_Sans.className} mt-4 px-2 text-lg lg:text-xl`}>{headline}</h2>
 
 
@@ -72,25 +68,27 @@ const ServicePage = ({ data }) => {
           <section className="mt-8 py-8 px-4 md:px-8 lg:px-16 bg-gradient-to-b from-gray-100 to-white dark:from-gray-800 dark:to-gray-900 rounded-lg shadow-lg">
             <h2 className=" text-4xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] pb-6">What They’ll Learn</h2>
             <div className={`${dm_Sanss.className} mt-8 grid grid-cols-1 md:grid-cols-2 gap-4`}>
-              {learningPoints?.length > 0 && learningPoints && learningPoints?.map((point, index) => {
-                const IconComponent = icons[index % icons.length];
-                return (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }} rt
-                    className="flex items-center gap-4 p-4 bg-white dark:bg-gray-800 rounded-lg shadow-md"
-                  >
-                    <div className="flex justify-center items-center w-7 h-7 bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] rounded-full shadow-lg">
-                      <FaStar className="text-white w-4  h-4" />
-                    </div>
-                    <div className="flex flex-col">
-                      <span className="text-lg font-normal text-gray-900 dark:text-white">{point.title}</span>
-                    </div>
-                  </motion.div>
-                );
-              })}
+              {Array.isArray(learningPoints) && learningPoints.map((point, index) => {
+    const IconComponent = icons[index % icons.length];
+    return (
+        <motion.div
+            key={index}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="flex items-center gap-4 p-4 bg-white dark:bg-gray-800 rounded-lg shadow-md"
+        >
+            <div className="flex justify-center items-center w-7 h-7 bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] rounded-full shadow-lg">
+                <IconComponent className="text-white w-4 h-4" />
+            </div>
+            <div className="flex flex-col">
+                <span className="text-lg font-normal text-gray-900 dark:text-white">
+                    {point?.heading || 'No Heading Available'}
+                </span>
+            </div>
+        </motion.div>
+    );
+})}
             </div>
           </section>
           <ProgramDetails />

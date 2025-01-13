@@ -16,8 +16,8 @@ const AddServices = ({ onClose }) => {
     const { toast } = useToast();
     const [currentStep, setCurrentStep] = useState(1);
     const [formData, setFormData] = useState({
-        mainTitle: '',
-        subTitle: '',
+        heading: '',
+        subheading: '',
         courseDescription: '',
         image: '',
         category: '',
@@ -192,12 +192,12 @@ const AddServices = ({ onClose }) => {
                 return (
                     <div className="space-y-6">
                         <div>
-                            <label className="block text-gray-700 dark:text-gray-300 mb-2">Main Title:</label>
+                            <label className="block text-gray-700 dark:text-gray-300 mb-2">heading:</label>
                             <Input
                                 type="text"
                                 placeholder="Enter the main title"
                                 name="mainTitle"
-                                value={formData.mainTitle}
+                                value={formData.heading}
                                 onChange={handleInputChange}
                                 className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                             />
@@ -208,7 +208,7 @@ const AddServices = ({ onClose }) => {
                                 type="text"
                                 placeholder="Enter the sub title"
                                 name="subTitle"
-                                value={formData.subTitle}
+                                value={formData.subheading}
                                 onChange={handleInputChange}
                                 className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                             />

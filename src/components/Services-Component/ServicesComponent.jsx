@@ -40,10 +40,21 @@ function ServicesComponent({ data }) {
   //   },
   // ];
 
+ 
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Filtered courses based on search term
-  const filteredCourses = data;
+  // Filter courses based on search term
+  const filteredCourses = data.filter((course) => {
+    // Ensure both title and description exist before filtering
+    const title = course?.mainTitle || "";
+    const description = course?.courseDescription || "";
+
+    return (
+      title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      description.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  });
+ 
 
   // courses.filter(
   //   (course) =>
@@ -116,10 +127,10 @@ function ServicesComponent({ data }) {
                     {/* Content Section */}
                     <div className="p-6 flex flex-col flex-grow">
                       <h5 className="text-xl font-semibold text-gray-900 dark:text-white">
-                        {course.title}
+                        {course?.heading}
                       </h5>
                       <p className="text-gray-700 dark:text-gray-400 mt-4 flex-grow">
-                        {course?.description}
+                        {course?.subheading}
                       </p>
 
                       {/* Button */}
