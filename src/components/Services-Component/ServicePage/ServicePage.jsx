@@ -26,7 +26,7 @@ const ServicePage = ({ data }) => {
   const {
     heading,
     headline,
-    subheadline,
+    subheading,
     overview,
     programOptions,
     
@@ -40,8 +40,8 @@ const ServicePage = ({ data }) => {
   if (!data) {
     return <div>Loading...</div>;
 }
-  const icons = [FaCheckCircle, FaStar, FaHeart];
-  const { learningPoints = [] } = data || {};
+  // const icons = [FaCheckCircle, FaStar, FaHeart];
+  // const { learningPoints = [] } = data || {};
   return (
     <div className="flex h-full dark:bg-[rgb(0,0,31)] bg-[#FFFFFF] items-center pb-4  justify-center w-full flex-col  ">
 
@@ -51,7 +51,7 @@ const ServicePage = ({ data }) => {
 
         <div className=" flex absolute pb-8 flex-col justify-center items-center text-center text-black">
           <h1 className="text-4xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#9e7033] via-[#c3965d] to-[#9e7033]  uppercase">{heading}</h1>
-          <h2 className={`${dm_Sans.className} mt-4 px-2 text-lg lg:text-xl`}>{headline}</h2>
+          <h2 className={`${dm_Sans.className} mt-4 px-2 text-lg lg:text-xl`}>{subheading}</h2>
 
 
         </div>
@@ -59,13 +59,13 @@ const ServicePage = ({ data }) => {
       <div className="w-full flex items-center justify-center bg-[#F7F7F7]">
         <div className="w-[96%] md:w-[70%]">
           <section className="mt-4 px-4 md:px-12 py-0 text-center">
-            <p className={`${dm_Sans.className} text-center text-gray-900 text-base  mx-2 lg:text-lg  `}>{subheadline}</p>
+            <p className={`${dm_Sans.className} text-center text-gray-900 text-base  mx-2 lg:text-lg  `}>{subheading}</p>
           </section>
 
           <Overview programOptions={programOptions} overview={overview} />
-          <ProgramHighlights programDetailsData={highlights} />
+          {/* <ProgramHighlights programDetailsData={highlights} /> */}
 
-          <section className="mt-8 py-8 px-4 md:px-8 lg:px-16 bg-gradient-to-b from-gray-100 to-white dark:from-gray-800 dark:to-gray-900 rounded-lg shadow-lg">
+          {/* <section className="mt-8 py-8 px-4 md:px-8 lg:px-16 bg-gradient-to-b from-gray-100 to-white dark:from-gray-800 dark:to-gray-900 rounded-lg shadow-lg">
             <h2 className=" text-4xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] pb-6">What They’ll Learn</h2>
             <div className={`${dm_Sanss.className} mt-8 grid grid-cols-1 md:grid-cols-2 gap-4`}>
               {Array.isArray(learningPoints) && learningPoints.map((point, index) => {
@@ -90,10 +90,10 @@ const ServicePage = ({ data }) => {
     );
 })}
             </div>
-          </section>
-          <ProgramDetails />
+          </section> */}
+          {/* <ProgramDetails /> */}
           {/* Call to Action */}
-          <section className="my-14 py-4 bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] opacity-90 rounded-lg text-center">
+          {/* <section className="my-14 py-4 bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] opacity-90 rounded-lg text-center">
             <h2 className="lg:text-4xl text-2xl mb-6 font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-50">
               Help Your Child Shine with Confidence and Polished Manners!
             </h2>
@@ -103,10 +103,10 @@ const ServicePage = ({ data }) => {
             >
               Register Now
             </ShadcnButton>
-          </section>
-
+          </section> */}
+{/* 
           <Testimonials />
-          <Faq faqData={faqData} />
+          <Faq faqData={faqData} /> */}
         </div></div>
     </div>
   );

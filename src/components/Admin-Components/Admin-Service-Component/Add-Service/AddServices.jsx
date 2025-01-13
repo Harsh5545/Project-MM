@@ -50,7 +50,7 @@ const AddServices = ({ onClose }) => {
             keywords: [],
         },
     });
-    
+
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -196,7 +196,7 @@ const AddServices = ({ onClose }) => {
                             <Input
                                 type="text"
                                 placeholder="Enter the main title"
-                                name="mainTitle"
+                                name="heading"
                                 value={formData.heading}
                                 onChange={handleInputChange}
                                 className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
@@ -207,7 +207,7 @@ const AddServices = ({ onClose }) => {
                             <Input
                                 type="text"
                                 placeholder="Enter the sub title"
-                                name="subTitle"
+                                name="subheading"
                                 value={formData.subheading}
                                 onChange={handleInputChange}
                                 className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"

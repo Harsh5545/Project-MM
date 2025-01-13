@@ -1,7 +1,7 @@
 import React from "react";
 import { Cormorant_Garamond } from "next/font/google";
 import { UsersRound, GlobeLock, Handshake , LaptopMinimal } from 'lucide-react';
-
+import icons from "@/hooks/icons";
 import Image from "next/image"; // Ensure Image is imported
 // Import the custom ShadCN Button you created
 
@@ -26,7 +26,7 @@ const Overview = (props) => {
                             width={400}
                             height={500}
                             alt="modern Mannerism image"
-                            src="/assets/AboutUsModernMannerism.webp"
+                            src={overview.overviewImage}
                             className="shadow-2xl h-auto lg:h-[60vh] rounded-2xl  object-cover p-0 lg:p-0.5 shadow-[#d1d9df]"
                             style={{
                                 boxShadow:
@@ -51,28 +51,29 @@ const Overview = (props) => {
 
                     {/* Description */}
                     <p className="text-gray-800 dark:text-white p-2 text-center">
-                        {overview}
+                        {overview.overviewDescription}
                     </p>
 
                     <div className="flex flex-col md:flex-row gap-8 justify-between items-stretch p-4 md:p-6">
-                        {programOptions.map((option, index) => (
+                        {overview?.courseHeadings?.map((option, index) => (
                             <div key={index} className="flex gap-8">
                                 <div className=" flex flex-col items-center gap-4 bg-gray-50 dark:bg-[#1A1A3B] p-6 rounded-lg shadow-lg">
-                                    {index == 0 && <UsersRound size={40} color="#eabf91" />}
-                                    {index == 1 && <Handshake    size={40} color="#eabf91" />}
+                                    {/* {index == 0 && <UsersRound size={40} color="#eabf91" />}
+                                    {index == 1 && <Handshake    size={40} color="#eabf91" />} */}
                                     {/* {index == 1 && <p className="p-1 text-4xl font-semibold text-[#eabf91]">1:1</p>} */}
-                                    {index == 2 && <LaptopMinimal size={40} color="#eabf91" />}
+                                    {/* {index == 2 && <LaptopMinimal size={40} color="#eabf91" />} */}
+                                    {icons[option.icon] ? React.cloneElement(icons[option.icon], { size: 40, color: "#eabf91" }) : null}
                                     <span
                                         className={`${dm_Sans.className} font-bold dark:text-white md:text-2xl text-xl text-[#06273A]`}
                                     >
-                                        {option.title}
+                                        {option.heading}
                                     </span>
                                     <p className="text-gray-700 dark:text-gray-300 md:text-sm text-xs text-start">
-                                        {option.description}
+                                        {option.subheading}
                                     </p>
                                 </div>
                                 <div
-                                    className={`hidden md:block ${index == programOptions.length - 1 ? "invisible" : "visible"
+                                    className={`hidden md:block ${index == overview?.courseHeadings.length - 1 ? "invisible" : "visible"
                                         }`}
                                     style={{
                                         height: "auto",
