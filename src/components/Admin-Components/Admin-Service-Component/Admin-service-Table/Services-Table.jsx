@@ -1,8 +1,7 @@
 'use client'
 
-import React, { useState, useMemo, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useToast } from '@/hooks/use-toast'
-// import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
@@ -29,6 +28,7 @@ const ServicesTable = () => {
   const [pageSize, setPageSize] = useState(10)
   const [searchTerm, setSearchTerm] = useState('')
   const [showForm, setShowForm] = useState(false)
+  const [totalCount, setTotalCount] = useState(0) // To store the total count of records
 
   const fetchServices = async () => {
     setLoading(true)
@@ -38,6 +38,7 @@ const ServicesTable = () => {
 
       if (result.Success) {
         setServices(result.data)
+        setTotalCount(result.totalCount) // Assuming the API returns a `totalCount` field
       } else {
         toast({
           title: "Error",
@@ -80,23 +81,15 @@ const ServicesTable = () => {
     </div>
   )
 
+  const totalPages = Math.ceil(totalCount / pageSize) // Calculate total pages based on totalCount
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h1 className="text-4xl font-bold">Manage Services </h1>
-        {/* <Dialog open={showForm} onOpenChange={setShowForm}> */}
-          {/* <DialogTrigger asChild> */}
-          <Button asChild>
-            <Link href={'/admin/services/add-service'}>Add Service</Link>
-          </Button>
-          {/* </DialogTrigger> */}
-          {/* <DialogContent className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 w-full max-w-6xl max-h-[80vh] overflow-y-auto">
-            <DialogHeader>
-              <DialogTitle className="text-center text-4xl">Add New Service</DialogTitle>
-            </DialogHeader>
-            <AddServiceForm onSubmit={fetchServices} onClose={() => setShowForm(false)} />
-          </DialogContent>
-        </Dialog> */}
+        <Button asChild>
+          <Link href={'/admin/services/add-service'}>Add Service</Link>
+        </Button>
       </div>
 
       <div className="flex justify-between items-center mb-4">
@@ -144,7 +137,7 @@ const ServicesTable = () => {
               services.map((service, index) => (
                 <TableRow key={index}>
                   <TableCell>
-                    <img  src={service.image|| 'https://ik.imagekit.io/giol62jyf/mypic_VLj2nrRSs.jpg'} width={16} height={16} alt="Service" className="w-16 h-16 object-cover rounded-full" />
+                    <img  src={service.image || 'https://ik.imagekit.io/giol62jyf/mypic_VLj2nrRSs.jpg'} width={16} height={16} alt="Service" className="w-16 h-16 object-cover rounded-full" />
                   </TableCell>
                   <TableCell>{service.heading}</TableCell>
                   <TableCell>{service?.category?.category_name}</TableCell>
@@ -174,21 +167,21 @@ const ServicesTable = () => {
             <ChevronLeft className="h-4 w-4" />
           </Button>
           <span className="text-sm font-medium">
-            Page {pageIndex + 1} of {Math.ceil(services.length / pageSize)}
+            Page {pageIndex + 1} of {totalPages}
           </span>
           <Button
             variant="outline"
             size="sm"
             onClick={() => setPageIndex(pageIndex + 1)}
-            disabled={pageIndex >= Math.ceil(services.length / pageSize) - 1}
+            disabled={pageIndex >= totalPages - 1}
           >
             <ChevronRight className="h-4 w-4" />
           </Button>
           <Button
             variant="outline"
             size="sm"
-            onClick={() => setPageIndex(Math.ceil(services.length / pageSize) - 1)}
-            disabled={pageIndex >= Math.ceil(services.length / pageSize) - 1}
+            onClick={() => setPageIndex(totalPages - 1)}
+            disabled={pageIndex >= totalPages - 1}
           >
             <ChevronsRight className="h-4 w-4" />
           </Button>
