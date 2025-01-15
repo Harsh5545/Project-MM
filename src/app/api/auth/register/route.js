@@ -5,9 +5,8 @@ import { NextResponse } from "next/server";
 
 export async function POST(req) {
     try {
-        // Parse the request body
         const body = await req.json();
-        // console.log(body)
+        console.log(body)
         // Basic validation of input fields
         if (
             !body.firstName ||
@@ -51,7 +50,7 @@ export async function POST(req) {
             password: hashedPassword,
             roleId: 1,  // Default role, you can adjust this as needed
         };
-
+        console.log(newUser)
         // Create the user in the database
         try {
             const user = await prisma.user.create({
