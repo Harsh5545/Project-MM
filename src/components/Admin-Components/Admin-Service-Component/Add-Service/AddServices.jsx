@@ -29,7 +29,7 @@ const AddServices = ({ onClose }) => {
             overviewDescription: '',
         },
         programDetails: {
-            ageGroups: [{ heading: '', subheading: '' }],
+            ageGroups: [{  subheading: '' }],
             formats: [{ heading: '', subheading: '' }],
             durations: [{ heading: '', subheading: '' }],
             locations: [{ heading: '', subheading: '' }],

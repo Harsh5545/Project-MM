@@ -73,7 +73,7 @@ const Testimonials = ({ testimonials, onTestimonialsChange, formData, setFormDat
         </div>
 
         {/* Outside Image */}
-        <div>
+        {/* <div>
           <label className="block text-gray-700 dark:text-gray-300 mb-2">Outside Image:</label>
           <div className="flex items-center space-x-2">
             <UploadServices
@@ -88,7 +88,7 @@ const Testimonials = ({ testimonials, onTestimonialsChange, formData, setFormDat
               <Image width={400} height={200} src={testimonials.outsideImage} alt="Outside" className="h-auto rounded-lg shadow-md" />
             </div>
           )}
-        </div>
+        </div> */}
 
         {/* Testimonials */}
         <h2 className="text-2xl font-semibold text-gray-800 dark:text-white">Testimonials</h2>

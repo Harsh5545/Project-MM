@@ -6,7 +6,7 @@ const ProgramDetails = ({ programDetails, onProgramDetailsChange }) => {
   const { ageGroups, formats, durations, locations } = programDetails;
 
     const addAgeGroup = () => {
-        onProgramDetailsChange('ageGroups', [...ageGroups, { heading: '', subheading: '' }]);
+        onProgramDetailsChange('ageGroups', [...ageGroups, { subheading: '' }]);
     };
 
     const addFormat = () => {
@@ -40,7 +40,7 @@ const ProgramDetails = ({ programDetails, onProgramDetailsChange }) => {
           <h2 className="text-2xl font-semibold text-gray-800 dark:text-white">Age Group</h2>
           {ageGroups.map((group, index) => (
             <div key={index} className="flex items-center space-x-4">
-              <div className="flex-1">
+              {/* <div className="flex-1">
                 <label className="block text-gray-700 dark:text-gray-300 mb-2">Age Group Heading:</label>
                 <Input
                   type="text"
@@ -49,7 +49,7 @@ const ProgramDetails = ({ programDetails, onProgramDetailsChange }) => {
                   placeholder="Enter the age group heading"
                   className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                 />
-              </div>
+              </div> */}
               <div className="flex-1">
                 <label className="block text-gray-700 dark:text-gray-300 mb-2">Age Group Subheading:</label>
                 <Input

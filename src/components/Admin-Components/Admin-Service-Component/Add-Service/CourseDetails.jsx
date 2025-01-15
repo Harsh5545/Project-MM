@@ -154,7 +154,7 @@ const CourseDetails = ({ courseDetails, onCourseDetailsChange, formData, setForm
                   <div className="flex items-center space-x-2">
                     <select
                       value={detail.icon}
-                      onChange={(e) => handleProgramHighlightChange(index, 'icon', e.target.value)}
+                      onChange={(e) => handleCourseDetailChange(index, 'icon', e.target.value)}
                       className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                     >
                       {Object.keys(icons).map((iconKey) => (
