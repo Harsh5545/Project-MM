@@ -23,13 +23,13 @@ const AddServices = ({ onClose }) => {
         category: '',
         courseDetails: {
             courseHeadings: [{ heading: '', subheading: '', icon: '' }],
-            courseDetail: [{icon: '', description: ''}],
+            courseDetail: [{ icon: '', description: '' }],
             programHighlights: [{ icon: 'FaCheckCircle', heading: '', description: '' }],
             overviewImage: '',
             overviewDescription: '',
         },
         programDetails: {
-            ageGroups: [{  subheading: '' }],
+            ageGroups: [{ subheading: '' }],
             formats: [{ heading: '', subheading: '' }],
             durations: [{ heading: '', subheading: '' }],
             locations: [{ heading: '', subheading: '' }],
@@ -303,7 +303,7 @@ const AddServices = ({ onClose }) => {
                                 Previous
                             </Button>
                         )}
-                        {currentStep < 5 ? (
+                        {currentStep < 5 && (
                             <Button
                                 type="button"
                                 onClick={handleNext}
@@ -311,7 +311,8 @@ const AddServices = ({ onClose }) => {
                             >
                                 Next
                             </Button>
-                        ) : (
+                        )}
+                        {currentStep === 5 && (
                             <Button
                                 type="submit"
                                 className="bg-black text-white px-4 py-2 rounded-lg"

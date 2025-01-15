@@ -2,7 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
-// Validation schemas as you already defined
+// Define the validation schemas
 const courseHeadingSchema = z.object({
   heading: z.string().min(1, "Course heading is required"),
   subheading: z.string().min(1, "Course subheading is required"),
@@ -87,6 +87,46 @@ const serviceSchema = z.object({
   heroImage: z.string().url("Invalid URL format for hero image").optional(),
 });
 
+// Function to translate Zod error paths to user-friendly messages
+const translateZodErrors = (errors) => {
+  const userFriendlyMessages = {
+    heading: "Please provide a heading for the service.",
+    subheading: "Please provide a subheading for the service.",
+    courseDescription: "Please provide a course description.",
+    category: "Category is required. Please select a valid category.",
+    "courseDetails.courseHeadings.0.heading": "The course heading is required in the course details.",
+    "courseDetails.courseHeadings.0.subheading": "The course subheading is required in the course details.",
+    "courseDetails.courseHeadings.0.icon": "Icon is required in the course details.",
+    "courseDetails.programHighlights.0.heading": "The highlight heading is required.",
+    "courseDetails.programHighlights.0.description": "The highlight description is required.",
+    "courseDetails.overviewDescription": "The overview description is required.",
+    "programDetails.ageGroups.0.subheading": "The age group subheading is required.",
+    "programDetails.formats.0.heading": "The format heading is required.",
+    "programDetails.formats.0.subheading": "The format subheading is required.",
+    "programDetails.durations.0.heading": "The duration heading is required.",
+    "programDetails.durations.0.subheading": "The duration subheading is required.",
+    "programDetails.locations.0.heading": "The location heading is required.",
+    "programDetails.locations.0.subheading": "The location subheading is required.",
+    "testimonials.taglineHeading": "The tagline heading is required.",
+    "testimonials.mmDescription": "The MM description is required.",
+    "testimonials.testimonials.0.comment": "The testimonial comment is required.",
+    "testimonials.testimonials.0.name": "The testimonial name is required.",
+    "testimonials.faqs.0.question": "The FAQ question is required.",
+    "testimonials.faqs.0.answer": "The FAQ answer is required.",
+    "testimonials.heroImage": "Please provide a valid URL for the hero image.",
+    "seo.meta_title": "Please provide a meta title.",
+    "seo.meta_description": "Please provide a meta description.",
+    "seo.og_title": "Please provide an OG title.",
+    "seo.og_image": "Please provide a valid URL for the OG image.",
+    image: "Please provide a valid URL for the image.",
+  };
+
+  return errors.map(error => {
+    const path = error.path.join(".");
+    return userFriendlyMessages[path] || `${path} is invalid.`;
+  });
+};
+
 export async function POST(req) {
   try {
     const data = await req.json();
@@ -132,7 +172,7 @@ export async function POST(req) {
 
   } catch (error) {
     if (error instanceof z.ZodError) {
-      const errorMessages = error.errors.map((e) => `${e.path.join(".")}: ${e.message}`);
+      const errorMessages = translateZodErrors(error.errors);
       return NextResponse.json(
         { success: false, message: `Validation failed: ${errorMessages.join(', ')}` },
         { status: 400 }

@@ -4,6 +4,7 @@ import { auth } from "@/auth";
 import "../globals.css";
 import { redirect } from "next/navigation";
 import { ThemeProvider } from "next-themes";
+import { Toaster } from "@/components/ui/toaster";
 const geistSans = Geist({
     variable: "--font-geist-sans",
     subsets: ["latin"],
@@ -41,6 +42,7 @@ export default async function Layout({ children }) {
                 > */}
                     <Dashboard session={session}>
                         {children}
+                        <Toaster />
                     </Dashboard>
                 {/* </ThemeProvider> */}
             </body>
