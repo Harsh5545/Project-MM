@@ -30,7 +30,7 @@ const ProgramHighlights = ({data}) => {
       <div className="relative">
         <div className={`grid gap-4 ${isMobile ? 'grid-cols-1 sm:grid-cols-2' : 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'}`}>
           {data?.programHighlights?.map((highlight, index) => {
-            const IconComponent = highlight.icon;
+           
             return (
               <motion.div
                 key={index}

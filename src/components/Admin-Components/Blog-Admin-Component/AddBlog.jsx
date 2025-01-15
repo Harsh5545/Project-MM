@@ -21,51 +21,51 @@ export default function AddBlog({ existingBlog }) {
   const { toast } = useToast()
   const { categories, loading: categoriesLoading } = useCategories()
   const isEditMode = !!existingBlog
-  const [title, setTitle] = useState(existingBlog ? existingBlog.title : '')
-  const [content, setContent] = useState(existingBlog ? existingBlog.content : '')
-  const [image, setImage] = useState(existingBlog ? existingBlog.image : null)
-  const [category, setCategory] = useState(existingBlog ? existingBlog.category : '')
-  const [tags, setTags] = useState(existingBlog ? existingBlog.tags : [])
-  const [tagInput, setTagInput] = useState('')
+  const [blogData, setBlogData] = useState({
+    title: existingBlog?.title || '',
+    content: existingBlog?.content || '',
+    image: existingBlog?.image || null,
+    heroImage: existingBlog?.heroImage || null,
+    category: existingBlog?.category || '',
+    tags: existingBlog?.tags || [],
+  });
   const [previewMode, setPreviewMode] = useState('laptop')
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0]
+  const handleImageChange = (e, imageType) => {
+    const file = e.target.files[0];
     if (file) {
-      const reader = new FileReader()
+      const reader = new FileReader();
       reader.onloadend = () => {
-        setImage(reader.result)
-      }
-      reader.readAsDataURL(file)
+        setBlogData(prevData => ({
+          ...prevData,
+          [imageType]: reader.result,
+        }));
+      };
+      reader.readAsDataURL(file);
     }
-  }
+  };
 
   const handleTagAddition = () => {
-    if (tagInput.trim() && !tags.includes(tagInput.trim())) {
-      setTags([...tags, tagInput.trim()])
-      setTagInput('')
+    if (blogData.tagInput.trim() && !blogData.tags.includes(blogData.tagInput.trim())) {
+      setBlogData(prevData => ({...prevData, tags: [...prevData.tags, blogData.tagInput.trim()]}))
+      setBlogData(prevData => ({...prevData, tagInput: ''}))
     }
-  }
+  };
 
   const handleTagRemoval = (tagToRemove) => {
-    setTags(tags.filter(tag => tag !== tagToRemove))
-  }
+    setBlogData(prevData => ({...prevData, tags: prevData.tags.filter(tag => tag !== tagToRemove)}))
+  };
 
   const handleContentChange = (newContent) => {
-    setContent(newContent)
-  }
+    setBlogData(prevData => ({
+      ...prevData,
+      content: newContent.html,
+      contentJson: newContent.json,
+    }));
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    const blogData = {
-      id: isEditMode ? existingBlog.id : uuidv4(),
-      title,
-      content,
-      image,
-      category,
-      tags
-    }
-
+    e.preventDefault();
     try {
       const response = await fetch('/api/blog/save', {
         method: isEditMode ? 'PUT' : 'POST',
@@ -73,26 +73,26 @@ export default function AddBlog({ existingBlog }) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(blogData),
-      })
+      });
 
       if (!response.ok) {
-        throw new Error('Failed to save blog')
+        throw new Error('Failed to save blog');
       }
 
       toast({
         title: "Success",
         description: isEditMode ? "Blog updated successfully" : "Blog created successfully",
-      })
+      });
       // Redirect or clear form here
     } catch (error) {
-      console.error('Error saving blog:', error)
+      console.error('Error saving blog:', error);
       toast({
         title: "Error",
         description: "Failed to save blog. Please try again.",
         variant: "destructive",
-      })
+      });
     }
-  }
+  };
 
   useEffect(() => {
     console.log('Categories:', categories);
@@ -101,14 +101,14 @@ export default function AddBlog({ existingBlog }) {
   return (
     <>
       <Head>
-        <title>{title ? `${title} - Modern Mannerism` : 'Add New Blog - Modern Mannerism'}</title>
-        <meta name="description" content={content.substring(0, 160)} />
-        <meta name="keywords" content={tags.join(', ')} />
+        <title>{blogData.title ? `${blogData.title} - Modern Mannerism` : 'Add New Blog - Modern Mannerism'}</title>
+        <meta name="description" content={blogData.content.substring(0, 160)} />
+        <meta name="keywords" content={blogData.tags.join(', ')} />
         
-        <meta property="og:title" content={title ? title : 'Add New Blog - Modern Mannerism'} />
-        <meta property="og:description" content={content.substring(0, 160)} />
-        <meta property="og:image" content={image ? image : '/default-image.jpg'} />
-        <meta property="og:url" content={`https://yourwebsite.com/blog/${title}`} />
+        <meta property="og:title" content={blogData.title ? blogData.title : 'Add New Blog - Modern Mannerism'} />
+        <meta property="og:description" content={blogData.content.substring(0, 160)} />
+        <meta property="og:image" content={blogData.image ? blogData.image : '/default-image.jpg'} />
+        <meta property="og:url" content={`https://yourwebsite.com/blog/${blogData.title}`} />
         <meta property="og:type" content="article" />
         
         <script type="application/ld+json">
@@ -116,13 +116,13 @@ export default function AddBlog({ existingBlog }) {
             {
               "@context": "https://schema.org",
               "@type": "BlogPosting",
-              "headline": "${title}",
-              "description": "${content.substring(0, 160)}",
+              "headline": "${blogData.title}",
+              "description": "${blogData.content.substring(0, 160)}",
               "author": {
                 "@type": "Person",
                 "name": "Manasi"
               },
-              "image": "${image ? image : '/default-image.jpg'}",
+              "image": "${blogData.image ? blogData.image : '/default-image.jpg'}",
               "datePublished": "${new Date().toISOString()}"
             }
           `}
@@ -139,8 +139,8 @@ export default function AddBlog({ existingBlog }) {
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Title:</label>
               <Input
                 type="text"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
+                value={blogData.title}
+                onChange={(e) => setBlogData(prevData => ({...prevData, title: e.target.value}))}
                 required
                 className="w-full p-2 rounded-md"
                 placeholder="Enter blog title"
@@ -150,8 +150,8 @@ export default function AddBlog({ existingBlog }) {
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Category:</label>
               <Select
-                value={category}
-                onValueChange={setCategory}
+                value={blogData.category}
+                onValueChange={value => setBlogData(prevData => ({...prevData, category: value}))}
                 disabled={categoriesLoading}
               >
                 <SelectTrigger className="w-full p-2 rounded-md">
@@ -178,8 +178,8 @@ export default function AddBlog({ existingBlog }) {
               <div className="flex items-center space-x-2">
                 <Input
                   type="text"
-                  value={tagInput}
-                  onChange={(e) => setTagInput(e.target.value)}
+                  value={blogData.tagInput}
+                  onChange={(e) => setBlogData(prevData => ({...prevData, tagInput: e.target.value}))}
                   placeholder="Enter a tag"
                   className="flex-grow p-2 rounded-md"
                 />
@@ -192,7 +192,7 @@ export default function AddBlog({ existingBlog }) {
                 </Button>
               </div>
               <div className="flex flex-wrap gap-2 mt-2">
-                {tags.map(tag => (
+                {blogData.tags.map(tag => (
                   <span
                     key={tag}
                     className="inline-flex items-center px-2 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800"
@@ -219,15 +219,30 @@ export default function AddBlog({ existingBlog }) {
                     <p className="mb-2 text-sm text-gray-500 dark:text-gray-400"><span className="font-semibold">Click to upload</span> or drag and drop</p>
                     <p className="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
                   </div>
-                  <input type="file" className="hidden" accept="image/*" onChange={handleImageChange} />
+                  <input type="file" className="hidden" accept="image/*" onChange={(e) => handleImageChange(e, 'image')} />
                 </label>
               </div>
-              {image && <img src={image} alt="Preview" className="mt-4 max-w-full h-auto rounded-lg shadow-md" />}
+              {blogData.image && <img src={blogData.image} alt="Preview" className="mt-4 max-w-full h-auto rounded-lg shadow-md" />}
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Hero Image:</label>
+              <div className="flex items-center justify-center w-full">
+                <label className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                  <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                    <AiOutlineCloudUpload className="w-10 h-10 mb-3 text-gray-400" />
+                    <p className="mb-2 text-sm text-gray-500 dark:text-gray-400"><span className="font-semibold">Click to upload</span> or drag and drop</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 1920x1080px)</p>
+                  </div>
+                  <input type="file" className="hidden" accept="image/*" onChange={(e) => handleImageChange(e, 'heroImage')} />
+                </label>
+              </div>
+              {blogData.heroImage && <img src={blogData.heroImage} alt="Hero Preview" className="mt-4 max-w-full h-auto rounded-lg shadow-md" />}
             </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Content:</label>
-              <Tiptap content={content} onChange={handleContentChange} />
+              <Tiptap content={blogData.content} onChange={handleContentChange} />
             </div>
 
             <Button
@@ -259,17 +274,18 @@ export default function AddBlog({ existingBlog }) {
             </div>
 
             <div className={`border border-gray-300 dark:border-gray-600 rounded-lg p-6 ${previewMode === 'mobile' ? 'max-w-sm mx-auto' : 'w-full'}`}>
-              <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">{title}</h3>
-              {category && <span className="inline-block bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300 mb-4">Category: {category}</span>}
+              {blogData.heroImage && <img src={blogData.heroImage} alt="Hero" className="w-full mb-4 rounded-lg" />}
+              <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">{blogData.title}</h3>
+              {blogData.category && <span className="inline-block bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300 mb-4">Category: {blogData.category}</span>}
               <div className="flex flex-wrap gap-2 mb-4">
-                {tags.map(tag => (
+                {blogData.tags.map(tag => (
                   <span key={tag} className="px-2 py-1 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full text-sm">
                     #{tag}
                   </span>
                 ))}
               </div>
-              {image && <img src={image} alt="Main" className="w-full mb-4 rounded-lg" />}
-              <div dangerouslySetInnerHTML={{ __html: content }} className="prose dark:prose-invert max-w-none" />
+              {blogData.image && <img src={blogData.image} alt="Main" className="w-full mb-4 rounded-lg" />}
+              <div dangerouslySetInnerHTML={{ __html: blogData.content }} className="prose dark:prose-invert max-w-none" />
             </div>
           </div>
         </div>

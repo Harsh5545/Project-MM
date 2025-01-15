@@ -76,7 +76,8 @@ const ServicePage = ({ data }) => {
                     className="flex items-center gap-4 p-4 bg-white dark:bg-gray-800 rounded-lg shadow-md"
                   >
                     <div className="flex justify-center items-center w-7 h-7 bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] rounded-full shadow-lg">
-                      <IconComponent className="text-white w-4 h-4" />
+                      {/* <IconComponent className="text-white w-4 h-4" /> */}
+                      {point.icons}
                     </div>
                     <div className="flex flex-col">
                       <span className="text-lg font-normal text-gray-900 dark:text-white">

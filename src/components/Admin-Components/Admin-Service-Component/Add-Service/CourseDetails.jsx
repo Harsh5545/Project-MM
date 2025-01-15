@@ -30,11 +30,11 @@ const CourseDetails = ({ courseDetails, onCourseDetailsChange, formData, setForm
     onCourseDetailsChange({ courseHeadings: newCourseHeadings });
   };
 
-  const handleCourseDetailChange = (index, value,field) => {
+  const handleCourseDetailChange = (index, field, value) => {
     const newCourseDetails = [...courseDetails.courseDetail];
     newCourseDetails[index][field] = value;
     onCourseDetailsChange({ courseDetail: newCourseDetails });
-  };
+  };  
 
   const handleProgramHighlightChange = (index, field, value) => {
     const newProgramHighlights = [...courseDetails.programHighlights];
@@ -173,7 +173,7 @@ const CourseDetails = ({ courseDetails, onCourseDetailsChange, formData, setForm
                 <Input
                   type="text"
                   value={detail.description}
-                  onChange={(e) => handleCourseDetailChange(index, e.target.value)}
+                  onChange={(e) => handleCourseDetailChange(index, 'description' , e.target.value)}
                   placeholder="Enter the course detail"
                   className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                 />
