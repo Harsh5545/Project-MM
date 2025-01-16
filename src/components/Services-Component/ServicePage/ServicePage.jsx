@@ -28,16 +28,12 @@ const ServicePage = ({ data }) => {
     subheading,
     courseDescription,
     courseDetails,
-    
-    program_highlights,
-    program_details,
     programDetails,
-    testimonial,
     testimonials
-    
+
   } = data;
 
-  console.log(testimonials, 'harsh')
+  console.log(data, 'harsh')
   if (!data) {
     return <div>Loading...</div>;
   }
@@ -49,7 +45,7 @@ const ServicePage = ({ data }) => {
 
       <div className="  w-full  pb-5 bg-cover bg-center flex items-end justify-center">
         <ServicesHero data={testimonials.heroImage} className="relative" />
-      
+
 
         <div className=" flex absolute pb-8 flex-col justify-center items-center text-center text-black">
           <h1 className="text-4xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#9e7033] via-[#c3965d] to-[#9e7033]  uppercase">{heading}</h1>
@@ -71,7 +67,7 @@ const ServicePage = ({ data }) => {
             <h2 className=" text-4xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] pb-6">What They’ll Learn</h2>
             <div className={`${dm_Sanss.className} mt-8 grid grid-cols-1 md:grid-cols-2 gap-4`}>
               {courseDetails?.courseDetail?.map((point, index) => {
-                const IconComponent = icons[index % icons.length];
+
                 return (
                   <motion.div
                     key={index}
@@ -81,12 +77,12 @@ const ServicePage = ({ data }) => {
                     className="flex items-center gap-4 p-4 bg-white dark:bg-gray-800 rounded-lg shadow-md"
                   >
                     <div className="flex justify-center items-center w-7 h-7 bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] rounded-full shadow-lg">
-                  
-                      {point.icons}
+
+                      {point?.icon}
                     </div>
                     <div className="flex flex-col">
                       <span className="text-lg font-normal text-gray-900 dark:text-white">
-                        {point || 'No Heading Available'}
+                        {point?.description || 'No Heading Available'}
                       </span>
                     </div>
                   </motion.div>
@@ -94,9 +90,9 @@ const ServicePage = ({ data }) => {
               })}
             </div>
           </section>
-          {/* <ProgramDetails data={program_details} /> */}
-          {/* Call to Action */}
-          {/* <section className="my-14 py-4 bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] opacity-90 rounded-lg text-center">
+          <ProgramDetails data={programDetails} />
+          {/* Call to Action */} 
+          <section className="my-14 py-4 bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] opacity-90 rounded-lg text-center">
             <h2 className="lg:text-4xl text-2xl mb-6 font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-50">
             {testimonials?.taglineHeading || 'No Heading Available'}
             </h2>
@@ -106,10 +102,10 @@ const ServicePage = ({ data }) => {
             >
               Register Now
             </ShadcnButton>
-          </section> */}
-          
-          {/* <Testimonials data={testimonial}/> */}
-          {/* <Faq data={testimonial} />  */}
+          </section>
+
+           <Testimonials data={testimonials}/>
+          <Faq data={testimonials} /> 
         </div></div>
     </div>
   );

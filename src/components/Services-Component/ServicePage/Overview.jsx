@@ -10,7 +10,7 @@ const dm_Sans = Cormorant_Garamond({
     weight: ["400"],
 });
 
-const Overview = (data) => {
+const Overview = ({data}) => {
    
     return (
         <div className="flex  bg-slate-50 rounded-2xl flex-col py-6 md:py-16 w-full">

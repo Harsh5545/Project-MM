@@ -16,15 +16,15 @@ function ServicesComponent({ data }) {
 
   const [searchTerm, setSearchTerm] = useState("");
 
-  const filteredCourses = data.filter((course) => {
-    const title = course?.mainTitle || "";
-    const description = course?.courseDescription || "";
+  // const filteredCourses = data.filter((course) => {
+  //   const title = course?.mainTitle || "";
+  //   const description = course?.courseDescription || "";
 
-    return (
-      title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      description.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  });
+  //   return (
+  //     title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  //     description.toLowerCase().includes(searchTerm.toLowerCase())
+  //   );
+  // });
 
 
   // courses.filter(
@@ -77,8 +77,8 @@ function ServicesComponent({ data }) {
           {/* Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
 
-            {filteredCourses?.length > 0 ? (
-              filteredCourses?.map((course, index) => (
+            {
+              data?.map((course, index) => (
                 <Link key={course?.id} href={`/services/${course?.slug}`}>
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -115,16 +115,17 @@ function ServicesComponent({ data }) {
                   </motion.div>
                 </Link>
               ))
-            ) : (
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.9 }}
-                className="col-span-full text-center text-gray-700 dark:text-gray-300 text-lg"
-              >
-                No services match your search.
-              </motion.p>
-            )}
+            // ) : (
+            //   <motion.p
+            //     initial={{ opacity: 0, y: 20 }}
+            //     animate={{ opacity: 1, y: 0 }}
+            //     transition={{ duration: 0.9 }}
+            //     className="col-span-full text-center text-gray-700 dark:text-gray-300 text-lg"
+            //   >
+            //     No services match your search.
+            //   </motion.p>
+            // )
+}
           </div>
         </div>
       </div>

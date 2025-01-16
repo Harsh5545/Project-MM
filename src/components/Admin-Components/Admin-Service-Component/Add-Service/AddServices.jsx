@@ -23,7 +23,7 @@ const AddServices = ({ onClose }) => {
         category: '',
         courseDetails: {
             courseHeadings: [{ heading: '', subheading: '', icon: '' }],
-            courseDetail: [{ icon: '', description: '' }],
+            courseDetail : [{ icon: '', description: '' }],
             programHighlights: [{ icon: 'FaCheckCircle', heading: '', description: '' }],
             overviewImage: '',
             overviewDescription: '',
