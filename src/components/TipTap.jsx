@@ -11,9 +11,26 @@ import ListItem from '@tiptap/extension-list-item';
 import Toolbar from './Toolbar';
 import { useState, useEffect } from 'react';
 import TextStyle from '@tiptap/extension-text-style';
+
+const CustomImage = Image.extend({
+  addAttributes() {
+    return {
+      ...this.parent?.(),
+      role: {
+        default: 'presentation',
+        renderHTML: (attributes) => {
+          return {
+            role: attributes.role,
+          }
+        },
+      },
+    }
+  },
+})
+
 const Tiptap = ({ onChange, content }) => {
   const [isMobile, setIsMobile] = useState(false);
-``
+
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile();
@@ -22,18 +39,20 @@ const Tiptap = ({ onChange, content }) => {
   }, []);
 
   const editor = useEditor({
-    extensions: [
-      StarterKit,
+    extensions:  [
+      StarterKit.configure({
+        bulletList: {
+          keepMarks: true,
+         
+        },
+      }),
       Underline,
-      BulletList.configure({
-        itemTypeName: 'listItem',
-        keepMarks: true,
-        
-      }),          // Explicitly add BulletList extension
-      ListItem,       
-      Image.configure({
-        inline: false,
+      CustomImage.configure({
+        inline: true,
         allowBase64: true,
+        HTMLAttributes: {
+          class: 'rounded-lg shadow-md max-w-[80%]',
+        },
       }),
       Link.configure({
         openOnClick: false,
@@ -46,12 +65,31 @@ const Tiptap = ({ onChange, content }) => {
     content: content,
     editorProps: {
       attributes: {
-        class: 'prose prose-sm sm:prose lg:prose-lg xl:prose-xl focus:outline-none',
+        class: 'prose prose-sm sm:prose lg:prose-lg xl:prose-xl focus:outline-none min-h-[300px] max-h-[600px] overflow-y-auto p-4',
+      },
+      handleDrop: (view, event, slice, moved) => {
+        if (!moved && event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files[0]) {
+          const file = event.dataTransfer.files[0];
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            const node = view.state.schema.nodes.image.create({
+              src: e.target?.result,
+            });
+            const transaction = view.state.tr.replaceSelectionWith(node);
+            view.dispatch(transaction);
+          };
+          reader.readAsDataURL(file);
+          return true;
+        }
+        return false;
       },
     },
     onUpdate: ({ editor }) => {
-      onChange(editor.getHTML());
+      const html = editor.getHTML();
+      const json = editor.getJSON();
+      onChange({ html, json });
     },
+    immediatelyRender: false, 
   });
 
   return (
@@ -68,3 +106,4 @@ const Tiptap = ({ onChange, content }) => {
 };
 
 export default Tiptap;
+

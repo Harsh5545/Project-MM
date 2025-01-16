@@ -1,8 +1,7 @@
 'use client'
 
-import React, { useState, useMemo, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useToast } from '@/hooks/use-toast'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
@@ -16,6 +15,8 @@ import {
 import { Loader2, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, ArrowUpDown } from 'lucide-react'
 import { Shimmer } from '@/components/ui/shimmer'
 import AddServiceForm from '../Add-Service/AddServices'
+import Image from 'next/image'
+import Link from 'next/link'
 
 const ServicesTable = () => {
   const { toast } = useToast()
@@ -27,6 +28,7 @@ const ServicesTable = () => {
   const [pageSize, setPageSize] = useState(10)
   const [searchTerm, setSearchTerm] = useState('')
   const [showForm, setShowForm] = useState(false)
+  const [totalCount, setTotalCount] = useState(0) // To store the total count of records
 
   const fetchServices = async () => {
     setLoading(true)
@@ -34,8 +36,9 @@ const ServicesTable = () => {
       const response = await fetch(`/api/services/list?page=${pageIndex + 1}&pageSize=${pageSize}&searchTerm=${searchTerm}&sortBy=${sortColumn}&sortOrder=${sortOrder}`)
       const result = await response.json()
 
-      if (result.success) {
+      if (result.Success) {
         setServices(result.data)
+        setTotalCount(result.totalCount) // Assuming the API returns a `totalCount` field
       } else {
         toast({
           title: "Error",
@@ -78,21 +81,45 @@ const ServicesTable = () => {
     </div>
   )
 
+  const totalPages = Math.ceil(totalCount / pageSize);
+
+
+  const handleDelete = async (id) => {
+    try {
+      const response = await fetch('/api/services/delete', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id }),
+      })
+      const result = await response.json()
+      if (result.Success) {
+        toast({
+          title: "Success",
+          description: result?.Message,
+        })
+        fetchServices()
+      } else {
+        throw new Error(result?.Message || 'Failed to delete category')
+      }
+    } catch (error) {
+      console.error('Error:', error)
+      toast({
+        title: "Error",
+        description: error instanceof Error ? error.message : "Failed to delete category. Please try again.",
+        variant: "destructive",
+      })
+    }
+  }
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h1 className="text-4xl font-bold">Manage Services </h1>
-        <Dialog open={showForm} onOpenChange={setShowForm}>
-          <DialogTrigger asChild>
-            <Button>Add Service</Button>
-          </DialogTrigger>
-          <DialogContent className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 w-full max-w-6xl max-h-[80vh] overflow-y-auto">
-            <DialogHeader>
-              <DialogTitle className="text-center text-xl lg:text-3xl">Add New Service</DialogTitle>
-            </DialogHeader>
-            <AddServiceForm onSubmit={fetchServices} onClose={() => setShowForm(false)} />
-          </DialogContent>
-        </Dialog>
+        <Button asChild>
+          <Link href={'/admin/services/add-service'}>Add Service</Link>
+        </Button>
       </div>
 
       <div className="flex justify-between items-center mb-4">
@@ -140,16 +167,16 @@ const ServicesTable = () => {
               services.map((service, index) => (
                 <TableRow key={index}>
                   <TableCell>
-                    <img src={service.image} alt="Service" className="w-16 h-16 object-cover rounded-full" />
+                    <img  src={service.image || 'https://ik.imagekit.io/giol62jyf/mypic_VLj2nrRSs.jpg'} width={16} height={16} alt="Service" className="w-16 h-16 object-cover rounded-full" />
                   </TableCell>
-                  <TableCell>{service.mainTitle}</TableCell>
-                  <TableCell>{service.category}</TableCell>
+                  <TableCell>{service.heading}</TableCell>
+                  <TableCell>{service?.category?.category_name}</TableCell>
                   <TableCell>
                     <div className="flex space-x-2">
                       <Button variant="outline" onClick={() => console.log('Edit', index)}>
                         Edit
                       </Button>
-                      <Button variant="destructive" onClick={() => console.log('Delete', index)}>
+                      <Button variant="destructive" onClick={() => handleDelete(service.id)}>
                         Delete
                       </Button>
                     </div>
@@ -170,21 +197,21 @@ const ServicesTable = () => {
             <ChevronLeft className="h-4 w-4" />
           </Button>
           <span className="text-sm font-medium">
-            Page {pageIndex + 1} of {Math.ceil(services.length / pageSize)}
+            Page {pageIndex + 1} of {totalPages}
           </span>
           <Button
             variant="outline"
             size="sm"
             onClick={() => setPageIndex(pageIndex + 1)}
-            disabled={pageIndex >= Math.ceil(services.length / pageSize) - 1}
+            disabled={pageIndex >= totalPages - 1}
           >
             <ChevronRight className="h-4 w-4" />
           </Button>
           <Button
             variant="outline"
             size="sm"
-            onClick={() => setPageIndex(Math.ceil(services.length / pageSize) - 1)}
-            disabled={pageIndex >= Math.ceil(services.length / pageSize) - 1}
+            onClick={() => setPageIndex(totalPages - 1)}
+            disabled={pageIndex >= totalPages - 1}
           >
             <ChevronsRight className="h-4 w-4" />
           </Button>

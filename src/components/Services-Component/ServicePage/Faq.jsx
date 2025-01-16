@@ -3,8 +3,8 @@ import { motion } from 'framer-motion';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
-const Faq = (props) => {
-  const { faqData } = props;
+const Faq = ({data}) => {
+  
 
   return (
     <section className="flex  bg-[#c3965d] my-16 flex-col md:flex-row gap-8 p-4 md:p-8 lg:px-16 lg:py-36 dark:from-gray-900 dark:to-gray-800 rounded-lg shadow-lg w-full relative z-10">
@@ -23,8 +23,7 @@ const Faq = (props) => {
           </CardHeader>
           <CardContent>
             <p className="text-gray-700  dark:text-gray-300"> 
-              Modern Mannerism helps you navigate social situations with confidence and grace, making a positive impression in both personal and professional settings.
-            </p>
+          {data?.mmDescription} </p>
           </CardContent>
         </Card>
       </div>
@@ -35,7 +34,7 @@ const Faq = (props) => {
           Frequently Asked Questions
         </h2>
         <Accordion type="single" collapsible className="space-y-4">
-          {faqData.map((faq, index) => (
+          {data?.faqs?.map((faq, index) => (
             <AccordionItem key={index} value={`faq-${index}`}>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}

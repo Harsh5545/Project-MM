@@ -1,25 +1,6 @@
 'use client';
 import React from 'react';
-import {
-  Bold,
-  Strikethrough,
-  Italic,
-  List,
-  ListOrdered,
-  Heading2,
-  Underline,
-  Quote,
-  Undo,
-  Redo,
-  Code,
-  ImageIcon,
-  Link,
-  AlignLeft,
-  AlignCenter,
-  AlignRight,
-  Paintbrush,
-  TextSize,
-} from 'lucide-react';
+import { Bold, Strikethrough, Italic, List, ListOrdered, Heading2, Heading3, Heading4, Underline, Quote, Undo, Redo, Code, ImageIcon, Link, AlignLeft, AlignCenter, AlignRight, Paintbrush, TextIcon as TextSize } from 'lucide-react';
 
 const Toolbar = ({ editor, isMobile }) => {
   if (!editor) {
@@ -46,11 +27,15 @@ const Toolbar = ({ editor, isMobile }) => {
   };
 
   const setFontSize = (size) => {
-    editor.chain().focus().setMark('textStyle', { fontSize: `${size}px` }).run();
+    editor.chain().focus().setFontSize(size).run();
   };
 
   const setFontColor = (color) => {
     editor.chain().focus().setMark('textStyle', { color }).run();
+  };
+
+  const setHeading = (level) => {
+    editor.chain().focus().toggleHeading({ level }).run();
   };
 
   const ToolbarButton = ({ onClick, isActive, children }) => (
@@ -92,8 +77,18 @@ const Toolbar = ({ editor, isMobile }) => {
     },
     {
       icon: <Heading2 size={18} />,
-      action: () => editor.chain().focus().toggleHeading({ level: 2 }).run(),
+      action: () => setHeading(2),
       isActive: editor.isActive('heading', { level: 2 }),
+    },
+    {
+      icon: <Heading3 size={18} />,
+      action: () => setHeading(3),
+      isActive: editor.isActive('heading', { level: 3 }),
+    },
+    {
+      icon: <Heading4 size={18} />,
+      action: () => setHeading(4),
+      isActive: editor.isActive('heading', { level: 4 }),
     },
     {
       icon: <List size={18} />,
@@ -170,11 +165,14 @@ const Toolbar = ({ editor, isMobile }) => {
         className="p-2 rounded bg-gray-200 dark:bg-gray-700"
       >
         <option value="">Font Size</option>
-        <option value="12">12px</option>
-        <option value="14">14px</option>
-        <option value="16">16px</option>
-        <option value="18">18px</option>
-        <option value="20">20px</option>
+        <option value="12px">12px</option>
+        <option value="14px">14px</option>
+        <option value="16px">16px</option>
+        <option value="18px">18px</option>
+        <option value="20px">20px</option>
+        <option value="24px">24px</option>
+        <option value="28px">28px</option>
+        <option value="32px">32px</option>
       </select>
       {/* Font Color */}
       <button
@@ -188,3 +186,4 @@ const Toolbar = ({ editor, isMobile }) => {
 };
 
 export default Toolbar;
+

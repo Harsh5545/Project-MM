@@ -191,7 +191,7 @@ const UserForm = () => {
                     <div className="mt-6 text-center">
                         <Button
                             variant="ghost"
-                            onClick={() => router.push("/sing-in")}
+                            onClick={() => router.push("/sign-in")}
                             className="border border-[#eabf91] text-[#c3965d] font-bold hover:bg-[#eabf91] hover:text-white"
                         >
                             Already a member? Login

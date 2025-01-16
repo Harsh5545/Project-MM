@@ -60,7 +60,6 @@ const HomeConsultation = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
     setFormData({
       name: "",
       countryCode: "",

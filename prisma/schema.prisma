@@ -47,14 +47,10 @@ model Service {
   categoryId          Int
   heading             String
   subheading          String
-  testimonial         String? @db.Text
-  faq                 String? @db.Text
-  why_choose_program  String? @db.Text 
-  program_details     String? @db.Text 
-  program_highlights  String? @db.Text 
-  what_you_learn      String? @db.Text 
-  overview            String? @db.Text 
-  what_program_offers String? @db.Text 
+  courseDescription   String
+  testimonials        String? @db.Text
+  programDetails      String? @db.Text 
+  courseDetails       String? @db.Text 
   hero_image          String?
   image               String?
   slug                String   @unique
