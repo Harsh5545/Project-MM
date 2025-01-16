@@ -11,9 +11,14 @@ import SeoComponent from './Seo';
 import { useToast } from '@/hooks/use-toast';
 import UploadServices from './UploadServices';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { Dialog, DialogTrigger, DialogContent } from '@/components/ui/dialog';
 
 const AddServices = ({ onClose }) => {
     const { toast } = useToast();
+    const [isFormValid, setIsFormValid] = useState(false);
+    const [showSuccessDialog, setShowSuccessDialog] = useState(false);
+    const router = useRouter();
     const [currentStep, setCurrentStep] = useState(1);
     const [formData, setFormData] = useState({
         heading: '',
@@ -79,6 +84,14 @@ const AddServices = ({ onClose }) => {
 
         fetchCategories();
     }, [toast]);
+    const validateForm = useCallback(() => {
+        const isValid = formData.heading && formData.subheading && formData.courseDescription && formData.category && formData.image;
+        setIsFormValid(isValid);
+    }, [formData]);
+
+    useEffect(() => {
+        validateForm();
+    }, [formData, validateForm]);
 
     const handleNext = useCallback(() => {
         setCurrentStep((prevStep) => Math.min(prevStep + 1, 5));
@@ -323,6 +336,17 @@ const AddServices = ({ onClose }) => {
                     </div>
                 </form>
             </div>
+<Dialog open={showSuccessDialog} onOpenChange={setShowSuccessDialog}>
+    <DialogContent>
+        <h2 className="text-lg font-semibold text-center">Service Successfully Created!</h2>
+        <Button
+            onClick={() => router.push('/admin/services')}
+            className="mt-4 bg-black text-white px-4 py-2 rounded-lg w-full"
+        >
+            OK
+        </Button>
+    </DialogContent>
+</Dialog>
         </div>
     );
 };
