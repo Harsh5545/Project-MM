@@ -56,6 +56,7 @@ const courseDetailsSchema = z.object({
   courseHeadings: z.array(courseHeadingSchema).min(1, "At least one course heading is required"),
   programHighlights: z.array(programHighlightSchema).min(1, "At least one program highlight is required"),
   overviewDescription: z.string().min(1, "Overview description is required"),
+  overviewImage: z.string().min(1, "overview Image is required"),
 });
 
 const programDetailsSchema = z.object({
@@ -84,7 +85,7 @@ const serviceSchema = z.object({
   testimonials: testimonialDetailsSchema,
   seo: seoSchema,
   image: z.string().url("Invalid URL format for image").optional(),
-  heroImage: z.string().url("Invalid URL format for hero image").optional(),
+  heroImage: z.string().min(1, "hero Image is required"),
 });
 
 // Function to translate Zod error paths to user-friendly messages
@@ -100,6 +101,7 @@ const translateZodErrors = (errors) => {
     "courseDetails.programHighlights.0.heading": "The highlight heading is required.",
     "courseDetails.programHighlights.0.description": "The highlight description is required.",
     "courseDetails.overviewDescription": "The overview description is required.",
+    "courseDetails.overviewImage": "The overview Image is required.",
     "programDetails.ageGroups.0.subheading": "The age group subheading is required.",
     "programDetails.formats.0.heading": "The format heading is required.",
     "programDetails.formats.0.subheading": "The format subheading is required.",
@@ -121,17 +123,20 @@ const translateZodErrors = (errors) => {
     image: "Please provide a valid URL for the image.",
   };
 
-  return errors.map(error => {
+  return errors.map((error) => {
     const path = error.path.join(".");
-    return userFriendlyMessages[path] || `${path} is invalid.`;
+    return {
+      field: path,
+      message: userFriendlyMessages[path] || `${path} is invalid.`,
+    };
   });
 };
 
+// POST request handler
 export async function POST(req) {
   try {
     const data = await req.json();
     const parsedData = serviceSchema.parse(data); // Zod validation
-    console.log(parsedData);
 
     // Check if the category exists in the database
     const categoryExists = await prisma.category.findUnique({
@@ -174,7 +179,7 @@ export async function POST(req) {
     if (error instanceof z.ZodError) {
       const errorMessages = translateZodErrors(error.errors);
       return NextResponse.json(
-        { success: false, message: `Validation failed: ${errorMessages.join(', ')}` },
+        { success: false, errors: errorMessages },
         { status: 400 }
       );
     }
