@@ -49,7 +49,6 @@ const AddCategoryDialog = ({ onCategoryAdded }) => {
       }
 
       const result = await response.json()
-      console.log('Category added:', result)
       setOpen(false)
       toast({
         title: "Success",

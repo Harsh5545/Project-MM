@@ -7,7 +7,6 @@ const secret = process.env.NEXTAUTH_SECRET;
 
 export async function middleware(request) {
     const token = await getToken({ req: request, secret });
-    console.log(token,'token')
     const { nextUrl } = request;
     const isAuthenticated = !!token;
     const isPublicRoute = PUBLIC_ROUTES.some(route => nextUrl.pathname.startsWith(route)) || nextUrl.pathname === ROOT;
@@ -43,7 +42,6 @@ export async function middleware(request) {
 
     // If the user is logged in but not on their appropriate route, redirect based on their role
     const userRole = token?.role; 
-    console.log(userRole,'userRole')
     if (userRole === 'Admin') {
         if (!ADMIN_ROUTES.includes(nextUrl.pathname)) {
             return NextResponse.redirect(new URL(ADMIN_ROUTES[0], nextUrl)); 

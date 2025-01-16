@@ -5,7 +5,6 @@ const Page = async () => {
   // Fetch data from your API endpoint
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/services/frontend-list`);
   const result = await response.json();
-  console.log(result.data)
 
   return (
     <div>

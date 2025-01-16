@@ -3,7 +3,6 @@ import { NextResponse } from "next/server";
 
 // Helper function to parse stringified JSON fields
 const parseStringifiedFields = (data) => {
-    console.log(data,"DATA>>>>>>>>>>>>")
     return data.map(item => {
         return {
             ...item,

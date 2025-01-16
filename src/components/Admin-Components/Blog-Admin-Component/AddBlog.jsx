@@ -95,7 +95,6 @@ export default function AddBlog({ existingBlog }) {
   };
 
   useEffect(() => {
-    console.log('Categories:', categories);
   }, [categories]);
 
   return (

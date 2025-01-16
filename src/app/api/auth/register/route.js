@@ -6,8 +6,6 @@ import { NextResponse } from "next/server";
 export async function POST(req) {
     try {
         const body = await req.json();
-        console.log(body)
-        // Basic validation of input fields
         if (
             !body.firstName ||
             !body.lastName ||
@@ -50,15 +48,12 @@ export async function POST(req) {
             password: hashedPassword,
             roleId: 1,  // Default role, you can adjust this as needed
         };
-        console.log(newUser)
         // Create the user in the database
         try {
             const user = await prisma.user.create({
                 data: newUser,
             });
-            console.log(user, 'created user')
         } catch (err) {
-            console.log(err, 'jf')
             return NextResponse.json({
                 Message: "Unable to create user.",
                 Success: false,
