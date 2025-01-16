@@ -85,7 +85,6 @@ const serviceSchema = z.object({
   testimonials: testimonialDetailsSchema,
   seo: seoSchema,
   image: z.string().url("Invalid URL format for image").optional(),
-  heroImage: z.string().min(1, "hero Image is required"),
 });
 
 // Function to translate Zod error paths to user-friendly messages
