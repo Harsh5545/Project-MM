@@ -3,23 +3,26 @@ import { NextResponse } from "next/server";
 
 // Helper function to parse stringified JSON fields
 const parseStringifiedFields = (data) => {
+    console.log(data,"DATA>>>>>>>>>>>>")
     return data.map(item => {
-        // Parse stringified JSON fields into actual objects
         return {
             ...item,
-            testimonial: item.testimonial ? JSON.parse(item.testimonial) : null,
-            faq: item.faq ? JSON.parse(item.faq) : null,
-            program_details: item.program_details ? JSON.parse(item.program_details) : null,
-            program_highlights: item.program_highlights ? JSON.parse(item.program_highlights) : null,
-            overview: item.overview ? JSON.parse(item.overview) : null,
-            what_program_offers: item.what_program_offers ? JSON.parse(item.what_program_offers) : null,
+            testimonials: item.testimonials ? JSON.parse(item.testimonials) : null,
+            programDetails: item.programDetails ? JSON.parse(item.programDetails) : null,
+            courseDetails: item.courseDetails ? JSON.parse(item.courseDetails) : null,
+            seo: {
+                meta_title: item.meta_title,
+                meta_description: item.meta_description,
+                og_title: item.og_title,
+                og_image: item.og_image,
+                keywords: item.keywords ? JSON.parse(item.keywords) : null,
+            },
         };
     });
 };
 
 // GET handler to fetch all services without any params
 export async function GET() {
-    console.log('runnning............')
     try {
         // Fetch all services from the database
         const services = await prisma.service.findMany({

@@ -29,11 +29,11 @@ const ServicePage = ({ data }) => {
     overview,
     program_highlights,
     program_details,
-    testimonial,
+    testimonials,
     
   } = data;
 
-  console.log(data, 'harsh')
+  console.log(testimonials, 'harsh')
   if (!data) {
     return <div>Loading...</div>;
   }
@@ -44,7 +44,7 @@ const ServicePage = ({ data }) => {
 
 
       <div className="  w-full  pb-5 bg-cover bg-center flex items-end justify-center">
-        <ServicesHero data={testimonial.heroImage} className="relative" />
+        <ServicesHero data={testimonials.heroImage} className="relative" />
 
         <div className=" flex absolute pb-8 flex-col justify-center items-center text-center text-black">
           <h1 className="text-4xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#9e7033] via-[#c3965d] to-[#9e7033]  uppercase">{heading}</h1>
@@ -93,7 +93,7 @@ const ServicePage = ({ data }) => {
           {/* Call to Action */}
           <section className="my-14 py-4 bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] opacity-90 rounded-lg text-center">
             <h2 className="lg:text-4xl text-2xl mb-6 font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-50">
-            {testimonial?.taglineHeading || 'No Heading Available'}
+            {testimonials?.taglineHeading || 'No Heading Available'}
             </h2>
             <ShadcnButton
               variant="contained"
@@ -103,8 +103,8 @@ const ServicePage = ({ data }) => {
             </ShadcnButton>
           </section>
           
-          <Testimonials data={testimonial}/>
-          <Faq data={testimonial} /> 
+          <Testimonials data={testimonials}/>
+          <Faq data={testimonials} /> 
         </div></div>
     </div>
   );

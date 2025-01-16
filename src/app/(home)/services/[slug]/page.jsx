@@ -7,7 +7,7 @@ const page = async ({ params }) => {
 
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/services/service-details?slug=${slug}`);
   const result = await response.json();
-  console.log(result.data?.program_highlights, "bhavish")
+  console.log(result.data, "bhavish")
   return (
     <>
       <ServicePage data={result?.data} />

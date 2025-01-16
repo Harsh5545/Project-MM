@@ -27,7 +27,6 @@ const handleFiltering = (filterBy, categoryId) => {
     filters.OR = [
       { heading: { contains: filterBy, mode: "insensitive" } },
       { subheading: { contains: filterBy, mode: "insensitive" } },
-      // Remove JSON fields from the filter logic
     ];
   }
 
@@ -40,6 +39,7 @@ const handleFiltering = (filterBy, categoryId) => {
 
 // Helper function to parse stringified JSON fields (if needed)
 const parseStringifiedFields = (data) => {
+  console.log(data,'Hello')
   return data.map(item => {
     return {
       ...item,

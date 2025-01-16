@@ -6,7 +6,7 @@ const parseStringifiedFields = (data) => {
     // If the data is not null or undefined, parse the stringified JSON fields
     return {
         ...data,
-        testimonials: data.testimonial ? JSON.parse(data.testimonial) : null,
+        testimonials: data.testimonials ? JSON.parse(data.testimonials) : null,
         programDetails: data.programDetails ? JSON.parse(data.programDetails) : null,
         courseDetails: data.courseDetails ? JSON.parse(data.courseDetails) : null,
         seo: {
