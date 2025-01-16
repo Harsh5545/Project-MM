@@ -52,11 +52,18 @@ const seoSchema = z.object({
   keywords: z.array(z.string().min(1)).optional(),
 });
 
+const courseDetailSchema = z.object({
+  icon: z.string().optional(), 
+  description: z.string().min(1),
+});
+
+
 const courseDetailsSchema = z.object({
   courseHeadings: z.array(courseHeadingSchema).min(1, "At least one course heading is required"),
   programHighlights: z.array(programHighlightSchema).min(1, "At least one program highlight is required"),
   overviewDescription: z.string().min(1, "Overview description is required"),
   overviewImage: z.string().min(1, "overview Image is required"),
+  courseDetail:z.array(courseDetailSchema).min(1, "At least one course courseDetail is required")
 });
 
 const programDetailsSchema = z.object({
@@ -101,6 +108,7 @@ const translateZodErrors = (errors) => {
     "courseDetails.programHighlights.0.description": "The highlight description is required.",
     "courseDetails.overviewDescription": "The overview description is required.",
     "courseDetails.overviewImage": "The overview Image is required.",
+    "courseDetails.courseDetail":"The courseDetail is required.",
     "programDetails.ageGroups.0.subheading": "The age group subheading is required.",
     "programDetails.formats.0.heading": "The format heading is required.",
     "programDetails.formats.0.subheading": "The format subheading is required.",
