@@ -71,7 +71,7 @@ const testimonialDetailsSchema = z.object({
   mmDescription: z.string().min(1, "MM description is required"),
   testimonials: z.array(testimonialSchema).min(1, "At least one testimonial is required"),
   faqs: z.array(faqSchema).min(1, "At least one FAQ is required"),
-  heroImage: z.string().url("Invalid URL format for hero image").optional(),
+  heroImage: z.string().min(1, "hero Image is required"),
 });
 
 // Main schema for the root structure
