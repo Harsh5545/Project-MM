@@ -26,7 +26,7 @@ const Overview = (data) => {
                             width={400}
                             height={500}
                             // alt={`${data?.overviewDescription.slice(0, 3)}`}
-                            src={data.overviewImage}
+                            src={data?.overviewImage}
                             className="shadow-2xl h-auto lg:h-[60vh] rounded-2xl  object-cover p-0 lg:p-0.5 shadow-[#d1d9df]"
                             style={{
                                 boxShadow:
@@ -51,7 +51,7 @@ const Overview = (data) => {
 
                     {/* Description */}
                     <p className="text-gray-800 dark:text-white p-2 text-center">
-                        {data.overviewDescription}
+                        {data?.overviewDescription}
                     </p>
 
                     <div className="flex flex-col md:flex-row gap-8 justify-between items-stretch p-4 md:p-6">

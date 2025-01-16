@@ -28,7 +28,7 @@ const ServicePage = ({ data }) => {
     subheading,
     courseDescription,
     courseDetails,
-    overview,
+    
     program_highlights,
     program_details,
     programDetails,
@@ -67,10 +67,10 @@ const ServicePage = ({ data }) => {
           <Overview data={courseDetails} />
           <ProgramHighlights data={courseDetails} />
 
-          {/* <section className="mt-8 py-8 px-4 md:px-8 lg:px-16 bg-gradient-to-b from-gray-100 to-white dark:from-gray-800 dark:to-gray-900 rounded-lg shadow-lg">
+          <section className="mt-8 py-8 px-4 md:px-8 lg:px-16 bg-gradient-to-b from-gray-100 to-white dark:from-gray-800 dark:to-gray-900 rounded-lg shadow-lg">
             <h2 className=" text-4xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] pb-6">What They’ll Learn</h2>
             <div className={`${dm_Sanss.className} mt-8 grid grid-cols-1 md:grid-cols-2 gap-4`}>
-              {overview?.courseDetail?.map((point, index) => {
+              {courseDetails?.courseDetail?.map((point, index) => {
                 const IconComponent = icons[index % icons.length];
                 return (
                   <motion.div
@@ -93,7 +93,7 @@ const ServicePage = ({ data }) => {
                 );
               })}
             </div>
-          </section> */}
+          </section>
           {/* <ProgramDetails data={program_details} /> */}
           {/* Call to Action */}
           {/* <section className="my-14 py-4 bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] opacity-90 rounded-lg text-center">
