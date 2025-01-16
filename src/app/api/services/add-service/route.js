@@ -154,7 +154,7 @@ export async function POST(req) {
         testimonials: parsedData.testimonials ? JSON.stringify(parsedData.testimonials) : null,
         programDetails: parsedData.programDetails ? JSON.stringify(parsedData.programDetails) : null,
         courseDetails: parsedData.courseDetails ? JSON.stringify(parsedData.courseDetails) : null,
-        hero_image: parsedData.heroImage || "",
+        hero_image: parsedData.testimonials.heroImage || "",
         image: parsedData.image || "",
         slug: parsedData.heading.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, ''),
         meta_title: parsedData.seo.meta_title,

@@ -6,12 +6,16 @@ const parseStringifiedFields = (data) => {
     // If the data is not null or undefined, parse the stringified JSON fields
     return {
         ...data,
-        testimonial: data.testimonial ? JSON.parse(data.testimonial) : null,
-        faq: data.faq ? JSON.parse(data.faq) : null,
-        program_details: data.program_details ? JSON.parse(data.program_details) : null,
-        program_highlights: data.program_highlights ? JSON.parse(data.program_highlights) : null,
-        overview: data.overview ? JSON.parse(data.overview) : null,
-        what_program_offers: data.what_program_offers ? JSON.parse(data.what_program_offers) : null,
+        testimonials: data.testimonial ? JSON.parse(data.testimonial) : null,
+        programDetails: data.programDetails ? JSON.parse(data.programDetails) : null,
+        courseDetails: data.courseDetails ? JSON.parse(data.courseDetails) : null,
+        seo: {
+            meta_title: data.meta_title,
+            meta_description: data.meta_description,
+            og_title: data.og_title,
+            og_image: data.og_image,
+            keywords: data.keywords ? JSON.parse(data.keywords) : null,
+        },
     };
 };
 
@@ -45,7 +49,7 @@ export async function GET(req) {
 
         // Parse stringified fields before sending to the frontend
         const parsedService = parseStringifiedFields(service);
-
+        console.log(parsedService)
         return NextResponse.json({
             Success: true,
             data: parsedService,
