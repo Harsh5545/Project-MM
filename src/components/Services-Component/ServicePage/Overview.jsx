@@ -10,8 +10,8 @@ const dm_Sans = Cormorant_Garamond({
     weight: ["400"],
 });
 
-const Overview = (props) => {
-    const { overview } = props
+const Overview = (data) => {
+   
     return (
         <div className="flex  bg-slate-50 rounded-2xl flex-col py-6 md:py-16 w-full">
             {/* Main Content */}
@@ -25,8 +25,8 @@ const Overview = (props) => {
                         <Image
                             width={400}
                             height={500}
-                            alt={`${overview?.overviewDescription.slice(0, 3)}`}
-                            src={overview.overviewImage}
+                            // alt={`${data?.overviewDescription.slice(0, 3)}`}
+                            src={data.overviewImage}
                             className="shadow-2xl h-auto lg:h-[60vh] rounded-2xl  object-cover p-0 lg:p-0.5 shadow-[#d1d9df]"
                             style={{
                                 boxShadow:
@@ -51,11 +51,11 @@ const Overview = (props) => {
 
                     {/* Description */}
                     <p className="text-gray-800 dark:text-white p-2 text-center">
-                        {overview.overviewDescription}
+                        {data.overviewDescription}
                     </p>
 
                     <div className="flex flex-col md:flex-row gap-8 justify-between items-stretch p-4 md:p-6">
-                        {overview?.courseHeadings?.map((option, index) => (
+                        {data?.courseHeadings?.map((option, index) => (
                             <div key={index} className="flex gap-8">
                                 <div className=" flex flex-col items-center gap-4 bg-gray-50 dark:bg-[#1A1A3B] p-6 rounded-lg shadow-lg">
                                     {/* {index == 0 && <UsersRound size={40} color="#eabf91" />}
@@ -73,7 +73,7 @@ const Overview = (props) => {
                                     </p>
                                 </div>
                                 <div
-                                    className={`hidden md:block ${index == overview?.courseHeadings.length - 1 ? "invisible" : "visible"
+                                    className={`hidden md:block ${index == data?.courseHeadings.length - 1 ? "invisible" : "visible"
                                         }`}
                                     style={{
                                         height: "auto",
