@@ -1,5 +1,5 @@
 "use client";
-
+import React from "react";
 import { Cormorant_Garamond, DM_Sans } from "next/font/google";
 import { motion } from "framer-motion";
 import ShadcnButton from "@/components/Atom/button/ShadcnButton";
@@ -11,6 +11,7 @@ import ProgramHighlights from "./ProgramHighlight";
 import ProgramDetails from "./ProgramDetails";
 import Testimonials from "./Testimonial";
 import ServicesHero from "./ServicesHero";
+import icons from "@/hooks/icons";
 
 const dm_Sans = DM_Sans({
   subsets: ["latin"],
@@ -37,8 +38,7 @@ const ServicePage = ({ data }) => {
   if (!data) {
     return <div>Loading...</div>;
   }
-  const icons = [FaCheckCircle, FaStar, FaHeart];
-
+  
   return (
     <div className="flex h-full dark:bg-[rgb(0,0,31)] bg-[#FFFFFF] items-center pb-4  justify-center w-full flex-col  ">
 
@@ -77,8 +77,8 @@ const ServicePage = ({ data }) => {
                     className="flex items-center gap-4 p-4 bg-white dark:bg-gray-800 rounded-lg shadow-md"
                   >
                     <div className="flex justify-center items-center w-7 h-7 bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] rounded-full shadow-lg">
-
-                      {point?.icon}
+                    {icons[point.icon] ? React.cloneElement(icons[point.icon], { size: 25, color:"#ffffff" }) : null}
+                   
                     </div>
                     <div className="flex flex-col">
                       <span className="text-lg font-normal text-gray-900 dark:text-white">
