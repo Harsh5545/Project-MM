@@ -81,7 +81,37 @@ const ServicesTable = () => {
     </div>
   )
 
-  const totalPages = Math.ceil(totalCount / pageSize) // Calculate total pages based on totalCount
+  const totalPages = Math.ceil(totalCount / pageSize);
+
+
+  const handleDelete = async (id) => {
+    try {
+      const response = await fetch('/api/services/delete', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id }),
+      })
+      const result = await response.json()
+      if (result.Success) {
+        toast({
+          title: "Success",
+          description: result?.Message,
+        })
+        fetchServices()
+      } else {
+        throw new Error(result?.Message || 'Failed to delete category')
+      }
+    } catch (error) {
+      console.error('Error:', error)
+      toast({
+        title: "Error",
+        description: error instanceof Error ? error.message : "Failed to delete category. Please try again.",
+        variant: "destructive",
+      })
+    }
+  }
 
   return (
     <div className="space-y-6">
@@ -146,7 +176,7 @@ const ServicesTable = () => {
                       <Button variant="outline" onClick={() => console.log('Edit', index)}>
                         Edit
                       </Button>
-                      <Button variant="destructive" onClick={() => console.log('Delete', index)}>
+                      <Button variant="destructive" onClick={() => handleDelete(service.id)}>
                         Delete
                       </Button>
                     </div>
