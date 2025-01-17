@@ -2,8 +2,7 @@ import React from 'react'
 
 
 export const metadata = {
-  title: 'Events',
-  description: 'Events Page',
+  title: 'Manage Events',
 }
 
 

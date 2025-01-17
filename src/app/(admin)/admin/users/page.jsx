@@ -3,8 +3,7 @@ import React from 'react'
 
 
 export const metadata = {
-  title: 'Users',
-  description: 'Users page',
+  title: 'Manage Users',
 }
 
 const page = () => {

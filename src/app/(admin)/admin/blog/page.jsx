@@ -2,8 +2,7 @@ import BlogTable from '@/components/Admin-Components/Blog-Admin-Component/BlogTa
 import React from 'react'
 
 export const metadata = {
-  title: 'Blog',
-  description: 'Blog page'
+  title: 'Manage Blog',
 }
 
 const page = () => {
