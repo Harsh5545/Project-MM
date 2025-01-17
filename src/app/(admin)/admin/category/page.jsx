@@ -4,7 +4,7 @@ import React from 'react';
 
 
 export const metadata = {
-  title: 'Category | Modern Mannerisim',
+  title: 'Manage Category',
   description: 'Category page',
 }
 
