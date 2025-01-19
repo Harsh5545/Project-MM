@@ -36,9 +36,9 @@ const ProgramDetails = ({data}) => {
 
   return (
     <section className="py-8 px-4 md:px-8 lg:px-16 bg-gradient-to-b from-gray-100 to-white dark:from-gray-800 dark:to-gray-900 rounded-lg shadow-lg w-full">
-      <h2 className="text-3xl md:text-4xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] mb-8">
+      <p className="text-3xl md:text-4xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d]">
         Program Details
-      </h2>
+      </p>
 
       {/* Vertical Layout for PC View */}
       <div className="hidden md:flex flex-col gap-8">
@@ -51,9 +51,9 @@ const ProgramDetails = ({data}) => {
             <div className="shrink-0">{icons[detail]}</div>
             {/* Detail Section */}
             <div>
-              <h3 className="text-lg font-semibold capitalize text-gray-900 dark:text-white">
+              <span className="text-lg font-semibold capitalize text-gray-900 dark:text-white">
                 {detail}
-              </h3>
+              </span>
               <div className="mt-2">
                 {Array.isArray(data[detail]) ? (
                   <ul className="space-y-2">
@@ -102,9 +102,9 @@ const ProgramDetails = ({data}) => {
                       key={idx}
                       className="mb-4 bg-gray-100 dark:bg-gray-700 p-2 rounded-lg"
                     >
-                      <h3 className="text-md font-semibold text-gray-900 dark:text-white">
+                      <span className="text-md font-semibold text-gray-900 dark:text-white">
                         {item.heading}
-                      </h3>
+                      </span>
                       <p className="text-gray-700 dark:text-gray-300">
                         {item.subheading}
                       </p>
