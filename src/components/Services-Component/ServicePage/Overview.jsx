@@ -25,7 +25,7 @@ const Overview = ({data}) => {
                         <Image
                             width={400}
                             height={500}
-                            // alt={`${data?.overviewDescription.slice(0, 3)}`}
+                            alt={`${data?.overviewDescription.slice(0, 3)}`}
                             src={data?.overviewImage}
                             className="shadow-2xl h-auto lg:h-[60vh] rounded-2xl  object-cover p-0 lg:p-0.5 shadow-[#d1d9df]"
                             style={{
