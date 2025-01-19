@@ -42,7 +42,7 @@ function HeaderDefault() {
               src="/assets/MM.png"
               width={300}
               height={300}
-              className="md:max-w-[12rem] max-w-[6rem]"
+              className="md:max-w-[12rem] max-w-[7rem]"
               alt="ModernMannerism logo"
               priority
             />
@@ -80,7 +80,7 @@ function HeaderDefault() {
         >
           <ShadcnButton 
             className={`${dm_Sans.className} tracking-wide rounded-full bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] text-white 
-              p-2 px-4 sm:px-6 sm:py-3 md:px-8 md:py-4 lg:px-8 lg:py-2 text-sm sm:text-base md:text-base lg:text-base shadow-lg`}
+              p-2 px-4 sm:px-6 sm:py-3 md:px-8 md:py-4 lg:px-8 lg:py-2 mb-8 md:mb-auto lg:mb-auto text-sm sm:text-base md:text-base lg:text-base shadow-lg`}
             onClick={() => {
               router.push("/contact-us");
               toggleMobileMenu();
