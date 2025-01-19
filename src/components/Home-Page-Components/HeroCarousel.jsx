@@ -89,11 +89,11 @@ const HeroCarousel = () => {
 
   const styles = {
     container: `md:h-screen w-full bg-cover z-0 relative`,
-    slide: `md:h-screen  h-[65vh] w-full relative`,
-    image: `object-cover  w-full md:h-full h-[65vh]`,
+    slide: `md:h-screen h-[65vh] w-full relative`,
+    image: `object-cover w-full h-full`, // Ensure the image covers the container
     overlay: `absolute inset-0 dark:bg-[#060507] bg-[#3a4e5d] dark:bg-opacity-60 bg-opacity-50`,
     text: `md:text-4xl ${cormorant.className} dark:text-white text-white font-bold text-2xl text-black lato-font`,
-    button: `px-8 ${dm_Sans.className} py-5 px-8 tracking-wider bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] text-md lg:text-xl   text-white rounded-full mt-4 sm:mt-10`,
+    button: `px-8 ${dm_Sans.className} py-5 px-8 tracking-wider bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] text-md lg:text-xl text-white rounded-full mt-4 sm:mt-10`,
   };
 
   return (
@@ -121,23 +121,28 @@ const HeroCarousel = () => {
       </Head>
       <div className={styles.container}>
         <style jsx>{`
-          @media (max-width: 767px) {
-            .swiper-button-next,
-            .swiper-button-prev {
-              display: none !important;
-            }
-          }
-          .swiper-button-next,
-          .swiper-button-prev {
-            color: #ff0000; /* Customize this color as needed */
-          }
-          .swiper-pagination-bullet {
-            background-color: #c70ba8; /* Customize this color as needed */
-          }
-          .swiper-pagination-bullet-active {
-            background-color: #ff0000 !important; /* Customize active dot color */
-          }
-        `}</style>
+      @media (max-width: 767px) {
+        .swiper-button-next,
+        .swiper-button-prev {
+          display: none !important;
+        }
+      }
+      .swiper-button-next,
+      .swiper-button-prev {
+        color: #ff0000; /* Customize this color as needed */
+      }
+      .swiper-pagination-bullet {
+        background-color: #c70ba8; /* Customize this color as needed */
+      }
+      .swiper-pagination-bullet-active {
+        background-color: #ff0000 !important; /* Customize active dot color */
+      }
+      @media (max-width: 480px) {
+        .${styles.slide} {
+          height: 50vh; /* Adjust for smaller devices */
+        }
+      }
+    `}</style>
         <Swiper
           onSlideChange={handleSlideChange}
           keyboard={{
@@ -147,10 +152,10 @@ const HeroCarousel = () => {
             clickable: true,
           }}
           autoplay={{
-            delay: 60000,
+            delay: 4000,
             disableOnInteraction: false,
           }}
-          speed={1000}
+          speed={800}
           loop={true}
           navigation={false}
           modules={[Autoplay, Keyboard, Pagination, Navigation]}
@@ -163,8 +168,10 @@ const HeroCarousel = () => {
                 <Image
                   src={slide.image}
                   alt={slide.text}
+                    layout="fill" // Ensures the image fills the parent
+                     // Ensures the image covers the space without distortion
                   className={styles.image}
-                  fill
+                  priority // Optimizes loading for carousel images
                 />
                 <div className={styles.overlay}></div>
                 <div className="absolute text-white flex gap-5 md:gap-9 flex-col text-center items-center justify-center w-full h-full z-10 p-8">
@@ -173,7 +180,9 @@ const HeroCarousel = () => {
                     <p>{slide.description}</p>
                     <p>{slide.description2}</p>
                   </div>
-                  <Button onClick={scrollToTestimonials} className={styles.button}>{slide.button}</Button>
+                  <Button onClick={scrollToTestimonials} className={styles.button}>
+                    {slide.button}
+                  </Button>
                 </div>
               </div>
             </SwiperSlide>
