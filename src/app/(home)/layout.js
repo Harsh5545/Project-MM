@@ -5,9 +5,7 @@ import Footer from "@/components/footer/Footer";
 import Header from "@/components/Navbar/Navbar";
 import { Toaster } from "@/components/ui/toaster";
 import { SessionProvider } from "next-auth/react";
-import Script from "next/script";
-
-
+import { ThemeProvider } from "@/components/Theme/ThemeProvider"; // Import the ThemeProvider
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,23 +24,22 @@ export const metadata = {
   },
 };
 
-
-
-
 export default async function RootLayout({ children }) {
   const session = await auth();
   return (
     <SessionProvider session={session}>
       <html lang="en">
-        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`} >
-          <div className="flex flex-col">
-            <Header />
-            <div className="flex-grow">
-              {children}
-              <Toaster />
+        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+          
+            <div className="flex flex-col min-h-screen">
+              <Header />
+              <div className="flex-grow">
+                {children}
+                <Toaster />
+              </div>
+              <Footer />
             </div>
-            <Footer />
-          </div>
+        
         </body>
       </html>
     </SessionProvider>

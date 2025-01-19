@@ -88,7 +88,7 @@ function ServicesComponent({ data }) {
                   >
                     <div className="relative w-full h-60">
                       <Image
-                        alt={course.title}
+                        alt={course.heading}
                         src={course.image}
                         fill
                         className="object-cover"
