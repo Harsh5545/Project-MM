@@ -3,10 +3,10 @@
 import { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import Image from "next/image";
-import { useRouter } from "next/navigation"; 
+import { useRouter } from "next/navigation";
 import AllLinks from "./links/AllLinks";
 import { Lato } from "next/font/google";
-import ShadcnButton from "../Atom/button/ShadcnButton";
+import { AtSign, Mail, Mails, PhoneCall } from "lucide-react";
 
 const dm_Sans = Lato({
   subsets: ["latin"],
@@ -36,6 +36,7 @@ function HeaderDefault() {
   return (
     <div className="flex z-[999] absolute w-full pb-5 justify-center items-center">
       <div className="flex-col bg-black text-white bg-opacity-50 md:flex-row flex justify-between px-2 md:px-10 rounded-md w-[90%] items-center backdrop-filter backdrop-blur-md py-1 mt-4">
+        {/* Logo */}
         <div className="flex justify-between items-center w-full md:w-0">
           <span className="text-xl">
             <Image
@@ -47,6 +48,7 @@ function HeaderDefault() {
               priority
             />
           </span>
+          {/* Mobile menu toggle */}
           <div className="md:hidden">
             <label className="hamburger">
               <input
@@ -65,29 +67,37 @@ function HeaderDefault() {
           </div>
         </div>
 
+        {/* Navigation Links */}
         <div className="flex flex-col items-start">
           <div
             className={`flex flex-col text-white font-poppins md:flex-row items-center gap-8 md:gap-10 h-[20rem] md:h-0 justify-center ${isMobileMenuOpen ? "block" : "hidden"
               } md:flex`}
           >
-            <AllLinks onClose={()=>toggleMobileMenu()}/>
+            <AllLinks onClose={() => toggleMobileMenu()} />
           </div>
         </div>
 
+        {/* Contact Icons */}
         <div
           className={`${isMobileMenuOpen ? "block" : "hidden"
-            } md:flex gap-2 flex-col-reverse md:flex-row items-center justify-center`}
+            } md:flex gap-6 flex-row items-center justify-center`}
         >
-          <ShadcnButton 
-            className={`${dm_Sans.className} tracking-wide rounded-full bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] text-white 
-              p-2 px-4 sm:px-6 sm:py-3 md:px-8 md:py-4 lg:px-8 lg:py-2 mb-8 md:mb-auto lg:mb-auto text-sm sm:text-base md:text-base lg:text-base shadow-lg`}
-            onClick={() => {
-              router.push("/contact-us");
-              toggleMobileMenu();
-            }}
-          >
-            CONTACT US
-          </ShadcnButton>  
+          {/* Call Icon */}
+          <PhoneCall
+            className="w-6 h-6 cursor-pointer  text-[#c3965d] hover:text-[#eabf91]"
+            onClick={() => router.push("/contact-us")}
+          />
+
+          {/* Email Icon */}
+          <div className="relative group">
+            <AtSign
+              className="w-6 h-6 cursor-pointer text-[#c3965d] hover:text-[#eabf91]"
+              onClick={() => window.open("mailto:modernmannerism@gmail.com")}
+            />
+            <span className="absolute bottom-[-2.5rem] left-0 w-auto px-2 py-1 text-xs text-white bg-black rounded opacity-0 group-hover:opacity-100">
+              modernmannerism@gmail.com
+            </span>
+          </div>
         </div>
       </div>
     </div>

@@ -56,7 +56,7 @@ const Overview = ({data}) => {
 
                     <div className="flex flex-col md:flex-row gap-8 justify-between items-stretch p-4 md:p-6">
                         {data?.courseHeadings?.map((option, index) => (
-                            <div key={index} className="flex gap-8">
+                            <div key={index} className="flex justify-center items-center gap-8">
                                 <div className=" flex flex-col items-center gap-4 bg-gray-50 dark:bg-[#1A1A3B] p-6 rounded-lg shadow-lg">
                                     {/* {index == 0 && <UsersRound size={40} color="#eabf91" />}
                                     {index == 1 && <Handshake    size={40} color="#eabf91" />} */}

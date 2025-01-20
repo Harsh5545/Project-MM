@@ -40,7 +40,7 @@ const ProgramHighlights = ({ data }) => {
               key={index}
               initial={{ opacity: 0, x: 100 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.9 }}
+              transition={{ duration: 0.5 }}
               className="p-2 text-center"
             >
               <Card

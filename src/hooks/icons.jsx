@@ -87,8 +87,28 @@ import {
     Utensils,
     UtensilsCrossed,
     Podcast,
+    MessageCircleIcon,
+    LocateIcon,
+    ChartNoAxesCombined,
+    User,
+    Group,
+    Mountain,
+    BookCheck,
+    BookCopy,
+    LocateOffIcon,
+    Rotate3D,
+    PersonStandingIcon,
+    HandMetalIcon,
+    Smartphone,
+    SmartphoneNfc,
+    UserRoundPen,
+    Signature,
+    Glasses,
+    MapPin,
   } from 'lucide-react';
-import { FaFacebook } from 'react-icons/fa';
+import { BsBodyText } from 'react-icons/bs';
+import { FaFacebook, FaFacebookSquare, FaInstagram, FaInstagramSquare } from 'react-icons/fa';
+import { MdGroupWork } from 'react-icons/md';
   
   // Declare the icons object
   const icons = {
@@ -179,7 +199,30 @@ import { FaFacebook } from 'react-icons/fa';
     podcast:<Podcast/>,
     Wine:<Wine/>,
     Utensils:<Utensils/>,
-    utensilsCrossed:<UtensilsCrossed/>
+    utensilsCrossed:<UtensilsCrossed/>,
+    instagram:<FaInstagram/>,
+    instagram2:<FaInstagramSquare/>,
+    facebook:<FaFacebookSquare/>,
+    MessageCircleIcon: <MessageCircleIcon  />,
+    LocateIcon: <LocateIcon  />,
+    ChartNoAxesCombined: <ChartNoAxesCombined  />,
+    User: <User  />,
+    Group: <Group  />,
+    Mountain: <Mountain  />,
+    BookCheck: <BookCheck  />,
+    BookCopy: <BookCopy  />,
+    LocateOffIcon: <LocateOffIcon  />,
+    Rotate3D: <Rotate3D  />,
+    BsBodyText: <BsBodyText  />,
+    PersonStandingIcon: <PersonStandingIcon  />,
+    MdGroupWork: <MdGroupWork  />,
+    HandMetalIcon: <HandMetalIcon  />,
+    Smartphone: <Smartphone  />,
+    SmartphoneNfc: <SmartphoneNfc  />,
+    UserRoundPen: <UserRoundPen  />,
+    Signature: <Signature  />,
+    Glasses: <Glasses  />,
+    MapPin: <MapPin  />,
 
 
 

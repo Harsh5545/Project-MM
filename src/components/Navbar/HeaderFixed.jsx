@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 import AllLinks from "./links/AllLinks";
 import { Lato } from "next/font/google";
 import ShadcnButton from "../Atom/button/ShadcnButton";
+import { AtSign, PhoneCall } from "lucide-react";
 const dm_Sans = Lato({
     subsets: ["latin"],
     weight: ["400"],
@@ -102,7 +103,7 @@ function HeaderFixed() {
             <div className={`${isMobile ? (isMobileMenuOpen ? "block" : "hidden") : "flex items-center gap-2"
                 }`}>
                
-                <ShadcnButton
+                {/* <ShadcnButton
                     className={`${dm_Sans.className} tracking-wide rounded-full bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] text-white 
               p-2 px-4 sm:px-6 sm:py-2 md:px-8 md:py-2 lg:px-8 lg:py-2  text-sm sm:text-base md:text-base lg:text-base shadow-lg`}
                     onClick={() => {
@@ -111,7 +112,22 @@ function HeaderFixed() {
                     }}
                 >
                     CONTACT US
-                </ShadcnButton>
+                </ShadcnButton> */}
+                      <PhoneCall
+            className="w-6 h-6 cursor-pointer  text-[#c3965d] hover:text-[#eabf91]"
+            onClick={() => router.push("/contact-us")}
+          />
+
+          {/* Email Icon */}
+          <div className="relative group">
+            <AtSign
+              className="w-6 h-6 cursor-pointer text-[#c3965d] hover:text-[#eabf91]"
+              onClick={() => window.open("mailto:modernmannerism@gmail.com")}
+            />
+            <span className="absolute bottom-[-2.5rem] left-0 w-auto px-2 py-1 text-xs text-white bg-black rounded opacity-0 group-hover:opacity-100">
+              modernmannerism@gmail.com
+            </span>
+          </div>
             </div>
         </motion.div>
     );
