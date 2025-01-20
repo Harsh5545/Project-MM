@@ -73,7 +73,7 @@ const Testimonials = ({ data }) => {
                 <FaQuoteLeft className="text-gray-400 dark:text-gray-500" />
               </CardHeader>
               <CardContent>
-                <p className="italic text-gray-700 dark:text-gray-300">{testimonial.comment}</p>
+                <p className="italic text-gray-700 text-center dark:text-gray-300">{testimonial.comment}</p>
                 <footer className="text-right mt-4 text-gray-900 dark:text-white">- {testimonial.name}</footer>
               </CardContent>
             </Card>

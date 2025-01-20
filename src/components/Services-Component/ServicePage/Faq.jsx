@@ -12,12 +12,12 @@ const Faq = ({data}) => {
       <div className="relative  flex flex-col md:flex-row gap-8 w-full">
         {/* Left Side */}
       <div className="md:w-1/2">
-        <span className="text-3xl md:text-4xl font-bold text-center md:text-left bg-clip-text text-white mb-6">
+        <span className="text-3xl md:text-4xl font-bold text-center md:text-left bg-clip-text text-white mb-8">
           Why Choose Modern Mannerism?
         </span>
         <Card className="dark:bg-gray-800 lg:bg-opacity-80 bg-opacity-40 bg-white md:w-[75%] w-full shadow-md">
           <CardHeader>
-            <CardTitle className="text-gray-700 dark:text-gray-300 text-xl font-bold mb-4">
+            <CardTitle className="text-gray-700 dark:text-gray-300 text-xl font-bold mb-6">
               Benefits of Modern Mannerism
             </CardTitle>
           </CardHeader>
@@ -30,7 +30,7 @@ const Faq = ({data}) => {
 
       {/* Right Side */}
       <div className=" w-full md:w-[60%]">
-        <span className="text-3xl md:text-4xl font-bold text-center md:text-left mb-6 bg-clip-text text-transparent bg-white">
+        <span className="text-3xl md:text-4xl font-bold text-center md:text-left mb-8 bg-clip-text text-transparent bg-white">
           Frequently Asked Questions
         </span>
         <Accordion type="single" collapsible className="space-y-4">
