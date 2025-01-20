@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 import AllLinks from "./links/AllLinks";
 import { Lato } from "next/font/google";
 import ShadcnButton from "../Atom/button/ShadcnButton";
+import { AtSign, PhoneCall } from "lucide-react";
 const dm_Sans = Lato({
     subsets: ["latin"],
     weight: ["400"],
@@ -119,8 +120,8 @@ function HeaderFixed() {
 
           {/* Email Icon */}
           <div className="relative group">
-            <Mails
-              className="w-8 h-8 cursor-pointer text-[#c3965d] hover:text-[#eabf91]"
+            <AtSign
+              className="w-6 h-6 cursor-pointer text-[#c3965d] hover:text-[#eabf91]"
               onClick={() => window.open("mailto:modernmannerism@gmail.com")}
             />
             <span className="absolute bottom-[-2.5rem] left-0 w-auto px-2 py-1 text-xs text-white bg-black rounded opacity-0 group-hover:opacity-100">
