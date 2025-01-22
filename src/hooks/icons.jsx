@@ -1,3 +1,4 @@
+import { IconBadge4k, IconLocation, IconMail, IconShirt } from '@tabler/icons-react';
 import {
     BadgeHelp,
     CircleHelp,
@@ -105,10 +106,14 @@ import {
     Signature,
     Glasses,
     MapPin,
+    MagnetIcon,
+    Shirt,
+    ShirtIcon,
   } from 'lucide-react';
+import { AiTwotoneHdd } from 'react-icons/ai';
 import { BsBodyText } from 'react-icons/bs';
 import { FaFacebook, FaFacebookSquare, FaInstagram, FaInstagramSquare } from 'react-icons/fa';
-import { MdGroupWork } from 'react-icons/md';
+import { MdDining, MdGroupWork } from 'react-icons/md';
   
   // Declare the icons object
   const icons = {
@@ -223,6 +228,13 @@ import { MdGroupWork } from 'react-icons/md';
     Signature: <Signature  />,
     Glasses: <Glasses  />,
     MapPin: <MapPin  />,
+    MdDining:<MdDining/>,
+    IconLocation:<IconLocation/>,
+    AiTwotoneHdd:<AiTwotoneHdd/>,
+    IconBadge4k:<IconBadge4k />,
+    Shirt:<Shirt/>,
+    IconShirt:<IconShirt/>,
+    IconMail:<IconMail/>
 
 
 
