@@ -1,8 +1,7 @@
-"use client"
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-
+"use client";
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import icons from "@/hooks/icons";
 
 const ProgramHighlights = ({ data }) => {
@@ -15,10 +14,10 @@ const ProgramHighlights = ({ data }) => {
     };
 
     handleResize();
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
@@ -31,9 +30,9 @@ const ProgramHighlights = ({ data }) => {
         <div
           className={`grid gap-4 ${
             isMobile
-              ? 'grid-cols-1 sm:grid-cols-2'
-              : 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'
-          }`}
+              ? "grid-cols-1 sm:grid-cols-2"
+              : "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+          } items-stretch`}
         >
           {data?.programHighlights?.map((highlight, index) => (
             <motion.div
@@ -41,13 +40,14 @@ const ProgramHighlights = ({ data }) => {
               initial={{ opacity: 0, x: 100 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
-              className="p-2 text-center"
+              className="p-2 text-center h-full"
             >
               <Card
-                className="h-auto transition-all duration-100 hover:bg-gradient-to-r hover:from-[#c3965d] hover:via-[#eabf91] hover:to-[#c3965d] hover:text-white group"
+                className="h-full flex flex-col justify-between transition-all duration-100 hover:bg-gradient-to-r hover:from-[#c3965d] hover:via-[#eabf91] hover:to-[#c3965d] hover:text-white group"
                 onMouseEnter={() => setIsHovered(index)}
                 onMouseLeave={() => setIsHovered(false)}
               >
+                {/* Icon Section */}
                 <div className="flex justify-center pt-12 items-center pb-4 px-4">
                   {icons[highlight.icon] ? (
                     <div>
@@ -58,13 +58,17 @@ const ProgramHighlights = ({ data }) => {
                     </div>
                   ) : null}
                 </div>
-                <CardHeader className="text-center py-2 space-y-1 px-4">
-                  <CardTitle className="text-base lg:text-lg font-bold transition-all duration-100 group-hover:text-white">
+
+                {/* Header Section */}
+                <CardHeader className="text-center py-2 space-y-1 px-4 flex-grow">
+                  <CardTitle className="text-base lg:text-lg font-bold transition-all duration-100 group-hover:text-white line-clamp-2">
                     {highlight?.heading}
                   </CardTitle>
                 </CardHeader>
+
+                {/* Content Section */}
                 <CardContent className="text-center pb-6 px-4">
-                  <p className="transition-all text-sm duration-100 group-hover:text-white">
+                  <p className="transition-all text-sm duration-100 group-hover:text-white line-clamp-3">
                     {highlight.description}
                   </p>
                 </CardContent>
