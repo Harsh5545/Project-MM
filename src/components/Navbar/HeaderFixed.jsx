@@ -14,6 +14,7 @@ import AllLinks from "./links/AllLinks";
 import { Lato } from "next/font/google";
 import ShadcnButton from "../Atom/button/ShadcnButton";
 import { AtSign, PhoneCall } from "lucide-react";
+import { IconMail } from "@tabler/icons-react";
 const dm_Sans = Lato({
     subsets: ["latin"],
     weight: ["400"],
@@ -131,14 +132,14 @@ function HeaderFixed() {
                 >
                     CONTACT US
                 </ShadcnButton> */}
-                       <div className="flex gap-4">
+                       <div className="flex gap-6">
   <PhoneCall
         className="w-6 h-6 cursor-pointer text-[#c3965d] hover:text-[#eabf91]"
         onClick={handlePhoneClick}
       />
           {/* Email Icon */}
           <div className="relative group">
-            <AtSign
+            <IconMail
               className="w-6 h-6 cursor-pointer text-[#c3965d] hover:text-[#eabf91]"
               onClick={() => window.open("mailto:modernmannerism@gmail.com")}
             />

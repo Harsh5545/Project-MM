@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import AllLinks from "./links/AllLinks";
 import { Lato } from "next/font/google";
 import { AtSign, Mail, Mails, PhoneCall } from "lucide-react";
+import { IconMail } from "@tabler/icons-react";
 
 const dm_Sans = Lato({
   subsets: ["latin"],
@@ -101,14 +102,14 @@ function HeaderDefault() {
             } md:flex gap-6 flex-row items-center justify-center`}
         >
           {/* Call Icon */}
-          <div className="flex gap-4">
+          <div className="flex gap-6">
   <PhoneCall
         className="w-6 h-6 cursor-pointer text-[#c3965d] hover:text-[#eabf91]"
         onClick={handlePhoneClick}
       />
           {/* Email Icon */}
           <div className="relative group">
-            <AtSign
+            <IconMail
               className="w-6 h-6 cursor-pointer text-[#c3965d] hover:text-[#eabf91]"
               onClick={() => window.open("mailto:modernmannerism@gmail.com")}
             />
