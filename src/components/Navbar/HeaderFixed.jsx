@@ -132,7 +132,7 @@ function HeaderFixed() {
                 >
                     CONTACT US
                 </ShadcnButton> */}
-                       <div className="flex gap-8 lg:gap-16">
+                       <div className="flex items-center justify-center gap-8 lg:gap-16">
   <PhoneCall
         className="w-6 h-6 cursor-pointer text-[#c3965d] hover:text-[#eabf91]"
         onClick={handlePhoneClick}
