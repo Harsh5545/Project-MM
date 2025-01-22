@@ -10,7 +10,7 @@ import { Keyboard, Pagination, Navigation, Autoplay } from "swiper/modules";
 import { Lato } from "next/font/google";
 import { Cormorant_Garamond } from "next/font/google";
 import Head from "next/head";
-import { Button } from "@/components/ui/button"; // Assuming ShadCN button is correctly imported
+import { Button } from "@/components/ui/button";
 
 const dm_Sans = Lato({
   subsets: ["latin"],
@@ -168,10 +168,9 @@ const HeroCarousel = () => {
                 <Image
                   src={slide.image}
                   alt={slide.text}
-                    layout="fill" // Ensures the image fills the parent
-                     // Ensures the image covers the space without distortion
+                  layout="fill" 
                   className={styles.image}
-                  priority // Optimizes loading for carousel images
+                  priority 
                 />
                 <div className={styles.overlay}></div>
                 <div className="absolute text-white flex gap-5 md:gap-9 flex-col text-center items-center justify-center w-full h-full z-10 p-8">
