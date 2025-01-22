@@ -1,7 +1,8 @@
+"use client"
 import React from "react";
 import Image from "next/image";
-import { FaStar } from "react-icons/fa"; // Importing an icon from react-icons
 import { MdOutlineArrowForwardIos } from "react-icons/md"; // Importing another icon
+import { useRouter } from "next/navigation"; // Importing Next.js router
 import styles from "./styles.module.css"; // Import the CSS module
 import { Cormorant_Garamond } from "next/font/google";
 
@@ -11,6 +12,8 @@ const dm_Sans = Cormorant_Garamond({
 });
 
 const CardComponent = () => {
+  const router = useRouter();
+
   const courses = [
     {
       image: "/assets/Personality Development.jpeg",
@@ -34,6 +37,18 @@ const CardComponent = () => {
       isBestSelling: false,
     },
   ];
+
+  // Function to convert a title to a slug
+  const generateSlug = (title) =>
+    title
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-|-$/g, ""); // Replace non-alphanumeric characters with dashes and trim trailing dashes
+
+  const handleReadMore = (title) => {
+    const slug = generateSlug(title);
+    router.push(`/services/${slug}`); // Navigate to the generated slug URL
+  };
 
   return (
     <div className="w-full dark:bg-[#00001F] flex flex-col justify-center items-center py-10">
@@ -75,7 +90,10 @@ const CardComponent = () => {
                   {course.description}
                 </p>
               </div>
-              <button className="flex items-center justify-center tracking-wider bg-black text-[#DEC29F] font-bold p-3 px-6 rounded-xl transition-colors duration-300 ease-in-out">
+              <button
+                onClick={() => handleReadMore(course.title)}
+                className="flex items-center justify-center tracking-wider bg-black text-[#DEC29F] font-bold p-3 px-6 rounded-xl transition-colors duration-300 ease-in-out"
+              >
                 Read more <MdOutlineArrowForwardIos className="ml-2" />
               </button>
             </div>
@@ -85,5 +103,5 @@ const CardComponent = () => {
     </div>
   );
 };
- 
+
 export default CardComponent;
