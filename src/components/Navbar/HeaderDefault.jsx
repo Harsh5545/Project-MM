@@ -102,7 +102,7 @@ function HeaderDefault() {
             } md:flex gap-6 flex-row items-center justify-center`}
         >
           {/* Call Icon */}
-          <div className="flex gap-8 lg:gap-16">
+          <div className="flex gap-8 items-center justify-center lg:gap-16">
   <PhoneCall
         className="w-6 h-6 cursor-pointer text-[#c3965d] hover:text-[#eabf91]"
         onClick={handlePhoneClick}
