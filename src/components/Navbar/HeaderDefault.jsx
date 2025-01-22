@@ -102,7 +102,7 @@ function HeaderDefault() {
             } md:flex gap-6 flex-row items-center justify-center`}
         >
           {/* Call Icon */}
-          <div className="flex gap-6">
+          <div className="flex gap-8 lg:gap-16">
   <PhoneCall
         className="w-6 h-6 cursor-pointer text-[#c3965d] hover:text-[#eabf91]"
         onClick={handlePhoneClick}
@@ -110,7 +110,7 @@ function HeaderDefault() {
           {/* Email Icon */}
           <div className="relative group">
             <IconMail
-              className="w-6 h-6 cursor-pointer text-[#c3965d] hover:text-[#eabf91]"
+              className="w-8 h-8 cursor-pointer text-[#c3965d] hover:text-[#eabf91]"
               onClick={() => window.open("mailto:modernmannerism@gmail.com")}
             />
             <span className="absolute bottom-[-2.5rem] left-[-5rem] w-auto px-2 py-1 text-xs text-white bg-black rounded opacity-0 group-hover:opacity-100">
