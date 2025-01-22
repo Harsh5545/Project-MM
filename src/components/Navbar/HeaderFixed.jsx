@@ -53,6 +53,24 @@ function HeaderFixed() {
     };
     const router = useRouter()
 
+    const handlePhoneClick = () => {
+        const userAgent = navigator.userAgent.toLowerCase()
+    
+        // Check if the device is mobile or tablet
+        const isMobileOrTablet =
+          /iphone|ipad|android|blackberry|iemobile|kindle|opera mini|mobile/i.test(
+            userAgent
+          )
+    
+        if (isMobileOrTablet) {
+          // Open phone dialer
+          window.location.href = "tel:+919867831324"
+        } else {
+          // Redirect to the contact-us page
+          router.push("/contact-us")
+        }
+      }
+    
     return (
         <motion.div
             initial="initial"
@@ -113,11 +131,11 @@ function HeaderFixed() {
                 >
                     CONTACT US
                 </ShadcnButton> */}
-                      <PhoneCall
-            className="w-6 h-6 cursor-pointer  text-[#c3965d] hover:text-[#eabf91]"
-            onClick={() => router.push("/contact-us")}
-          />
-
+                       <div className="flex gap-4">
+  <PhoneCall
+        className="w-6 h-6 cursor-pointer text-[#c3965d] hover:text-[#eabf91]"
+        onClick={handlePhoneClick}
+      />
           {/* Email Icon */}
           <div className="relative group">
             <AtSign
@@ -127,7 +145,7 @@ function HeaderFixed() {
             <span className="absolute bottom-[-2.5rem] left-0 w-auto px-2 py-1 text-xs text-white bg-black rounded opacity-0 group-hover:opacity-100">
               modernmannerism@gmail.com
             </span>
-          </div>
+          </div></div>
             </div>
         </motion.div>
     );
