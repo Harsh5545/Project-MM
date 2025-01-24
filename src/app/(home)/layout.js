@@ -27,24 +27,23 @@ export const metadata = {
   },
 };
 
-
-
-
 export default async function RootLayout({ children }) {
   const session = await auth();
   return (
     <SessionProvider session={session}>
       <html lang="en">
-        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`} >
-          <div className="flex flex-col">
-            <Header />
-            <div className="flex-grow">
-              {children}
-              <Toaster />
+        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+          
+            <div className="flex flex-col min-h-screen">
+              <Header />
+              <div className="flex-grow">
+                {children}
+                <Toaster />
               <NotificationProvider />
+              </div>
+              <Footer />
             </div>
-            <Footer />
-          </div>
+        
         </body>
       </html>
     </SessionProvider>

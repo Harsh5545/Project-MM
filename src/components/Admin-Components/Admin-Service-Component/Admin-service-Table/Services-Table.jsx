@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react'
 import { useToast } from '@/hooks/use-toast'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { Dialog, DialogContent, DialogHeader, DialogFooter, DialogTitle } from '@/components/ui/dialog'
 import {
   Table,
   TableBody,
@@ -12,10 +13,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { Loader2, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, ArrowUpDown } from 'lucide-react'
+import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, ArrowUpDown } from 'lucide-react'
 import { Shimmer } from '@/components/ui/shimmer'
-import AddServiceForm from '../Add-Service/AddServices'
-import Image from 'next/image'
+
 import Link from 'next/link'
 
 const ServicesTable = () => {
@@ -27,8 +27,9 @@ const ServicesTable = () => {
   const [pageIndex, setPageIndex] = useState(0)
   const [pageSize, setPageSize] = useState(10)
   const [searchTerm, setSearchTerm] = useState('')
-  const [showForm, setShowForm] = useState(false)
   const [totalCount, setTotalCount] = useState(0) // To store the total count of records
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false)
+  const [selectedServiceId, setSelectedServiceId] = useState(null)
 
   const fetchServices = async () => {
     setLoading(true)
@@ -68,30 +69,19 @@ const ServicesTable = () => {
     setSortOrder(newSortOrder)
   }
 
-  const TableShimmer = () => (
-    <div className="space-y-4">
-      {[...Array(5)].map((_, i) => (
-        <div key={i} className="flex space-x-4">
-          <Shimmer className="h-12 w-1/4" />
-          <Shimmer className="h-12 w-1/4" />
-          <Shimmer className="h-12 w-1/4" />
-          <Shimmer className="h-12 w-1/4" />
-        </div>
-      ))}
-    </div>
-  )
+  const handleDeleteConfirmation = (id) => {
+    setSelectedServiceId(id)
+    setShowDeleteDialog(true)
+  }
 
-  const totalPages = Math.ceil(totalCount / pageSize);
-
-
-  const handleDelete = async (id) => {
+  const handleDelete = async () => {
     try {
       const response = await fetch('/api/services/delete', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ id }),
+        body: JSON.stringify({ id: selectedServiceId }),
       })
       const result = await response.json()
       if (result.Success) {
@@ -101,17 +91,21 @@ const ServicesTable = () => {
         })
         fetchServices()
       } else {
-        throw new Error(result?.Message || 'Failed to delete category')
+        throw new Error(result?.Message || 'Failed to delete service')
       }
     } catch (error) {
       console.error('Error:', error)
       toast({
         title: "Error",
-        description: error instanceof Error ? error.message : "Failed to delete category. Please try again.",
+        description: error instanceof Error ? error.message : "Failed to delete service. Please try again.",
         variant: "destructive",
       })
+    } finally {
+      setShowDeleteDialog(false)
     }
   }
+
+  const totalPages = Math.ceil(totalCount / pageSize)
 
   return (
     <div className="space-y-6">
@@ -160,14 +154,20 @@ const ServicesTable = () => {
             {loading ? (
               <TableRow>
                 <TableCell colSpan={4}>
-                  <TableShimmer />
+                  <Shimmer className="w-full h-16" />
                 </TableCell>
               </TableRow>
             ) : (
               services.map((service, index) => (
                 <TableRow key={index}>
                   <TableCell>
-                    <img  src={service.image || 'https://ik.imagekit.io/giol62jyf/mypic_VLj2nrRSs.jpg'} width={16} height={16} alt="Service" className="w-16 h-16 object-cover rounded-full" />
+                    <img
+                      src={service.image || 'https://ik.imagekit.io/giol62jyf/mypic_VLj2nrRSs.jpg'}
+                      width={16}
+                      height={16}
+                      alt="Service"
+                      className="w-16 h-16 object-cover rounded-full"
+                    />
                   </TableCell>
                   <TableCell>{service.heading}</TableCell>
                   <TableCell>{service?.category?.category_name}</TableCell>
@@ -176,7 +176,7 @@ const ServicesTable = () => {
                       <Button variant="outline" onClick={() => console.log('Edit', index)}>
                         Edit
                       </Button>
-                      <Button variant="destructive" onClick={() => handleDelete(service.id)}>
+                      <Button variant="destructive" onClick={() => handleDeleteConfirmation(service.id)}>
                         Delete
                       </Button>
                     </div>
@@ -224,6 +224,23 @@ const ServicesTable = () => {
           ))}
         </div>
       </div>
+
+      <Dialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Confirm Delete</DialogTitle>
+          </DialogHeader>
+          <p>Are you sure you want to delete this service? This action cannot be undone.</p>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setShowDeleteDialog(false)}>
+              Cancel
+            </Button>
+            <Button variant="destructive" onClick={handleDelete}>
+              Confirm
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }

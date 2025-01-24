@@ -52,6 +52,7 @@ const Socials = () => {
       <FloatingDock
         mobileClassName="translate-y-20"
         items={links}
+        iconWrapperClassName="bg-gray-50 dark:bg-[#00001F] p-2 rounded-full transition-colors"
       />
     </div>
   );
