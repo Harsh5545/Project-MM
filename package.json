@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 3040",
     "lint": "next lint"
   },
   "dependencies": {
@@ -63,6 +63,7 @@
     "draft-js": "^0.11.7",
     "embla-carousel-react": "^8.5.1",
     "framer-motion": "^11.15.0",
+    "http": "^0.0.1-security",
     "imagekit": "^6.0.0",
     "imagekitio-next": "^1.0.1",
     "input-otp": "^1.4.1",
@@ -81,6 +82,8 @@
     "react-responsive": "^10.0.0",
     "react-table": "^7.8.0",
     "recharts": "^2.15.0",
+    "socket.io": "^4.8.1",
+    "socket.io-client": "^4.8.1",
     "sonner": "^1.7.1",
     "swiper": "^11.1.15",
     "tailwind-merge": "^2.6.0",
@@ -96,5 +99,6 @@
     "postcss": "^8",
     "prisma": "^6.1.0",
     "tailwindcss": "^3.4.1"
-  }
+  },
+  "type": "module"
 }

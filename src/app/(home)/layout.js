@@ -5,7 +5,10 @@ import Footer from "@/components/footer/Footer";
 import Header from "@/components/Navbar/Navbar";
 import { Toaster } from "@/components/ui/toaster";
 import { SessionProvider } from "next-auth/react";
-import { ThemeProvider } from "@/components/Theme/ThemeProvider"; // Import the ThemeProvider
+import Script from "next/script";
+import { NotificationProvider } from "@/components/NotificationProvider";
+
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,6 +39,7 @@ export default async function RootLayout({ children }) {
               <div className="flex-grow">
                 {children}
                 <Toaster />
+              <NotificationProvider />
               </div>
               <Footer />
             </div>
