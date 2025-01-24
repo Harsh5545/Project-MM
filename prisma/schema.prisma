@@ -28,6 +28,7 @@ model User {
   updatedAt     DateTime @updatedAt
   image         String?
   role          Role     @relation(fields: [roleId], references: [id])
+  notifications Notification[]
 
   @@index([roleId], map: "User_roleId_fkey")
 }
@@ -70,4 +71,18 @@ enum CategoryStatus {
   ACTIVE
   INACTIVE
 
+}
+
+model Notification {
+  id        Int      @id @default(autoincrement())
+  title     String
+  message   String
+  userId    Int
+  status    String   @default("unread") // Could be "read" or "unread"
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user      User     @relation(fields: [userId], references: [id]) // Relation to the User model
+
+  @@index([userId], map: "Notification_userId_fkey")
 }

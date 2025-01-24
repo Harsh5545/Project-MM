@@ -6,6 +6,7 @@ import Header from "@/components/Navbar/Navbar";
 import { Toaster } from "@/components/ui/toaster";
 import { SessionProvider } from "next-auth/react";
 import Script from "next/script";
+import { NotificationProvider } from "@/components/NotificationProvider";
 
 
 
@@ -40,6 +41,7 @@ export default async function RootLayout({ children }) {
             <div className="flex-grow">
               {children}
               <Toaster />
+              <NotificationProvider />
             </div>
             <Footer />
           </div>
