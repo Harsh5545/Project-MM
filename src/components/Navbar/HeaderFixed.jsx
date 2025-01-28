@@ -119,7 +119,7 @@ function HeaderFixed() {
                 </div>
             </div>
 
-            <div className={`${isMobile ? (isMobileMenuOpen ? "block" : "hidden") : "flex items-center gap-2"
+            <div className={`${isMobile ? (isMobileMenuOpen ? "block" : "hidden") : "flex items-center pr-0 lg:pr-16 gap-2"
                 }`}>
                
               

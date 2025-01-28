@@ -8,17 +8,29 @@ import Link from "@tiptap/extension-link"
 import TextAlign from "@tiptap/extension-text-align"
 import TextStyle from "@tiptap/extension-text-style"
 import { Color } from "@tiptap/extension-color"
+import Highlight from "@tiptap/extension-highlight"
+import TaskList from "@tiptap/extension-task-list"
+import TaskItem from "@tiptap/extension-task-item"
+import Table from "@tiptap/extension-table"
+import TableRow from "@tiptap/extension-table-row"
+import TableCell from "@tiptap/extension-table-cell"
+import TableHeader from "@tiptap/extension-table-header"
+import YouTube from "@tiptap/extension-youtube"
+import Superscript from "@tiptap/extension-superscript"
+import Subscript from "@tiptap/extension-subscript"
+import FontFamily from "@tiptap/extension-font-family"
 import Toolbar from "./Toolbar"
 
 const CustomImage = Image.extend({
   addAttributes() {
     return {
       ...this.parent?.(),
-      role: {
-        default: "presentation",
+      align: {
+        default: "center",
         renderHTML: (attributes) => {
+          const align = attributes.align || "center"
           return {
-            role: attributes.role,
+            style: `display: block; margin: ${align === "center" ? "0 auto" : align === "left" ? "0 auto 0 0" : "0 0 0 auto"}; max-width: 100%;`,
           }
         },
       },
@@ -30,31 +42,45 @@ const Tiptap = ({ onChange, content }) => {
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
-        bulletList: {
-          keepMarks: true,
-          keepAttributes: false,
-        },
-        orderedList: {
-          keepMarks: true,
-          keepAttributes: false,
+        heading: {
+          levels: [1, 2, 3, 4, 5, 6],
         },
       }),
       Underline,
       CustomImage.configure({
-        inline: true,
+        inline: false,
         allowBase64: true,
         HTMLAttributes: {
-          class: "rounded-lg shadow-md max-w-[80%]",
+          class: "rounded-lg shadow-md max-w-full",
         },
       }),
       Link.configure({
         openOnClick: false,
+        linkOnPaste: true,
       }),
       TextAlign.configure({
-        types: ["heading", "paragraph"],
+        types: ["heading", "paragraph", "image"],
       }),
       TextStyle,
       Color,
+      Highlight,
+      TaskList,
+      TaskItem.configure({
+        nested: true,
+      }),
+      Table.configure({
+        resizable: true,
+      }),
+      TableRow,
+      TableHeader,
+      TableCell,
+      YouTube.configure({
+        width: 640,
+        height: 480,
+      }),
+      Superscript,
+      Subscript,
+      FontFamily,
     ],
     content: content,
     editorProps: {
@@ -89,7 +115,7 @@ const Tiptap = ({ onChange, content }) => {
   return (
     <div className="w-full bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
       <Toolbar editor={editor} />
-      <EditorContent editor={editor} />
+      <EditorContent editor={editor} className="prose-sm sm:prose lg:prose-lg xl:prose-xl" />
     </div>
   )
 }

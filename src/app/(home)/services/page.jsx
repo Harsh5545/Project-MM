@@ -1,6 +1,7 @@
 import ServicesComponent from '@/components/Services-Component/ServicesComponent';
 import ServicesHero from '@/components/Services-Component/servicesHero';
 
+
 export const metadata = {
   title: "Services",
   description: "Explore our personalized coaching services on business etiquette, children's manners, and personality development for individuals and organizations.",
@@ -16,44 +17,20 @@ export const metadata = {
     creator: "@modernmannerism",
     title: "Our Services - Modern Mannerism",
     description: "Explore Modern Mannerism's personalized coaching services for business etiquette, children's manners, and personality development.",
-    image: "https://www.modernmannerism.com/services-twitter-image.jpg",
-  },
+    image: "https://www.modernmannerism.com/services-twitter-image.jpg"
+  }
 };
 
-const Page = async () => {
-  // Hardcoded services
-  const hardcodedServices = [
-    {
-      id: 1,
-      title: "Executive Coaching",
-      description: "Enhance your leadership skills with our tailored executive coaching programs.",
-      image: "/images/executive-coaching.jpg",
-    },
-    {
-      id: 2,
-      title: "Children's Manners Workshop",
-      description: "Teach your children the modern manners and etiquette for a bright future.",
-      image: "/images/childrens-manners.jpg",
-    },
-    {
-      id: 3,
-      title: "Personality Development",
-      description: "Unlock your potential with our comprehensive personality development courses.",
-      image: "/images/personality-development.jpg",
-    },
-  ];
 
-  // Fetch dynamic services
+const Page = async () => {
+  // Fetch data from your API endpoint
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/services/frontend-list`);
   const result = await response.json();
-
-  // Combine hardcoded and dynamic services
-  const combinedServices = [...hardcodedServices, ...(result?.data || [])];
 
   return (
     <div>
       <ServicesHero />
-      <ServicesComponent data={combinedServices} />
+      <ServicesComponent data={result?.data} />
     </div>
   );
 };

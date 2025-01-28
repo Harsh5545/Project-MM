@@ -99,7 +99,7 @@ function HeaderDefault() {
         {/* Contact Icons */}
         <div
           className={`${isMobileMenuOpen ? "block" : "hidden"
-            } md:flex gap-6 flex-row items-center justify-center pr-6`}
+            } md:flex gap-6 flex-row items-center justify-center pr-0 lg:pr-16`}
         >
           {/* Call Icon */}
           <div className="flex gap-8 items-center justify-center  lg:gap-16">
