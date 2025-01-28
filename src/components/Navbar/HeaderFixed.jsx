@@ -122,16 +122,7 @@ function HeaderFixed() {
             <div className={`${isMobile ? (isMobileMenuOpen ? "block" : "hidden") : "flex items-center gap-2"
                 }`}>
                
-                {/* <ShadcnButton
-                    className={`${dm_Sans.className} tracking-wide rounded-full bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] text-white 
-              p-2 px-4 sm:px-6 sm:py-2 md:px-8 md:py-2 lg:px-8 lg:py-2  text-sm sm:text-base md:text-base lg:text-base shadow-lg`}
-                    onClick={() => {
-                        router.push("/contact-us");
-                        toggleMobileMenu();
-                    }}
-                >
-                    CONTACT US
-                </ShadcnButton> */}
+              
                        <div className="flex items-center justify-center gap-8 lg:gap-16">
   <PhoneCall
         className="w-6 h-6 cursor-pointer text-[#c3965d] hover:text-[#eabf91]"
