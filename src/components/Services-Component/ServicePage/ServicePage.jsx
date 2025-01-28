@@ -64,7 +64,7 @@ const ServicePage = ({ data }) => {
           <ProgramHighlights data={courseDetails} />
 
           <section className="mt-8 py-8 px-4 md:px-8 lg:px-16 bg-gradient-to-b from-gray-100 to-white dark:from-gray-800 dark:to-gray-900 rounded-lg shadow-lg">
-            <h5 className=" text-4xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] pb-6">What They’ll Learn</h5>
+          <h5 className=" text-3xl md:text-4xl font-bold bg-clip-text text-center text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] leading-tight pb-6">Curriculum Overview</h5>
             <div className={`${dm_Sanss.className} mt-8 grid grid-cols-1 md:grid-cols-2 gap-4`}>
               {courseDetails?.courseDetail?.map((point, index) => {
 
