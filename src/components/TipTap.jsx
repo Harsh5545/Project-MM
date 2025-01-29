@@ -26,11 +26,11 @@ const CustomImage = Image.extend({
     return {
       ...this.parent?.(),
       align: {
-        default: "center",
-        renderHTML: (attributes) => {
-          const align = attributes.align || "center"
+        default: 'center',
+        renderHTML: attributes => {
+          const align = attributes.align || 'center';
           return {
-            style: `display: block; margin: ${align === "center" ? "0 auto" : align === "left" ? "0 auto 0 0" : "0 0 0 auto"}; max-width: 100%;`,
+            style: `display: block; margin: ${align === 'center' ? '0 auto' : align === 'left' ? '0 auto 0 0' : '0 0 0 auto'}; max-width: 100%;`,
           }
         },
       },
@@ -42,16 +42,14 @@ const Tiptap = ({ onChange, content }) => {
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
-        heading: {
-          levels: [1, 2, 3, 4, 5, 6],
-        },
+        heading: false,
       }),
       Underline,
       CustomImage.configure({
         inline: false,
         allowBase64: true,
         HTMLAttributes: {
-          class: "rounded-lg shadow-md max-w-full",
+          class: 'rounded-lg shadow-md max-w-full',
         },
       }),
       Link.configure({
@@ -59,7 +57,7 @@ const Tiptap = ({ onChange, content }) => {
         linkOnPaste: true,
       }),
       TextAlign.configure({
-        types: ["heading", "paragraph", "image"],
+        types: ["paragraph", "image"],
       }),
       TextStyle,
       Color,
@@ -121,4 +119,3 @@ const Tiptap = ({ onChange, content }) => {
 }
 
 export default Tiptap
-
