@@ -92,24 +92,24 @@ const Toolbar = ({ editor }) => {
   return (
     <div className="bg-gray-100 dark:bg-gray-900 p-2 flex flex-wrap gap-1 justify-center sm:justify-start items-center border-b border-gray-300 dark:border-gray-600">
       <Select
-        onValueChange={(value) => editor.chain().focus().setFontSize(value).run()}
+        onValueChange={(value) => console.log(editor.commands.setFontSize(value))}
         value={editor.getAttributes("textStyle").fontSize}
       >
         <SelectTrigger className="w-[180px]">
           <SelectValue placeholder="Font size" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="12px">12px</SelectItem>
-          <SelectItem value="14px">14px</SelectItem>
-          <SelectItem value="16px">16px (Default)</SelectItem>
-          <SelectItem value="18px">18px</SelectItem>
-          <SelectItem value="20px">20px</SelectItem>
-          <SelectItem value="24px">24px</SelectItem>
-          <SelectItem value="30px">30px</SelectItem>
-          <SelectItem value="36px">36px</SelectItem>
-          <SelectItem value="48px">48px</SelectItem>
-          <SelectItem value="60px">60px</SelectItem>
-          <SelectItem value="72px">72px</SelectItem>
+          <SelectItem value="12">12px</SelectItem>
+          <SelectItem value="14">14px</SelectItem>
+          <SelectItem value="16">16px (Default)</SelectItem>
+          <SelectItem value="18">18px</SelectItem>
+          <SelectItem value="20">20px</SelectItem>
+          <SelectItem value="24">24px</SelectItem>
+          <SelectItem value="30">30px</SelectItem>
+          <SelectItem value="36">36px</SelectItem>
+          <SelectItem value="48">48px</SelectItem>
+          <SelectItem value="60">60px</SelectItem>
+          <SelectItem value="72">72px</SelectItem>
         </SelectContent>
       </Select>
       <ToolbarButton onClick={() => editor.chain().focus().toggleBold().run()} isActive={editor.isActive("bold")}>
