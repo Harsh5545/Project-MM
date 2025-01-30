@@ -30,8 +30,9 @@ export default async function RootLayout({ children }) {
   const session = await auth();
   return (
     <SessionProvider session={session}>
+
       <html lang="en">
-        <Scrip
+        <Script
           id="clarity-script"
           strategy="afterInteractive"
           dangerouslySetInnerHTML={{
@@ -48,6 +49,7 @@ export default async function RootLayout({ children }) {
             <div className="flex-grow">
               {children}
               <Toaster />
+              <NotificationProvider />
             </div>
             <Footer />
           </div>
