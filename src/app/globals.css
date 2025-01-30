@@ -164,3 +164,12 @@ body{
 .animate-glow {
   animation: glow 1.5s infinite ease-in-out;
 }
+
+.tiptap ul, ol {
+  list-style: revert;
+  padding-left: 1rem
+}
+
+.tiptap blockquote {
+  margin-left: 1rem
+}

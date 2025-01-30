@@ -26,11 +26,11 @@ const CustomImage = Image.extend({
     return {
       ...this.parent?.(),
       align: {
-        default: "center",
-        renderHTML: (attributes) => {
-          const align = attributes.align || "center"
+        default: 'center',
+        renderHTML: attributes => {
+          const align = attributes.align || 'center';
           return {
-            style: `display: block; margin: ${align === "center" ? "0 auto" : align === "left" ? "0 auto 0 0" : "0 0 0 auto"}; max-width: 100%;`,
+            style: `display: block; margin: ${align === 'center' ? '0 auto' : align === 'left' ? '0 auto 0 0' : '0 0 0 auto'}; max-width: 100%;`,
           }
         },
       },
@@ -38,20 +38,53 @@ const CustomImage = Image.extend({
   },
 })
 
+const TextStyleExtended = TextStyle.extend({
+    addAttributes() {
+        return {
+            ...this.parent?.(),
+            fontSize: {
+                default: null,
+                parseHTML: (element) => element.style.fontSize.replace('px', ''),
+                renderHTML: (attributes) => {
+                    if (!attributes['fontSize']) {
+                        return {};
+                    }
+                    return {
+                        style: `font-size: ${attributes['fontSize']}px`
+                    };
+                }
+            }
+        };
+    },
+
+    addCommands() {
+        return {
+            ...this.parent?.(),
+            setFontSize: (fontSize) => ({ commands }) => {
+                return commands.setMark(this.name, { fontSize: fontSize });
+            },
+            unsetFontSize: () => ({ chain }) => {
+                return chain()
+                    .setMark(this.name, { fontSize: null })
+                    .removeEmptyTextStyle()
+                    .run();
+            }
+        };
+    }
+});
+
 const Tiptap = ({ onChange, content }) => {
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
-        heading: {
-          levels: [1, 2, 3, 4, 5, 6],
-        },
+        heading: false,
       }),
       Underline,
       CustomImage.configure({
         inline: false,
         allowBase64: true,
         HTMLAttributes: {
-          class: "rounded-lg shadow-md max-w-full",
+          class: 'rounded-lg shadow-md max-w-full',
         },
       }),
       Link.configure({
@@ -59,9 +92,10 @@ const Tiptap = ({ onChange, content }) => {
         linkOnPaste: true,
       }),
       TextAlign.configure({
-        types: ["heading", "paragraph", "image"],
+        types: ["paragraph", "image"],
       }),
       TextStyle,
+      TextStyleExtended,
       Color,
       Highlight,
       TaskList,
@@ -110,6 +144,8 @@ const Tiptap = ({ onChange, content }) => {
       const json = editor.getJSON()
       onChange({ html, json })
     },
+     // Fix for SSR hydration issue
+     immediatelyRender: false, 
   })
 
   return (
@@ -121,4 +157,3 @@ const Tiptap = ({ onChange, content }) => {
 }
 
 export default Tiptap
-

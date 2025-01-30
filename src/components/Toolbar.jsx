@@ -8,12 +8,6 @@ import {
   Strikethrough,
   List,
   ListOrdered,
-  Heading1,
-  Heading2,
-  Heading3,
-  Heading4,
-  Heading5,
-  Heading6,
   Quote,
   Undo,
   Redo,
@@ -30,7 +24,6 @@ import {
   Youtube,
   Superscript,
   Subscript,
-  ImageIcon as ImageIconImport,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -99,26 +92,24 @@ const Toolbar = ({ editor }) => {
   return (
     <div className="bg-gray-100 dark:bg-gray-900 p-2 flex flex-wrap gap-1 justify-center sm:justify-start items-center border-b border-gray-300 dark:border-gray-600">
       <Select
-        onValueChange={(value) =>
-          editor
-            .chain()
-            .focus()
-            .toggleHeading({ level: Number.parseInt(value) })
-            .run()
-        }
-        value={editor.isActive("heading") ? editor.getAttributes("heading").level.toString() : "0"}
+        onValueChange={(value) => console.log(editor.commands.setFontSize(value))}
+        value={editor.getAttributes("textStyle").fontSize}
       >
         <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder="Paragraph" />
+          <SelectValue placeholder="Font size" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="0">Paragraph</SelectItem>
-          <SelectItem value="1">Heading 1</SelectItem>
-          <SelectItem value="2">Heading 2</SelectItem>
-          <SelectItem value="3">Heading 3</SelectItem>
-          <SelectItem value="4">Heading 4</SelectItem>
-          <SelectItem value="5">Heading 5</SelectItem>
-          <SelectItem value="6">Heading 6</SelectItem>
+          <SelectItem value="12">12px</SelectItem>
+          <SelectItem value="14">14px</SelectItem>
+          <SelectItem value="16">16px (Default)</SelectItem>
+          <SelectItem value="18">18px</SelectItem>
+          <SelectItem value="20">20px</SelectItem>
+          <SelectItem value="24">24px</SelectItem>
+          <SelectItem value="30">30px</SelectItem>
+          <SelectItem value="36">36px</SelectItem>
+          <SelectItem value="48">48px</SelectItem>
+          <SelectItem value="60">60px</SelectItem>
+          <SelectItem value="72">72px</SelectItem>
         </SelectContent>
       </Select>
       <ToolbarButton onClick={() => editor.chain().focus().toggleBold().run()} isActive={editor.isActive("bold")}>
@@ -262,24 +253,6 @@ const Toolbar = ({ editor }) => {
           <SelectItem value="serif">Serif</SelectItem>
           <SelectItem value="monospace">Monospace</SelectItem>
           <SelectItem value="cursive">Cursive</SelectItem>
-        </SelectContent>
-      </Select>
-      <Select
-        onValueChange={(value) => editor.chain().focus().setFontSize(value).run()}
-        value={editor.getAttributes("textStyle").fontSize}
-      >
-        <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder="Font size" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="12px">12px</SelectItem>
-          <SelectItem value="14px">14px</SelectItem>
-          <SelectItem value="16px">16px</SelectItem>
-          <SelectItem value="18px">18px</SelectItem>
-          <SelectItem value="20px">20px</SelectItem>
-          <SelectItem value="24px">24px</SelectItem>
-          <SelectItem value="30px">30px</SelectItem>
-          <SelectItem value="36px">36px</SelectItem>
         </SelectContent>
       </Select>
       <input
