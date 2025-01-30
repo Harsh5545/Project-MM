@@ -28,6 +28,7 @@ model User {
   updatedAt     DateTime @updatedAt
   image         String?
   role          Role     @relation(fields: [roleId], references: [id])
+  notifications Notification[]
 
   @@index([roleId], map: "User_roleId_fkey")
 }
@@ -47,14 +48,10 @@ model Service {
   categoryId          Int
   heading             String
   subheading          String
-  testimonial         String?
-  faq                 String?
-  why_choose_program  String?
-  program_details     String?
-  program_highlights  String?
-  what_you_learn      String?
-  overview            String?
-  what_program_offers String?
+  courseDescription   String
+  testimonials        String? @db.Text
+  programDetails      String? @db.Text 
+  courseDetails       String? @db.Text 
   hero_image          String?
   image               String?
   slug                String   @unique
@@ -65,7 +62,7 @@ model Service {
   keywords            String?
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
-  category            Category @relation(fields: [categoryId], references: [id])
+  category            Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 
   @@index([categoryId], map: "Service_categoryId_fkey")
 }
@@ -74,4 +71,18 @@ enum CategoryStatus {
   ACTIVE
   INACTIVE
 
+}
+
+model Notification {
+  id        Int      @id @default(autoincrement())
+  title     String
+  message   String
+  userId    Int
+  status    String   @default("unread") // Could be "read" or "unread"
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user      User     @relation(fields: [userId], references: [id]) // Relation to the User model
+
+  @@index([userId], map: "Notification_userId_fkey")
 }

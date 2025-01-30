@@ -1,64 +1,123 @@
 'use client'
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
 import CourseDetails from './CourseDetails';
 import ProgramDetails from './ProgramDetails';
 import Testimonials from './Testimonials';
+import SeoComponent from './Seo';
 import { useToast } from '@/hooks/use-toast';
+import UploadServices from './UploadServices';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { Dialog, DialogTrigger, DialogContent } from '@/components/ui/dialog';
 
 const AddServices = ({ onClose }) => {
     const { toast } = useToast();
-    const [currentStep, setCurrentStep] = useState(1); // Track the current step of the form
+    const [isFormValid, setIsFormValid] = useState(false);
+    const [showSuccessDialog, setShowSuccessDialog] = useState(false);
+    const router = useRouter();
+    const [currentStep, setCurrentStep] = useState(1);
     const [formData, setFormData] = useState({
-        mainTitle: '',
-        subTitle: '',
+        heading: '',
+        subheading: '',
         courseDescription: '',
+        image: '',
         category: '',
-        courseDetails: {},
-        programDetails: {},
-        testimonials: {},
+        courseDetails: {
+            courseHeadings: [{ heading: '', subheading: '', icon: '' }],
+            courseDetail : [{ icon: '', description: '' }],
+            programHighlights: [{ icon: 'FaCheckCircle', heading: '', description: '' }],
+            overviewImage: '',
+            overviewDescription: '',
+        },
+        programDetails: {
+            ageGroups: [{ subheading: '' }],
+            formats: [{ heading: '', subheading: '' }],
+            durations: [{ heading: '', subheading: '' }],
+            locations: [{ heading: '', subheading: '' }],
+        },
+        testimonials: {
+            taglineHeading: '',
+            mmDescription: '',
+            testimonials: [{ comment: '', name: '' }],
+            faqs: [{ question: '', answer: '' }],
+            heroImage: '',
+            outsideImage: '',
+        },
+        seo: {
+            meta_title: '',
+            meta_description: '',
+            og_title: '',
+            og_image: '',
+            keywords: [],
+        },
     });
+
     const [categories, setCategories] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // Fetch categories from the backend
         const fetchCategories = async () => {
+            setLoading(true);
             try {
-                const response = await fetch('/api/categories'); // Adjust the URL as needed
-                const data = await response.json();
-                setCategories(data);
+                const response = await fetch('/api/category/list');
+                const result = await response.json();
+                if (result.data) {
+                    setCategories(result.data);
+                } else {
+                    throw new Error('Failed to fetch categories');
+                }
             } catch (error) {
                 console.error('Error fetching categories:', error);
+                toast({
+                    title: "Error",
+                    description: "Failed to fetch categories. Please try again.",
+                    variant: "destructive",
+                });
+            } finally {
+                setLoading(false);
             }
         };
 
         fetchCategories();
+    }, [toast]);
+    const validateForm = useCallback(() => {
+        const isValid = formData.heading && formData.subheading && formData.courseDescription && formData.category && formData.image;
+        setIsFormValid(isValid);
+    }, [formData]);
+
+    useEffect(() => {
+        validateForm();
+    }, [formData, validateForm]);
+
+    const handleNext = useCallback(() => {
+        setCurrentStep((prevStep) => Math.min(prevStep + 1, 5));
     }, []);
 
-    const handleNext = () => {
-        setCurrentStep((prevStep) => Math.min(prevStep + 1, 4)); // Ensure step does not exceed total steps
-    };
+    const handlePrev = useCallback(() => {
+        setCurrentStep((prevStep) => Math.max(prevStep - 1, 1));
+    }, []);
 
-    const handlePrev = () => {
-        setCurrentStep((prevStep) => Math.max(prevStep - 1, 1)); // Ensure step does not go below 1
-    };
-
-    const handleInputChange = (e) => {
+    const handleInputChange = useCallback((e) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({ ...prevData, [name]: value }));
-    };
+    }, []);
 
-    const handleSelectChange = (value) => {
+    const handleSelectChange = useCallback((value) => {
         setFormData((prevData) => ({ ...prevData, category: value }));
-    };
+    }, []);
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
+        if (currentStep !== 5) {
+            handleNext();
+            return;
+        }
         try {
-            const response = await fetch('/api/services/add', {
+            const response = await fetch('/api/services/add-service', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -90,87 +149,163 @@ const AddServices = ({ onClose }) => {
         }
     };
 
-    return (
-        <div className="bg-gradient-to-r from-gray-200 to-gray-100 ">
-            <div className="w-full mx-auto bg-white dark:bg-gray-800 rounded-lg p-8 space-y-8 relative">
-                <button
-                    type="button"
-                    className="absolute top-4 right-4 bg-red-600 hover:bg-red-700 text-white px-2 py-1 rounded-lg"
-                    onClick={onClose}
-                >
-                    &times;
-                </button>
-                <h1 className="text-3xl font-bold text-gray-800 dark:text-white text-center">
-                    Add New Service
-                </h1>
+    const handleCourseDetailsChange = useCallback((newCourseDetails) => {
+        setFormData(prevData => ({
+            ...prevData,
+            courseDetails: {
+                ...prevData.courseDetails,
+                ...newCourseDetails
+            }
+        }));
+    }, []);
 
-                <form onSubmit={handleFormSubmit} className="space-y-6">
-                    {/* Step 1: Main Title & Subtitle */}
-                    {currentStep === 1 && (
-                        <div className="space-y-6">
-                            <div>
-                                <label className="block text-gray-700 dark:text-gray-300 mb-2">Main Title:</label>
-                                <Input
-                                    type="text"
-                                    placeholder="Enter the main title"
-                                    name="mainTitle"
-                                    value={formData.mainTitle}
-                                    onChange={handleInputChange}
-                                    className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
-                                />
-                            </div>
+    const handleProgramDetailsChange = useCallback((field, value) => {
+        setFormData(prevData => ({
+            ...prevData,
+            programDetails: {
+                ...prevData.programDetails,
+                [field]: value
+            }
+        }));
+    }, []);
 
-                            <div>
-                                <label className="block text-gray-700 dark:text-gray-300 mb-2">Sub Title:</label>
-                                <Input
-                                    type="text"
-                                    placeholder="Enter the sub title"
-                                    name="subTitle"
-                                    value={formData.subTitle}
-                                    onChange={handleInputChange}
-                                    className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
-                                />
-                            </div>
+    const handleTestimonialsChange = useCallback((newTestimonials) => {
+        setFormData(prevData => ({
+            ...prevData,
+            testimonials: {
+                ...prevData.testimonials,
+                ...newTestimonials
+            }
+        }));
+    }, []);
 
-                            <div>
-                                <label className="block text-gray-700 dark:text-gray-300 mb-2">Category:</label>
-                                <Select onValueChange={handleSelectChange}>
-                                    <SelectTrigger className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white">
-                                        <SelectValue placeholder="Select a category" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        {categories.map((category) => (
-                                            <SelectItem key={category._id} value={category.name}>
-                                                {category.name}
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
-                            </div>
+    const handleImageUpload = useCallback((imageType, imageData) => {
+        setFormData(prevData => ({
+            ...prevData,
+            testimonials: {
+                ...prevData.testimonials,
+                [imageType]: imageData
+            }
+        }));
+    }, []);
 
-                            <div>
-                                <label className="block text-gray-700 dark:text-gray-300 mb-2">Course Description:</label>
-                                <textarea
-                                    placeholder="Enter the course description"
-                                    name="courseDescription"
-                                    value={formData.courseDescription}
-                                    onChange={handleInputChange}
-                                    className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white h-32"
-                                />
-                            </div>
+    const handleSeoChange = useCallback((newSeoData) => {
+        setFormData(prevData => ({
+            ...prevData,
+            seo: {
+                ...prevData.seo,
+                ...newSeoData
+            }
+        }));
+    }, []);
+
+    const renderStep = () => {
+        switch (currentStep) {
+            case 1:
+                return (
+                    <div className="space-y-6">
+                        <div>
+                            <label className="block text-gray-700 dark:text-gray-300 mb-2">heading:</label>
+                            <Input
+                                type="text"
+                                placeholder="Enter the main title"
+                                name="heading"
+                                value={formData.heading}
+                                onChange={handleInputChange}
+                                className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                            />
                         </div>
-                    )}
+                        <div>
+                            <label className="block text-gray-700 dark:text-gray-300 mb-2">Sub Title:</label>
+                            <Input
+                                type="text"
+                                placeholder="Enter the sub title"
+                                name="subheading"
+                                value={formData.subheading}
+                                onChange={handleInputChange}
+                                className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                            />
+                        </div>
+                        <UploadServices formData={formData} setFormData={setFormData} type="image" />
+                        {formData.image && (
+                            <Image width={300} height={300} src={formData.image} alt="service image" />
+                        )}
+                        <div>
+                            <label className="block text-gray-700 dark:text-gray-300 mb-2">Category:</label>
+                            <Select onValueChange={handleSelectChange} disabled={loading} value={formData.category}>
+                                <SelectTrigger className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white">
+                                    <SelectValue placeholder={loading ? "Loading categories..." : "Select a category"}>
+                                        {formData.category && categories.length > 0
+                                            ? categories.find((cat) => cat.id == formData.category)?.category_name
+                                            : "Select a category"}
+                                    </SelectValue>
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {categories.map((category) => (
+                                        <SelectItem key={category.id} value={category.id}>
+                                            {category.category_name}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                        </div>
+                        <div>
+                            <label className="block text-gray-700 dark:text-gray-300 mb-2">Course Description:</label>
+                            <textarea
+                                placeholder="Enter the course description"
+                                name="courseDescription"
+                                value={formData.courseDescription}
+                                onChange={handleInputChange}
+                                className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white h-32"
+                            />
+                        </div>
+                    </div>
+                );
+            case 2:
+                return (
+                    <CourseDetails
+                        courseDetails={formData.courseDetails}
+                        onCourseDetailsChange={handleCourseDetailsChange}
+                        formData={formData}
+                        setFormData={setFormData}
+                    />
+                );
+            case 3:
+                return (
+                    <ProgramDetails
+                        programDetails={formData.programDetails}
+                        onProgramDetailsChange={handleProgramDetailsChange}
+                    />
+                );
+            case 4:
+                return (
+                    <Testimonials
+                        testimonials={formData.testimonials}
+                        onTestimonialsChange={handleTestimonialsChange}
+                        handleImageUpload={handleImageUpload}
+                        formData={formData}
+                        setFormData={setFormData}
+                    />
+                );
+            case 5:
+                return (
+                    <SeoComponent
+                        seoData={formData.seo}
+                        onSeoChange={handleSeoChange}
+                        formData={formData}
+                        setFormData={setFormData}
+                    />
+                );
+            default:
+                return null;
+        }
+    };
 
-                    {/* Step 2: Course Details */}
-                    {currentStep === 2 && <CourseDetails formData={formData} setFormData={setFormData} />}
-
-                    {/* Step 3: Program Details */}
-                    {currentStep === 3 && <ProgramDetails formData={formData} setFormData={setFormData} />}
-
-                    {/* Step 4: Testimonials */}
-                    {currentStep === 4 && <Testimonials formData={formData} setFormData={setFormData} />}
-
-                    {/* Navigation Buttons */}
+    return (
+        <div className="bg-gradient-to-r from-gray-200 to-gray-100">
+            <div className="w-full mx-auto bg-white dark:bg-gray-800 rounded-lg p-8 space-y-8 relative">
+                <form onSubmit={handleFormSubmit} className="space-y-6">
+                    {renderStep()}
                     <div className="flex justify-between">
                         {currentStep > 1 && (
                             <Button
@@ -181,18 +316,19 @@ const AddServices = ({ onClose }) => {
                                 Previous
                             </Button>
                         )}
-                        {currentStep < 4 ? (
+                        {currentStep < 5 && (
                             <Button
                                 type="button"
                                 onClick={handleNext}
-                                className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg"
+                                className="bg-black text-white px-4 py-2 rounded-lg"
                             >
                                 Next
                             </Button>
-                        ) : (
+                        )}
+                        {currentStep === 5 && (
                             <Button
                                 type="submit"
-                                className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg"
+                                className="bg-black text-white px-4 py-2 rounded-lg"
                             >
                                 Submit
                             </Button>
@@ -200,8 +336,20 @@ const AddServices = ({ onClose }) => {
                     </div>
                 </form>
             </div>
+<Dialog open={showSuccessDialog} onOpenChange={setShowSuccessDialog}>
+    <DialogContent>
+        <h2 className="text-lg font-semibold text-center">Service Successfully Created!</h2>
+        <Button
+            onClick={() => router.push('/admin/services')}
+            className="mt-4 bg-black text-white px-4 py-2 rounded-lg w-full"
+        >
+            OK
+        </Button>
+    </DialogContent>
+</Dialog>
         </div>
     );
 };
 
 export default AddServices;
+

@@ -2,25 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-} */
-
-
 body{
   background-color: #f4f4f4;
   color: #333333;
@@ -165,4 +146,21 @@ body{
   100% {
   transform: translateX(0);
   }
+}
+
+
+@keyframes glow {
+  0% {
+    box-shadow: 0 0 2px #FFD700, 0 0 3px #FFD700;
+  }
+  50% {
+    box-shadow: 0 0 4px #FFD700, 0 0 6px #FFD700;
+  }
+  100% {
+    box-shadow: 0 0 2px #FFD700, 0 0 3px #FFD700;
+  }
+}
+
+.animate-glow {
+  animation: glow 1.5s infinite ease-in-out;
 }

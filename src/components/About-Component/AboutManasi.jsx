@@ -24,14 +24,14 @@ export const AboutManasi = () => {
               <hr className="h-1 bg-gradient-to-r  from-[#c3965d] via-[#eabf91] to-[#c3965d]  w-40" />
             </div>
 
-            <p className="text-center text-base">
+            <p className="text-center text-gray-700 dark:text-gray-300 text-base">
               Manasi Kadam is the visionary behind Modern Mannerism, bringing
               her extensive expertise in Image & Etiquette Consulting to the
               forefront. With a deep passion for empowering individuals and
               professionals, Manasi offers a comprehensive range of services,
               from Personal Branding and Communication Skills to Corporate Etiquette and Fine Dining Manners. Her unique background, enriched by diverse experiences across various industries, allows her to craft personalized strategies that enhance her clients' professional presence and social confidence.
             </p>
-            <p className="text-center text-base">
+            <p className="text-center text-gray-700 dark:text-gray-300 text-base">
               She is a certified Image Consultant and Soft Skills Trainer,
               having completed specialized programs at renowned institutions
               like the Image Consulting Business Institute (ICBI), Classes of
@@ -45,7 +45,7 @@ export const AboutManasi = () => {
               consulting and etiquette training.
             </p>
 
-            <p className="text-base text-center">
+            <p className="text-base text-gray-700 dark:text-gray-300 text-center">
               Join Manasi at Modern Mannerism, and let’s work together to refine
               your image, enhance your etiquette, and unlock your full
               potential.

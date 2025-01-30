@@ -1,79 +1,3 @@
-// import NextAuth from "next-auth"
-// import { prisma } from "./lib/prisma"
-// import { PrismaAdapter } from "@auth/prisma-adapter"
-// import CredentialsProvider from "next-auth/providers/credentials";
-// import bcrypt from "bcryptjs"
-
-// export const { handlers, signIn, signOut, auth } = NextAuth({
-//   adapter: PrismaAdapter(prisma),
-//   session: {
-//     strategy: "jwt",
-//   },
-//   providers: [
-//     CredentialsProvider({
-//       credentials: {
-//         email: {},
-//         password: {},
-//       },
-//       async authorize(credentials) {
-//         if (credentials === null) return null;
-
-//         try {
-//           const user = await prisma.user.findUnique({
-//             where: {
-//               email: credentials.email,
-//             },
-//             include: { role: true },
-//           });
-//           console.log("USER", user);
-//           if (user) {
-//             const isMatch = bcrypt.compare(
-//               credentials.password,
-//               user.password
-//             );
-//             if (isMatch) {
-//               return user;
-//             } else {
-//               throw new Error("Email or Password is not correct");
-//             }
-//           } else {
-//             throw new Error("User not found");
-//           }
-//         } catch (error) {
-//           throw new Error(error);
-//         }
-//       },
-//     })
-//   ],
-
-//   callbacks: {
-//     async jwt({ token, user }) {
-//       if (user) {
-//         token.role = user.role.name
-//         token.id = user.id
-//         token.email = user.email
-//         token.name = user.first_name
-//         token.image = user.image
-//       }
-//       return token
-//     },
-//     async session({ session, token }) {
-//       session.user.role = token.role
-//       session.token.id = user.id
-//       session.token.email = user.email
-//       session.token.name = user.name
-//       session.token.image = user.image
-//       return session
-//     }
-//   },
-//   pages: {
-//     signIn: "/sign-in",
-//     newUser: "/sign-up",
-//   },
-//   trueHost: true
-// })
-
-
 import NextAuth from "next-auth";
 import { prisma } from "./lib/prisma";
 import { PrismaAdapter } from "@auth/prisma-adapter";
@@ -101,12 +25,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           });
 
           if (!user) {
-            throw new Error("User not found");
+            throw new Error("This Email is Not register with us. Please register");
           }
 
-          const isMatch = bcrypt.compare(credentials.password, user.password);
+          const isMatch = await bcrypt.compareSync(credentials.password, user.password);
+
           if (!isMatch) {
-            throw new Error("Invalid email or password");
+            throw new Error("Invalid password");
           }
 
           return {

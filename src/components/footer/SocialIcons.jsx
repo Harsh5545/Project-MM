@@ -1,8 +1,6 @@
 import React from "react";
 import { FloatingDock } from "@/components/ui/floating-dock";
 import {
-  IconBrandGithub,
-  IconBrandX,
   IconBrandLinkedin,
   IconBrandInstagram,
   IconBrandFacebook,
@@ -17,46 +15,44 @@ const Socials = () => {
       icon: (
         <IconBrandLinkedin className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
-      href: "https://www.linkedin.com",
+      href: "https://www.linkedin.com/in/k-manasi/",
     },
     {
       title: "Instagram",
       icon: (
         <IconBrandInstagram className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
-      href: "https://www.instagram.com",
+      href: "https://www.instagram.com/modernmannerism/",
     },
     {
       title: "Facebook",
       icon: (
         <IconBrandFacebook className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
-      href: "https://www.facebook.com",
+      href: "https://www.facebook.com/modernmannerism/",
     },
     {
       title: "YouTube",
       icon: (
         <IconBrandYoutube className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
-      href: "https://www.youtube.com",
+      href: "https://www.youtube.com/@modernmannerism",
     },
     {
       title: "Medium",
       icon: (
         <IconBrandMedium className="h-full w-full text-neutral-500 dark:text-neutral-300" />
       ),
-      href: "https://www.medium.com",
+      href: "https://medium.com/@modernmannerism",
     },
-    
-    
   ];
 
   return (
     <div className="md:flex hidden items-center justify-center">
       <FloatingDock
-        
         mobileClassName="translate-y-20"
         items={links}
+        iconWrapperClassName="bg-gray-50 dark:bg-[#00001F] p-2 rounded-full transition-colors"
       />
     </div>
   );

@@ -1,94 +1,296 @@
-import React from 'react';
-import { Editor } from '@tiptap/react';
+"use client"
+
+import React from "react"
 import {
   Bold,
-  Strikethrough,
   Italic,
+  Underline,
+  Strikethrough,
   List,
   ListOrdered,
+  Heading1,
   Heading2,
-  Underline,
+  Heading3,
+  Heading4,
+  Heading5,
+  Heading6,
   Quote,
   Undo,
   Redo,
   Code,
-} from 'lucide-react';
+  ImageIcon,
+  LinkIcon,
+  AlignLeft,
+  AlignCenter,
+  AlignRight,
+  AlignJustify,
+  Highlighter,
+  CheckSquare,
+  Table,
+  Youtube,
+  Superscript,
+  Subscript,
+  ImageIcon as ImageIconImport,
+} from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
-const Toolbar = ({ editor }) => { 
+const Toolbar = ({ editor }) => {
   if (!editor) {
-    return null;
+    return null
   }
 
-  return (
-    <div className='px-2 py-3 rounded-tl-md rounded-tr-md flex justify-start  items-start gap-5 w-full flex-wrap border border-gray-700'>
-      <button
-        onClick={() => editor.chain().focus().toggleBold().run()}
-        className={`p-2 ${editor.isActive('bold') ? 'bg-gray-300' : ''}`}
-      >
-        <Bold />
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleItalic().run()}
-        className={`p-2 ${editor.isActive('italic') ? 'bg-gray-300' : ''}`}
-      >
-        <Italic />
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleUnderline().run()}
-        className={`p-2 ${editor.isActive('underline') ? 'bg-gray-300' : ''}`}
-      >
-        <Underline />
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleStrike().run()}
-        className={`p-2 ${editor.isActive('strike') ? 'bg-gray-300' : ''}`}
-      >
-        <Strikethrough />
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleCode().run()}
-        className={`p-2 ${editor.isActive('code') ? 'bg-gray-300' : ''}`}
-      >
-        <Code />
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-        className={`p-2 ${editor.isActive('heading', { level: 2 }) ? 'bg-gray-300' : ''}`}
-      >
-        <Heading2 />
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleBulletList().run()}
-        className={`p-2 ${editor.isActive('bulletList') ? 'bg-gray-300' : ''}`}
-      >
-        <List />
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleOrderedList().run()}
-        className={`p-2 ${editor.isActive('orderedList') ? 'bg-gray-300' : ''}`}
-      >
-        <ListOrdered />
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleBlockquote().run()}
-        className={`p-2 ${editor.isActive('blockquote') ? 'bg-gray-300' : ''}`}
-      >
-        <Quote />
-      </button>
-      <button
-        onClick={() => editor.chain().focus().undo().run()}
-        className='p-2'
-      >
-        <Undo />
-      </button>
-      <button
-        onClick={() => editor.chain().focus().redo().run()}
-        className='p-2'
-      >
-        <Redo />
-      </button>
-    </div>
-  );
-};
+  const uploadImage = (e) => {
+    e.preventDefault()
+    const input = document.createElement("input")
+    input.type = "file"
+    input.accept = "image/*"
+    input.onchange = () => {
+      if (input.files?.length) {
+        const file = input.files[0]
+        const reader = new FileReader()
+        reader.onload = (e) => {
+          editor.chain().focus().setImage({ src: e.target?.result }).run()
+        }
+        reader.readAsDataURL(file)
+      }
+    }
+    input.click()
+  }
 
-export default Toolbar;
+  const setLink = (e) => {
+    e.preventDefault()
+    const previousUrl = editor.getAttributes("link").href
+    const url = window.prompt("URL", previousUrl)
+    if (url === null) {
+      return
+    }
+    if (url === "") {
+      editor.chain().focus().extendMarkRange("link").unsetLink().run()
+      return
+    }
+    editor.chain().focus().extendMarkRange("link").setLink({ href: url }).run()
+  }
+
+  const addYoutubeVideo = (e) => {
+    e.preventDefault()
+    const url = prompt("Enter YouTube URL")
+    if (url) {
+      editor.commands.setYoutubeVideo({ src: url })
+    }
+  }
+
+  const setImageAlignment = (alignment) => {
+    editor.chain().focus().setImage({ align: alignment }).run()
+  }
+
+  const ToolbarButton = ({ onClick, isActive, disabled, children }) => (
+    <Button
+      type="button"
+      onClick={onClick}
+      className={`p-2 ${isActive ? "bg-gray-200 dark:bg-gray-700" : "bg-transparent"} hover:bg-gray-100 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 ${disabled ? "opacity-50 cursor-not-allowed" : ""}`}
+      variant="ghost"
+      disabled={disabled}
+    >
+      {children}
+    </Button>
+  )
+
+  return (
+    <div className="bg-gray-100 dark:bg-gray-900 p-2 flex flex-wrap gap-1 justify-center sm:justify-start items-center border-b border-gray-300 dark:border-gray-600">
+      <Select
+        onValueChange={(value) =>
+          editor
+            .chain()
+            .focus()
+            .toggleHeading({ level: Number.parseInt(value) })
+            .run()
+        }
+        value={editor.isActive("heading") ? editor.getAttributes("heading").level.toString() : "0"}
+      >
+        <SelectTrigger className="w-[180px]">
+          <SelectValue placeholder="Paragraph" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="0">Paragraph</SelectItem>
+          <SelectItem value="1">Heading 1</SelectItem>
+          <SelectItem value="2">Heading 2</SelectItem>
+          <SelectItem value="3">Heading 3</SelectItem>
+          <SelectItem value="4">Heading 4</SelectItem>
+          <SelectItem value="5">Heading 5</SelectItem>
+          <SelectItem value="6">Heading 6</SelectItem>
+        </SelectContent>
+      </Select>
+      <ToolbarButton onClick={() => editor.chain().focus().toggleBold().run()} isActive={editor.isActive("bold")}>
+        <Bold className="h-4 w-4" />
+      </ToolbarButton>
+      <ToolbarButton onClick={() => editor.chain().focus().toggleItalic().run()} isActive={editor.isActive("italic")}>
+        <Italic className="h-4 w-4" />
+      </ToolbarButton>
+      <ToolbarButton
+        onClick={() => editor.chain().focus().toggleUnderline().run()}
+        isActive={editor.isActive("underline")}
+      >
+        <Underline className="h-4 w-4" />
+      </ToolbarButton>
+      <ToolbarButton onClick={() => editor.chain().focus().toggleStrike().run()} isActive={editor.isActive("strike")}>
+        <Strikethrough className="h-4 w-4" />
+      </ToolbarButton>
+      <ToolbarButton onClick={() => editor.chain().focus().toggleCode().run()} isActive={editor.isActive("code")}>
+        <Code className="h-4 w-4" />
+      </ToolbarButton>
+      <ToolbarButton
+        onClick={() => editor.chain().focus().toggleBulletList().run()}
+        isActive={editor.isActive("bulletList")}
+      >
+        <List className="h-4 w-4" />
+      </ToolbarButton>
+      <ToolbarButton
+        onClick={() => editor.chain().focus().toggleOrderedList().run()}
+        isActive={editor.isActive("orderedList")}
+      >
+        <ListOrdered className="h-4 w-4" />
+      </ToolbarButton>
+      <ToolbarButton
+        onClick={() => editor.chain().focus().toggleTaskList().run()}
+        isActive={editor.isActive("taskList")}
+      >
+        <CheckSquare className="h-4 w-4" />
+      </ToolbarButton>
+      <ToolbarButton
+        onClick={() => editor.chain().focus().toggleBlockquote().run()}
+        isActive={editor.isActive("blockquote")}
+      >
+        <Quote className="h-4 w-4" />
+      </ToolbarButton>
+      <ToolbarButton onClick={() => editor.chain().focus().setHorizontalRule().run()}>
+        <span className="font-bold">―</span>
+      </ToolbarButton>
+      <ToolbarButton onClick={uploadImage}>
+        <ImageIcon className="h-4 w-4" />
+      </ToolbarButton>
+      <ToolbarButton
+        onClick={() => setImageAlignment("left")}
+        isActive={editor.isActive("image", { align: "left" })}
+        disabled={!editor.isActive("image")}
+      >
+        <AlignLeft className="h-4 w-4" />
+      </ToolbarButton>
+      <ToolbarButton
+        onClick={() => setImageAlignment("center")}
+        isActive={editor.isActive("image", { align: "center" })}
+        disabled={!editor.isActive("image")}
+      >
+        <AlignCenter className="h-4 w-4" />
+      </ToolbarButton>
+      <ToolbarButton
+        onClick={() => setImageAlignment("right")}
+        isActive={editor.isActive("image", { align: "right" })}
+        disabled={!editor.isActive("image")}
+      >
+        <AlignRight className="h-4 w-4" />
+      </ToolbarButton>
+      <ToolbarButton onClick={setLink} isActive={editor.isActive("link")}>
+        <LinkIcon className="h-4 w-4" />
+      </ToolbarButton>
+      <ToolbarButton
+        onClick={() => editor.chain().focus().setTextAlign("left").run()}
+        isActive={editor.isActive({ textAlign: "left" })}
+      >
+        <AlignLeft className="h-4 w-4" />
+      </ToolbarButton>
+      <ToolbarButton
+        onClick={() => editor.chain().focus().setTextAlign("center").run()}
+        isActive={editor.isActive({ textAlign: "center" })}
+      >
+        <AlignCenter className="h-4 w-4" />
+      </ToolbarButton>
+      <ToolbarButton
+        onClick={() => editor.chain().focus().setTextAlign("right").run()}
+        isActive={editor.isActive({ textAlign: "right" })}
+      >
+        <AlignRight className="h-4 w-4" />
+      </ToolbarButton>
+      <ToolbarButton
+        onClick={() => editor.chain().focus().setTextAlign("justify").run()}
+        isActive={editor.isActive({ textAlign: "justify" })}
+      >
+        <AlignJustify className="h-4 w-4" />
+      </ToolbarButton>
+      <ToolbarButton
+        onClick={() => editor.chain().focus().toggleHighlight().run()}
+        isActive={editor.isActive("highlight")}
+      >
+        <Highlighter className="h-4 w-4" />
+      </ToolbarButton>
+      <ToolbarButton
+        onClick={() => editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()}
+      >
+        <Table className="h-4 w-4" />
+      </ToolbarButton>
+      <ToolbarButton onClick={addYoutubeVideo}>
+        <Youtube className="h-4 w-4" />
+      </ToolbarButton>
+      <ToolbarButton
+        onClick={() => editor.chain().focus().toggleSuperscript().run()}
+        isActive={editor.isActive("superscript")}
+      >
+        <Superscript className="h-4 w-4" />
+      </ToolbarButton>
+      <ToolbarButton
+        onClick={() => editor.chain().focus().toggleSubscript().run()}
+        isActive={editor.isActive("subscript")}
+      >
+        <Subscript className="h-4 w-4" />
+      </ToolbarButton>
+      <ToolbarButton onClick={() => editor.chain().focus().undo().run()}>
+        <Undo className="h-4 w-4" />
+      </ToolbarButton>
+      <ToolbarButton onClick={() => editor.chain().focus().redo().run()}>
+        <Redo className="h-4 w-4" />
+      </ToolbarButton>
+      <Select
+        onValueChange={(value) => editor.chain().focus().setFontFamily(value).run()}
+        value={editor.getAttributes("textStyle").fontFamily}
+      >
+        <SelectTrigger className="w-[180px]">
+          <SelectValue placeholder="Font family" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="Inter">Inter</SelectItem>
+          <SelectItem value="Comic Sans MS, Comic Sans">Comic Sans</SelectItem>
+          <SelectItem value="serif">Serif</SelectItem>
+          <SelectItem value="monospace">Monospace</SelectItem>
+          <SelectItem value="cursive">Cursive</SelectItem>
+        </SelectContent>
+      </Select>
+      <Select
+        onValueChange={(value) => editor.chain().focus().setFontSize(value).run()}
+        value={editor.getAttributes("textStyle").fontSize}
+      >
+        <SelectTrigger className="w-[180px]">
+          <SelectValue placeholder="Font size" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="12px">12px</SelectItem>
+          <SelectItem value="14px">14px</SelectItem>
+          <SelectItem value="16px">16px</SelectItem>
+          <SelectItem value="18px">18px</SelectItem>
+          <SelectItem value="20px">20px</SelectItem>
+          <SelectItem value="24px">24px</SelectItem>
+          <SelectItem value="30px">30px</SelectItem>
+          <SelectItem value="36px">36px</SelectItem>
+        </SelectContent>
+      </Select>
+      <input
+        type="color"
+        onInput={(e) => editor.chain().focus().setColor(e.target.value).run()}
+        value={editor.getAttributes("textStyle").color}
+        className="w-8 h-8 p-0 border-none rounded-full cursor-pointer"
+      />
+    </div>
+  )
+}
+
+export default Toolbar
+

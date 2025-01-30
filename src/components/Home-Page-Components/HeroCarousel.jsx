@@ -10,7 +10,7 @@ import { Keyboard, Pagination, Navigation, Autoplay } from "swiper/modules";
 import { Lato } from "next/font/google";
 import { Cormorant_Garamond } from "next/font/google";
 import Head from "next/head";
-import { Button } from "@/components/ui/button"; // Assuming ShadCN button is correctly imported
+import { Button } from "@/components/ui/button";
 
 const dm_Sans = Lato({
   subsets: ["latin"],
@@ -47,7 +47,7 @@ const HeroCarousel = () => {
     },
     {
       id: 2,
-      image: "/assets/One-on-One Consulting.jpeg",
+      image: "/assets/OneonOneConsulting.jpeg",
       text: "One-on-One Consulting",
       description:
         "Help individuals refine their personal and professional image, develop strong communication skills, and boost their confidence. Our one-on-one sessions are customized to meet the unique needs of each client.",
@@ -55,7 +55,7 @@ const HeroCarousel = () => {
     },
     {
       id: 3,
-      image: "/assets/Corporate Workshops & Training.jpeg",
+      image: "/assets/CorporateWorkshops&Training.jpeg",
       text: "Corporate Workshops & Training",
       description:
         "We offer customized training programs designed to improve workplace professionalism, communication, and team dynamics. These workshops are perfect for teams, managers, and executives who want to refine their professional image and etiquette.",
@@ -63,7 +63,7 @@ const HeroCarousel = () => {
     },
     {
       id: 4,
-      image: "/assets/Young Adult Grooming Programme.jpeg",
+      image: "/assets/YoungAdultGroomingProgramme.jpeg",
       text: "Young Adult Grooming Programmee",
       description:
         "Prepare teens and young adults for success by teaching them essential grooming, communication, and etiquette skills. This program is ideal for young adults entering the workforce, preparing for interviews, or simply wanting to build confidence in their daily lives.",
@@ -71,7 +71,7 @@ const HeroCarousel = () => {
     },
     {
       id: 5,
-      image: "/assets/Children's Etiquette Programme.jpeg",
+      image: "/assets/ChildrenEtiquetteProgramme.jpeg",
       text: "Children's Etiquette Programmee",
       description:
         "Help children learn good manners, respect, and social skills in a fun and engaging way. This program focuses on building the foundation for positive behavior and respectful interactions, preparing children for both social and school environments.",
@@ -79,7 +79,7 @@ const HeroCarousel = () => {
     },
     {
       id: 6,
-      image: "/assets/Online Courses & Workshops.jpeg",
+      image: "/assets/OnlineCoursesWorkshops.jpeg",
       text: "Online Courses & Webinars",
       description:
         "Our online offerings allow you to learn at your own pace or join live sessions to enhance your skills in image, etiquette, and communication.",
@@ -89,11 +89,11 @@ const HeroCarousel = () => {
 
   const styles = {
     container: `md:h-screen w-full bg-cover z-0 relative`,
-    slide: `md:h-screen  h-[65vh] w-full relative`,
-    image: `object-cover  w-full md:h-full h-[65vh]`,
+    slide: `md:h-screen h-[65vh] w-full relative`,
+    image: `object-cover w-full h-full`, // Ensure the image covers the container
     overlay: `absolute inset-0 dark:bg-[#060507] bg-[#3a4e5d] dark:bg-opacity-60 bg-opacity-50`,
     text: `md:text-4xl ${cormorant.className} dark:text-white text-white font-bold text-2xl text-black lato-font`,
-    button: `px-8 ${dm_Sans.className} py-5 px-8 tracking-wider bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] text-md lg:text-xl   text-white rounded-full mt-4 sm:mt-10`,
+    button: `px-8 ${dm_Sans.className} py-5 px-8 tracking-wider bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] text-md lg:text-xl text-white rounded-full mt-4 sm:mt-10`,
   };
 
   return (
@@ -121,23 +121,28 @@ const HeroCarousel = () => {
       </Head>
       <div className={styles.container}>
         <style jsx>{`
-          @media (max-width: 767px) {
-            .swiper-button-next,
-            .swiper-button-prev {
-              display: none !important;
-            }
-          }
-          .swiper-button-next,
-          .swiper-button-prev {
-            color: #ff0000; /* Customize this color as needed */
-          }
-          .swiper-pagination-bullet {
-            background-color: #c70ba8; /* Customize this color as needed */
-          }
-          .swiper-pagination-bullet-active {
-            background-color: #ff0000 !important; /* Customize active dot color */
-          }
-        `}</style>
+      @media (max-width: 767px) {
+        .swiper-button-next,
+        .swiper-button-prev {
+          display: none !important;
+        }
+      }
+      .swiper-button-next,
+      .swiper-button-prev {
+        color: #ff0000; /* Customize this color as needed */
+      }
+      .swiper-pagination-bullet {
+        background-color: #c70ba8; /* Customize this color as needed */
+      }
+      .swiper-pagination-bullet-active {
+        background-color: #ff0000 !important; /* Customize active dot color */
+      }
+      @media (max-width: 480px) {
+        .${styles.slide} {
+          height: 50vh; /* Adjust for smaller devices */
+        }
+      }
+    `}</style>
         <Swiper
           onSlideChange={handleSlideChange}
           keyboard={{
@@ -147,10 +152,10 @@ const HeroCarousel = () => {
             clickable: true,
           }}
           autoplay={{
-            delay: 60000,
+            delay: 4000,
             disableOnInteraction: false,
           }}
-          speed={1000}
+          speed={800}
           loop={true}
           navigation={false}
           modules={[Autoplay, Keyboard, Pagination, Navigation]}
@@ -163,17 +168,20 @@ const HeroCarousel = () => {
                 <Image
                   src={slide.image}
                   alt={slide.text}
+                  layout="fill" 
                   className={styles.image}
-                  layout="fill"
+                  priority 
                 />
                 <div className={styles.overlay}></div>
                 <div className="absolute text-white flex gap-5 md:gap-9 flex-col text-center items-center justify-center w-full h-full z-10 p-8">
-                  <h1 className={styles.text}>{slide.text}</h1>
+                  <span className={styles.text}>{slide.text}</span>
                   <div className="flex flex-col md:w-[50%] text-sm font-medium md:text-lg">
                     <p>{slide.description}</p>
                     <p>{slide.description2}</p>
                   </div>
-                  <Button onClick={scrollToTestimonials} className={styles.button}>{slide.button}</Button>
+                  <Button onClick={scrollToTestimonials} className={styles.button}>
+                    {slide.button}
+                  </Button>
                 </div>
               </div>
             </SwiperSlide>

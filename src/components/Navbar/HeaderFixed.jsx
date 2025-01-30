@@ -13,6 +13,8 @@ import { useRouter } from "next/navigation";
 import AllLinks from "./links/AllLinks";
 import { Lato } from "next/font/google";
 import ShadcnButton from "../Atom/button/ShadcnButton";
+import { AtSign, PhoneCall } from "lucide-react";
+import { IconMail } from "@tabler/icons-react";
 const dm_Sans = Lato({
     subsets: ["latin"],
     weight: ["400"],
@@ -52,6 +54,24 @@ function HeaderFixed() {
     };
     const router = useRouter()
 
+    const handlePhoneClick = () => {
+        const userAgent = navigator.userAgent.toLowerCase()
+    
+        // Check if the device is mobile or tablet
+        const isMobileOrTablet =
+          /iphone|ipad|android|blackberry|iemobile|kindle|opera mini|mobile/i.test(
+            userAgent
+          )
+    
+        if (isMobileOrTablet) {
+          // Open phone dialer
+          window.location.href = "tel:+919867831324"
+        } else {
+          // Redirect to the contact-us page
+          router.push("/contact-us")
+        }
+      }
+    
     return (
         <motion.div
             initial="initial"
@@ -69,7 +89,7 @@ function HeaderFixed() {
             width={300}
             height={300}
             src="/assets/MM.png"
-            className="md:max-w-40 max-w-16"
+            className="md:max-w-[10rem] max-w-[6rem]"
             alt="ModernMannerism institute logo"
           />
 
@@ -99,19 +119,25 @@ function HeaderFixed() {
                 </div>
             </div>
 
-            <div className={`${isMobile ? (isMobileMenuOpen ? "block" : "hidden") : "flex items-center gap-2"
+            <div className={`${isMobile ? (isMobileMenuOpen ? "block" : "hidden") : "flex items-center pr-0 lg:pr-16 gap-2"
                 }`}>
                
-                <ShadcnButton
-                    className={`${dm_Sans.className} tracking-wide rounded-full bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] text-white 
-              p-2 px-4 sm:px-6 sm:py-2 md:px-8 md:py-2 lg:px-8 lg:py-2  text-sm sm:text-base md:text-base lg:text-base shadow-lg`}
-                    onClick={() => {
-                        router.push("/contact-us");
-                        toggleMobileMenu();
-                    }}
-                >
-                    CONTACT US
-                </ShadcnButton>
+              
+                       <div className="flex items-center justify-center gap-8 lg:gap-16">
+  <PhoneCall
+        className="w-6 h-6 cursor-pointer text-[#c3965d] hover:text-[#eabf91]"
+        onClick={handlePhoneClick}
+      />
+          {/* Email Icon */}
+          <div className="relative group">
+            <IconMail
+              className="w-8 h-8 cursor-pointer text-[#c3965d] hover:text-[#eabf91]"
+              onClick={() => window.open("mailto:modernmannerism@gmail.com")}
+            />
+            <span className="absolute bottom-[-2.5rem] left-[-5rem]  w-auto px-2 py-1 text-xs text-white bg-black rounded opacity-0 group-hover:opacity-100">
+              modernmannerism@gmail.com
+            </span>
+          </div></div>
             </div>
         </motion.div>
     );

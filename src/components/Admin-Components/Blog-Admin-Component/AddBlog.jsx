@@ -1,246 +1,309 @@
-"use client";
+"use client"
 
-import { useState } from 'react';
-import dynamic from 'next/dynamic';
-import 'react-quill/dist/quill.snow.css'; // Import the styles for the editor
-import { AiOutlineCloudUpload, AiOutlineMobile, AiOutlineLaptop } from 'react-icons/ai';
-import { BsPlusCircle } from 'react-icons/bs';
-import Head from 'next/head';
-import { v4 as uuidv4 } from 'uuid';
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import Tiptap from '@/components/TipTap';
+import { useState } from "react"
+import { AiOutlineCloudUpload, AiOutlineMobile, AiOutlineLaptop } from "react-icons/ai"
+import { BsPlusCircle } from "react-icons/bs"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import Tiptap from "@/components/TipTap"
+import { useToast } from "@/hooks/use-toast"
+import { useCategories } from "./Admin-Blog-Table/UseCategories"
 
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
+export default function BlogEditor({ existingBlog }) {
+  const { toast } = useToast()
+  const { categories, loading: categoriesLoading } = useCategories()
+  const isEditMode = !!existingBlog
+  const [blogData, setBlogData] = useState({
+    title: existingBlog?.title || "",
+    content: existingBlog?.content || "",
+    image: existingBlog?.image || null,
+    heroImage: existingBlog?.heroImage || null,
+    category: existingBlog?.category || "",
+    tags: existingBlog?.tags || [],
+    tagInput: "",
+  })
+  const [previewMode, setPreviewMode] = useState("laptop")
 
-export default function AddBlog({ existingBlog }) {
-  const isEditMode = !!existingBlog; // Determine if in edit mode
-  const [title, setTitle] = useState(existingBlog ? existingBlog.title : '');
-  const [content, setContent] = useState(existingBlog ? existingBlog.content : '');
-  const [image, setImage] = useState(existingBlog ? existingBlog.image : null);
-  const [category, setCategory] = useState(existingBlog ? existingBlog.category : '');
-  const [tags, setTags] = useState(existingBlog ? existingBlog.tags : []);
-  const [tagInput, setTagInput] = useState('');
-  const [previewMode, setPreviewMode] = useState('laptop'); // 'laptop' or 'mobile'
-
-    // // Custom toolbar options
-    // const modules = {
-    //   toolbar: [
-    //     [{ 'font': [] }, { 'size': [] }],
-    //     [{ 'header': '1' }, { 'header': '2' }, 'blockquote', 'code-block'],
-    //     [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-    //     ['bold', 'italic', 'underline', 'strike'],
-    //     [{ 'color': [] }, { 'background': [] }],
-    //     [{ 'align': [] }],
-    //     ['link', 'image'],
-    //     ['clean']
-    //   ],
-    // };
-
-    // const formats = [
-    //   'font', 'size', 'header', 'bold', 'italic', 'underline', 'strike',
-    //   'blockquote', 'code-block', 'list', 'bullet', 'color', 'background',
-    //   'align', 'link', 'image'
-    // ];
-
-  const handleImageChange = (e) => {
-    setImage(URL.createObjectURL(e.target.files[0]));
-  };
+  const handleImageChange = (e, imageType) => {
+    const file = e.target.files[0]
+    if (file) {
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        setBlogData((prevData) => ({
+          ...prevData,
+          [imageType]: reader.result,
+        }))
+      }
+      reader.readAsDataURL(file)
+    }
+  }
 
   const handleTagAddition = () => {
-    if (tagInput.trim() && !tags.includes(tagInput)) {
-      setTags([...tags, tagInput]);
-      setTagInput('');
+    if (blogData.tagInput.trim() && !blogData.tags.includes(blogData.tagInput.trim())) {
+      setBlogData((prevData) => ({
+        ...prevData,
+        tags: [...prevData.tags, blogData.tagInput.trim()],
+        tagInput: "",
+      }))
     }
-  };
+  }
 
   const handleTagRemoval = (tagToRemove) => {
-    setTags(tags.filter(tag => tag !== tagToRemove));
-  };
+    setBlogData((prevData) => ({
+      ...prevData,
+      tags: prevData.tags.filter((tag) => tag !== tagToRemove),
+    }))
+  }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const data={
-      id: uuidv4(),
-      content:content
+  const handleContentChange = (newContent) => {
+    setBlogData((prevData) => ({
+      ...prevData,
+      content: newContent.html,
+      contentJson: newContent.json,
+    }))
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    try {
+      const response = await fetch("/api/blog/save", {
+        method: isEditMode ? "PUT" : "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(blogData),
+      })
+
+      if (!response.ok) {
+        throw new Error("Failed to save blog")
+      }
+
+      toast({
+        title: "Success",
+        description: isEditMode ? "Blog updated successfully" : "Blog created successfully",
+      })
+      // Redirect or clear form here
+    } catch (error) {
+      console.error("Error saving blog:", error)
+      toast({
+        title: "Error",
+        description: "Failed to save blog. Please try again.",
+        variant: "destructive",
+      })
     }
-    console.log({ title, content, image, category, tags });
-    
-  };
+  }
 
   return (
-    <>
-      <Head>
-        {/* Meta tags for SEO */}
-        <title>{title ? `${title} - Modern Mannerism` : 'Add New Blog - Modern Mannerism'}</title>
-        <meta name="description" content={content.substring(0, 160)} /> {/* Content preview for description */}
-        <meta name="keywords" content={tags.join(', ')} />
-        
-        {/* Open Graph Tags */}
-        <meta property="og:title" content={title ? title : 'Add New Blog - Modern Mannerism'} />
-        <meta property="og:description" content={content.substring(0, 160)} />
-        <meta property="og:image" content={image ? image : '/default-image.jpg'} />
-        <meta property="og:url" content={`https://yourwebsite.com/blog/${title}`} />
-        <meta property="og:type" content="article" />
-        
-        {/* Structured Data (JSON-LD) */}
-        <script type="application/ld+json">
-          {`
-            {
-              "@context": "https://schema.org",
-              "@type": "BlogPosting",
-              "headline": "${title}",
-              "description": "${content.substring(0, 160)}",
-              "author": {
-                "@type": "Person",
-                "name": "Manasi"
-              },
-              "image": "${image ? image : '/default-image.jpg'}",
-              "datePublished": "${new Date().toISOString()}"
-            }
-          `}
-        </script>
-      </Head>
-      <div className="min-h-screen bg-gray-100 dark:bg-gray-900 p-6 sm:p-12">
-        <div className="max-w-8xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 space-y-8">
-          <h1 className="text-2xl font-semibold text-gray-800 dark:text-white">{isEditMode ? 'Edit Blog' : 'Add New Blog'}</h1>
-          
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div>
-              <label className="block text-gray-700 dark:text-gray-300 mb-2">Title:</label>
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 p-4 sm:p-6 lg:p-8">
+      <div className="max-w-4xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 space-y-8">
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white text-center">
+          {isEditMode ? "Edit Blog" : "Add New Blog"}
+        </h1>
+
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Title Input */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Title:</label>
+            <Input
+              type="text"
+              value={blogData.title}
+              onChange={(e) => setBlogData((prevData) => ({ ...prevData, title: e.target.value }))}
+              required
+              className="w-full p-2 rounded-md"
+              placeholder="Enter blog title"
+            />
+          </div>
+
+          {/* Category Select */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Category:</label>
+            <Select
+              value={blogData.category}
+              onValueChange={(value) => setBlogData((prevData) => ({ ...prevData, category: value }))}
+              disabled={categoriesLoading}
+            >
+              <SelectTrigger className="w-full p-2 rounded-md">
+                <SelectValue placeholder={categoriesLoading ? "Loading categories..." : "Select a Category"} />
+              </SelectTrigger>
+              <SelectContent>
+                {categoriesLoading ? (
+                  <SelectItem value="loading">Loading...</SelectItem>
+                ) : categories.length > 0 ? (
+                  categories.map((cat) => (
+                    <SelectItem key={cat.id} value={cat.category_name}>
+                      {cat.category_name}
+                    </SelectItem>
+                  ))
+                ) : (
+                  <SelectItem value="no-categories">No categories available</SelectItem>
+                )}
+              </SelectContent>
+            </Select>
+          </div>
+
+          {/* Tags Input */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Tags:</label>
+            <div className="flex items-center space-x-2">
               <Input
                 type="text"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                required
-                className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                value={blogData.tagInput}
+                onChange={(e) => setBlogData((prevData) => ({ ...prevData, tagInput: e.target.value }))}
+                placeholder="Enter a tag"
+                className="flex-grow p-2 rounded-md"
               />
-            </div>
-
-            <div>
-              <label className="block text-gray-700 dark:text-gray-300 mb-2">Category:</label>
-              <Select
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-                className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+              <Button
+                type="button"
+                onClick={handleTagAddition}
+                className="p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
               >
-                <SelectTrigger>
-                  <SelectValue placeholder="Select a Category" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="personal-branding">Personal Branding</SelectItem>
-                  <SelectItem value="communication-skills">Communication Skills</SelectItem>
-                  <SelectItem value="corporate-etiquette">Corporate Etiquette</SelectItem>
-                  <SelectItem value="fine-dining-manners">Fine Dining Manners</SelectItem>
-                </SelectContent>
-              </Select>
+                <BsPlusCircle />
+              </Button>
             </div>
-
-            <div>
-              <label className="block text-gray-700 dark:text-gray-300 mb-2">Tags:</label>
-              <div className="flex items-center space-x-2">
-                <Input
-                  type="text"
-                  value={tagInput}
-                  onChange={(e) => setTagInput(e.target.value)}
-                  placeholder="Enter a tag"
-                  className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
-                />
-                <Button
-                  type="button"
-                  onClick={handleTagAddition}
-                  className="text-xl text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white"
+            <div className="flex flex-wrap gap-2 mt-2">
+              {blogData.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="inline-flex items-center px-2 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800"
                 >
-                  <BsPlusCircle />
-                </Button>
-              </div>
-              <div className="flex space-x-2 mt-2">
-                {tags.map(tag => (
-                  <span
-                    key={tag}
-                    className="inline-block bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-300 px-2 py-1 rounded-lg"
+                  {tag}
+                  <button
+                    type="button"
+                    onClick={() => handleTagRemoval(tag)}
+                    className="ml-1 text-blue-600 hover:text-blue-800"
                   >
-                    {tag} <Button onClick={() => handleTagRemoval(tag)} className="ml-1 text-sm font-bold text-red-600">x</Button>
-                  </span>
-                ))}
-              </div>
+                    &times;
+                  </button>
+                </span>
+              ))}
             </div>
+          </div>
 
-            <div>
-              <label className="block text-gray-700 dark:text-gray-300 mb-2">Main Image:</label>
-              <div className="flex items-center">
-                <label className="w-full flex flex-col items-center px-4 py-6 bg-gray-200 dark:bg-gray-700 text-blue rounded-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-[#933469] hover:text-white">
-                  <AiOutlineCloudUpload className="text-3xl" />
-                  <span className="mt-2 text-base leading-normal">Upload an Image</span>
-                  <input type="file" className="hidden" accept="image/*" onChange={handleImageChange} />
-                </label>
-              </div>
-              {image && <img src={image} alt="Preview" className="mt-4 w-40 rounded-lg shadow-md" />}
+          {/* Image Uploads */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Main Image:</label>
+            <div className="flex items-center justify-center w-full">
+              <label className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                  <AiOutlineCloudUpload className="w-10 h-10 mb-3 text-gray-400" />
+                  <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                    <span className="font-semibold">Click to upload</span> or drag and drop
+                  </p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+                </div>
+                <input
+                  type="file"
+                  className="hidden"
+                  accept="image/*"
+                  onChange={(e) => handleImageChange(e, "image")}
+                />
+              </label>
             </div>
+            {blogData.image && (
+              <img
+                src={blogData.image || "/placeholder.svg"}
+                alt="Preview"
+                className="mt-4 max-w-full h-auto rounded-lg shadow-md"
+              />
+            )}
+          </div>
 
-            <div>
-              <label className="block text-gray-700 dark:text-gray-300 mb-2">Content:</label>
-              <Tiptap content={content} onChange={(e)=>handleContentChange(e)}/>
-              {/* <ReactQuill
-                value={content}
-                onChange={setContent}
-                modules={modules}
-                formats={formats}
-                className="bg-white dark:bg-gray-700 dark:text-white"
-              /> */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Hero Image:</label>
+            <div className="flex items-center justify-center w-full">
+              <label className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                  <AiOutlineCloudUpload className="w-10 h-10 mb-3 text-gray-400" />
+                  <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                    <span className="font-semibold">Click to upload</span> or drag and drop
+                  </p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 1920x1080px)</p>
+                </div>
+                <input
+                  type="file"
+                  className="hidden"
+                  accept="image/*"
+                  onChange={(e) => handleImageChange(e, "heroImage")}
+                />
+              </label>
             </div>
+            {blogData.heroImage && (
+              <img
+                src={blogData.heroImage || "/placeholder.svg"}
+                alt="Hero Preview"
+                className="mt-4 max-w-full h-auto rounded-lg shadow-md"
+              />
+            )}
+          </div>
 
-            <Button
-              type="submit"
-              className="w-full bg-[#933469] hover:bg-[#d664b6] text-white py-3 rounded-lg font-semibold"
-            >
-              {isEditMode ? 'Update Blog' : 'Submit'}
-            </Button>
-          </form>
+          {/* Tiptap Editor */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Content:</label>
+            <Tiptap content={blogData.content} onChange={handleContentChange} />
+          </div>
 
-          {/* Preview Section with Mode Toggle */}
-          <div className="mt-12 border-t border-gray-200 dark:border-gray-600 pt-8">
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-semibold text-gray-800 dark:text-white">Preview:</h2>
-              <div className="flex space-x-2">
-                <Button
-                  onClick={() => setPreviewMode('laptop')}
-                  className={`p-2 rounded-lg ${previewMode === 'laptop' ? 'bg-[#933469] text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-300'}`}
+          <Button
+            type="submit"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300"
+          >
+            {isEditMode ? "Update Blog" : "Publish Blog"}
+          </Button>
+        </form>
+
+        {/* Preview Section */}
+        <div className="mt-12 border-t border-gray-200 dark:border-gray-700 pt-8">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-xl font-semibold text-gray-800 dark:text-white">Preview:</h2>
+            <div className="flex space-x-2">
+              <Button
+                onClick={() => setPreviewMode("laptop")}
+                className={`p-2 rounded-lg ${previewMode === "laptop" ? "bg-blue-600 text-white" : "bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-300"}`}
+              >
+                <AiOutlineLaptop className="text-2xl" />
+              </Button>
+              <Button
+                onClick={() => setPreviewMode("mobile")}
+                className={`p-2 rounded-lg ${previewMode === "mobile" ? "bg-blue-600 text-white" : "bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-300"}`}
+              >
+                <AiOutlineMobile className="text-2xl" />
+              </Button>
+            </div>
+          </div>
+
+          <div
+            className={`border border-gray-300 dark:border-gray-600 rounded-lg p-6 ${previewMode === "mobile" ? "max-w-sm mx-auto" : "w-full"}`}
+          >
+            {blogData.heroImage && (
+              <img src={blogData.heroImage || "/placeholder.svg"} alt="Hero" className="w-full mb-4 rounded-lg" />
+            )}
+            <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">{blogData.title}</h3>
+            {blogData.category && (
+              <span className="inline-block bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300 mb-4">
+                Category: {blogData.category}
+              </span>
+            )}
+            <div className="flex flex-wrap gap-2 mb-4">
+              {blogData.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="px-2 py-1 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full text-sm"
                 >
-                  <AiOutlineLaptop className="text-2xl" />
-                </Button>
-                <Button
-                  onClick={() => setPreviewMode('mobile')}
-                  className={`p-2 rounded-lg ${previewMode === 'mobile' ? 'bg-[#933469] text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-300'}`}
-                >
-                  <AiOutlineMobile className="text-2xl" />
-                </Button>
-              </div>
+                  #{tag}
+                </span>
+              ))}
             </div>
-
-            <div className={`border border-gray-300 dark:border-gray-600 rounded-lg p-6 ${previewMode === 'mobile' ? 'w-80 mx-auto' : 'w-full'}`}>
-              <h3 className="text-2xl font-bold text-gray-800 dark:text-white">{title}</h3>
-              {category && <span className="block text-sm text-gray-500 dark:text-gray-400 mb-2">Category: {category}</span>}
-              <div className="flex flex-wrap space-x-2 mb-4">
-                {tags.map(tag => (
-                  <span key={tag} className="px-2 py-1 bg-gray-300 dark:bg-gray-600 rounded-lg text-gray-700 dark:text-gray-300">
-                    #{tag}
-                  </span>
-                ))}
-              </div>
-              {image && <img src={image} alt="Main" className="w-full mb-4 rounded-lg" />}
-              <div dangerouslySetInnerHTML={{ __html: content }} className="text-gray-800 dark:text-gray-300" />
-            </div>
+            {blogData.image && (
+              <img src={blogData.image || "/placeholder.svg"} alt="Main" className="w-full mb-4 rounded-lg" />
+            )}
+            <div
+              dangerouslySetInnerHTML={{ __html: blogData.content }}
+              className="prose dark:prose-invert max-w-none"
+            />
           </div>
         </div>
       </div>
-    </>
-  );
+    </div>
+  )
 }
+

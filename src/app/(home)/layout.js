@@ -6,6 +6,8 @@ import Header from "@/components/Navbar/Navbar";
 import { Toaster } from "@/components/ui/toaster";
 import { SessionProvider } from "next-auth/react";
 import Script from "next/script";
+import { NotificationProvider } from "@/components/NotificationProvider";
+import Script from "next/script";
 
 
 
@@ -29,7 +31,7 @@ export default async function RootLayout({ children }) {
   return (
     <SessionProvider session={session}>
       <html lang="en">
-        <Script
+        <Scrip
           id="clarity-script"
           strategy="afterInteractive"
           dangerouslySetInnerHTML={{

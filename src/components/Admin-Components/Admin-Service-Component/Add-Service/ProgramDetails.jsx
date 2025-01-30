@@ -1,69 +1,36 @@
-import React, { useState, useEffect } from 'react';
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-const ProgramDetails = (props) => {
-  const { formData ,setFormData } = props;
-  const [ageGroups, setAgeGroups] = useState(formData?.programDetails?.ageGroups ||[{ heading: '', subheading: '' }]);
-  const [formats, setFormats] = useState(formData?.programDetails?.formats || [{ heading: '', subheading: '' }]);
-  const [durations, setDurations] = useState(formData?.programDetails?.durations || [{ heading: '', subheading: '' }]);
-  const [locations, setLocations] = useState(formData?.programDetails?.locations || [{ heading: '', subheading: '' }]);
+const ProgramDetails = ({ programDetails, onProgramDetailsChange }) => {
+  const { ageGroups, formats, durations, locations } = programDetails;
 
-  const addAgeGroup = () => {
-    setAgeGroups([...ageGroups, { heading: '', subheading: '' }]);
-  };
-
-  const addFormat = () => {
-    setFormats([...formats, { heading: '', subheading: '' }]);
-  };
-
-  const addDuration = () => {
-    setDurations([...durations, { heading: '', subheading: '' }]);
-  };
-
-  const addLocation = () => {
-    setLocations([...locations, { heading: '', subheading: '' }]);
-  };
-
-  const handleInputChange = (index, field, value, setState, state) => {
-    const newState = [...state];
-    newState[index][field] = value;
-    setState(newState);
-  };
-
-  const removeInput = (index, setState, state) => {
-    const newState = state.filter((_, i) => i !== index);
-    setState(newState);
-  };
-
-  useEffect(() => {
-    // On mount: Initialize form data
-    setFormData((prevData) => ({
-      ...prevData,
-      programDetails: {
-        ageGroups,
-        formats,
-        durations,  
-        locations
-
-      },
-    }));
-    return () => {  
-      setFormData((prevData) => ({
-        ...prevData,
-        programDetails: {
-          ageGroups,
-        formats,
-        durations,  
-        locations
-        },
-      }));
+    const addAgeGroup = () => {
+        onProgramDetailsChange('ageGroups', [...ageGroups, { subheading: '' }]);
     };
-  }, [ageGroups,
-    formats,
-    durations,  
-    locations]);
 
+    const addFormat = () => {
+        onProgramDetailsChange('formats', [...formats, { heading: '', subheading: '' }]);
+    };
+
+    const addDuration = () => {
+        onProgramDetailsChange('durations', [...durations, { heading: '', subheading: '' }]);
+    };
+
+    const addLocation = () => {
+        onProgramDetailsChange('locations', [...locations, { heading: '', subheading: '' }]);
+    };
+
+    const handleInputChange = (index, field, value, stateKey) => {
+        const newState = [...programDetails[stateKey]];
+        newState[index][field] = value;
+        onProgramDetailsChange(stateKey, newState);
+    };
+
+    const removeInput = (index, stateKey) => {
+        const newState = programDetails[stateKey].filter((_, i) => i !== index);
+        onProgramDetailsChange(stateKey, newState);
+    };
   return (
     <div className="min-h-screen">
       <div className="mx-auto bg-white dark:bg-gray-800 rounded-lg space-y-8">
@@ -73,29 +40,29 @@ const ProgramDetails = (props) => {
           <h2 className="text-2xl font-semibold text-gray-800 dark:text-white">Age Group</h2>
           {ageGroups.map((group, index) => (
             <div key={index} className="flex items-center space-x-4">
-              <div className="flex-1">
+              {/* <div className="flex-1">
                 <label className="block text-gray-700 dark:text-gray-300 mb-2">Age Group Heading:</label>
                 <Input
                   type="text"
                   value={group.heading}
-                  onChange={(e) => handleInputChange(index, 'heading', e.target.value, setAgeGroups, ageGroups)}
+                  onChange={(e) => handleInputChange(index, 'heading', e.target.value,  'ageGroups')}
                   placeholder="Enter the age group heading"
                   className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                 />
-              </div>
+              </div> */}
               <div className="flex-1">
                 <label className="block text-gray-700 dark:text-gray-300 mb-2">Age Group Subheading:</label>
                 <Input
                   type="text"
                   value={group.subheading}
-                  onChange={(e) => handleInputChange(index, 'subheading', e.target.value, setAgeGroups, ageGroups)}
+                  onChange={(e) => handleInputChange(index, 'subheading', e.target.value,  'ageGroups')}
                   placeholder="Enter the age group subheading"
                   className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                 />
               </div>
               <Button
                 type="button"
-                onClick={() => removeInput(index, setAgeGroups, ageGroups)}
+                onClick={() => removeInput(index, 'ageGroups')}
                 className="mt-6 bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg"
               >
                 Delete
@@ -105,7 +72,7 @@ const ProgramDetails = (props) => {
           <Button
             type="button"
             onClick={addAgeGroup}
-            className="mt-4 bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg"
+            className="mt-4 bg-black text-white py-2 px-4 rounded-lg"
           >
             + Add Age Group
           </Button>
@@ -118,7 +85,7 @@ const ProgramDetails = (props) => {
                 <Input
                   type="text"
                   value={format.heading}
-                  onChange={(e) => handleInputChange(index, 'heading', e.target.value, setFormats, formats)}
+                  onChange={(e) => handleInputChange(index, 'heading', e.target.value,  'formats')}
                   placeholder="Enter the format heading"
                   className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                 />
@@ -128,14 +95,14 @@ const ProgramDetails = (props) => {
                 <Input
                   type="text"
                   value={format.subheading}
-                  onChange={(e) => handleInputChange(index, 'subheading', e.target.value, setFormats, formats)}
+                  onChange={(e) => handleInputChange(index, 'subheading', e.target.value,  'formats')}
                   placeholder="Enter the format subheading"
                   className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                 />
               </div>
               <Button
                 type="button"
-                onClick={() => removeInput(index, setFormats, formats)}
+                onClick={() => removeInput(index,  'formats')}
                 className="mt-6 bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg"
               >
                 Delete
@@ -145,7 +112,7 @@ const ProgramDetails = (props) => {
           <Button
             type="button"
             onClick={addFormat}
-            className="mt-4 bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg"
+            className="mt-4 bg-black text-white py-2 px-4 rounded-lg"
           >
             + Add Format
           </Button>
@@ -158,7 +125,7 @@ const ProgramDetails = (props) => {
                 <Input
                   type="text"
                   value={duration.heading}
-                  onChange={(e) => handleInputChange(index, 'heading', e.target.value, setDurations, durations)}
+                  onChange={(e) => handleInputChange(index, 'heading', e.target.value, 'durations')}
                   placeholder="Enter the duration heading"
                   className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                 />
@@ -168,14 +135,14 @@ const ProgramDetails = (props) => {
                 <Input
                   type="text"
                   value={duration.subheading}
-                  onChange={(e) => handleInputChange(index, 'subheading', e.target.value, setDurations, durations)}
+                  onChange={(e) => handleInputChange(index, 'subheading', e.target.value, 'durations')}
                   placeholder="Enter the duration subheading"
                   className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                 />
               </div>
               <Button
                 type="button"
-                onClick={() => removeInput(index, setDurations, durations)}
+                onClick={() => removeInput(index, 'durations')}
                 className="mt-6 bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg"
               >
                 Delete
@@ -185,7 +152,7 @@ const ProgramDetails = (props) => {
           <Button
             type="button"
             onClick={addDuration}
-            className="mt-4 bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg"
+            className="mt-4 bg-black text-white py-2 px-4 rounded-lg"
           >
             + Add Duration
           </Button>
@@ -198,7 +165,7 @@ const ProgramDetails = (props) => {
                 <Input
                   type="text"
                   value={location.heading}
-                  onChange={(e) => handleInputChange(index, 'heading', e.target.value, setLocations, locations)}
+                  onChange={(e) => handleInputChange(index, 'heading', e.target.value,  'locations')}
                   placeholder="Enter the location heading"
                   className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                 />
@@ -208,14 +175,14 @@ const ProgramDetails = (props) => {
                 <Input
                   type="text"
                   value={location.subheading}
-                  onChange={(e) => handleInputChange(index, 'subheading', e.target.value, setLocations, locations)}
+                  onChange={(e) => handleInputChange(index, 'subheading', e.target.value,  'locations')}
                   placeholder="Enter the location subheading"
                   className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
                 />
               </div>
               <Button
                 type="button"
-                onClick={() => removeInput(index, setLocations, locations)}
+                onClick={() => removeInput(index, 'locations')}
                 className="mt-6 bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg"
               >
                 Delete
@@ -225,7 +192,7 @@ const ProgramDetails = (props) => {
           <Button
             type="button"
             onClick={addLocation}
-            className="mt-4 bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg"
+            className="mt-4 bg-black text-white py-2 px-4 rounded-lg"
           >
             + Add Location
           </Button>

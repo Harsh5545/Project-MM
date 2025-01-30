@@ -4,8 +4,7 @@ import React from 'react'
 
 
 export const metadata = {
-  title: 'Services',
-  description: 'Services page',
+  title: 'Manage Services',
 }
 
 
