@@ -17,8 +17,8 @@ export default function BlogEditor({ existingBlog }) {
   const [blogData, setBlogData] = useState({
     title: existingBlog?.title || "",
     content: existingBlog?.content || "",
-    image: existingBlog?.image || null,
-    heroImage: existingBlog?.heroImage || null,
+    image: existingBlog?.image || "",
+    heroImage: existingBlog?.heroImage || "",
     category: existingBlog?.category || "",
     tags: existingBlog?.tags || [],
     tagInput: "",
@@ -107,7 +107,7 @@ export default function BlogEditor({ existingBlog }) {
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Title:</label>
             <Input
               type="text"
-              value={blogData.title}
+              value={blogData.title ?? ""}
               onChange={(e) => setBlogData((prevData) => ({ ...prevData, title: e.target.value }))}
               required
               className="w-full p-2 rounded-md"

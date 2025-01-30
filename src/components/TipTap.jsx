@@ -144,6 +144,8 @@ const Tiptap = ({ onChange, content }) => {
       const json = editor.getJSON()
       onChange({ html, json })
     },
+     // Fix for SSR hydration issue
+     immediatelyRender: false, 
   })
 
   return (
