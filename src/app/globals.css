@@ -164,3 +164,8 @@ body{
 .animate-glow {
   animation: glow 1.5s infinite ease-in-out;
 }
+
+ul, ol {
+  list-style: revert;
+  padding-left: 1rem
+}
