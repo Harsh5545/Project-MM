@@ -15,7 +15,7 @@ RUN if [ -f "prisma/schema.prisma" ]; then npx prisma generate; fi
 
 # Copy the rest of the application files
 COPY . .
-
+RUN npx prisma generate
 # Build the Next.js application
 RUN npm run build
 
