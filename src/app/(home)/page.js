@@ -49,7 +49,7 @@ export const metadata = {
     title: "Modern Mannerism - Elevating Etiquette and Personality",
     description: "Learn essential skills for professional and personal growth with Modern Mannerism's coaching programs on etiquette and personality development.",
     image: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-  }
+  } 
 };
 
 export default function Home() {
