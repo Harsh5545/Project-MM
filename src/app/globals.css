@@ -174,10 +174,10 @@ body{
 
 .tiptap blockquote {
   margin-left: 1rem
-
+}
 .main-container {
 	font-family: 'Lato';
-	width: fit-content;
+	width: 'fit-content';
 
 }
 
