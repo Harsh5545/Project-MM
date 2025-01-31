@@ -312,7 +312,10 @@ export default function Editor({ onChange, content }) {
 			}
 		};
 	}, [isLayoutReady]);
-
+	const handleChange = (event, editor) => {
+		const data = editor.getData(); // Get the current editor content
+		onChange(data); // Pass the content to the parent component via `onChange`
+	};
 	return (
 		<div className="main-container">
 			<div className="editor-container editor-container_classic-editor editor-container_include-word-count" ref={editorContainerRef}>
@@ -320,6 +323,9 @@ export default function Editor({ onChange, content }) {
 					<div ref={editorRef}>
 						{editorConfig && (
 							<CKEditor
+
+								data={content}
+								onChange={handleChange}
 								onReady={editor => {
 									const wordCount = editor.plugins.get('WordCount');
 									editorWordCountRef.current.appendChild(wordCount.wordCountContainer);
@@ -329,11 +335,12 @@ export default function Editor({ onChange, content }) {
 								}}
 								editor={ClassicEditor}
 								config={editorConfig}
+
 							/>
 						)}
 					</div>
 				</div>
-				<div className="editor_container__word-count" ref={editorWordCountRef}></div>
+				{/* <div className="editor_container__word-count" ref={editorWordCountRef}></div> */}
 			</div>
 		</div>
 	);

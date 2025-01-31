@@ -58,13 +58,11 @@ export default function BlogEditor({ existingBlog }) {
   }
 
   const handleContentChange = (newContent) => {
-    console.log(newContent)
     setBlogData((prevData) => ({
       ...prevData,
-      content: newContent.html,
-      contentJson: newContent.json,
-    }))
-  }
+      content: newContent, // CKEditor gives HTML directly
+    }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault()
