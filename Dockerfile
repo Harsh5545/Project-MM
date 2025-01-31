@@ -10,8 +10,6 @@ COPY package.json package-lock.json ./
 # Install dependencies with --legacy-peer-deps to avoid conflicts
 RUN npm i --legacy-peer-deps
 
-# Install typescript as a dev dependency
-RUN npm install typescript --save-dev
 
 # Generate Prisma client (if Prisma is being used)
 RUN npx prisma generate
