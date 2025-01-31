@@ -10,9 +10,8 @@ COPY package.json package-lock.json ./
 # Install dependencies with --legacy-peer-deps to avoid conflicts
 RUN npm i --legacy-peer-deps
 
-
-# Generate Prisma client (if Prisma is being used)
-RUN npx prisma generate
+# Check if prisma schema exists and run prisma generate if so
+RUN if [ -f "prisma/schema.prisma" ]; then npx prisma generate; fi
 
 # Copy the rest of the application files
 COPY . .
