@@ -79,7 +79,7 @@ import 'ckeditor5/ckeditor5.css';
 const LICENSE_KEY =
 	'eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3Mzk0OTExOTksImp0aSI6IjE4YmUwNmVmLTRiZDgtNDA1ZS05NmZhLTViYTY5MjhjM2M1NyIsInVzYWdlRW5kcG9pbnQiOiJodHRwczovL3Byb3h5LWV2ZW50LmNrZWRpdG9yLmNvbSIsImRpc3RyaWJ1dGlvbkNoYW5uZWwiOlsiY2xvdWQiLCJkcnVwYWwiLCJzaCJdLCJ3aGl0ZUxhYmVsIjp0cnVlLCJsaWNlbnNlVHlwZSI6InRyaWFsIiwiZmVhdHVyZXMiOlsiKiJdLCJ2YyI6IjIzY2ViZTNjIn0.CdqzzGFQyaH5I4ZZexXxUlY2yuu6umDPSv4szfs9B5fpF6SWiDi-ZDmw4mLgy5OMX5n2m1H7qdp_0GH_tCxGyA';
 
-export default function Editor() {
+export default function Editor({ onChange, content }) {
 	const editorContainerRef = useRef(null);
 	const editorRef = useRef(null);
 	const editorWordCountRef = useRef(null);

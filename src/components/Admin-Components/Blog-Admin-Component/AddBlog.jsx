@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import Tiptap from "@/components/TipTap"
 import { useToast } from "@/hooks/use-toast"
 import { useCategories } from "./Admin-Blog-Table/UseCategories"
+import Editor from "@/components/Editor"
 
 export default function BlogEditor({ existingBlog }) {
   const { toast } = useToast()
@@ -57,6 +58,7 @@ export default function BlogEditor({ existingBlog }) {
   }
 
   const handleContentChange = (newContent) => {
+    console.log(newContent)
     setBlogData((prevData) => ({
       ...prevData,
       content: newContent.html,
@@ -240,7 +242,8 @@ export default function BlogEditor({ existingBlog }) {
           {/* Tiptap Editor */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Content:</label>
-            <Tiptap content={blogData.content} onChange={handleContentChange} />
+            {/* <Tiptap content={blogData.content} onChange={handleContentChange} /> */}
+            <Editor content={blogData.content} onChange={handleContentChange}/>
           </div>
 
           <Button
