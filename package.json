@@ -69,6 +69,7 @@
     "@tiptap/react": "^2.11.0",
     "@tiptap/starter-kit": "^2.11.0",
     "bcryptjs": "^2.4.3",
+    "ckeditor5-custom-project": "file:ckeditor5",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
