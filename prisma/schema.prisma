@@ -29,6 +29,7 @@ model User {
   image         String?
   role          Role     @relation(fields: [roleId], references: [id])
   notifications Notification[]
+  blogs          Blog[]
 
   @@index([roleId], map: "User_roleId_fkey")
 }
@@ -40,6 +41,7 @@ model Category {
   createdAt      DateTime       @default(now())
   updatedAt      DateTime       @updatedAt
   status         CategoryStatus @default(ACTIVE)
+  blogs          Blog[]  
   services       Service[]
 }
 
@@ -85,4 +87,34 @@ model Notification {
   user      User     @relation(fields: [userId], references: [id]) // Relation to the User model
 
   @@index([userId], map: "Notification_userId_fkey")
+}
+
+model Blog {
+  id          Int        @id @default(autoincrement())
+  title       String     // Blog title
+  content     String     // Blog content
+  published   Boolean    @default(false) // Whether the blog is published
+  authorId    Int        // Author (reference to the User model)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  categoryId  Int        // Blog's category
+  slug        String     @unique // Unique slug for SEO and URL
+  meta_title  String?    // Meta title for SEO
+  meta_desc   String?    // Meta description for SEO
+  tags        Tag[]      @relation("BlogTags") // Many-to-many relation with Tag
+
+  author      User       @relation(fields: [authorId], references: [id])
+  category    Category   @relation(fields: [categoryId], references: [id])
+
+  @@index([slug], name: "Blog_slug_idx")
+}
+
+
+model Tag {
+  id        Int       @id @default(autoincrement())
+  name      String    @unique
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  blogs     Blog[]    @relation("BlogTags") // Many-to-many relation with Blog
+  @@index([name], name: "Tag_name_idx")
 }
