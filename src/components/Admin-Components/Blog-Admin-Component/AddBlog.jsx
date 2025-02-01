@@ -13,7 +13,7 @@ import Editor from "@/components/Editor"
 
 
 export default function BlogEditor({ existingBlog, userId }) {
-  
+
   const { toast } = useToast()
   const { categories, loading: categoriesLoading } = useCategories()
   const isEditMode = !!existingBlog
@@ -21,9 +21,9 @@ export default function BlogEditor({ existingBlog, userId }) {
     title: existingBlog?.title || "",
     content: existingBlog?.content || "",
     slug: existingBlog?.slug || "",
-    
+    published: existingBlog?.published || true,
     authorId: existingBlog?.authorId || userId,
-    categoryId: existingBlog?.category || "",
+    categoryId: existingBlog?.categoryId || "",
     image: existingBlog?.image || "",
     heroImage: existingBlog?.heroImage || "",
     meta_title: existingBlog?.meta_title || "",
@@ -74,21 +74,39 @@ export default function BlogEditor({ existingBlog, userId }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+
+    // Convert authorId and categoryId to numbers
+    const payload = {
+      ...blogData,
+      authorId: Number(blogData.authorId), // Convert to number
+      categoryId: Number(blogData.categoryId), // Convert to number
+    }
+
     try {
       const response = await fetch("/api/blog/add-blog", {
         method: isEditMode ? "PUT" : "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(blogData),
+        body: JSON.stringify(payload), // Send the correct payload
       })
 
       if (!response.ok) throw new Error("Failed to save blog")
 
-      toast({ title: "Success", description: isEditMode ? "Blog updated successfully" : "Blog created successfully" })
+      toast({
+        title: "Success",
+        description: isEditMode ? "Blog updated successfully" : "Blog created successfully"
+      })
     } catch (error) {
       console.error("Error saving blog:", error)
-      toast({ title: "Error", description: "Failed to save blog. Please try again.", variant: "destructive" })
+      toast({
+        title: "Error",
+        description: "Failed to save blog. Please try again.",
+        variant: "destructive"
+      })
     }
   }
+
+
+
 
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900 p-4 sm:p-6 lg:p-8">
@@ -155,8 +173,11 @@ export default function BlogEditor({ existingBlog, userId }) {
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Category:</label>
             <Select
-              value={blogData.category}
-              onValueChange={(value) => setBlogData((prevData) => ({ ...prevData, category: value }))}
+              value={blogData.categoryId}
+              onValueChange={(value) => setBlogData((prevData) => ({
+                ...prevData,
+                categoryId: Number(value) // Convert to number
+              }))}
               disabled={categoriesLoading}
             >
               <SelectTrigger className="w-full p-2 rounded-md">
@@ -167,7 +188,7 @@ export default function BlogEditor({ existingBlog, userId }) {
                   <SelectItem value="loading">Loading...</SelectItem>
                 ) : categories.length > 0 ? (
                   categories.map((cat) => (
-                    <SelectItem key={cat.id} value={cat.category_name}>
+                    <SelectItem key={cat.id} value={cat.id.toString()}> {/* Ensure value is a string */}
                       {cat.category_name}
                     </SelectItem>
                   ))
@@ -176,6 +197,8 @@ export default function BlogEditor({ existingBlog, userId }) {
                 )}
               </SelectContent>
             </Select>
+
+
           </div>
 
           {/* Tags Input */}
