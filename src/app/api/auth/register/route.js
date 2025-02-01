@@ -57,6 +57,7 @@ export async function POST(req) {
             return NextResponse.json({
                 Message: "Unable to create user.",
                 Success: false,
+                Error:  err,
             });
         }
 
