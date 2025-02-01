@@ -9,6 +9,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import Tiptap from "@/components/TipTap"
 import { useToast } from "@/hooks/use-toast"
 import { useCategories } from "./Admin-Blog-Table/UseCategories"
+import Editor from "@/components/Editor"
+
 
 export default function BlogEditor({ existingBlog }) {
   const { toast } = useToast()
@@ -17,11 +19,16 @@ export default function BlogEditor({ existingBlog }) {
   const [blogData, setBlogData] = useState({
     title: existingBlog?.title || "",
     content: existingBlog?.content || "",
+    slug: existingBlog?.slug || "",
+    published: existingBlog?.published || false,
+    authorId: existingBlog?.authorId || 1,
+    category: existingBlog?.category || "",
     image: existingBlog?.image || "",
     heroImage: existingBlog?.heroImage || "",
-    category: existingBlog?.category || "",
+    meta_title: existingBlog?.meta_title || "",
+    meta_desc: existingBlog?.meta_desc || "",
     tags: existingBlog?.tags || [],
-    tagInput: "",
+    
   })
   const [previewMode, setPreviewMode] = useState("laptop")
 
@@ -59,38 +66,25 @@ export default function BlogEditor({ existingBlog }) {
   const handleContentChange = (newContent) => {
     setBlogData((prevData) => ({
       ...prevData,
-      content: newContent.html,
-      contentJson: newContent.json,
-    }))
-  }
+      content: newContent, // CKEditor gives HTML directly
+    }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
       const response = await fetch("/api/blog/save", {
         method: isEditMode ? "PUT" : "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(blogData),
       })
 
-      if (!response.ok) {
-        throw new Error("Failed to save blog")
-      }
+      if (!response.ok) throw new Error("Failed to save blog")
 
-      toast({
-        title: "Success",
-        description: isEditMode ? "Blog updated successfully" : "Blog created successfully",
-      })
-      // Redirect or clear form here
+      toast({ title: "Success", description: isEditMode ? "Blog updated successfully" : "Blog created successfully" })
     } catch (error) {
       console.error("Error saving blog:", error)
-      toast({
-        title: "Error",
-        description: "Failed to save blog. Please try again.",
-        variant: "destructive",
-      })
+      toast({ title: "Error", description: "Failed to save blog. Please try again.", variant: "destructive" })
     }
   }
 
@@ -240,7 +234,8 @@ export default function BlogEditor({ existingBlog }) {
           {/* Tiptap Editor */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Content:</label>
-            <Tiptap content={blogData.content} onChange={handleContentChange} />
+            {/* <Tiptap content={blogData.content} onChange={handleContentChange} /> */}
+            <Editor content={blogData.content} onChange={handleContentChange}/>
           </div>
 
           <Button
@@ -271,7 +266,7 @@ export default function BlogEditor({ existingBlog }) {
             </div>
           </div>
 
-          <div
+          {/* <div
             className={`border border-gray-300 dark:border-gray-600 rounded-lg p-6 ${previewMode === "mobile" ? "max-w-sm mx-auto" : "w-full"}`}
           >
             {blogData.heroImage && (
@@ -300,7 +295,12 @@ export default function BlogEditor({ existingBlog }) {
               dangerouslySetInnerHTML={{ __html: blogData.content }}
               className="prose dark:prose-invert max-w-none"
             />
-          </div>
+          </div> */}
+            <div className={previewMode === "mobile" ? "max-w-sm mx-auto" : "w-full"}>
+            {blogData.heroImage && <img src={blogData.heroImage} alt="Hero" className="w-full mb-4 rounded-lg" />}
+            <h3 className="text-2xl font-bold mb-4">{blogData.title}</h3>
+            <div className=" ck-content prose dark:prose-invert" dangerouslySetInnerHTML={{ __html: blogData.content }} />
+        </div>
         </div>
       </div>
     </div>
