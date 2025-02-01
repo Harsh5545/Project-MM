@@ -5,6 +5,7 @@ import "../globals.css";
 import { redirect } from "next/navigation";
 import { ThemeProvider } from "next-themes";
 import { Toaster } from "@/components/ui/toaster";
+
 const geistSans = Geist({
     variable: "--font-geist-sans",
     subsets: ["latin"],

@@ -6,13 +6,14 @@ import { BsPlusCircle } from "react-icons/bs"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import Tiptap from "@/components/TipTap"
 import { useToast } from "@/hooks/use-toast"
 import { useCategories } from "./Admin-Blog-Table/UseCategories"
 import Editor from "@/components/Editor"
 
 
-export default function BlogEditor({ existingBlog }) {
+
+export default function BlogEditor({ existingBlog, userId }) {
+  
   const { toast } = useToast()
   const { categories, loading: categoriesLoading } = useCategories()
   const isEditMode = !!existingBlog
@@ -20,16 +21,17 @@ export default function BlogEditor({ existingBlog }) {
     title: existingBlog?.title || "",
     content: existingBlog?.content || "",
     slug: existingBlog?.slug || "",
-    published: existingBlog?.published || false,
-    authorId: existingBlog?.authorId || 1,
-    category: existingBlog?.category || "",
+    
+    authorId: existingBlog?.authorId || userId,
+    categoryId: existingBlog?.category || "",
     image: existingBlog?.image || "",
     heroImage: existingBlog?.heroImage || "",
     meta_title: existingBlog?.meta_title || "",
     meta_desc: existingBlog?.meta_desc || "",
     tags: existingBlog?.tags || [],
-    
+
   })
+
   const [previewMode, setPreviewMode] = useState("laptop")
 
   const handleImageChange = (e, imageType) => {
@@ -51,7 +53,7 @@ export default function BlogEditor({ existingBlog }) {
       setBlogData((prevData) => ({
         ...prevData,
         tags: [...prevData.tags, blogData.tagInput.trim()],
-        tagInput: "",
+
       }))
     }
   }
@@ -73,7 +75,7 @@ export default function BlogEditor({ existingBlog }) {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const response = await fetch("/api/blog/save", {
+      const response = await fetch("/api/blog/add-blog", {
         method: isEditMode ? "PUT" : "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(blogData),
@@ -106,6 +108,46 @@ export default function BlogEditor({ existingBlog }) {
               required
               className="w-full p-2 rounded-md"
               placeholder="Enter blog title"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">description:</label>
+            <Input
+              type="text"
+              value={blogData.meta_desc ?? ""}
+              onChange={(e) => setBlogData((prevData) => ({ ...prevData, meta_desc: e.target.value }))}
+              required
+              className="w-full p-2 rounded-md"
+              placeholder="Enter blog title"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">MetaTitle:</label>
+            <Input
+              type="text"
+              value={blogData.meta_title ?? ""}
+              onChange={(e) => setBlogData((prevData) => ({ ...prevData, meta_title: e.target.value }))}
+              required
+              className="w-full p-2 rounded-md"
+              placeholder="Enter blog title"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Slug:</label>
+            <Input
+              type="text"
+              value={blogData.slug}
+              onChange={(e) => {
+                const formattedSlug = e.target.value
+                  .toLowerCase()
+                  .replace(/\s+/g, "-") // Replace spaces with dashes
+                  .replace(/[^a-z0-9-]/g, ""); // Remove special characters except dashes
+
+                setBlogData((prevData) => ({ ...prevData, slug: formattedSlug }));
+              }}
+              required
+              className="w-full p-2 rounded-md"
+              placeholder="Enter blog slug"
             />
           </div>
 
@@ -235,7 +277,7 @@ export default function BlogEditor({ existingBlog }) {
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Content:</label>
             {/* <Tiptap content={blogData.content} onChange={handleContentChange} /> */}
-            <Editor content={blogData.content} onChange={handleContentChange}/>
+            <Editor content={blogData.content} onChange={handleContentChange} />
           </div>
 
           <Button
@@ -296,11 +338,11 @@ export default function BlogEditor({ existingBlog }) {
               className="prose dark:prose-invert max-w-none"
             />
           </div> */}
-            <div className={previewMode === "mobile" ? "max-w-sm mx-auto" : "w-full"}>
+          <div className={previewMode === "mobile" ? "max-w-sm mx-auto" : "w-full"}>
             {blogData.heroImage && <img src={blogData.heroImage} alt="Hero" className="w-full mb-4 rounded-lg" />}
             <h3 className="text-2xl font-bold mb-4">{blogData.title}</h3>
             <div className=" ck-content prose dark:prose-invert" dangerouslySetInnerHTML={{ __html: blogData.content }} />
-        </div>
+          </div>
         </div>
       </div>
     </div>
