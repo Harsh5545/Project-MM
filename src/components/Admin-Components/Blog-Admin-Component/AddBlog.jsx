@@ -109,8 +109,8 @@ export default function BlogEditor({ existingBlog, userId }) {
 
 
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 p-4 sm:p-6 lg:p-8">
-      <div className="max-w-4xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 space-y-8">
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
+      <div className="max-w-full mx-auto bg-white dark:bg-gray-800  p-6">
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white text-center">
           {isEditMode ? "Edit Blog" : "Add New Blog"}
         </h1>
@@ -150,6 +150,8 @@ export default function BlogEditor({ existingBlog, userId }) {
               placeholder="Enter blog title"
             />
           </div>
+
+
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Slug:</label>
             <Input
@@ -169,75 +171,82 @@ export default function BlogEditor({ existingBlog, userId }) {
             />
           </div>
 
-          {/* Category Select */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Category:</label>
-            <Select
-              value={blogData.categoryId}
-              onValueChange={(value) => setBlogData((prevData) => ({
-                ...prevData,
-                categoryId: Number(value) // Convert to number
-              }))}
-              disabled={categoriesLoading}
-            >
-              <SelectTrigger className="w-full p-2 rounded-md">
-                <SelectValue placeholder={categoriesLoading ? "Loading categories..." : "Select a Category"} />
-              </SelectTrigger>
-              <SelectContent>
-                {categoriesLoading ? (
-                  <SelectItem value="loading">Loading...</SelectItem>
-                ) : categories.length > 0 ? (
-                  categories.map((cat) => (
-                    <SelectItem key={cat.id} value={cat.id.toString()}> {/* Ensure value is a string */}
-                      {cat.category_name}
-                    </SelectItem>
-                  ))
-                ) : (
-                  <SelectItem value="no-categories">No categories available</SelectItem>
-                )}
-              </SelectContent>
-            </Select>
 
+          <div className="flex w-full gap-2">
 
-          </div>
-
-          {/* Tags Input */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Tags:</label>
-            <div className="flex items-center space-x-2">
-              <Input
-                type="text"
-                value={blogData.tagInput}
-                onChange={(e) => setBlogData((prevData) => ({ ...prevData, tagInput: e.target.value }))}
-                placeholder="Enter a tag"
-                className="flex-grow p-2 rounded-md"
-              />
-              <Button
-                type="button"
-                onClick={handleTagAddition}
-                className="p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+             {/* Category Select */}
+            <div className="w-[50%]">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Category:</label>
+              <Select
+                value={blogData.categoryId}
+                onValueChange={(value) => setBlogData((prevData) => ({
+                  ...prevData,
+                  categoryId: Number(value) // Convert to number
+                }))}
+                disabled={categoriesLoading}
               >
-                <BsPlusCircle />
-              </Button>
+                <SelectTrigger className="w-full p-2 rounded-md">
+                  <SelectValue placeholder={categoriesLoading ? "Loading categories..." : "Select a Category"} />
+                </SelectTrigger>
+                <SelectContent>
+                  {categoriesLoading ? (
+                    <SelectItem value="loading">Loading...</SelectItem>
+                  ) : categories.length > 0 ? (
+                    categories.map((cat) => (
+                      <SelectItem key={cat.id} value={cat.id.toString()}> {/* Ensure value is a string */}
+                        {cat.category_name}
+                      </SelectItem>
+                    ))
+                  ) : (
+                    <SelectItem value="no-categories">No categories available</SelectItem>
+                  )}
+                </SelectContent>
+              </Select>
+
+
             </div>
-            <div className="flex flex-wrap gap-2 mt-2">
-              {blogData.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="inline-flex items-center px-2 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800"
+
+            {/* Tags Input */}
+            <div className="w-[50%]">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Tags:</label>
+              <div className="flex items-center space-x-2">
+                <Input
+                  type="text"
+                  value={blogData.tagInput}
+                  onChange={(e) => setBlogData((prevData) => ({ ...prevData, tagInput: e.target.value }))}
+                  placeholder="Enter a tag"
+                  className="flex-grow p-2 rounded-md"
+                />
+                <Button
+                  type="button"
+                  onClick={handleTagAddition}
+                  className="p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
                 >
-                  {tag}
-                  <button
-                    type="button"
-                    onClick={() => handleTagRemoval(tag)}
-                    className="ml-1 text-blue-600 hover:text-blue-800"
+                  <BsPlusCircle />
+                </Button>
+              </div>
+              <div className="flex flex-wrap gap-2 mt-2">
+                {blogData.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="inline-flex items-center px-2 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800"
                   >
-                    &times;
-                  </button>
-                </span>
-              ))}
+                    {tag}
+                    <button
+                      type="button"
+                      onClick={() => handleTagRemoval(tag)}
+                      className="ml-1 text-blue-600 hover:text-blue-800"
+                    >
+                      &times;
+                    </button>
+                  </span>
+                ))}
+              </div>
             </div>
+
           </div>
+         
+
 
           {/* Image Uploads */}
           <div>

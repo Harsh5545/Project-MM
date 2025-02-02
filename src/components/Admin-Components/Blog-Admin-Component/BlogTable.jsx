@@ -103,7 +103,7 @@ export default function BlogTable() {
   };
 
   const handleEdit = (blog) => {
-    router.push(`/blog/edit/${blog.id}`);
+    router.push(`/admin/blog/edit/${blog.slug}`);
   };
 
   const paginatedBlogs = useMemo(() => {
