@@ -22,30 +22,35 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, ArrowUpDown } from "lucide-react";
 
 export default function BlogTable() {
-  const [blogs, setBlogs] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [blogs, setBlogs] = useState([]); // To store blogs from API
+  const [searchTerm, setSearchTerm] = useState(""); // For search input
   const [pageIndex, setPageIndex] = useState(0);
-  const [pageSize, setPageSize] = useState(5);
+  const [pageSize, setPageSize] = useState(10);
+  const [sortOrder, setSortOrder] = useState("asc");
+  const [sortColumn, setSortColumn] = useState("title"); // Default sort by title
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [published, setPublished] = useState(""); // To handle filtering by published status
   const [blogToDelete, setBlogToDelete] = useState(null);
   const { toast } = useToast();
   const router = useRouter();
 
   useEffect(() => {
     fetchBlogs();
-  }, []);
+  }, [pageIndex, pageSize, searchTerm, sortColumn, sortOrder, published]);
 
   const fetchBlogs = async () => {
     try {
-      const response = await fetch("/api/blogs");
+      const response = await fetch(
+        `/api/blog/list-blog?page=${pageIndex + 1}&pageSize=${pageSize}&searchTerm=${searchTerm}&sortBy=${sortColumn}&sortOrder=${sortOrder}&published=${published}`
+      );
       if (!response.ok) {
         throw new Error("Failed to fetch blogs");
       }
       const data = await response.json();
-      setBlogs(data);
+      setBlogs(data?.data || []); // Ensure `data?.data` is used if your API response is wrapped under `data`
     } catch (error) {
       console.error("Error fetching blogs:", error);
       toast({
@@ -56,18 +61,11 @@ export default function BlogTable() {
     }
   };
 
-  const filteredBlogs = useMemo(() => {
-    return blogs.filter(
-      (blog) =>
-        blog.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        blog.category.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  }, [blogs, searchTerm]);
-
-  const paginatedBlogs = useMemo(() => {
-    const startIndex = pageIndex * pageSize;
-    return filteredBlogs.slice(startIndex, startIndex + pageSize);
-  }, [filteredBlogs, pageIndex, pageSize]);
+  const handleSort = (column) => {
+    const newSortOrder = sortColumn === column && sortOrder === "asc" ? "desc" : "asc";
+    setSortColumn(column);
+    setSortOrder(newSortOrder);
+  };
 
   const handleDelete = (blog) => {
     setBlogToDelete(blog);
@@ -108,40 +106,49 @@ export default function BlogTable() {
     router.push(`/blog/edit/${blog.id}`);
   };
 
-  const handlePageChange = (newPageIndex) => {
-    setPageIndex(newPageIndex);
-  };
+  const paginatedBlogs = useMemo(() => {
+    const startIndex = pageIndex * pageSize;
+    return blogs.slice(startIndex, startIndex + pageSize); // Paginate data here
+  }, [blogs, pageIndex, pageSize]);
 
-  const handlePageSizeChange = (newPageSize) => {
-    setPageSize(newPageSize);
-    setPageIndex(0);
-  };
+  const totalPages = Math.ceil(blogs.length / pageSize);
 
   return (
     <div className="container mx-auto py-10">
-        <h1 className="text-3xl mb-5 font-bold">Manage Blog</h1>
+      <h1 className="text-3xl mb-5 font-bold">Manage Blog</h1>
 
       <div className="flex justify-between items-center mb-6">
-      <Input
-        type="text"
-        placeholder="Search blogs..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        className="max-w-sm"
-      />
-        <Button onClick={() => router.push("blog/create")}>
-          Add New Blog
-        </Button>
+        <Input
+          type="text"
+          placeholder="Search blogs..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="max-w-sm"
+        />
+        <Button onClick={() => router.push("blog/create")}>Add New Blog</Button>
       </div>
-
-     
 
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Image</TableHead>
-            <TableHead>Title</TableHead>
-            <TableHead>Category</TableHead>
+            <TableHead>
+              <Button variant="ghost" onClick={() => handleSort("image")}>
+                Image
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+              </Button>
+            </TableHead>
+            <TableHead>
+              <Button variant="ghost" onClick={() => handleSort("title")}>
+                Title
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+              </Button>
+            </TableHead>
+            <TableHead>
+              <Button variant="ghost" onClick={() => handleSort("category")}>
+                Category
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+              </Button>
+            </TableHead>
             <TableHead>Actions</TableHead>
           </TableRow>
         </TableHeader>
@@ -150,7 +157,7 @@ export default function BlogTable() {
             <TableRow key={blog.id}>
               <TableCell>
                 <Image
-                  src={blog.image}
+                  src={blog.image || "/default-image.jpg"}
                   alt={blog.title}
                   width={50}
                   height={50}
@@ -158,19 +165,12 @@ export default function BlogTable() {
                 />
               </TableCell>
               <TableCell>{blog.title}</TableCell>
-              <TableCell>{blog.category}</TableCell>
+              <TableCell>{blog.category ? blog.category.category_name : "No category"}</TableCell>
               <TableCell>
-                <Button
-                  variant="outline"
-                  className="mr-2"
-                  onClick={() => handleEdit(blog)}
-                >
+                <Button variant="outline" className="mr-2" onClick={() => handleEdit(blog)}>
                   Edit
                 </Button>
-                <Button
-                  variant="destructive"
-                  onClick={() => handleDelete(blog)}
-                >
+                <Button variant="destructive" onClick={() => handleDelete(blog)}>
                   Delete
                 </Button>
               </TableCell>
@@ -184,7 +184,7 @@ export default function BlogTable() {
           <Button
             variant="outline"
             size="sm"
-            onClick={() => handlePageChange(0)}
+            onClick={() => setPageIndex(0)}
             disabled={pageIndex === 0}
           >
             <ChevronsLeft className="h-4 w-4" />
@@ -192,27 +192,27 @@ export default function BlogTable() {
           <Button
             variant="outline"
             size="sm"
-            onClick={() => handlePageChange(pageIndex - 1)}
+            onClick={() => setPageIndex(pageIndex - 1)}
             disabled={pageIndex === 0}
           >
             <ChevronLeft className="h-4 w-4" />
           </Button>
           <span className="text-sm font-medium">
-            Page {pageIndex + 1} of {Math.ceil(filteredBlogs.length / pageSize)}
+            Page {pageIndex + 1} of {totalPages}
           </span>
           <Button
             variant="outline"
             size="sm"
-            onClick={() => handlePageChange(pageIndex + 1)}
-            disabled={pageIndex >= Math.ceil(filteredBlogs.length / pageSize) - 1}
+            onClick={() => setPageIndex(pageIndex + 1)}
+            disabled={pageIndex >= totalPages - 1}
           >
             <ChevronRight className="h-4 w-4" />
           </Button>
           <Button
             variant="outline"
             size="sm"
-            onClick={() => handlePageChange(Math.ceil(filteredBlogs.length / pageSize) - 1)}
-            disabled={pageIndex >= Math.ceil(filteredBlogs.length / pageSize) - 1}
+            onClick={() => setPageIndex(totalPages - 1)}
+            disabled={pageIndex >= totalPages - 1}
           >
             <ChevronsRight className="h-4 w-4" />
           </Button>
@@ -223,7 +223,7 @@ export default function BlogTable() {
               key={size}
               variant={pageSize === size ? "default" : "outline"}
               size="sm"
-              onClick={() => handlePageSizeChange(size)}
+              onClick={() => setPageSize(size)}
             >
               {size}
             </Button>
@@ -236,15 +236,11 @@ export default function BlogTable() {
           <DialogHeader>
             <DialogTitle>Are you sure you want to delete this blog?</DialogTitle>
             <DialogDescription>
-              This action cannot be undone. This will permanently delete the
-              blog and remove the data from our servers.
+              This action cannot be undone. This will permanently delete the blog and remove the data from our servers.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
-            <Button
-              variant="outline"
-              onClick={() => setIsDeleteDialogOpen(false)}
-            >
+            <Button variant="outline" onClick={() => setIsDeleteDialogOpen(false)}>
               Cancel
             </Button>
             <Button variant="destructive" onClick={confirmDelete}>
@@ -256,4 +252,3 @@ export default function BlogTable() {
     </div>
   );
 }
-
