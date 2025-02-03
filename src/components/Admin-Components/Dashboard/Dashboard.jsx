@@ -101,7 +101,7 @@ export function Dashboard({ children, session }) {
 
         {/* Main Content */}
         <Suspense fallback={<LoadingSpinner />}>
-          <main className="flex-1 overflow-y-auto bg-gray-100 dark:bg-gray-900 p-4">
+          <main className="flex-1 overflow-y-auto bg-white dark:bg-gray-900 p-4 shadow-lg border m-2 rounded-lg">
             <div className="container mx-auto">
               <DynamicMainContent>{children}</DynamicMainContent>
             </div>
