@@ -5,6 +5,6 @@ export default function robots() {
             allow: '/',
             disallow: ['/admin/','/user/'],
         },
-        sitemap: 'https://modernmannerism.com/sitemap.xml',
+        sitemap: 'https://www.modernmannerism.com/sitemap.xml',
     }
 }
