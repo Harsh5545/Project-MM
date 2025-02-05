@@ -103,6 +103,7 @@ export default function BlogEditor({ existingBlog, userId }) {
         variant: "destructive"
       })
     }
+    console.log(blogData)
   }
 
 
