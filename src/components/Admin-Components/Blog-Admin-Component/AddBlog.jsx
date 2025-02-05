@@ -36,18 +36,25 @@ export default function BlogEditor({ existingBlog, userId }) {
   const [previewMode, setPreviewMode] = useState("laptop")
 
   const handleImageChange = (e, imageType) => {
-    const file = e.target.files[0]
+    const file = e.target.files[0];
     if (file) {
-      const reader = new FileReader()
+      const reader = new FileReader();
       reader.onloadend = () => {
-        setBlogData((prevData) => ({
-          ...prevData,
-          [imageType]: reader.result,
-        }))
-      }
-      reader.readAsDataURL(file)
+        setBlogData((prevData) => {
+          const updatedData = { ...prevData, [imageType]: reader.result };
+  
+          // Ensure og_image updates when the main image changes
+          if (imageType === "image") {
+            updatedData.og_image = reader.result;
+          }
+  
+          return updatedData;
+        });
+      };
+      reader.readAsDataURL(file);
     }
-  }
+  };
+  
 
   const handleTagAddition = () => {
     if (blogData.tagInput.trim() && !blogData.tags.includes(blogData.tagInput.trim())) {
