@@ -92,7 +92,7 @@ model Notification {
 model Blog {
   id          Int        @id @default(autoincrement())
   title       String     // Blog title
-  content     String     // Blog content
+  content     String     @db.Text
   published   Boolean    @default(false) // Whether the blog is published
   authorId    Int        // Author (reference to the User model)
   createdAt   DateTime   @default(now())
@@ -102,10 +102,10 @@ model Blog {
   meta_title  String?    // Meta title for SEO
   meta_desc   String?    // Meta description for SEO
   tags        Tag[]      @relation("BlogTags") // Many-to-many relation with Tag
-
+  image       String?
   author      User       @relation(fields: [authorId], references: [id])
   category    Category   @relation(fields: [categoryId], references: [id])
-
+  og_image    String?
   @@index([slug], name: "Blog_slug_idx")
 }
 

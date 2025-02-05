@@ -29,6 +29,7 @@ export default function BlogEditor({ existingBlog, userId }) {
     meta_title: existingBlog?.meta_title || "",
     meta_desc: existingBlog?.meta_desc || "",
     tags: existingBlog?.tags || [],
+    og_image : existingBlog?.image || "",
 
   })
 
