@@ -305,7 +305,6 @@ export default function Editor({ onChange, content }) {
 						}
 					]
 				},
-				placeholder: 'Type or paste your content here!',
 				table: {
 					contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells', 'tableProperties', 'tableCellProperties']
 				}

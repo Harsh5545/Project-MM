@@ -107,7 +107,7 @@ export default function BlogEditor({ existingBlog, userId }) {
 
 
 
-
+  console.log(categories)
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
       <div className="max-w-full mx-auto bg-white dark:bg-gray-800  p-6">
@@ -174,8 +174,8 @@ export default function BlogEditor({ existingBlog, userId }) {
 
           <div className="flex w-full gap-2">
 
-             {/* Category Select */}
-            <div className="w-[50%]">
+            {/* Category Select Old*/}
+            {/* <div className="w-[50%]">
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Category:</label>
               <Select
                 value={blogData.categoryId}
@@ -193,7 +193,8 @@ export default function BlogEditor({ existingBlog, userId }) {
                     <SelectItem value="loading">Loading...</SelectItem>
                   ) : categories.length > 0 ? (
                     categories.map((cat) => (
-                      <SelectItem key={cat.id} value={cat.id.toString()}> {/* Ensure value is a string */}
+                      <SelectItem key={cat.id} value={cat.id.toString()}>
+                        {console.log(cat.category_name)}
                         {cat.category_name}
                       </SelectItem>
                     ))
@@ -204,7 +205,40 @@ export default function BlogEditor({ existingBlog, userId }) {
               </Select>
 
 
+            </div> */}
+
+            {/* Category Select New */}
+            <div className="w-[50%]">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                Category:
+              </label>
+              <Select
+                value={blogData.categoryId.toString()} // Ensure it's a string to match the value of SelectItem
+                onValueChange={(value) => setBlogData((prevData) => ({
+                  ...prevData,
+                  categoryId: Number(value) // Convert to number when updating state
+                }))}
+                disabled={categoriesLoading}
+              >
+                <SelectTrigger className="w-full p-2 rounded-md">
+                  <SelectValue placeholder={categoriesLoading ? "Loading categories..." : "Select a Category"} />
+                </SelectTrigger>
+                <SelectContent>
+                  {categoriesLoading ? (
+                    <SelectItem value="loading">Loading...</SelectItem>
+                  ) : categories.length > 0 ? (
+                    categories.map((cat) => (
+                      <SelectItem key={cat.id} value={cat.id.toString()}>
+                        {cat.category_name}
+                      </SelectItem>
+                    ))
+                  ) : (
+                    <SelectItem value="no-categories">No categories available</SelectItem>
+                  )}
+                </SelectContent>
+              </Select>
             </div>
+
 
             {/* Tags Input */}
             <div className="w-[50%]">
@@ -245,7 +279,7 @@ export default function BlogEditor({ existingBlog, userId }) {
             </div>
 
           </div>
-         
+
 
 
           {/* Image Uploads */}
