@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useToast } from "@/hooks/use-toast"
 import { useCategories } from "./Admin-Blog-Table/UseCategories"
 import Editor from "@/components/Editor"
+import BlogImageUploader from "./BlogImageUploder"
 
 
 
@@ -25,7 +26,6 @@ export default function BlogEditor({ existingBlog, userId }) {
     authorId: existingBlog?.authorId || userId,
     categoryId: existingBlog?.categoryId || "",
     image: existingBlog?.image || "",
-    heroImage: existingBlog?.heroImage || "",
     meta_title: existingBlog?.meta_title || "",
     meta_desc: existingBlog?.meta_desc || "",
     tags: existingBlog?.tags || [],
@@ -103,11 +103,12 @@ export default function BlogEditor({ existingBlog, userId }) {
         variant: "destructive"
       })
     }
+    console.log(blogData)
   }
 
 
 
-
+  console.log(categories)
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
       <div className="max-w-full mx-auto bg-white dark:bg-gray-800  p-6">
@@ -174,8 +175,8 @@ export default function BlogEditor({ existingBlog, userId }) {
 
           <div className="flex w-full gap-2">
 
-             {/* Category Select */}
-            <div className="w-[50%]">
+            {/* Category Select Old*/}
+            {/* <div className="w-[50%]">
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Category:</label>
               <Select
                 value={blogData.categoryId}
@@ -193,7 +194,8 @@ export default function BlogEditor({ existingBlog, userId }) {
                     <SelectItem value="loading">Loading...</SelectItem>
                   ) : categories.length > 0 ? (
                     categories.map((cat) => (
-                      <SelectItem key={cat.id} value={cat.id.toString()}> {/* Ensure value is a string */}
+                      <SelectItem key={cat.id} value={cat.id.toString()}>
+                        {console.log(cat.category_name)}
                         {cat.category_name}
                       </SelectItem>
                     ))
@@ -204,7 +206,40 @@ export default function BlogEditor({ existingBlog, userId }) {
               </Select>
 
 
+            </div> */}
+
+            {/* Category Select New */}
+            <div className="w-[50%]">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                Category:
+              </label>
+              <Select
+                value={blogData.categoryId.toString()} // Ensure it's a string to match the value of SelectItem
+                onValueChange={(value) => setBlogData((prevData) => ({
+                  ...prevData,
+                  categoryId: Number(value) // Convert to number when updating state
+                }))}
+                disabled={categoriesLoading}
+              >
+                <SelectTrigger className="w-full p-2 rounded-md">
+                  <SelectValue placeholder={categoriesLoading ? "Loading categories..." : "Select a Category"} />
+                </SelectTrigger>
+                <SelectContent>
+                  {categoriesLoading ? (
+                    <SelectItem value="loading">Loading...</SelectItem>
+                  ) : categories.length > 0 ? (
+                    categories.map((cat) => (
+                      <SelectItem key={cat.id} value={cat.id.toString()}>
+                        {cat.category_name}
+                      </SelectItem>
+                    ))
+                  ) : (
+                    <SelectItem value="no-categories">No categories available</SelectItem>
+                  )}
+                </SelectContent>
+              </Select>
             </div>
+
 
             {/* Tags Input */}
             <div className="w-[50%]">
@@ -245,13 +280,13 @@ export default function BlogEditor({ existingBlog, userId }) {
             </div>
 
           </div>
-         
+
 
 
           {/* Image Uploads */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Main Image:</label>
-            <div className="flex items-center justify-center w-full">
+            {/* <div className="flex items-center justify-center w-full">
               <label className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                 <div className="flex flex-col items-center justify-center pt-5 pb-6">
                   <AiOutlineCloudUpload className="w-10 h-10 mb-3 text-gray-400" />
@@ -267,7 +302,8 @@ export default function BlogEditor({ existingBlog, userId }) {
                   onChange={(e) => handleImageChange(e, "image")}
                 />
               </label>
-            </div>
+            </div> */}
+               <BlogImageUploader formData={blogData} setFormData={setBlogData} />
             {blogData.image && (
               <img
                 src={blogData.image || "/placeholder.svg"}
@@ -277,7 +313,7 @@ export default function BlogEditor({ existingBlog, userId }) {
             )}
           </div>
 
-          <div>
+          {/* <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Hero Image:</label>
             <div className="flex items-center justify-center w-full">
               <label className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
@@ -303,7 +339,7 @@ export default function BlogEditor({ existingBlog, userId }) {
                 className="mt-4 max-w-full h-auto rounded-lg shadow-md"
               />
             )}
-          </div>
+          </div> */}
 
           {/* Tiptap Editor */}
           <div>

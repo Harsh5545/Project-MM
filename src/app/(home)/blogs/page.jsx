@@ -12,7 +12,9 @@ export const metadata = {
 };
 
 const page = async () => {
-
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blog/list-blog`);
+  const result = await response.json();
+  console.log(result,"RESULT")
   return (
     <div >
       <BlogHero/>

@@ -40,12 +40,12 @@ import {
 	LinkImage,
 	List,
 	ListProperties,
-	Markdown,
+	// Markdown,
 	MediaEmbed,
 	Mention,
 	PageBreak,
 	Paragraph,
-	PasteFromMarkdownExperimental,
+	// PasteFromMarkdownExperimental,
 	PasteFromOffice,
 	RemoveFormat,
 	SpecialCharacters,
@@ -177,12 +177,12 @@ export default function Editor({ onChange, content }) {
 					LinkImage,
 					List,
 					ListProperties,
-					Markdown,
+					// Markdown,
 					MediaEmbed,
 					Mention,
 					PageBreak,
 					Paragraph,
-					PasteFromMarkdownExperimental,
+					// PasteFromMarkdownExperimental,
 					PasteFromOffice,
 					RemoveFormat,
 					SpecialCharacters,
@@ -305,7 +305,6 @@ export default function Editor({ onChange, content }) {
 						}
 					]
 				},
-				placeholder: 'Type or paste your content here!',
 				table: {
 					contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells', 'tableProperties', 'tableCellProperties']
 				}
