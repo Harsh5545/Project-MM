@@ -47,15 +47,12 @@ export default function BlogEditor({ existingBlog, userId }) {
           if (imageType === "image") {
             updatedData.og_image = reader.result;
           }
-  
           return updatedData;
         });
       };
       reader.readAsDataURL(file);
     }
   };
-  
-
   const handleTagAddition = () => {
     if (blogData.tagInput.trim() && !blogData.tags.includes(blogData.tagInput.trim())) {
       setBlogData((prevData) => ({
@@ -65,7 +62,6 @@ export default function BlogEditor({ existingBlog, userId }) {
       }))
     }
   }
-
   const handleTagRemoval = (tagToRemove) => {
     setBlogData((prevData) => ({
       ...prevData,
@@ -79,26 +75,20 @@ export default function BlogEditor({ existingBlog, userId }) {
       content: newContent, // CKEditor gives HTML directly
     }));
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault()
-
-    // Convert authorId and categoryId to numbers
     const payload = {
       ...blogData,
       authorId: Number(blogData.authorId), // Convert to number
       categoryId: Number(blogData.categoryId), // Convert to number
     }
-
     try {
       const response = await fetch("/api/blog/add-blog", {
         method: isEditMode ? "PUT" : "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload), // Send the correct payload
       })
-
       if (!response.ok) throw new Error("Failed to save blog")
-
       toast({
         title: "Success",
         description: isEditMode ? "Blog updated successfully" : "Blog created successfully"
@@ -113,10 +103,6 @@ export default function BlogEditor({ existingBlog, userId }) {
     }
     console.log(blogData)
   }
-
-
-
-  console.log(categories)
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
       <div className="max-w-full mx-auto bg-white dark:bg-gray-800  p-6">
@@ -159,9 +145,7 @@ export default function BlogEditor({ existingBlog, userId }) {
               placeholder="Enter blog title"
             />
           </div>
-
-
-          <div>
+         <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Slug:</label>
             <Input
               type="text"
@@ -179,42 +163,7 @@ export default function BlogEditor({ existingBlog, userId }) {
               placeholder="Enter blog slug"
             />
           </div>
-
-
           <div className="flex w-full gap-2">
-
-            {/* Category Select Old*/}
-            {/* <div className="w-[50%]">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Category:</label>
-              <Select
-                value={blogData.categoryId}
-                onValueChange={(value) => setBlogData((prevData) => ({
-                  ...prevData,
-                  categoryId: Number(value) // Convert to number
-                }))}
-                disabled={categoriesLoading}
-              >
-                <SelectTrigger className="w-full p-2 rounded-md">
-                  <SelectValue placeholder={categoriesLoading ? "Loading categories..." : "Select a Category"} />
-                </SelectTrigger>
-                <SelectContent>
-                  {categoriesLoading ? (
-                    <SelectItem value="loading">Loading...</SelectItem>
-                  ) : categories.length > 0 ? (
-                    categories.map((cat) => (
-                      <SelectItem key={cat.id} value={cat.id.toString()}>
-                        {console.log(cat.category_name)}
-                        {cat.category_name}
-                      </SelectItem>
-                    ))
-                  ) : (
-                    <SelectItem value="no-categories">No categories available</SelectItem>
-                  )}
-                </SelectContent>
-              </Select>
-
-
-            </div> */}
 
             {/* Category Select New */}
             <div className="w-[50%]">
@@ -247,8 +196,6 @@ export default function BlogEditor({ existingBlog, userId }) {
                 </SelectContent>
               </Select>
             </div>
-
-
             {/* Tags Input */}
             <div className="w-[50%]">
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Tags:</label>
@@ -288,29 +235,10 @@ export default function BlogEditor({ existingBlog, userId }) {
             </div>
 
           </div>
-
-
-
           {/* Image Uploads */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Main Image:</label>
-            {/* <div className="flex items-center justify-center w-full">
-              <label className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                  <AiOutlineCloudUpload className="w-10 h-10 mb-3 text-gray-400" />
-                  <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                    <span className="font-semibold">Click to upload</span> or drag and drop
-                  </p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
-                </div>
-                <input
-                  type="file"
-                  className="hidden"
-                  accept="image/*"
-                  onChange={(e) => handleImageChange(e, "image")}
-                />
-              </label>
-            </div> */}
+           
                <BlogImageUploader formData={blogData} setFormData={setBlogData} />
             {blogData.image && (
               <img
@@ -355,7 +283,6 @@ export default function BlogEditor({ existingBlog, userId }) {
             {/* <Tiptap content={blogData.content} onChange={handleContentChange} /> */}
             <Editor content={blogData.content} onChange={handleContentChange} />
           </div>
-
           <Button
             type="submit"
             className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300"
@@ -363,7 +290,6 @@ export default function BlogEditor({ existingBlog, userId }) {
             {isEditMode ? "Update Blog" : "Publish Blog"}
           </Button>
         </form>
-
         {/* Preview Section */}
         <div className="mt-12 border-t border-gray-200 dark:border-gray-700 pt-8">
           <div className="flex justify-between items-center mb-4">
@@ -383,37 +309,6 @@ export default function BlogEditor({ existingBlog, userId }) {
               </Button>
             </div>
           </div>
-
-          {/* <div
-            className={`border border-gray-300 dark:border-gray-600 rounded-lg p-6 ${previewMode === "mobile" ? "max-w-sm mx-auto" : "w-full"}`}
-          >
-            {blogData.heroImage && (
-              <img src={blogData.heroImage || "/placeholder.svg"} alt="Hero" className="w-full mb-4 rounded-lg" />
-            )}
-            <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">{blogData.title}</h3>
-            {blogData.category && (
-              <span className="inline-block bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300 mb-4">
-                Category: {blogData.category}
-              </span>
-            )}
-            <div className="flex flex-wrap gap-2 mb-4">
-              {blogData.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="px-2 py-1 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full text-sm"
-                >
-                  #{tag}
-                </span>
-              ))}
-            </div>
-            {blogData.image && (
-              <img src={blogData.image || "/placeholder.svg"} alt="Main" className="w-full mb-4 rounded-lg" />
-            )}
-            <div
-              dangerouslySetInnerHTML={{ __html: blogData.content }}
-              className="prose dark:prose-invert max-w-none"
-            />
-          </div> */}
           <div className={previewMode === "mobile" ? "max-w-sm mx-auto" : "w-full"}>
             {blogData.heroImage && <img src={blogData.heroImage} alt="Hero" className="w-full mb-4 rounded-lg" />}
             <h3 className="text-2xl font-bold mb-4">{blogData.title}</h3>
