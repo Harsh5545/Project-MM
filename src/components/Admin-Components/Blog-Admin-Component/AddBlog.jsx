@@ -26,10 +26,10 @@ export default function BlogEditor({ existingBlog, userId }) {
     authorId: existingBlog?.authorId || userId,
     categoryId: existingBlog?.categoryId || "",
     image: existingBlog?.image || "",
+    og_image: existingBlog?.og_image || "",
     meta_title: existingBlog?.meta_title || "",
     meta_desc: existingBlog?.meta_desc || "",
     tags: existingBlog?.tags || [],
-    og_image : existingBlog?.image || "",
 
   })
 
@@ -42,7 +42,7 @@ export default function BlogEditor({ existingBlog, userId }) {
       reader.onloadend = () => {
         setBlogData((prevData) => {
           const updatedData = { ...prevData, [imageType]: reader.result };
-  
+
           // Ensure og_image updates when the main image changes
           if (imageType === "image") {
             updatedData.og_image = reader.result;
@@ -145,7 +145,7 @@ export default function BlogEditor({ existingBlog, userId }) {
               placeholder="Enter blog title"
             />
           </div>
-         <div>
+          <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Slug:</label>
             <Input
               type="text"
@@ -238,8 +238,21 @@ export default function BlogEditor({ existingBlog, userId }) {
           {/* Image Uploads */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Main Image:</label>
-           
-               <BlogImageUploader formData={blogData} setFormData={setBlogData} />
+
+            <BlogImageUploader formData={blogData} setFormData={setBlogData} type={'image'}/>
+            {blogData.image && (
+              <img
+                src={blogData.image || "/placeholder.svg"}
+                alt="Preview"
+                className="mt-4 max-w-full h-auto rounded-lg shadow-md"
+              />
+            )}
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Og Image:</label>
+
+            <BlogImageUploader formData={blogData} setFormData={setBlogData} type={'og_image'}/>
             {blogData.image && (
               <img
                 src={blogData.image || "/placeholder.svg"}
