@@ -7,7 +7,7 @@ export const AboutManasi = () => {
       <div className="flex gap-5 md:gap-1 w-[90%] items-center flex-col justify-evenly h-full md:flex-row">
         <div className="flex flex-1 items-center justify-center w-full md:w-[30%] relative group">
           <Image
-            src="/assets/Manasi_kadam_image.jpg"
+            src="/assets/Manasi_Aboust_section_Image.jpg"
             height={700}
             width={500}
             alt="modern Mannerism"

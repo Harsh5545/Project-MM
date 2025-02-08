@@ -38,7 +38,7 @@ const HeroCarousel = () => {
       description: "A sophisticated guide to cultural manner & etiquette.",
       description2:
         "We help individuals and professionals enhance their image, communication, and etiquette to succeed in personal and professional settings.",
-      right_side_image: "/assets/Mansi_Hero_image.png",
+      right_side_image: "/assets/Manasi_madam.png",
       button: "Explore",
     },
     {
@@ -87,6 +87,25 @@ const HeroCarousel = () => {
     <>
       <Head>
         <title>Modern Mannerism - Enhance Your Professional & Personal Etiquette</title>
+        <meta
+          name="description"
+          content="Modern Mannerism offers personalized consulting, workshops, and programs to help individuals and professionals master etiquette, communication, and image-building skills."
+        />
+        <meta
+          name="keywords"
+          content="etiquette, communication, personal image, professional image, workshops, consulting, children etiquette, young adult grooming"
+        />
+        <meta name="author" content="Modern Mannerism" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta property="og:title" content="Modern Mannerism" />
+        <meta
+          property="og:description"
+          content="Empowering individuals with the skills to succeed through refined etiquette and communication."
+        />
+        <meta property="og:image" content="/assets/One-on-One Consulting.jpeg" />
+        <meta property="og:url" content="https://modernmannerism.com" />
+        <meta name="twitter:card" content="summary_large_image" />
+    
       </Head>
       <div className="w-full relative">
         <Swiper
@@ -114,7 +133,7 @@ const HeroCarousel = () => {
                 }}
               > {index === 0 ? (
                 <>
-                  <div className="w-full text-center md:w-3/4 lg:w-1/2 flex flex-col items-center justify-center p-4 md:p-10 z-10 relative">
+                  <div className="w-full text-center md:w-3/4 lg:w-1/2 flex flex-col items-center justify-end p-4 lg:pl-48 md:p-10 z-10 relative">
                     <h1 className={`text-lg md:text-4xl lg:text-5xl font-bold ${cormorant.className}`}>{slide.text}</h1>
                     <p className="mt-2 md:mt-4 text-xs md:text-lg">{slide.description}</p>
                     <p className="mt-1 md:mt-2 text-xs md:text-lg">{slide.description2}</p>
@@ -129,18 +148,19 @@ const HeroCarousel = () => {
                       layout="fill"
                       objectFit="contain"
                       priority
-                      className="absolute"
+                      className="absolute pt-10"
                     />
                   </div>
                 </>
               ) : (
-                <div className="w-full h-full flex flex-col justify-center items-center text-center p-5 md:p-8">
-                  <h1 className={`text-2xl md:text-4xl font-bold ${cormorant.className}`}>{slide.text}</h1>
-                  <p className="mt-2 w-full md:[60%] md:mt-4 text-sm md:text-lg">{slide.description}</p>
-                  <Button className="mt-4 md:mt-6 bg-gradient-to-r from-[#c3965d] to-[#eabf91] text-white px-6 md:px-8 py-2 md:py-4 rounded-full">
-                    {slide.button}
-                  </Button>
-                </div>
+               <> <div className="absolute inset-0 dark:bg-[#060507] bg-[#3a4e5d] dark:bg-opacity-60 bg-opacity-50"></div>
+               <div className="w-full z-10 h-full flex flex-col justify-center items-center text-center p-5 md:p-8">
+                 <h1 className={`text-2xl md:text-4xl font-bold ${cormorant.className}`}>{slide.text}</h1>
+                 <p className="mt-2 w-full md:w-[60%] md:mt-4 text-sm md:text-xl ">{slide.description}</p>
+                 <Button className="mt-4 md:mt-6 bg-gradient-to-r from-[#c3965d] to-[#eabf91] text-white px-6 md:px-8 py-2 md:py-4 rounded-full">
+                   {slide.button}
+                 </Button>
+               </div></>
               )}
               </div>
             </SwiperSlide>
