@@ -1,5 +1,4 @@
-"use client";
-
+"use client"
 import { useState, useEffect } from "react";
 import { BentoGrid, BentoGridItem } from "../ui/bento-grid";
 import { Input } from "../ui/input";
@@ -10,6 +9,7 @@ import { HoverEffect } from "../ui/card-hover-effect";
 import { Badge } from "../ui/badge";
 import { IconClipboardCopy } from "@tabler/icons-react";
 import Pagination from "@/hooks/Pagination";
+import Link from "next/link"; // Import Link from Next.js
 
 export function BentoGridDemo({ blogs }) {
   console.log("Blogs received in BentoGridDemo:", blogs);
@@ -73,7 +73,7 @@ export function BentoGridDemo({ blogs }) {
           <HoverEffect items={blogs.slice(0, 3).map((blog) => ({
             title: blog.title,
             description: `By ${blog.author}`,
-            link: `/blog/${blog.id}`, 
+            link: `/blog/${blog.slug}`, // Use the slug here
           }))} />
         </BackgroundGradient>
       </aside>
@@ -83,28 +83,29 @@ export function BentoGridDemo({ blogs }) {
         <BentoGrid className="mx-auto">
           {paginatedBlogs.length > 0 ? (
             paginatedBlogs.map((item) => (
-              <BentoGridItem
-                key={item.id}
-                title={item.title}
-                description={item.meta_desc || "No description available"}
-                header={
-                  <div className="rounded-[22px] max-w-sm h-full">
-                    <img
-                      src={item.image || "/default-blog.png"} 
-                      alt={item.title}
-                      className="object-cover w-full h-auto rounded-[22px]"
-                    />
-                  </div>
-                }
-                icon={<IconClipboardCopy className="h-4 w-4 text-neutral-500" />}
-              >
-                <AnimatedTooltip
-                  items={[{ id: 1, name: item.category_name || "Uncategorized", designation: "Category", image: item.image }]}
-                />
-                {item.category_name && (
-                  <Badge className="absolute top-4 right-4">{item.category_name}</Badge>
-                )}
-              </BentoGridItem>
+              <Link key={item.slug} href={`/blogs/${item.slug}`} passHref> 
+                <BentoGridItem
+                  title={item.title}
+                  description={item.meta_desc || "No description available"}
+                  header={
+                    <div className="rounded-[22px] max-w-sm h-full">
+                      <img
+                        src={item.image || "/default-blog.png"} 
+                        alt={item.title}
+                        className="object-cover w-full h-auto rounded-[22px]"
+                      />
+                    </div>
+                  }
+                  icon={<IconClipboardCopy className="h-4 w-4 text-neutral-500" />}
+                >
+                  <AnimatedTooltip
+                    items={[{ id: 1, name: item.category_name || "Uncategorized", designation: "Category", image: item.image }]}
+                  />
+                  {item.category_name && (
+                    <Badge className="absolute top-4 right-4">{item.category_name}</Badge>
+                  )}
+                </BentoGridItem>
+              </Link>
             ))
           ) : (
             <div className="text-center text-gray-700 dark:text-gray-300 text-lg">
