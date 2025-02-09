@@ -26,14 +26,23 @@ const DynamicMainContent = dynamic(() => import('./MainContent'), {
 
 function LoadingSpinner() {
   return (
-    <div className="flex items-center justify-center h-full">
+    <div className="absolute inset-0 flex items-center justify-center">
       <div className="relative">
-        <div className="w-12 h-12 border-t-4 border-b-4 border-purple-600 rounded-full animate-spin"></div>
-        <div className="w-12 h-12 border-t-4 border-b-4 border-purple-600 rounded-full animate-ping absolute top-0 left-0 opacity-30"></div>
+        <div class="flex-col gap-4 w-full flex items-center justify-center">
+          <div
+            class="w-20 h-20 border-4 border-transparent text-blue-400 text-4xl animate-spin flex items-center justify-center border-t-blue-400 rounded-full"
+          >
+            <div
+              class="w-16 h-16 border-4 border-transparent text-red-400 text-2xl animate-spin flex items-center justify-center border-t-red-400 rounded-full"
+            ></div>
+          </div>
+        </div>
+
       </div>
     </div>
   );
 }
+
 
 export function Dashboard({ children, session }) {
   const pathname = usePathname();

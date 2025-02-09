@@ -11,10 +11,10 @@ import {
 
 
 const icons = {
-  ageGroups: <ClipboardCopy className="h-6 w-6 text-primary" />,
-  durations: <Signature className="h-6 w-6 text-primary" />,
-  formats: <FilePen className="h-6 w-6 text-primary" />,
-  locations: <TableColumnsSplit className="h-6 w-6 text-primary" />,
+  ageGroup: <ClipboardCopy className="h-6 w-6 text-primary" />,
+  duration: <Signature className="h-6 w-6 text-primary" />,
+  format: <FilePen className="h-6 w-6 text-primary" />,
+  location: <TableColumnsSplit className="h-6 w-6 text-primary" />,
 };
 
 const ProgramDetails = ({data}) => {

@@ -8,6 +8,7 @@ import AllLinks from "./links/AllLinks";
 import { Lato } from "next/font/google";
 import { AtSign, Mail, Mails, PhoneCall } from "lucide-react";
 import { IconMail } from "@tabler/icons-react";
+import Link from "next/link";
 
 const dm_Sans = Lato({
   subsets: ["latin"],
@@ -58,14 +59,16 @@ function HeaderDefault() {
         {/* Logo */}
         <div className="flex justify-between items-center w-full md:w-0">
           <span className="text-xl">
-            <Image
-              src="/assets/MM.png"
-              width={300}
-              height={300}
-              className="md:max-w-[12rem] max-w-[7rem]"
-              alt="ModernMannerism logo"
-              priority
-            />
+          <Link href="/" passHref>
+  <Image
+    src="/assets/MM.png"
+    width={300}
+    height={300}
+    className="md:max-w-[12rem] max-w-[7rem]"
+    alt="ModernMannerism logo"
+    priority
+  />
+</Link>
           </span>
           {/* Mobile menu toggle */}
           <div className="md:hidden">

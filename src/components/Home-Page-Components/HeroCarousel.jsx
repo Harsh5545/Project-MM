@@ -29,20 +29,16 @@ const HeroCarousel = () => {
   const handleSlideChange = (swiper) => {
     setCurrentSlide(swiper.realIndex);
   };
-  const scrollToTestimonials = () => {
-    const testimonialSection = document.getElementById("testimonials");
-    if (testimonialSection) {
-      testimonialSection.scrollIntoView({ behavior: "smooth" });
-    }
-  };
+
   const slides = [
     {
       id: 1,
-      image: "/assets/ModernHomeHero.jpg",
+      image: "/assets/Bg_Manasi_kadam.png",
       text: "Welcome to Modern Mannerism!",
       description: "A sophisticated guide to cultural manner & etiquette.",
       description2:
-        "We help individuals and professionals from all walks of life enhance their image, communication, and etiquette to succeed in personal and professional settings.",
+        "We help individuals and professionals enhance their image, communication, and etiquette to succeed in personal and professional settings.",
+      right_side_image: "/assets/Manasi_madam.png",
       button: "Explore",
     },
     {
@@ -87,15 +83,6 @@ const HeroCarousel = () => {
     },
   ];
 
-  const styles = {
-    container: `md:h-screen w-full bg-cover z-0 relative`,
-    slide: `md:h-screen h-[65vh] w-full relative`,
-    image: `object-cover w-full h-full`, // Ensure the image covers the container
-    overlay: `absolute inset-0 dark:bg-[#060507] bg-[#3a4e5d] dark:bg-opacity-60 bg-opacity-50`,
-    text: `md:text-4xl ${cormorant.className} dark:text-white text-white font-bold text-2xl text-black lato-font`,
-    button: `px-8 ${dm_Sans.className} py-5 px-8 tracking-wider bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] text-md lg:text-xl text-white rounded-full mt-4 sm:mt-10`,
-  };
-
   return (
     <>
       <Head>
@@ -118,43 +105,14 @@ const HeroCarousel = () => {
         <meta property="og:image" content="/assets/One-on-One Consulting.jpeg" />
         <meta property="og:url" content="https://modernmannerism.com" />
         <meta name="twitter:card" content="summary_large_image" />
+    
       </Head>
-      <div className={styles.container}>
-        <style jsx>{`
-      @media (max-width: 767px) {
-        .swiper-button-next,
-        .swiper-button-prev {
-          display: none !important;
-        }
-      }
-      .swiper-button-next,
-      .swiper-button-prev {
-        color: #ff0000; /* Customize this color as needed */
-      }
-      .swiper-pagination-bullet {
-        background-color: #c70ba8; /* Customize this color as needed */
-      }
-      .swiper-pagination-bullet-active {
-        background-color: #ff0000 !important; /* Customize active dot color */
-      }
-      @media (max-width: 480px) {
-        .${styles.slide} {
-          height: 50vh; /* Adjust for smaller devices */
-        }
-      }
-    `}</style>
+      <div className="w-full relative">
         <Swiper
           onSlideChange={handleSlideChange}
-          keyboard={{
-            enabled: true,
-          }}
-          pagination={{
-            clickable: true,
-          }}
-          autoplay={{
-            delay: 4000,
-            disableOnInteraction: false,
-          }}
+          keyboard={{ enabled: true }}
+          pagination={{ clickable: true }}
+          autoplay={{ delay: 4000000, disableOnInteraction: false }}
           speed={800}
           loop={true}
           navigation={false}
@@ -162,27 +120,48 @@ const HeroCarousel = () => {
           className="mySwiper"
           ref={swiperRef}
         >
-          {slides.map((slide) => (
+          {slides.map((slide, index) => (
             <SwiperSlide key={slide.id}>
-              <div className={styles.slide}>
-                <Image
-                  src={slide.image}
-                  alt={slide.text}
-                  layout="fill" 
-                  className={styles.image}
-                  priority 
-                />
-                <div className={styles.overlay}></div>
-                <div className="absolute text-white flex gap-5 md:gap-9 flex-col text-center items-center justify-center w-full h-full z-10 p-8">
-                  <span className={styles.text}>{slide.text}</span>
-                  <div className="flex flex-col md:w-[50%] text-sm font-medium md:text-lg">
-                    <p>{slide.description}</p>
-                    <p>{slide.description2}</p>
+              <div
+                className={`relative w-full h-[50vh] md:h-[60vh] lg:h-screen flex items-center ${index === 0 ? "flex-row justify-center items-end lg:items-center" : "flex justify-center  items-end "
+                  }`}
+                style={{
+                  backgroundImage: `url(${slide.image})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  backgroundRepeat: "no-repeat",
+                }}
+              > {index === 0 ? (
+                <>
+                  <div className="w-full text-center md:w-3/4 lg:w-1/2 flex flex-col items-center justify-end p-4 lg:pl-48 md:p-10 z-10 relative">
+                    <h1 className={`text-lg md:text-4xl lg:text-5xl font-bold ${cormorant.className}`}>{slide.text}</h1>
+                    <p className="mt-2 md:mt-4 text-xs md:text-lg">{slide.description}</p>
+                    <p className="mt-1 md:mt-2 text-xs md:text-lg">{slide.description2}</p>
+                    <Button className="mt-2 md:mt-6 text-xs md:text-lg bg-gradient-to-r from-[#c3965d] to-[#eabf91] text-white px-4 md:px-10 py-2 md:py-5 rounded-full">
+                      {slide.button}
+                    </Button>
                   </div>
-                  <Button onClick={scrollToTestimonials} className={styles.button}>
-                    {slide.button}
-                  </Button>
-                </div>
+                  <div className="w-full md:w-3/4 lg:w-1/2 h-[50vh] md:h-[60vh] lg:h-full relative">
+                    <Image
+                      src={slide.right_side_image}
+                      alt={slide.text}
+                      layout="fill"
+                      objectFit="contain"
+                      priority
+                      className="absolute pt-10"
+                    />
+                  </div>
+                </>
+              ) : (
+               <> <div className="absolute inset-0 dark:bg-[#060507] bg-[#3a4e5d] dark:bg-opacity-60 bg-opacity-50"></div>
+               <div className="w-full z-10 h-full flex flex-col justify-center items-center text-center p-5 md:p-8">
+                 <h1 className={`text-2xl md:text-4xl font-bold ${cormorant.className}`}>{slide.text}</h1>
+                 <p className="mt-2 w-full md:w-[60%] md:mt-4 text-sm md:text-xl ">{slide.description}</p>
+                 <Button className="mt-4 md:mt-6 bg-gradient-to-r from-[#c3965d] to-[#eabf91] text-white px-6 md:px-8 py-2 md:py-4 rounded-full">
+                   {slide.button}
+                 </Button>
+               </div></>
+              )}
               </div>
             </SwiperSlide>
           ))}
