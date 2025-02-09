@@ -14,14 +14,11 @@ export const metadata = {
 const page = async () => {
   try {
     const url = new URL(`${process.env.NEXT_PUBLIC_API_URL}/api/blog/list-blog`);
-    console.log("Fetching from: ", `${process.env.NEXT_PUBLIC_API_URL}/api/blog/list-blog`);
-    const page = 1;  // Adjust the page number based on your requirements (this could come from the query params)
-    const pageSize = 10;  // Adjust based on what you want
-
-    // Adding query parameters for pagination, sorting, and filtering
+    // console.log("Fetching from: ", `${process.env.NEXT_PUBLIC_API_URL}/api/blog/list-blog`);
+    const page = 1;  
+    const pageSize = 10;  
     url.searchParams.set("page", page);
     url.searchParams.set("pageSize", pageSize);
-    // You can add more parameters as needed, such as filterBy, categoryId, etc.
 
     const response = await fetch(url);
     
@@ -30,9 +27,7 @@ const page = async () => {
     }
 
     const result = await response.json();
-    console.log(result, "RESULT");
-
-    // Check if data exists
+  
     if (result && result.data && result.data.length > 0) {
       return (
         <div>
