@@ -27,7 +27,7 @@ const page = async () => {
     }
 
     const result = await response.json();
-  
+    console.log(result)
     if (result && result.data && result.data.length > 0) {
       return (
         <div>
