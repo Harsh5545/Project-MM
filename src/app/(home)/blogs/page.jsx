@@ -32,7 +32,7 @@ const page = async () => {
       return (
         <div>
           <BlogHero />
-          <BentoGridDemo blogs={result.data} /> {/* Pass fetched data to BentoGridDemo */}
+          <BentoGridDemo blogs={result.data} />
         </div>
       );
     } else {

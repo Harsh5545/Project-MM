@@ -12,7 +12,6 @@ import Pagination from "@/hooks/Pagination";
 import Link from "next/link"; // Import Link from Next.js
 
 export function BentoGridDemo({ blogs }) {
-  console.log("Blogs received in BentoGridDemo:", blogs);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [currentPage, setCurrentPage] = useState(1);

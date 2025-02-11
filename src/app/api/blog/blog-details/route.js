@@ -19,32 +19,38 @@ const parseStringifiedFields = (data) => {
 export async function GET(req) {
     const url = new URL(req.url);
     const slug = url.searchParams.get("slug");
+    console.log(slug, "SLUG")
 
     if (!slug) {
         return NextResponse.json({ Success: false, error: "Slug is required" });
     }
 
     try {
-   
+
         const blog = await prisma.blog.findUnique({
             where: {
-                slug: slug, 
+                slug: slug,
             },
             include: {
+                author: {
+                    select: {
+                        first_name: true, 
+                        last_name: true,
+                        image:true
+                    },
+                },
                 category: {
                     select: {
                         category_name: true,
                     },
                 },
-                author: {
+                tags: {
                     select: {
                         name: true,
-                        bio: true,
                     },
                 },
             },
         });
-
         if (!blog) {
             return NextResponse.json({ Success: false, error: "Blog not found" });
         }
