@@ -5,7 +5,6 @@ import React from 'react'
 
 const addBlog = async () => {
   const session = await auth();
-  console.log(session)
   return (
     <div><AddBlog userId={session?.user?.id} /></div>
   )

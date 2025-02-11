@@ -16,6 +16,7 @@ const blogSchema = z.object({
     meta_title: z.string().optional().nullable(),
     meta_desc: z.string().optional().nullable(),
     tags: z.array(z.string()).optional(),
+    image: z.string().optional().nullable()
 });
 
 export async function POST(req) {
@@ -34,6 +35,7 @@ export async function POST(req) {
             meta_title,
             meta_desc,
             tags,
+            image
         } = parsedData;
 
 
@@ -80,7 +82,7 @@ export async function POST(req) {
             );
         }
 
-        if(category.status === "INACTIVE"){
+        if (category.status === "INACTIVE") {
             return NextResponse.json(
                 { success: false, message: "Category is inactive please activate the category or select other category." },
                 { status: 400 }
@@ -98,6 +100,7 @@ export async function POST(req) {
                 published,
                 authorId,
                 categoryId,
+                image,
                 meta_title: meta_title || null,
                 meta_desc: meta_desc || null,
                 tags: {

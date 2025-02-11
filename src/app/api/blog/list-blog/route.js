@@ -118,9 +118,6 @@ export async function GET(req) {
       where: filterOptions,
     });
 
-    // Log the fetched blogs
-    console.log('Fetched Blogs:', blogs);
-
     // Parse the response (SEO fields, etc.)
     const parsedBlogs = parseResponse(blogs);
 

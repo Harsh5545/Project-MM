@@ -27,12 +27,12 @@ const page = async () => {
     }
 
     const result = await response.json();
-  
+    console.log(result)
     if (result && result.data && result.data.length > 0) {
       return (
         <div>
           <BlogHero />
-          <BentoGridDemo blogs={result.data} /> {/* Pass fetched data to BentoGridDemo */}
+          <BentoGridDemo blogs={result.data} />
         </div>
       );
     } else {

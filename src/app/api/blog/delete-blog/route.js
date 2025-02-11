@@ -7,7 +7,7 @@ export async function POST(req) {
     try {
         const result = await prisma.blog.delete({
             where: {
-                id: body.blog_id
+                id: body.id
             }
         });
         return NextResponse.json({ Success: true, Message: "Blog Deleted Successfully.", data: result }, { status: 200 });

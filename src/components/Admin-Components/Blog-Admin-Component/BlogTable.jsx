@@ -79,16 +79,21 @@ export default function BlogTable() {
 
   const confirmDelete = async () => {
     if (!blogToDelete) return;
-
+    console.log(blogToDelete?.id,"LOG")
     try {
-      const response = await fetch(`/api/blogs/${blogToDelete.id}`, {
-        method: "DELETE",
+
+      const payload = { id: blogToDelete?.id };
+      const response = await fetch(`/api/blog/delete-blog`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
       });
 
       if (!response.ok) {
         throw new Error("Failed to delete blog");
       }
-
       setBlogs(blogs.filter((blog) => blog.id !== blogToDelete.id));
       toast({
         title: "Success",
@@ -106,6 +111,7 @@ export default function BlogTable() {
       setBlogToDelete(null);
     }
   };
+
 
   const handleEdit = (blog) => {
     router.push(`/admin/blog/edit/${blog.slug}`);
@@ -216,75 +222,75 @@ export default function BlogTable() {
       </Table> */}
 
 
-<Table>
-  <TableHeader>
-    <TableRow>
-      <TableHead style={{ width: '100px' }}>
-        <Button variant="ghost">Image</Button>
-      </TableHead>
-      <TableHead style={{ width: '200px' }}>
-        <Button variant="ghost" onClick={() => handleSort("title")}>
-          Title
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      </TableHead>
-      <TableHead style={{ width: '150px' }}>
-        <Button variant="ghost" onClick={() => handleSort("category")}>
-          Category
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      </TableHead>
-      <TableHead style={{ width: '120px' }}>
-        <Button variant="ghost" onClick={() => setPublished(!published)}>
-          Published
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      </TableHead>
-      <TableHead style={{ width: '150px' }}>Actions</TableHead>
-    </TableRow>
-  </TableHeader>
-  <TableBody>
-    {loading ? (
-      <TableRow>
-        <TableCell colSpan={5}>
-          <TableShimmer />
-        </TableCell>
-      </TableRow>
-    ) : (
-      paginatedBlogs.map((blog) => (
-        <TableRow key={blog.id}>
-          <TableCell style={{ width: '100px' }}>
-            <Image
-              src={blog.image || "/default-image.jpg"}
-              alt={blog.title}
-              width={50}
-              height={50}
-              className="rounded-full"
-            />
-          </TableCell>
-          <TableCell style={{ width: '200px' }}>{blog.title}</TableCell>
-          <TableCell style={{ width: '150px' }}>
-            {blog.category ? blog.category.category_name : "No category"}
-          </TableCell>
-          <TableCell style={{ width: '120px' }}>
-            <Button variant={blog.published ? "default" : "destructive"}>
-              {blog.published ? "Published" : "Not Published"}
-            </Button>
-          </TableCell>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead style={{ width: '100px' }}>
+              <Button variant="ghost">Image</Button>
+            </TableHead>
+            <TableHead style={{ width: '200px' }}>
+              <Button variant="ghost" onClick={() => handleSort("title")}>
+                Title
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+              </Button>
+            </TableHead>
+            <TableHead style={{ width: '150px' }}>
+              <Button variant="ghost" onClick={() => handleSort("category")}>
+                Category
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+              </Button>
+            </TableHead>
+            <TableHead style={{ width: '120px' }}>
+              <Button variant="ghost" onClick={() => setPublished(!published)}>
+                Published
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+              </Button>
+            </TableHead>
+            <TableHead style={{ width: '150px' }}>Actions</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {loading ? (
+            <TableRow>
+              <TableCell colSpan={5}>
+                <TableShimmer />
+              </TableCell>
+            </TableRow>
+          ) : (
+            paginatedBlogs.map((blog) => (
+              <TableRow key={blog.id}>
+                <TableCell style={{ width: '100px' }}>
+                  <Image
+                    src={blog.image || "/default-image.jpg"}
+                    alt={blog.title}
+                    width={50}
+                    height={50}
+                    className="rounded-full"
+                  />
+                </TableCell>
+                <TableCell style={{ width: '200px' }}>{blog.title}</TableCell>
+                <TableCell style={{ width: '150px' }}>
+                  {blog.category ? blog.category.category_name : "No category"}
+                </TableCell>
+                <TableCell style={{ width: '120px' }}>
+                  <Button variant={blog.published ? "default" : "destructive"}>
+                    {blog.published ? "Published" : "Not Published"}
+                  </Button>
+                </TableCell>
 
-          <TableCell style={{ width: '150px' }}>
-            <Button variant="outline" className="mr-2" onClick={() => handleEdit(blog)}>
-              Edit
-            </Button>
-            <Button variant="destructive" onClick={() => handleDelete(blog)}>
-              Delete
-            </Button>
-          </TableCell>
-        </TableRow>
-      ))
-    )}
-  </TableBody>
-</Table>
+                <TableCell style={{ width: '150px' }}>
+                  <Button variant="outline" className="mr-2" onClick={() => handleEdit(blog)}>
+                    Edit
+                  </Button>
+                  <Button variant="destructive" onClick={() => handleDelete(blog)}>
+                    Delete
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))
+          )}
+        </TableBody>
+      </Table>
 
 
       <div className="flex justify-center items-center border-t pt-4 space-x-2 mt-4">
