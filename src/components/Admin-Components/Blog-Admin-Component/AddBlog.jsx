@@ -14,7 +14,6 @@ import BlogImageUploader from "./BlogImageUploder"
 
 
 export default function BlogEditor({ existingBlog, userId }) {
-
   const { toast } = useToast()
   const { categories, loading: categoriesLoading } = useCategories()
   const isEditMode = !!existingBlog
@@ -30,7 +29,6 @@ export default function BlogEditor({ existingBlog, userId }) {
     meta_title: existingBlog?.meta_title || "",
     meta_desc: existingBlog?.meta_desc || "",
     tags: existingBlog?.tags || [],
-
   })
 
   const [previewMode, setPreviewMode] = useState("laptop")
@@ -72,21 +70,21 @@ export default function BlogEditor({ existingBlog, userId }) {
   const handleContentChange = (newContent) => {
     setBlogData((prevData) => ({
       ...prevData,
-      content: newContent, // CKEditor gives HTML directly
+      content: newContent,
     }));
   };
   const handleSubmit = async (e) => {
     e.preventDefault()
     const payload = {
       ...blogData,
-      authorId: Number(blogData.authorId), // Convert to number
-      categoryId: Number(blogData.categoryId), // Convert to number
+      authorId: Number(blogData.authorId), 
+      categoryId: Number(blogData.categoryId),
     }
     try {
-      const response = await fetch("/api/blog/add-blog", {
-        method: isEditMode ? "PUT" : "POST",
+      const response = await fetch(isEditMode ? "/api/blog/update-blog" : "/api/blog/add-blog", {
+        method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload), // Send the correct payload
+        body: JSON.stringify(payload),
       })
       if (!response.ok) throw new Error("Failed to save blog")
       toast({
@@ -116,7 +114,7 @@ export default function BlogEditor({ existingBlog, userId }) {
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Title:</label>
             <Input
               type="text"
-              value={blogData.title ?? ""}
+              value={blogData.title}
               onChange={(e) => setBlogData((prevData) => ({ ...prevData, title: e.target.value }))}
               required
               className="w-full p-2 rounded-md"
@@ -221,7 +219,7 @@ export default function BlogEditor({ existingBlog, userId }) {
                     key={tag}
                     className="inline-flex items-center px-2 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800"
                   >
-                    {tag}
+                    {isEditMode ? tag.name : tag}
                     <button
                       type="button"
                       onClick={() => handleTagRemoval(tag)}
