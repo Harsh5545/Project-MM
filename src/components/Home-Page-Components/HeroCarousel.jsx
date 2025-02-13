@@ -105,14 +105,14 @@ const HeroCarousel = () => {
         <meta property="og:image" content="/assets/One-on-One Consulting.jpeg" />
         <meta property="og:url" content="https://modernmannerism.com" />
         <meta name="twitter:card" content="summary_large_image" />
-    
+
       </Head>
       <div className="w-full relative">
         <Swiper
           onSlideChange={handleSlideChange}
           keyboard={{ enabled: true }}
           pagination={{ clickable: true }}
-          autoplay={{ delay: 4000000, disableOnInteraction: false }}
+          autoplay={{ delay: 4000, disableOnInteraction: false }}
           speed={800}
           loop={true}
           navigation={false}
@@ -141,26 +141,29 @@ const HeroCarousel = () => {
                       {slide.button}
                     </Button>
                   </div>
-                  <div className="w-full md:w-3/4 lg:w-1/2 h-[50vh] md:h-[60vh] lg:h-full relative">
-                    <Image
-                      src={slide.right_side_image}
-                      alt={slide.text}
-                      layout="fill"
-                      objectFit="contain"
-                      priority
-                      className="absolute pt-10"
-                    />
+                  <div className="w-full md:w-3/4 lg:w-1/2 relative flex justify-center">
+                    <div className="relative w-[100%] h-[50vh] md:w-[70%] md:h-[60vh] lg:w-full lg:h-[100vh]">
+                      <Image
+                        src={slide.right_side_image}
+                        alt={slide.text}
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        className="object-contain"
+                        priority
+                      />
+                    </div>
                   </div>
+
                 </>
               ) : (
-               <> <div className="absolute inset-0 dark:bg-[#060507] bg-[#3a4e5d] dark:bg-opacity-60 bg-opacity-50"></div>
-               <div className="w-full z-10 h-full flex flex-col justify-center items-center text-center p-5 md:p-8">
-                 <h1 className={`text-2xl md:text-4xl font-bold ${cormorant.className}`}>{slide.text}</h1>
-                 <p className="mt-2 w-full md:w-[60%] md:mt-4 text-sm md:text-xl ">{slide.description}</p>
-                 <Button className="mt-4 md:mt-6 bg-gradient-to-r from-[#c3965d] to-[#eabf91] text-white px-6 md:px-8 py-2 md:py-4 rounded-full">
-                   {slide.button}
-                 </Button>
-               </div></>
+                <> <div className="absolute inset-0 dark:bg-[#060507] bg-[#3a4e5d] dark:bg-opacity-60 bg-opacity-50"></div>
+                  <div className="w-full z-10 h-full flex flex-col justify-center items-center text-center p-5 md:p-8">
+                    <h1 className={`text-2xl md:text-4xl font-bold ${cormorant.className}`}>{slide.text}</h1>
+                    <p className="mt-2 w-full md:w-[60%] md:mt-4 text-sm md:text-xl ">{slide.description}</p>
+                    <Button className="mt-4 md:mt-6 bg-gradient-to-r from-[#c3965d] to-[#eabf91] text-white px-6 md:px-8 py-2 md:py-4 rounded-full">
+                      {slide.button}
+                    </Button>
+                  </div></>
               )}
               </div>
             </SwiperSlide>

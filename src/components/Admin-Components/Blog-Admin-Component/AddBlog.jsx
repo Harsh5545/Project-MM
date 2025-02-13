@@ -253,7 +253,7 @@ export default function BlogEditor({ existingBlog, userId }) {
             <BlogImageUploader formData={blogData} setFormData={setBlogData} type={'og_image'}/>
             {blogData.image && (
               <img
-                src={blogData.image || "/placeholder.svg"}
+                src={blogData.og_image || "/placeholder.svg"}
                 alt="Preview"
                 className="mt-4 max-w-full h-auto rounded-lg shadow-md"
               />
