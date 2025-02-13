@@ -7,8 +7,8 @@ const BlogPage = ({ data }) => {
   }
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
-      <div className="max-w-4xl mx-auto bg-white dark:bg-gray-900 rounded-lg shadow-lg p-6 md:p-10">
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8  py-16 md:py-24">
+      <div className="max-w-6xl mx-auto bg-white dark:bg-gray-900 rounded-lg shadow-lg p-6 md:p-10">
         
         {/* Blog Header */}
         <div className="text-center mb-6 md:mb-10">
@@ -19,13 +19,13 @@ const BlogPage = ({ data }) => {
         </div>
 
         {/* Blog Image */}
-        <div className="w-full h-60 md:h-80 lg:h-96 mb-8">
+        {/* <div className="w-full h-60 md:h-80 lg:h-96 mb-8">
           <img
             src={data.image || "/default-image.jpg"}
             alt={data.title}
             className="object-cover w-full h-full rounded-lg"
           />
-        </div>
+        </div> */}
 
         {/* Blog Content */}
         <div className="text-base md:text-lg text-gray-800 dark:text-gray-300 leading-relaxed">
@@ -33,7 +33,7 @@ const BlogPage = ({ data }) => {
         </div>
 
         {/* SEO Details */}
-        {data.seo && (
+        {/* {data.seo && (
           <div className="mt-12 bg-gray-100 dark:bg-gray-800 p-6 rounded-lg">
             <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">SEO Information</h2>
             <p className="text-sm text-gray-600 dark:text-gray-400">
@@ -55,7 +55,7 @@ const BlogPage = ({ data }) => {
               </div>
             )}
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );
