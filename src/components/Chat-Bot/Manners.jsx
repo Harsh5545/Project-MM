@@ -1,55 +1,51 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { motion } from "framer-motion"
-import { Send, X } from "lucide-react" // Added X for close button
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Send, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export function Manners() {
   const [messages, setMessages] = useState([
-    { id: 1, role: "bot", content: "Hello! What is your name?" },
-  ])
-  const [input, setInput] = useState("")
-  const [showChat, setShowChat] = useState(false)
+    { id: 1, role: "bot", content: "Welcome to Modern Mannerism! How do we address you?\n🔘 Mr. \n🔘 Miss \n🔘 Mrs. \n🔘 Others (Specify)" },
+  ]);
+  const [input, setInput] = useState("");
+  const [showChat, setShowChat] = useState(false);
+  const [step, setStep] = useState(1);
 
   const handleInputChange = (e) => {
-    setInput(e.target.value)
-  }
+    setInput(e.target.value);
+  };
 
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
+    if (!input.trim()) return;
 
-    // User message
-    if (input.trim()) {
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        { id: prevMessages.length + 1, role: "user", content: input },
-      ])
+    const userMessage = { id: messages.length + 1, role: "user", content: input };
+    setMessages((prev) => [...prev, userMessage]);
+    
+    const botResponse = getNextBotResponse(input, step);
+    if (botResponse) {
+      setMessages((prev) => [...prev, { id: prev.length + 1, role: "bot", content: botResponse.text }]);
+      setStep(botResponse.nextStep);
     }
+    setInput("");
+  };
 
-    // Automated response
-    const nextBotMessage = getNextBotResponse(input)
-    if (nextBotMessage) {
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        { id: prevMessages.length + 2, role: "bot", content: nextBotMessage },
-      ])
+  const getNextBotResponse = (userMessage, currentStep) => {
+    switch (currentStep) {
+      case 1:
+        return { text: `Great! Please enter your first and last name.`, nextStep: 2 };
+      case 2:
+        return { text: `Nice to meet you, ${userMessage.split(" ").pop()}! How can we assist you today?\n⿡ Personal Grooming & Etiquette \n⿢ Corporate & Business Etiquette \n⿣ Children & Teen Etiquette \n⿤ Workshops & Training Programs \n⿥ Custom Consultation \n⿦ Other (Type your query)`, nextStep: 3 };
+      case 3:
+        return { text: `Would you like to book a consultation or get more details?\n🔘 Book a Session \n🔘 Speak to an Expert \n🔘 Download Our Free E-Book`, nextStep: 4 };
+      default:
+        return { text: "I'm not sure how to respond to that. Could you ask me something else?", nextStep: currentStep };
     }
-
-    setInput("")
-  }
-
-  const getNextBotResponse = (userMessage) => {
-    if (userMessage.toLowerCase().includes("hello")) {
-      return "Nice to meet you! How can I help you today?"
-    }
-    if (userMessage.toLowerCase().includes("help")) {
-      return "I'm here to assist you with your manners! Ask me anything."
-    }
-    return "I'm not sure how to respond to that. Could you ask me something else?"
-  }
+  };
 
   return (
     <motion.div
@@ -98,5 +94,5 @@ export function Manners() {
         </Card>
       )}
     </motion.div>
-  )
+  );
 }

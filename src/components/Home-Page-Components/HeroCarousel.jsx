@@ -156,7 +156,7 @@ const HeroCarousel = () => {
 
                 </>
               ) : (
-                <> <div className="absolute inset-0 dark:bg-[#060507] bg-[#3a4e5d] dark:bg-opacity-60 bg-opacity-60"></div>
+                <> <div className="absolute inset-0 dark:bg-[#060507] bg-black dark:bg-opacity-60 bg-opacity-30"></div>
                   <div className="w-full z-20 h-full flex flex-col justify-center items-center text-center p-5 md:p-8">
                     <h1 className={`text-2xl md:text-4xl text-gray-100 font-bold ${cormorant.className}`}>{slide.text}</h1>
                     <p className="mt-2 w-full md:w-[60%] text-gray-300 md:mt-4 text-sm md:text-xl ">{slide.description}</p>
