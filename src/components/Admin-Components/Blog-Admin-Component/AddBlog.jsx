@@ -242,7 +242,7 @@ export default function BlogEditor({ existingBlog, userId }) {
               <img
                 src={blogData.image || "/placeholder.svg"}
                 alt="Preview"
-                className="mt-4 max-w-full h-auto rounded-lg shadow-md"
+                className="mt-4 max-w-full h-[40vh] rounded-lg shadow-md"
               />
             )}
           </div>
@@ -255,7 +255,7 @@ export default function BlogEditor({ existingBlog, userId }) {
               <img
                 src={blogData.og_image || "/placeholder.svg"}
                 alt="Preview"
-                className="mt-4 max-w-full h-auto rounded-lg shadow-md"
+                className="mt-4 max-w-full h-[40vh] rounded-lg shadow-md"
               />
             )}
           </div>
