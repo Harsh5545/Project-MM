@@ -76,8 +76,7 @@ import 'ckeditor5/ckeditor5.css';
 
 
 
-const LICENSE_KEY =
-	'eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3Mzk0OTExOTksImp0aSI6IjE4YmUwNmVmLTRiZDgtNDA1ZS05NmZhLTViYTY5MjhjM2M1NyIsInVzYWdlRW5kcG9pbnQiOiJodHRwczovL3Byb3h5LWV2ZW50LmNrZWRpdG9yLmNvbSIsImRpc3RyaWJ1dGlvbkNoYW5uZWwiOlsiY2xvdWQiLCJkcnVwYWwiLCJzaCJdLCJ3aGl0ZUxhYmVsIjp0cnVlLCJsaWNlbnNlVHlwZSI6InRyaWFsIiwiZmVhdHVyZXMiOlsiKiJdLCJ2YyI6IjIzY2ViZTNjIn0.CdqzzGFQyaH5I4ZZexXxUlY2yuu6umDPSv4szfs9B5fpF6SWiDi-ZDmw4mLgy5OMX5n2m1H7qdp_0GH_tCxGyA';
+const LICENSE_KEY = 'eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3NDEwNDYzOTksImp0aSI6IjFiODZkNzdiLTFhYmYtNDg5MS05YTJlLThlZDQyZTFkYTQ0NCIsInVzYWdlRW5kcG9pbnQiOiJodHRwczovL3Byb3h5LWV2ZW50LmNrZWRpdG9yLmNvbSIsImRpc3RyaWJ1dGlvbkNoYW5uZWwiOlsiY2xvdWQiLCJkcnVwYWwiLCJzaCJdLCJ3aGl0ZUxhYmVsIjp0cnVlLCJsaWNlbnNlVHlwZSI6InRyaWFsIiwiZmVhdHVyZXMiOlsiKiJdLCJ2YyI6IjIxYjg1ZDUwIn0.n0FoBFHCSqRe5_D95GAtn_zmtMTBjwnhfRTbfoB7BwaI8B5KvOD15Xp24x1OD1NF-8BZP833DtCNq_tFK5zF5g';
 
 export default function Editor({ onChange, content }) {
 	const editorContainerRef = useRef(null);
@@ -312,8 +311,8 @@ export default function Editor({ onChange, content }) {
 		};
 	}, [isLayoutReady]);
 	const handleChange = (event, editor) => {
-		const data = editor.getData(); // Get the current editor content
-		onChange(data); // Pass the content to the parent component via `onChange`
+		const data = editor.getData(); 
+		onChange(data); 
 	};
 	return (
 		<div className="main-container">
@@ -339,7 +338,7 @@ export default function Editor({ onChange, content }) {
 						)}
 					</div>
 				</div>
-				{/* <div className="editor_container__word-count" ref={editorWordCountRef}></div> */}
+				
 			</div>
 		</div>
 	);

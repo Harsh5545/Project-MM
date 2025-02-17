@@ -29,7 +29,7 @@ const navVariants = {
         y: 0,
         x: "-50%",
         transition: {
-            duration: 1.5,
+            duration: 1,
         },
     },
     exit: {
@@ -78,7 +78,7 @@ function HeaderFixed() {
             animate="animate"
             exit="exit"
             variants={navVariants}
-            className="fixed z-[999] bg-black bg-opacity-65  nav top-2 left-1/2 -translate-x-1/2 rounded-xl p-2 md:px-10 flex-col border justify-between flex md:flex-row items-center"
+            className="fixed z-[999] bg-black bg-opacity-65  nav top-2 left-1/2 border-none -translate-x-1/2 rounded-xl p-2 md:px-10 flex-col justify-between flex md:flex-row items-center"
             style={{ width: "90%" }}
         >
             <div className="flex justify-between  items-center w-full md:w-0">

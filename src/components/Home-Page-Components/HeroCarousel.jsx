@@ -142,7 +142,7 @@ const HeroCarousel = () => {
                     </Button>
                   </div>
                   <div className="w-full md:w-3/4 lg:w-1/2 relative flex justify-center">
-                    <div className="relative w-[100%] h-[50vh] md:w-[70%] md:h-[60vh] lg:w-full lg:h-[100vh]">
+                    <div className="relative w-[100%] h-[50vh] md:w-[70%] md:h-[60vh] lg:w-full lg:h-[95vh]">
                       <Image
                         src={slide.right_side_image}
                         alt={slide.text}
@@ -156,10 +156,10 @@ const HeroCarousel = () => {
 
                 </>
               ) : (
-                <> <div className="absolute inset-0 dark:bg-[#060507] bg-[#3a4e5d] dark:bg-opacity-60 bg-opacity-50"></div>
-                  <div className="w-full z-10 h-full flex flex-col justify-center items-center text-center p-5 md:p-8">
-                    <h1 className={`text-2xl md:text-4xl font-bold ${cormorant.className}`}>{slide.text}</h1>
-                    <p className="mt-2 w-full md:w-[60%] md:mt-4 text-sm md:text-xl ">{slide.description}</p>
+                <> <div className="absolute inset-0 dark:bg-[#060507] bg-[#3a4e5d] dark:bg-opacity-60 bg-opacity-60"></div>
+                  <div className="w-full z-20 h-full flex flex-col justify-center items-center text-center p-5 md:p-8">
+                    <h1 className={`text-2xl md:text-4xl text-gray-100 font-bold ${cormorant.className}`}>{slide.text}</h1>
+                    <p className="mt-2 w-full md:w-[60%] text-gray-300 md:mt-4 text-sm md:text-xl ">{slide.description}</p>
                     <Button className="mt-4 md:mt-6 bg-gradient-to-r from-[#c3965d] to-[#eabf91] text-white px-6 md:px-8 py-2 md:py-4 rounded-full">
                       {slide.button}
                     </Button>
