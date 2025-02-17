@@ -98,7 +98,7 @@ const Footer = () => {
       {/* Footer Bottom */}
       <div className="text-center py-10 md:py-4 text-sm">
         &copy; 2024 Modern Mannerism |
-        <span className="px-1 cursor-pointer">Privacy-Policy</span> |{" "}
+        <span className="px-1 cursor-pointer">Privacy Policy</span> |{" "}
         <span className="px-1 cursor-pointer">Terms</span> | Designed by Harsh
       </div>
     </footer>
