@@ -17,13 +17,13 @@ export default function EmailPopup() {
 
     if (!emailSubmitted) {
       if (!lastDismissed) {
-        setIsOpen(true);
+        setTimeout(() => setIsOpen(true), 20000); // Show after 20 seconds
       } else {
         const lastDismissedTime = new Date(lastDismissed);
         const currentTime = new Date();
         const daysSinceDismissed = (currentTime - lastDismissedTime) / (1000 * 60 * 60 * 24);
         if (daysSinceDismissed >= 5) {
-          setIsOpen(true);
+          setTimeout(() => setIsOpen(true), 20000); // Show after 20 seconds if 5 days passed
         }
       }
     }
