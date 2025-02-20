@@ -20,7 +20,7 @@ export default function EmailPopup() {
 
     if (!emailSubmitted) {
       if (!lastDismissed) {
-        setTimeout(() => setIsOpen(true), 200);
+        setTimeout(() => setIsOpen(true), 10000);
       } else {
         const lastDismissedTime = new Date(lastDismissed);
         const currentTime = new Date();
