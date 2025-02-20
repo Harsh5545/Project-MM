@@ -73,7 +73,7 @@ function HeaderDefault() {
           {/* Mobile menu toggle */}
           <div className="md:hidden">
             <label className="hamburger">
-              <input
+              <input 
                 type="checkbox"
                 onChange={toggleMobileMenu}
                 checked={navInput}

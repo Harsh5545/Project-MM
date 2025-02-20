@@ -9,31 +9,26 @@ import { HoverEffect } from "../ui/card-hover-effect";
 import { Badge } from "../ui/badge";
 import { IconClipboardCopy } from "@tabler/icons-react";
 import Pagination from "@/hooks/Pagination";
-import Link from "next/link"; // Import Link from Next.js
+import Link from "next/link";
 
 export function BentoGridDemo({ blogs }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(9); // Default
+  const [itemsPerPage, setItemsPerPage] = useState(9);
 
   useEffect(() => {
-    // Adjust items per page based on screen size
     const updateItemsPerPage = () => {
-      setItemsPerPage(window.innerWidth < 768 ? 5 : 9);
+      setItemsPerPage(window.innerWidth < 768 ? 6 : 12);
     };
     updateItemsPerPage();
     window.addEventListener("resize", updateItemsPerPage);
     return () => window.removeEventListener("resize", updateItemsPerPage);
   }, []);
 
-  // Filtered and paginated blog list
-  const filteredBlogs = blogs.filter((blog) => {
-    return (
-      blog.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      blog.category_name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  });
+  const filteredBlogs = blogs.filter((blog) =>
+    blog.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   const totalPages = Math.ceil(filteredBlogs.length / itemsPerPage);
   const paginatedBlogs = filteredBlogs.slice(
@@ -42,88 +37,63 @@ export function BentoGridDemo({ blogs }) {
   );
 
   return (
-    <div className="flex flex-col md:flex-row max-w-[90%] my-8 mx-auto gap-6 px-4 md:px-0">
-      {/* Sidebar */}
-      <aside className="hidden md:block md:w-1/3 lg:w-1/4 space-y-6">
-        <BackgroundGradient className="rounded-[22px] p-4 sm:p-10 bg-white dark:bg-zinc-900">
-          <Input
-            type="text"
-            placeholder="Search blogs..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="mb-4"
-          />
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold">Filter by Category</h3>
-            <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-              <option value="">All Categories</option>
-              {Array.from(new Set(blogs?.map((item) => item.category_name))).map((category) => (
-                <option key={category} value={category}>
-                  {category}
-                </option>
-              ))}
-            </Select>
-          </div>
-        </BackgroundGradient>
-
-        {/* Top Blogs */}
-        <BackgroundGradient className="rounded-[22px] p-4 sm:p-10 bg-white dark:bg-zinc-900">
-          <h3 className="text-lg font-semibold mb-4">Top Blogs</h3>
-          <HoverEffect items={blogs.slice(0, 3).map((blog) => ({
+    <div className="flex flex-col md:flex-row max-w-7xl mx-auto py-10 px-6 gap-10">
+      <aside className="hidden md:block w-1/4 space-y-6 bg-white dark:bg-gray-900 p-6 rounded-xl shadow-md">
+        <Input
+          type="text"
+          placeholder="Search blogs..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="w-full border p-3 rounded-md"
+        />
+        <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+          <option value="">All Categories</option>
+          {Array.from(new Set(blogs.map((item) => item.category_name))).map(
+            (category) => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            )
+          )}
+        </Select>
+        <h3 className="text-lg font-semibold">Top Blogs</h3>
+        <HoverEffect
+          items={blogs.slice(0, 3).map((blog) => ({
             title: blog.title,
             description: `By ${blog.author}`,
-            link: `/blog/${blog.slug}`, // Use the slug here
-          }))} />
-        </BackgroundGradient>
+            link: `/blog/${blog.slug}`,
+          }))}
+        />
       </aside>
 
-      {/* Blog Grid */}
-      <main className="w-full md:w-2/3 lg:w-3/4">
-        <BentoGrid className="mx-auto">
-          {paginatedBlogs.length > 0 ? (
-            paginatedBlogs.map((item) => (
-              <Link key={item.slug} href={`/blogs/${item.slug}`} passHref> 
-                <BentoGridItem
-                  title={item.title}
-                  description={item.meta_desc || "No description available"}
-                  header={
-                    <div className="rounded-[22px] max-w-sm h-full">
-                      <img
-                        src={item.image || "/default-blog.png"} 
-                        alt={item.title}
-                        className="object-cover w-full h-auto rounded-[22px]"
-                      />
-                    </div>
-                  }
-                  icon={<IconClipboardCopy className="h-4 w-4 text-neutral-500" />}
-                >
-                  <AnimatedTooltip
-                    items={[{ id: 1, name: item.category_name || "Uncategorized", designation: "Category", image: item.image }]}
-                  />
-                  {item.category_name && (
-                    <Badge className="absolute top-4 right-4">{item.category_name}</Badge>
-                  )}
-                </BentoGridItem>
-              </Link>
-            ))
-          ) : (
-            <div className="text-center text-gray-700 dark:text-gray-300 text-lg">
-              No blogs available
-            </div>
-          )}
-        </BentoGrid>
-
-        {/* Pagination */}
-        {totalPages > 1 && (
-          <div className="flex justify-center mt-10">
-            <Pagination
-              totalPages={totalPages}
-              currentPage={currentPage}
-              onPageChange={setCurrentPage}
-            />
-          </div>
+      <main className="w-full md:w-3/4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {paginatedBlogs.length > 0 ? (
+          paginatedBlogs.map((item) => (
+            <Link key={item.slug} href={`/blogs/${item.slug}`} passHref>
+              <div className="relative bg-white dark:bg-gray-800 p-4 rounded-xl shadow-lg hover:scale-105 transition-transform duration-300">
+                <img
+                  src={item.image || "/default-blog.png"}
+                  alt={item.title}
+                  className="w-full h-40 object-cover rounded-lg"
+                />
+                <h3 className="text-lg font-semibold mt-3">{item.title}</h3>
+                <p className="text-sm text-gray-500 mt-2">{item.meta_desc || "No description available"}</p>
+                {item.category_name && (
+                  <Badge className="absolute top-3 right-3 bg-blue-600 text-white">{item.category_name}</Badge>
+                )}
+              </div>
+            </Link>
+          ))
+        ) : (
+          <p className="text-center text-gray-600 dark:text-gray-300 col-span-full">No blogs available</p>
         )}
       </main>
+
+      {totalPages > 1 && (
+        <div className="flex justify-center w-full mt-8">
+          <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={setCurrentPage} />
+        </div>
+      )}
     </div>
   );
 }

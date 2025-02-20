@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -6,20 +5,20 @@ import { motion } from "framer-motion";
 import { useMediaQuery } from "react-responsive";
 
 import "./navbar.module.css";
-import "./Header.css"
+import "./Header.css";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import AllLinks from "./links/AllLinks";
 import { Lato } from "next/font/google";
-import ShadcnButton from "../Atom/button/ShadcnButton";
 import { AtSign, PhoneCall } from "lucide-react";
 import { IconMail } from "@tabler/icons-react";
+
 const dm_Sans = Lato({
     subsets: ["latin"],
     weight: ["400"],
-    // Add weights if needed
 });
+
 const navVariants = {
     initial: {
         y: "-50%",
@@ -39,11 +38,9 @@ const navVariants = {
 
 function HeaderFixed() {
     const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const [navInput, setNavInput] = useState(false);
 
     const toggleMobileMenu = () => {
         setMobileMenuOpen((prev) => !prev);
-        setNavInput((prev) => !prev);
     };
 
     const isMobile = useMediaQuery({ query: "(max-width: 767px)" });
@@ -52,53 +49,56 @@ function HeaderFixed() {
         window.scrollTo(0, 0);
         toggleMobileMenu();
     };
-    const router = useRouter()
+
+    const router = useRouter();
 
     const handlePhoneClick = () => {
-        const userAgent = navigator.userAgent.toLowerCase()
-    
+        const userAgent = navigator.userAgent.toLowerCase();
+
         // Check if the device is mobile or tablet
         const isMobileOrTablet =
           /iphone|ipad|android|blackberry|iemobile|kindle|opera mini|mobile/i.test(
             userAgent
-          )
-    
+          );
+
         if (isMobileOrTablet) {
-          // Open phone dialer
-          window.location.href = "tel:+919867831324"
+            // Open phone dialer
+            window.location.href = "tel:+919867831324";
         } else {
-          // Redirect to the contact-us page
-          router.push("/contact-us")
+            // Redirect to the contact-us page
+            router.push("/contact-us");
         }
-      }
-    
+    };
+
     return (
         <motion.div
             initial="initial"
             animate="animate"
             exit="exit"
             variants={navVariants}
-            className="fixed z-[999] bg-black bg-opacity-65  nav top-2 left-1/2 border-none -translate-x-1/2 rounded-xl p-2 md:px-10 flex-col justify-between flex md:flex-row items-center"
+            className="fixed z-[999] bg-black bg-opacity-65 nav top-2 left-1/2 border-none -translate-x-1/2 rounded-xl p-2 md:px-10 flex-col justify-between flex md:flex-row items-center"
             style={{ width: "90%" }}
         >
-            <div className="flex justify-between  items-center w-full md:w-0">
-            <span className="text-xl">
-      <Link href="/" passHref>
-        
-          <Image
-            width={300}
-            height={300}
-            src="/assets/MM.png"
-            className="md:max-w-[10rem] max-w-[6rem]"
-            alt="ModernMannerism institute logo"
-          />
+            <div className="flex justify-between items-center w-full md:w-0">
+                <span className="text-xl">
+                    <Link href="/" passHref>
+                        <Image
+                            width={300}
+                            height={300}
+                            src="/assets/MM.png"
+                            className="md:max-w-[10rem] max-w-[6rem]"
+                            alt="ModernMannerism institute logo"
+                        />
+                    </Link>
+                </span>
 
-
-      </Link>
-    </span>
                 <div className="md:hidden">
                     <label className="hamburger">
-                        <input type="checkbox" onChange={toggleMobileMenu} checked={navInput} />
+                        <input
+                            type="checkbox"
+                            onChange={toggleMobileMenu}
+                            checked={isMobileMenuOpen} // Ensure this is tied to the state
+                        />
                         <svg viewBox="0 0 32 32">
                             <path
                                 className="line line-top-bottom"
@@ -108,7 +108,6 @@ function HeaderFixed() {
                         </svg>
                     </label>
                 </div>
-                
             </div>
 
             <div className="flex flex-col items-start">
@@ -119,25 +118,22 @@ function HeaderFixed() {
                 </div>
             </div>
 
-            <div className={`${isMobile ? (isMobileMenuOpen ? "block" : "hidden") : "flex items-center pr-0 lg:pr-16 gap-2"
-                }`}>
-               
-              
-                       <div className="flex items-center justify-center gap-8 lg:gap-16">
-  <PhoneCall
-        className="w-6 h-6 cursor-pointer text-[#c3965d] hover:text-[#eabf91]"
-        onClick={handlePhoneClick}
-      />
-          {/* Email Icon */}
-          <div className="relative group">
-            <IconMail
-              className="w-8 h-8 cursor-pointer text-[#c3965d] hover:text-[#eabf91]"
-              onClick={() => window.open("mailto:modernmannerism@gmail.com")}
-            />
-            <span className="absolute bottom-[-2.5rem] left-[-5rem]  w-auto px-2 py-1 text-xs text-white bg-black rounded opacity-0 group-hover:opacity-100">
-              modernmannerism@gmail.com
-            </span>
-          </div></div>
+            <div className={`${isMobile ? (isMobileMenuOpen ? "block" : "hidden") : "flex items-center pr-0 lg:pr-16 gap-2"}`}>
+                <div className="flex items-center justify-center gap-8 lg:gap-16">
+                    <PhoneCall
+                        className="w-6 h-6 cursor-pointer text-[#c3965d] hover:text-[#eabf91]"
+                        onClick={handlePhoneClick}
+                    />
+                    <div className="relative group">
+                        <IconMail
+                            className="w-8 h-8 cursor-pointer text-[#c3965d] hover:text-[#eabf91]"
+                            onClick={() => window.open("mailto:modernmannerism@gmail.com")}
+                        />
+                        <span className="absolute bottom-[-2.5rem] left-[-5rem] w-auto px-2 py-1 text-xs text-white bg-black rounded opacity-0 group-hover:opacity-100">
+                            modernmannerism@gmail.com
+                        </span>
+                    </div>
+                </div>
             </div>
         </motion.div>
     );
