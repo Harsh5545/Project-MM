@@ -41,7 +41,8 @@ const BlogPage = ({ data }) => {
 
         {/* Blog Content */}
         <div className="text-base md:text-lg text-gray-800 dark:text-gray-300 leading-relaxed">
-          <div dangerouslySetInnerHTML={{ __html: data.content }}></div>
+         <div className="prose dark:prose-invert max-w-full" dangerouslySetInnerHTML={{ __html: data.content }} />
+
         </div>
       </motion.div>
 
@@ -61,7 +62,7 @@ const BlogPage = ({ data }) => {
           />
         </div>
         {/* Author Section */}
-        <div className="bg-gray-100 flex flex-col gap-5 dark:bg-gray-800 p-6 rounded-lg text-center">
+        <div className="bg-gray-100 hidden md:flex flex-col justify-center items-center gap-5 dark:bg-gray-800 p-6  text-center">
            <div className="flex flex-1 items-center justify-center w-full  relative group">
                     <Image
                       src="/assets/Manasi_kadam_image.jpg"
@@ -72,9 +73,10 @@ const BlogPage = ({ data }) => {
                     />
                     
                   </div>
-          <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Manasi Kadam</h3>
-          <p className="text-gray-600 dark:text-gray-400">Hi Manasi kaisi Hai</p>
-          <button className=" bg-gradient-to-r from-[#c3965d] to-[#eabf91] font-bold text-white min-w-fit px-6 md:px-6 py-2 md:py-3 rounded-full">
+          {/* <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Manasi Kadam</h3> */}
+          <p className="text-gray-600 dark:text-gray-400">Hi, I’m Manasi Kadam! 
+       </p>  <p className="text-gray-800 text-center text-sm  dark:text-gray-400">   I’m a Certified Image & Etiquette Consultant and Soft Skills Coach, here to help you feel confident, polished, and at ease in any setting. Whether it’s personal style, communication, or etiquette, I make it simple and practical—so you can shine effortlessly!</p>
+          <button className=" bg-[#eabf91] bg-opacity-45 font-normal text-gray-900 min-w-fit px-6 md:px-6 py-2 md:py-3 rounded-lg">
             Know More
           </button>
         </div>
@@ -84,7 +86,7 @@ const BlogPage = ({ data }) => {
         
          {/* Recent Blogs */}
          <div className="bg-gray-100 shadow-md shadow-slate-400 dark:bg-gray-800 p-6 rounded-lg">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Recent Updates</h3>
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white text-center mb-4">Latest Blog</h3>
           <ul className="space-y-2">
             {data.recentBlogs?.map((blog, index) => (
               <li key={index} className="text-blue-600 dark:text-blue-400 hover:underline">

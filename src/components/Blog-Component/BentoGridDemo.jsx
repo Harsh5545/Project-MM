@@ -56,7 +56,7 @@ export function BentoGridDemo({ blogs }) {
             )
           )}
         </Select>
-        <h3 className="text-lg font-semibold">Top Blogs</h3>
+        <h3 className="text-lg  font-semibold">Top Blogs</h3>
         <HoverEffect
           items={blogs.slice(0, 3).map((blog) => ({
             title: blog.title,

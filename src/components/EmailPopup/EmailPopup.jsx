@@ -61,10 +61,10 @@ export default function EmailPopup() {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="p-6 flex flex-col md:flex-row items-center gap-6 w-full md:min-w-max"> {/* Increased width */}
+      <DialogContent className="p-6 flex flex-col md:flex-row items-center gap-6 w-full md:min-w-fit"> {/* Increased width */}
         {/* Image */}
-        <div className="flex-1  border-2 border-sky-600 flex justify-start items-center w-[90%] md:w-[50%]">
-          <Image src="/assets/manasi-box.png" alt="Branding" width={400} height={400} className="rounded-lg object-cover " />
+        <div className="flex-1 flex justify-start items-center w-[90%] md:w-full">
+          <Image src="/assets/Book.png" alt="Branding" width={400} height={400} className="rounded-lg object-cover " />
         </div>
         {/* Form */}
         <div className="flex-1 flex flex-col items-center gap-16 justify-center w-full md:w-[50%]">
