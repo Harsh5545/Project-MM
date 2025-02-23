@@ -1,5 +1,5 @@
 import { auth } from "@/auth";
-import AddBlog from '@/components/Admin-Components/Blog-Admin-Component/AddBlog'
+import EditBlog from "@/components/Admin-Components/Blog-Admin-Component/Edit-Blog-Component/EditBlogComponent";
 
 const page = async ({params}) => {
     const slug = (await params).slug
@@ -8,7 +8,7 @@ const page = async ({params}) => {
     const session = await auth();
     return (
         <div className="space-y-4">
-            <AddBlog existingBlog={result?.data || {}} userId={session?.user?.id}/>
+            <EditBlog existingBlog={result?.data || {}} userId={session?.user?.id}/>
         </div>
     )
 }

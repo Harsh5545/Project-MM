@@ -5,14 +5,16 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { useCategories } from "./Admin-Blog-Table/UseCategories";
 import Editor from "@/components/Editor";
-import BlogImageUploader from "./BlogImageUploader";
+import BlogImageUploader from "../BlogImageUploder";
+import { useCategories } from "../Admin-Blog-Table/UseCategories";
+import { BsPlusCircle } from "react-icons/bs";
 
 export default function EditBlog({ existingBlog }) {
   const { toast } = useToast();
   const { categories, loading: categoriesLoading } = useCategories();
   const [blogData, setBlogData] = useState({
+    id: existingBlog?.id || "",
     title: existingBlog?.title || "",
     content: existingBlog?.content || "",
     slug: existingBlog?.slug || "",
@@ -24,6 +26,7 @@ export default function EditBlog({ existingBlog }) {
     meta_title: existingBlog?.meta_title || "",
     meta_desc: existingBlog?.meta_desc || "",
     tags: existingBlog?.tags || [],
+    tagInput: "", // To capture the new tag input
   });
 
   const [previewMode, setPreviewMode] = useState("laptop");
@@ -44,18 +47,21 @@ export default function EditBlog({ existingBlog }) {
   };
 
   const handleTagAddition = () => {
-    if (blogData.tagInput?.trim() && !blogData.tags.includes(blogData.tagInput.trim())) {
-      setBlogData((prevData) => ({
-        ...prevData,
-        tags: [...prevData.tags, blogData.tagInput.trim()],
-      }));
+    if (blogData.tagInput?.trim()) {
+      const tag = blogData.tagInput.trim();
+      if (!blogData.tags.includes(tag)) {
+        setBlogData((prevData) => ({
+          ...prevData,
+          tags: [...prevData.tags, tag], // Ensure that tags are always strings
+        }));
+      }
     }
   };
 
   const handleTagRemoval = (tagToRemove) => {
     setBlogData((prevData) => ({
       ...prevData,
-      tags: prevData.tags.filter((tag) => tag !== tagToRemove),
+      tags: prevData.tags.filter((tag) => tag !== tagToRemove), // Remove the tag (it will be a string now)
     }));
   };
 
@@ -65,11 +71,19 @@ export default function EditBlog({ existingBlog }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const payload = { ...blogData, categoryId: Number(blogData.categoryId) };
+
+    // Ensure all tags are strings before sending
+    const tagsAsStrings = blogData.tags.map(tag => typeof tag === 'string' ? tag : tag.name);
+
+    const payload = { 
+      ...blogData, 
+      tags: tagsAsStrings, // All tags are now strings
+      categoryId: Number(blogData.categoryId) 
+    };
 
     try {
-      const response = await fetch(`/api/blog/update-blog/${existingBlog.id}`, {
-        method: "PUT",
+      const response = await fetch(`/api/blog/update-blog`, {
+        method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
@@ -125,7 +139,44 @@ export default function EditBlog({ existingBlog }) {
               />
             </div>
           </div>
-
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Tags:</label>
+            <div className="flex items-center space-x-2">
+              <Input
+                type="text"
+                value={blogData.tagInput}
+                onChange={(e) => setBlogData((prevData) => ({ ...prevData, tagInput: e.target.value }))}
+                placeholder="Enter a tag"
+                className="flex-grow p-2 rounded-md"
+              />
+              <Button
+                type="button"
+                onClick={handleTagAddition}
+                className="p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+              >
+                <BsPlusCircle />
+              </Button>
+            </div>
+            {blogData.tags.length > 0 && (
+              <div className="mt-2 flex flex-wrap gap-2">
+                {blogData.tags.map((tag, index) => (
+                  <span
+                    key={index}
+                    className="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-2 py-1 rounded-md flex items-center"
+                  >
+                    {tag.name ? tag.name : tag}
+                    <Button
+                      type="button"
+                      className="ml-2 text-red-500 hover:text-red-700"
+                      onClick={() => handleTagRemoval(tag)}
+                    >
+                      &times;
+                    </Button>
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
           {/* Slug Input */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Slug:</label>
