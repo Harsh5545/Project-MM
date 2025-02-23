@@ -19,10 +19,11 @@ const blogSchema = z.object({
     image: z.string().optional().nullable(),
 });
 
+
 export async function POST(req) {
-    console.log(req);
     try {
         const data = await req.json();
+        console.log(data)
         const parsedData = blogSchema.parse(data);
 
         const {
@@ -50,6 +51,20 @@ export async function POST(req) {
                     { success: false, message: "Blog not found" },
                     { status: 404 }
                 );
+            }
+
+            // If the slug has changed, check if it's unique
+            if (slug !== existingBlog.slug) {
+                const existingBlogSlug = await prisma.blog.findUnique({
+                    where: { slug },
+                });
+
+                if (existingBlogSlug) {
+                    return NextResponse.json(
+                        { success: false, message: "Slug must be unique" },
+                        { status: 400 }
+                    );
+                }
             }
 
             // Update the existing blog
@@ -93,7 +108,7 @@ export async function POST(req) {
                 where: { slug },
             });
 
-            if (existingBlogSlug) {
+            if (existingBlogSlug && existingBlogSlug.id !== id) {
                 return NextResponse.json(
                     { success: false, message: "Slug must be unique" },
                     { status: 400 }
@@ -194,3 +209,4 @@ export async function POST(req) {
         );
     }
 }
+

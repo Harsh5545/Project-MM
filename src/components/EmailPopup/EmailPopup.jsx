@@ -61,29 +61,29 @@ export default function EmailPopup() {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="p-6 flex flex-col md:flex-row items-center gap-6 w-full md:max-w-max"> {/* Increased width */}
+      <DialogContent className="p-6 flex flex-col lg:flex-row items-center gap-6 w-[90%] lg:min-w-fit"> {/* Increased width */}
         {/* Image */}
-        <div className="flex-1 w-full md:w-[50%]">
-          <Image src="/assets/pop-up.jpg" alt="Branding" width={300} height={500} className="rounded-lg object-cover w-full h-full" />
+        <div className="flex-1 hidden md:flex lg:flex justify-start items-center w-[90%] md:w-full">
+          <Image src="/assets/Book.png" alt="Branding" width={400} height={400} className="rounded-lg object-cover " />
         </div>
         {/* Form */}
-        <div className="flex-1 flex flex-col items-center gap-8 justify-center w-full md:w-[50%]">
+        <div className="flex-1 flex flex-col items-center gap-4 lg:gap-16 justify-center w-[90%] md:w-[50%]">
           <DialogHeader>
-            <DialogTitle className="text-2xl font-semibold text-center md:text-left">
+            <DialogTitle className="lg:text-2xl text-lg font-semibold text-center md:text-left">
               Unlock Your Path to Elegance & Confidence!
             </DialogTitle>
           </DialogHeader>
           {!submitted ? (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }}>
-              <p className="text-center md:text-lg  text-sm text-gray-600">
+              <p className="text-center md:text-lg  text-xs text-gray-600">
                 Get your FREE e-book – a practical, insightful guide to refining your social and professional image with ease.
               </p>
-              <div className="flex flex-col gap-5">
-            <div className="flex gap-4">    <Input type="text" placeholder="First Name" className="mt-3" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
-                <Input type="text" placeholder="Last Name" className="mt-3" value={lastName} onChange={(e) => setLastName(e.target.value)} />
-              </div>  <Input type="email" placeholder="Enter your email" className="mt-3" value={email} onChange={(e) => setEmail(e.target.value)} />
+              <div className="flex flex-col gap-2 lg:gap-10">
+            <div className="flex gap-2 lg:gap-6">    <Input type="text" placeholder="First Name" className=" mt-1 lg:mt-3" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+                <Input type="text" placeholder="Last Name" className="lg:mt-3 mt-1" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+              </div>  <Input type="email" placeholder="Enter your email" className="lg:mt-3 mt-1" value={email} onChange={(e) => setEmail(e.target.value)} />
               </div>
-              <div className="flex justify-center gap-3 mt-4">
+              <div className="flex flex-col lg:flex-row justify-center gap-3 lg:gap-8 mt-4">
                 <Button variant="outline" onClick={handleClose}>Maybe Later</Button>
                 <Button onClick={handleSubmit}>Get Your Free E-Book Now</Button>
               </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState , useEffect} from "react";
 import { motion } from "framer-motion";
 import { useMediaQuery } from "react-responsive";
 
@@ -38,6 +38,7 @@ const navVariants = {
 
 function HeaderFixed() {
     const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [isClient, setIsClient] = useState(false);
 
     const toggleMobileMenu = () => {
         setMobileMenuOpen((prev) => !prev);
@@ -51,6 +52,10 @@ function HeaderFixed() {
     };
 
     const router = useRouter();
+
+    useEffect(() => {
+        setIsClient(true);
+    }, []);
 
     const handlePhoneClick = () => {
         const userAgent = navigator.userAgent.toLowerCase();
@@ -71,71 +76,88 @@ function HeaderFixed() {
     };
 
     return (
-        <motion.div
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            variants={navVariants}
-            className="fixed z-[999] bg-black bg-opacity-65 nav top-2 left-1/2 border-none -translate-x-1/2 rounded-xl p-2 md:px-10 flex-col justify-between flex md:flex-row items-center"
-            style={{ width: "90%" }}
+      <motion.div
+        initial="initial"
+        animate="animate"
+        exit="exit"
+        variants={navVariants}
+        className="fixed z-[999] bg-black bg-opacity-65 nav top-2 left-1/2 border-none -translate-x-1/2 rounded-xl p-2 md:px-10 flex-col justify-between flex md:flex-row items-center"
+        style={{ width: "90%" }}
+      >
+        <div className="flex justify-between items-center w-full md:w-0">
+          <span className="text-xl">
+            <Link href="/" passHref>
+              <Image
+                width={300}
+                height={300}
+                src="/assets/MM.png"
+                className="md:max-w-[10rem] max-w-[6rem]"
+                alt="ModernMannerism institute logo"
+              />
+            </Link>
+          </span>
+
+          <div className="md:hidden">
+            <label className="hamburger">
+              <input
+                type="checkbox"
+                onChange={toggleMobileMenu}
+                checked={isMobileMenuOpen} // Ensure this is tied to the state
+              />
+              <svg viewBox="0 0 32 32">
+                <path
+                  className="line line-top-bottom"
+                  d="M27 10 13 10C10.8 10 9 8.2 9 6 9 3.5 10.8 2 13 2 15.2 2 17 3.8 17 6L17 26C17 28.2 18.8 30 21 30 23.2 30 25 28.2 25 26 25 23.8 23.2 22 21 22L7 22"
+                ></path>
+                <path className="line" d="M7 16 27 16"></path>
+              </svg>
+            </label>
+          </div>
+        </div>
+
+        <div className="flex flex-col items-start">
+          {/* <div
+                    className={`flex ${isMobile ? (isMobileMenuOpen ? "block" : "hidden") : "flex"}`}
+                > */}
+          {isClient && (
+            <div
+              className={`${
+                isMobile ? (isMobileMenuOpen ? "block" : "hidden") : "flex"
+              } flex-col-reverse text-white md:flex-row font-poppins items-center gap-8 md:gap-4 h-[20rem] md:h-0 justify-center  font-medium `}
+            >
+              <AllLinks />
+            </div>
+          )}
+          {/* </div> */}
+        </div>
+
+        {isClient && (
+         <div
+          className={`${
+            isMobile
+              ? isMobileMenuOpen
+                ? "block"
+                : "hidden"
+              : "flex items-center pr-0 lg:pr-16 gap-2"
+          }`}
         >
-            <div className="flex justify-between items-center w-full md:w-0">
-                <span className="text-xl">
-                    <Link href="/" passHref>
-                        <Image
-                            width={300}
-                            height={300}
-                            src="/assets/MM.png"
-                            className="md:max-w-[10rem] max-w-[6rem]"
-                            alt="ModernMannerism institute logo"
-                        />
-                    </Link>
-                </span>
-
-                <div className="md:hidden">
-                    <label className="hamburger">
-                        <input
-                            type="checkbox"
-                            onChange={toggleMobileMenu}
-                            checked={isMobileMenuOpen} // Ensure this is tied to the state
-                        />
-                        <svg viewBox="0 0 32 32">
-                            <path
-                                className="line line-top-bottom"
-                                d="M27 10 13 10C10.8 10 9 8.2 9 6 9 3.5 10.8 2 13 2 15.2 2 17 3.8 17 6L17 26C17 28.2 18.8 30 21 30 23.2 30 25 28.2 25 26 25 23.8 23.2 22 21 22L7 22"
-                            ></path>
-                            <path className="line" d="M7 16 27 16"></path>
-                        </svg>
-                    </label>
-                </div>
+          <div className="flex items-center justify-center gap-8 lg:gap-16">
+            <PhoneCall
+              className="w-6 h-6 cursor-pointer text-[#c3965d] hover:text-[#eabf91]"
+              onClick={handlePhoneClick}
+            />
+            <div className="relative group">
+              <IconMail
+                className="w-8 h-8 cursor-pointer text-[#c3965d] hover:text-[#eabf91]"
+                onClick={() => window.open("mailto:modernmannerism@gmail.com")}
+              />
+              <span className="absolute bottom-[-2.5rem] left-[-5rem] w-auto px-2 py-1 text-xs text-white bg-black rounded opacity-0 group-hover:opacity-100">
+                modernmannerism@gmail.com
+              </span>
             </div>
-
-            <div className="flex flex-col items-start">
-                <div
-                    className={`flex flex-col-reverse text-white md:flex-row font-poppins items-center gap-8 md:gap-4 h-[20rem] md:h-0 justify-center  font-medium ${isMobile ? (isMobileMenuOpen ? "block" : "hidden") : "flex"}`}
-                >
-                    <AllLinks />
-                </div>
-            </div>
-
-            <div className={`${isMobile ? (isMobileMenuOpen ? "block" : "hidden") : "flex items-center pr-0 lg:pr-16 gap-2"}`}>
-                <div className="flex items-center justify-center gap-8 lg:gap-16">
-                    <PhoneCall
-                        className="w-6 h-6 cursor-pointer text-[#c3965d] hover:text-[#eabf91]"
-                        onClick={handlePhoneClick}
-                    />
-                    <div className="relative group">
-                        <IconMail
-                            className="w-8 h-8 cursor-pointer text-[#c3965d] hover:text-[#eabf91]"
-                            onClick={() => window.open("mailto:modernmannerism@gmail.com")}
-                        />
-                        <span className="absolute bottom-[-2.5rem] left-[-5rem] w-auto px-2 py-1 text-xs text-white bg-black rounded opacity-0 group-hover:opacity-100">
-                            modernmannerism@gmail.com
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </motion.div>
+          </div>
+        </div>)}
+      </motion.div>
     );
 }
 
