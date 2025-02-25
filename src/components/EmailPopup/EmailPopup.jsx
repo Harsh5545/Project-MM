@@ -152,7 +152,7 @@ export default function EmailPopup() {
         ) : (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }}>
           <Image src="/assets/success-check.svg" alt="Success" width={60} height={60} />
-  <p className="text-lg font-semibold text-green-600 mt-3">
+  <p className="text-lg font-semibold text-[#B8860B] mt-3">
     Thank you! Your PDF is downloading...
   </p>
         </motion.div>
