@@ -75,12 +75,13 @@ export default function EmailPopup() {
     setIsOpen(false);
   };
   const downloadPDF = () => {
-    const link = document.createElement("a");
-    link.href = "https://www.modernmannerism.com/free-tips.pdf"; // Replace with actual hosted file URL
-    link.download = "free-tips.pdf";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    // const link = document.createElement("a");
+    // link.href = `${process.env.NEXT_PUBLIC_API_URL}/sample-5.pdf`; // Replace with actual hosted file URL
+    // link.download = "free-tips.pdf";
+    // document.body.appendChild(link);
+    // link.click();
+    // document.body.removeChild(link);
+    window.open(`${process.env.NEXT_PUBLIC_API_URL}/sample-5.pdf`, "_blank");
   };
 
   return (
@@ -145,20 +146,20 @@ export default function EmailPopup() {
                   className="bg-[#D4AF37] hover:bg-[#B8860B] text-white px-6 py-2 rounded-md transition-all"
                 >
 
-                Get Your Free E-Book Now
-              </Button>
-            </div>
+                  Get Your Free E-Book Now
+                </Button>
+              </div>
             </motion.div>
-        ) : (
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }}>
-          <Image src="/assets/success-check.svg" alt="Success" width={60} height={60} />
-  <p className="text-lg font-semibold text-[#B8860B] mt-3">
-    Thank you! Your PDF is downloading...
-  </p>
-        </motion.div>
+          ) : (
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }}>
+              <Image src="/assets/success-check.svg" alt="Success" width={60} height={60} />
+              <p className="text-lg font-semibold text-[#B8860B] mt-3">
+                Thank you! Your PDF is downloading...
+              </p>
+            </motion.div>
           )}
-      </div>
-    </DialogContent>
+        </div>
+      </DialogContent>
     </Dialog >
   );
 }

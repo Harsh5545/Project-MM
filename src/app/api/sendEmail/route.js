@@ -23,7 +23,7 @@ export async function POST(req) {
       subject: "Your Free E-Book - Modern Mannerism",
       html: `<p>Dear ${firstName},</p>
       <p>Here’s your free e-book:</p>
-      <a href="https://yourwebsite.com/free-tips.pdf" download>Download E-Book</a>
+      <a href="${process.env.NEXT_PUBLIC_API_URL}/sample-5.pdf" download>Download E-Book</a>
       <p>Best Regards,<br>Modern Mannerism Team</p>`,
     };
 
@@ -36,7 +36,18 @@ export async function POST(req) {
       <p><strong>Email:</strong> ${email}</p>`,
     };
 
-    await transporter.sendMail(mailOptionsUser);
+    const res = await transporter.sendMail(mailOptionsUser);
+    if(res.accepted.length > 0){
+      const EmailUser = await prisma.DownloadEntry.create({
+        data: {
+          name:firstName,
+          last_name:lastName,
+          email:email,
+          downloaded:true
+        },
+      });
+      console.log(EmailUser)
+    }
     await transporter.sendMail(mailOptionsAdmin);
 
     return NextResponse.json({ success: true, message: "Emails sent successfully!" }, { status: 200 });
