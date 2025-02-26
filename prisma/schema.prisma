@@ -92,7 +92,7 @@ model Notification {
 model Blog {
   id          Int        @id @default(autoincrement())
   title       String     // Blog title
-  content     String     @db.Text
+  content     String     @db.LongText // Blog content
   published   Boolean    @default(false) // Whether the blog is published
   authorId    Int        // Author (reference to the User model)
   createdAt   DateTime   @default(now())
@@ -117,4 +117,15 @@ model Tag {
   updatedAt DateTime  @updatedAt
   blogs     Blog[]    @relation("BlogTags") // Many-to-many relation with Blog
   @@index([name], name: "Tag_name_idx")
+}
+
+
+model DownloadEntry {
+  id        Int      @id @default(autoincrement()) 
+  downloaded Boolean  @default(false)
+  name      String
+  last_name String
+  email     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt 
 }

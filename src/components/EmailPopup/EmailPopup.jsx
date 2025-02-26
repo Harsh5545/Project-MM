@@ -6,6 +6,11 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { Cormorant_Garamond, Lato } from "next/font/google";
+
+const dm_Sansss = Cormorant_Garamond({ subsets: ["latin"], weight: ["700"] });
+const dm_Sans = Cormorant_Garamond({ subsets: ["latin"], weight: ["400"] });
+const dm_Sanss = Lato({ subsets: ["latin"], weight: ["300"] });
 
 export default function EmailPopup() {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,6 +18,7 @@ export default function EmailPopup() {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState(""); // Store error messages for UI
 
   useEffect(() => {
     const lastDismissed = localStorage.getItem("popupDismissed");
@@ -32,69 +38,128 @@ export default function EmailPopup() {
     }
   }, []);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!firstName.trim() || !lastName.trim() || !email.match(/\S+@\S+\.\S+/)) {
       alert("Please enter valid details.");
       return;
     }
-    localStorage.setItem("emailSubmitted", "true");
-    setSubmitted(true);
-    setTimeout(() => {
-      setIsOpen(false);
-      downloadPDF();
-    }, 1500);
+
+    try {
+      const response = await fetch("/api/sendEmail", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ firstName, lastName, email }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        localStorage.setItem("emailSubmitted", "true");
+        setSubmitted(true);
+        setTimeout(() => {
+          setIsOpen(false);
+          downloadPDF();
+        }, 1500);
+      } else {
+        alert(data.error || "Error sending email. Please try again.");
+      }
+    } catch (error) {
+      console.error("Email sending error:", error);
+      alert("Something went wrong. Please try again.");
+    }
   };
+
 
   const handleClose = () => {
     localStorage.setItem("popupDismissed", new Date().toISOString());
     setIsOpen(false);
   };
-
   const downloadPDF = () => {
-    const link = document.createElement("a");
-    link.href = "/free-tips.pdf";
-    link.download = "free-tips.pdf";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    // const link = document.createElement("a");
+    // link.href = `${process.env.NEXT_PUBLIC_API_URL}/sample-5.pdf`; // Replace with actual hosted file URL
+    // link.download = "free-tips.pdf";
+    // document.body.appendChild(link);
+    // link.click();
+    // document.body.removeChild(link);
+    window.open(`${process.env.NEXT_PUBLIC_API_URL}/sample-5.pdf`, "_blank");
   };
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="p-6 flex flex-col lg:flex-row items-center gap-6 w-[90%] lg:min-w-fit"> {/* Increased width */}
+      <DialogContent className="md:p-0 p-5 bg-gray-200 lg:bg-[#fffcfc] flex flex-col lg:flex-row items-center gap-4 w-[90%] lg:min-w-fit">
         {/* Image */}
-        <div className="flex-1 hidden md:flex lg:flex justify-start items-center w-[90%] md:w-full">
-          <Image src="/assets/Book.png" alt="Branding" width={400} height={400} className="rounded-lg object-cover " />
+        <div className="flex-1 hidden md:flex lg:flex justify-start items-center md:w-full">
+          <Image src="/assets/Book.png" alt="Branding" width={500} height={500} className="object-cover rounded-l-lg" />
         </div>
+
         {/* Form */}
-        <div className="flex-1 flex flex-col items-center gap-4 lg:gap-16 justify-center w-[90%] md:w-[50%]">
+        <div className="flex-1 px-2 flex flex-col items-center gap-4 lg:gap-8 justify-stretch w-[90%] md:w-[50%]">
           <DialogHeader>
-            <DialogTitle className="lg:text-2xl text-lg font-semibold text-center md:text-left">
+            <DialogTitle className={`${dm_Sansss.className} lg:text-3xl text-xl font-semibold text-center`}>
               Unlock Your Path to Elegance & Confidence!
             </DialogTitle>
           </DialogHeader>
+
           {!submitted ? (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }}>
-              <p className="text-center md:text-lg  text-xs text-gray-600">
-                Get your FREE e-book – a practical, insightful guide to refining your social and professional image with ease.
+              <p className={`${dm_Sanss.className} text-gray-700 text-lg font-medium`}>
+                Get your FREE e-book – a step-by-step guide to refine your professional & social presence.
               </p>
-              <div className="flex flex-col gap-2 lg:gap-10">
-            <div className="flex gap-2 lg:gap-6">    <Input type="text" placeholder="First Name" className=" mt-1 lg:mt-3" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
-                <Input type="text" placeholder="Last Name" className="lg:mt-3 mt-1" value={lastName} onChange={(e) => setLastName(e.target.value)} />
-              </div>  <Input type="email" placeholder="Enter your email" className="lg:mt-3 mt-1" value={email} onChange={(e) => setEmail(e.target.value)} />
+
+              <div className="flex flex-col gap-3 mt-4">
+                <div className="flex gap-3">
+                  <Input
+                    type="text" placeholder="First Name"
+                    className="px-4 py-2 border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                  />
+                  <Input
+                    type="text" placeholder="Last Name"
+                    className="px-4 py-2 border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                  />
+                </div>
+                <Input
+                  type="email" placeholder="Enter your email"
+                  className="px-4 py-2 border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
               </div>
-              <div className="flex flex-col lg:flex-row justify-center gap-3 lg:gap-8 mt-4">
-                <Button variant="outline" onClick={handleClose}>Maybe Later</Button>
-                <Button onClick={handleSubmit}>Get Your Free E-Book Now</Button>
+
+              {/* Error message with better UI */}
+              {error && (
+                <p className="mt-2 text-red-500 text-sm">
+                  {error}
+                </p>
+              )}
+
+              {/* CTA Buttons */}
+              <div className="flex flex-col lg:flex-row justify-center gap-3 lg:gap-6 mt-5">
+                <Button variant="outline" className="text-gray-600 hover:bg-gray-200" onClick={handleClose}>
+                  Maybe Later
+                </Button>
+                <Button
+                  onClick={handleSubmit}
+                  className="bg-[#D4AF37] hover:bg-[#B8860B] text-white px-6 py-2 rounded-md transition-all"
+                >
+
+                  Get Your Free E-Book Now
+                </Button>
               </div>
             </motion.div>
           ) : (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }}>
-              <p className="text-center font-medium">Thank you! Your PDF is downloading...</p>
+              <Image src="/assets/success-check.svg" alt="Success" width={60} height={60} />
+              <p className="text-lg font-semibold text-[#B8860B] mt-3">
+                Thank you! Your PDF is downloading...
+              </p>
             </motion.div>
           )}
         </div>
       </DialogContent>
-    </Dialog>
+    </Dialog >
   );
 }

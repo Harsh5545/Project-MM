@@ -92,8 +92,7 @@ const CardComponent = () => {
               </div>
               <button
                 onClick={() => handleReadMore(course.title)}
-                className="flex items-center justify-center tracking-wider bg-black text-[#DEC29F] font-bold p-3 px-6 rounded-xl transition-colors duration-300 ease-in-out"
-              >
+                className={`${dm_Sans.className} flex items-center justify-center tracking-wider bg-black text-[#DEC29F] font-bold p-3 px-6 rounded-xl transition-colors duration-300 ease-in-out`}>
                 Read more <MdOutlineArrowForwardIos className="ml-2" />
               </button>
             </div>
