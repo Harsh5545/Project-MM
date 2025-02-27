@@ -3,7 +3,7 @@ import { Cormorant_Garamond } from "next/font/google";
 import Image from "next/image"; // Ensure Image is imported
 // Import the custom ShadCN Button you created
 import { Star, Award } from "lucide-react"; // Use Lucide icons
-
+import { EB_Garamond } from "next/font/google";
 const dm_Sans = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["400"],

@@ -50,7 +50,7 @@ function ServicesComponent({ data }) {
   return (
     <>
       <div className="w-full min-h-screen bg-gradient-to-b from-[#f9f5f0] to-[#eae6e0] dark:from-[#00001F] dark:to-[#1a1a2e] py-16">
-        <div className="w-[90%] max-w-7xl mx-auto">
+        <div className=" lg:max-w-7xl mx-auto">
           {/* Heading */}
           <div className="text-center">
             <motion.h4
@@ -88,7 +88,7 @@ function ServicesComponent({ data }) {
           </motion.div>
 
           {/* Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12 items-stretch">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16 mt-12 items-stretch">
             {paginatedCourses.length > 0 ? (
               paginatedCourses.map((course, index) => (
                 <Link key={course?.id} href={`/services/${course?.slug}`}>

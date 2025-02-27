@@ -49,7 +49,7 @@ export default async function RootLayout({ children }) {
             <Header />
             <div className="flex-grow">
               {children}
-              <Manners/>
+              {/* <Manners/> */}
               <Toaster />
               <EmailPopup />
            

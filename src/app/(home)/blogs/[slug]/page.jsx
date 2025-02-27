@@ -1,5 +1,6 @@
 
 import BlogPage from '@/components/Blog-Component/BlogPage';
+import HomeSection from '@/components/Home-Page-Components/HomeSection';
 import React from 'react';
 
 const page = async ({ params }) => {
@@ -9,6 +10,7 @@ const page = async ({ params }) => {
   return (
     <>
       <BlogPage data={result?.data} />
+      <HomeSection/>
     </>
   );
 };
