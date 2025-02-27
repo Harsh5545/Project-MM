@@ -62,7 +62,7 @@ const BlogPage = ({ data }) => {
         </div>
 
         <div className="w-full h-full overflow-hidden">
-          <div className="ck-content prose dark:prose-invert">
+          <div className="ck-content w-[90%]  prose dark:prose-invert">
             {parse(data?.content) || "No Content"}
           </div>
         </div>

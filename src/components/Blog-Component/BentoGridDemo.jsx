@@ -38,7 +38,7 @@ export function BentoGridDemo({ blogs }) {
 
   return (
     <div className="flex flex-col md:flex-row w-full md:px-12 lg:px-24 mx-auto py-10 px-6 gap-10">
-      <aside className="hidden md:block w-1/4 space-y-6 bg-white dark:bg-gray-900 p-6 rounded-xl shadow-md">
+      <aside className="hidden md:block w-1/4 space-y-6  dark:bg-gray-900 p-6 ">
         <Input
           type="text"
           placeholder="Search blogs..."
@@ -66,7 +66,7 @@ export function BentoGridDemo({ blogs }) {
         />
       </aside>
 
-      <main className="w-full md:w-3/4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <main className="w-full md:w-3/4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
         {paginatedBlogs.length > 0 ? (
           paginatedBlogs.map((item) => (
             <Link key={item.slug} href={`/blogs/${item.slug}`} passHref>
