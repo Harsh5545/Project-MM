@@ -2,31 +2,10 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import parse from "html-react-parser";
-import { useSocket } from "@/hooks/useSocket";
+import parse from 'html-react-parser';
+
 
 const BlogPage = ({ data }) => {
-  const { socket, sendNotification, isSocketReady } = useSocket();
-  const [visitCount, setVisitCount] = useState(0);
-  const [latestVisit, setLatestVisit] = useState(null);
-  const blogId = data?.id;
-
-  useEffect(() => {
-    if (isSocketReady && socket) {
-      socket.emit("view-blog", { blogId });
-
-      socket.on("update-visit-data", (data) => {
-        if (data.blogId === blogId) {
-          setVisitCount(data.visitCount);
-          setLatestVisit(data.latestVisit);
-        }
-      });
-
-      return () => {
-        socket.off("update-visit-data");
-      };
-    }
-  }, [isSocketReady, socket, blogId]);
 
   if (!data) {
     return (
@@ -62,7 +41,7 @@ const BlogPage = ({ data }) => {
         </div>
 
         <div className="w-full h-full overflow-hidden">
-          <div className="ck-content prose dark:prose-invert">
+          <div className="ck-content w-[90%]  prose dark:prose-invert">
             {parse(data?.content) || "No Content"}
           </div>
         </div>

@@ -6,7 +6,6 @@ import Header from "@/components/Navbar/Navbar";
 import { Toaster } from "@/components/ui/toaster";
 import { SessionProvider } from "next-auth/react";
 import Script from "next/script";
-import { NotificationProvider } from "@/components/NotificationProvider";
 import EmailPopup from "@/components/EmailPopup/EmailPopup";
 import { Manners } from "@/components/Chat-Bot/Manners";
 
@@ -52,7 +51,6 @@ export default async function RootLayout({ children }) {
               {children}
               <Manners/>
               <Toaster />
-              <NotificationProvider />
               <EmailPopup />
            
             </div>
