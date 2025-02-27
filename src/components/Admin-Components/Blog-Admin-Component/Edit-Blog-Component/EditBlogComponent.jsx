@@ -229,7 +229,7 @@ export default function EditBlog({ existingBlog }) {
           <h2 className="text-xl font-semibold text-gray-800 dark:text-white">Preview:</h2>
           <div className={previewMode === "mobile" ? "max-w-sm mx-auto" : "w-full"}>
             <h3 className="text-2xl font-bold mb-4">{blogData.title}</h3>
-            <div dangerouslySetInnerHTML={{ __html: blogData.content }} />
+            <div className=" ck-content prose dark:prose-invert" dangerouslySetInnerHTML={{ __html: blogData.content }} />
           </div>
         </div>
       </div>

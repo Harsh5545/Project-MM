@@ -39,7 +39,7 @@ const handleFiltering = (filterBy, categoryId) => {
 
 // Helper function to parse stringified JSON fields (if needed)
 const parseStringifiedFields = (data) => {
-  console.log(data,'Hello')
+
   return data.map(item => {
     return {
       ...item,
