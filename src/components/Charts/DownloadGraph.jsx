@@ -48,19 +48,31 @@ const DownloadGraph = () => {
 
   // Chart data
   const chartData = {
-    labels: data.map((entry) => entry.date), // X-axis is the date
+    // Labels (X-axis) - convert the dates to IST
+    labels: data.map((entry) => {
+      const utcDate = new Date(entry.date);
+      const istDate = new Date(utcDate.toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }));
+      
+      const day = istDate.getDate();
+      const month = istDate.getMonth() + 1; // Months are zero-indexed
+      const year = istDate.getFullYear();
+      
+      return `${day < 10 ? '0' + day : day}-${month < 10 ? '0' + month : month}-${year}`;
+    }),
+    
     datasets: [
       {
         label: 'Download Count',
         data: data.map((entry) => entry.count), // Y-axis is the download count per day
-        backgroundColor: 'rgb(75, 192, 192)',
-        borderColor: 'rgb(75, 192, 192)',
+        backgroundColor: 'rgb(160, 42, 192)',
+        borderColor: 'rgb(75, 192, 42)',
         borderWidth: 1,
-        fill: false, // Remove the fill under the line
+        fill: true, // Remove the fill under the line
         tension: 0.1, // Smooth the line a bit
       },
     ],
   };
+  
 
   // Chart options for responsiveness and smaller size
   const chartOptions = {
