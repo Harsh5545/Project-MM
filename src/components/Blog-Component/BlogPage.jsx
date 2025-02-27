@@ -3,34 +3,11 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import parse from 'html-react-parser';
-import { useSocket } from "@/hooks/useSocket";
+
 
 
 const BlogPage = ({ data }) => {
-  const { socket, sendNotification, isSocketReady } = useSocket();
-  const [visitCount, setVisitCount] = useState(0);
-  const [latestVisit, setLatestVisit] = useState(null);
-  const blogId = data?.id;
- console.log(isSocketReady, socket, 'socket')
-  useEffect(() => {
-    if (isSocketReady && socket) {
-      // Emit 'view-blog' only when socket is ready
-      socket.emit('view-blog', { blogId });
 
-      // Listen for the update-visit-data event to get the real-time visit data
-      socket.on('update-visit-data', (data) => {
-        if (data.blogId === blogId) {
-          setVisitCount(data.visitCount); // Update the visit count
-          setLatestVisit(data.latestVisit); // Update the latest visit info
-        }
-      });
-
-      // Clean up the socket connection
-      return () => {
-        socket.off('update-visit-data'); // Unsubscribe from the event when the component unmounts
-      };
-    }
-  }, [isSocketReady, socket, blogId]);
 
   if (!data) {
     return (
