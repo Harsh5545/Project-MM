@@ -1,3 +1,4 @@
+import HomeSection from '@/components/Home-Page-Components/HomeSection';
 import ServicesComponent from '@/components/Services-Component/ServicesComponent';
 import ServicesHero from '@/components/Services-Component/servicesHero';
 
@@ -31,6 +32,7 @@ const Page = async () => {
     <div>
       <ServicesHero />
       <ServicesComponent data={result?.data} />
+      <HomeSection/>
     </div>
   );
 };

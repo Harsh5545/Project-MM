@@ -1,6 +1,7 @@
 import { BentoGridDemo } from "@/components/Blog-Component/BentoGridDemo";
 import BlogHero from "@/components/Blog-Component/BlogHero";
 import BlogPage from "@/components/Blog-Component/BlogPage";
+import HomeSection from "@/components/Home-Page-Components/HomeSection";
 
 export const metadata = {
   title: "Blog",
@@ -33,6 +34,7 @@ const page = async () => {
         <div>
           <BlogHero />
           <BentoGridDemo blogs={result.data} />
+          <HomeSection/>
         </div>
       );
     } else {
