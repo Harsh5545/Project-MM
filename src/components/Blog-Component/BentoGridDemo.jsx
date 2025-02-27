@@ -37,7 +37,7 @@ export function BentoGridDemo({ blogs }) {
   );
 
   return (
-    <div className="flex flex-col md:flex-row max-w-7xl mx-auto py-10 px-6 gap-10">
+    <div className="flex flex-col md:flex-row w-full md:px-12 lg:px-24 mx-auto py-10 px-6 gap-10">
       <aside className="hidden md:block w-1/4 space-y-6 bg-white dark:bg-gray-900 p-6 rounded-xl shadow-md">
         <Input
           type="text"
