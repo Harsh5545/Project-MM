@@ -1,6 +1,6 @@
 export default function manifest() {
     return {
-        id: 'web-app-manifest',
+        id: '1234584695',
         name: 'Next.js PWA',
         short_name: 'NextPWA',
         description: 'A Progressive Web App built with Next.js',
