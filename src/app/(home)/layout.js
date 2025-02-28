@@ -9,7 +9,6 @@ import Script from "next/script";
 import EmailPopup from "@/components/EmailPopup/EmailPopup";
 import { Manners } from "@/components/Chat-Bot/Manners";
 import PushNotificationManager from "@/components/PushNotificationManager/PushNotificationManager";
-import InstallPrompt from "@/components/PushNotificationManager/InstallPrompt";
 
 
 
@@ -54,7 +53,6 @@ export default async function RootLayout({ children }) {
               <Toaster />
               <EmailPopup />
               <PushNotificationManager />
-              <InstallPrompt />
             </div>
             <Footer />
           </div>

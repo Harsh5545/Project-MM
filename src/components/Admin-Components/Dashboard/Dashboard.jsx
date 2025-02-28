@@ -7,7 +7,7 @@ import Image from "next/image";
 import { Suspense } from "react";
 import dynamic from 'next/dynamic';
 import { useTheme } from "next-themes";
-import { CircleUser, Home, LineChart, Menu, Package, Package2, Users, Sun, Moon, Settings, Bell, Search, LogOut, Calendar, BookOpen, DownloadCloud } from 'lucide-react';
+import { CircleUser, Home, LineChart, Menu, Package, Package2, Users, Sun, Moon, Settings, Bell, Search, LogOut, Calendar, BookOpen, DownloadCloud, BellRing } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu, DropdownMenuContent, DropdownMenuItem,
@@ -58,7 +58,8 @@ export function Dashboard({ children, session }) {
       { href: "/admin/users", text: "Users", icon: Users },
       { href: "/admin/services", text: "Services", icon: Settings },
       { href: "/admin/events", text: "Events", icon: Calendar },
-      { href: "/admin/download-data", text: "Downloads ", icon: DownloadCloud }
+      { href: "/admin/download-data", text: "Downloads ", icon: DownloadCloud },
+      { href: "/admin/send-notification", text: "Send Notification", icon: BellRing }
     ],
     User: [
       { href: "/user/dashboard", text: "Dashboard", icon: Home },

@@ -115,20 +115,30 @@ export async function unsubscribeUser() {
 
 
 
-export async function sendNotification(message) {
+export async function sendNotification(title,message,link,users) {
+
     // Retrieve all subscriptions from the database
-    const subscriptions = await prisma.subscription.findMany();
+    let subscriptions = [];
+
+    if(users){
+        subscriptions = users;
+    }else{
+        subscriptions = await prisma.subscription.findMany();
+    }
 
     if (!subscriptions || subscriptions.length === 0) {
         throw new Error('No subscriptions available');
     }
 
     const notificationPayload = {
-        title: 'Test Notification',
+        title: title || 'Test Notification',
         body: message || 'Default notification message',
         icon: '/icon.png',
+        data: {
+            url: link || process.env.NEXT_PUBLIC_SITE_URL,
+        },
     };
-
+    console.log(notificationPayload)
     const results = [];
 
     // Loop through each subscription and send a notification
@@ -146,7 +156,7 @@ export async function sendNotification(message) {
             );
 
             // Track success for each notification
-            results.push({ endpoint: subscription.endpoint, success: true });
+            results.push({ endpoint: subscription.endpoint,res, success: true });
         } catch (error) {
             // Check if the error is a 410 Gone error
             if (error.statusCode === 410) {

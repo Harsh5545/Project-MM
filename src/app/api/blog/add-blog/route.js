@@ -1,4 +1,5 @@
 
+import { sendNotification } from "@/Actions";
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import { z } from "zod";
@@ -124,6 +125,18 @@ export async function POST(req) {
                 tags: true,
             },
         });
+
+        // Send notification to all users after creating the blog
+        const subscriptions = await prisma.subscription.findMany();  // Fetch all subscriptions
+
+        // Prepare the notification payload
+        const notificationMessage = `New Blog Published: ${newBlog.title}`;
+        const notificationLink = `${process.env.NEXT_PUBLIC_SITE_URL}/blogs/${newBlog.slug}`; 
+
+        // Send notifications to all users
+        if (subscriptions && subscriptions.length > 0) {
+            await sendNotification('New Blog Added',notificationMessage, notificationLink, subscriptions);
+        }
 
         return NextResponse.json({ success: true, data: newBlog });
 

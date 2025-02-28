@@ -7,7 +7,7 @@ import { Cormorant_Garamond, EB_Garamond, Montserrat, Open_Sans } from "next/fon
 import Head from "next/head";
 import { Antic_Didone } from "next/font/google";
 import { Cinzel } from "next/font/google";
-import { Montserrat } from "next/font/google";
+
 const dm_Sans = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["700"],
