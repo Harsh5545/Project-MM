@@ -98,7 +98,7 @@ const HeroSection = () => {
         >
           <motion.div
             variants={itemVariants}
-            className="lg:w-1/2 flex flex-col gap-12  mb-10 lg:mb-0"
+            className="lg:w-1/2 flex flex-col gap-8  mb-10 lg:mb-0"
           >
          <p className={`${EBGaramond.className} uppercase font-serif text-4xl md:text-5xl lg:text-4xl font-light text-gray-900 mb-1 leading-tight`}>
   Your personality is your <span className="bg-clip-text text-transparent bg-gradient-to-r whitespace-nowrap from-amber-500 to-amber-700">BRAND</span>
@@ -107,7 +107,7 @@ const HeroSection = () => {
 </p>
     
            <div className="flex flex-col gap-6">
-<p className={`${Montserratt.className} text-base  md:text-xl text-gray-600 font-light leading-relaxed`}>
+<p className={`${Montserratt.className} text-base  md:text-lg text-gray-600 font-light leading-relaxed`}>
 We help individuals & professionals from all walks of life, enhance their communication, image & etiquette to succeed in their personal & professional life.
  </p>
 <p className={`${Cinzells.className} text-base  md:text-xl text-gray-600 mb-8 font-light leading-relaxed`}>
@@ -128,7 +128,7 @@ Ready to start your image transformation journey? </p></div>
             variants={itemVariants}
             className="lg:w-1/2 flex f relative"
           >
-<div className="relative w-full flex flex-col justify-center items-center">
+<div className="relative w-full flex flex-col justify-end items-end">
             <div className="relative hidden  lg:w-[80%] lg:flex overflow-hidden shadow-3xl bg-[#F4DCD3] rounded-br-[40%] rounded-tl-[60%] lg:rounded-br-[150px] lg:rounded-tl-[150px] rounded-tr-3xl px-1 p-0 items-center justify-center">
               <Image
                 src={"/assets/Manasi_png_bg_png_bg.png"}
