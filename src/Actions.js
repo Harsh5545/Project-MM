@@ -134,9 +134,7 @@ export async function sendNotification(title,message,link,users) {
         title: title || 'Test Notification',
         body: message || 'Default notification message',
         icon: '/icon.png',
-        data: {
-            url: link || process.env.NEXT_PUBLIC_SITE_URL,
-        },
+        url: link || process.env.NEXT_PUBLIC_SITE_URL,
     };
     console.log(notificationPayload)
     const results = [];
