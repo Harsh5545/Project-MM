@@ -8,6 +8,8 @@ import { SessionProvider } from "next-auth/react";
 import Script from "next/script";
 import EmailPopup from "@/components/EmailPopup/EmailPopup";
 import { Manners } from "@/components/Chat-Bot/Manners";
+import PushNotificationManager from "@/components/PushNotificationManager/PushNotificationManager";
+import InstallPrompt from "@/components/PushNotificationManager/InstallPrompt";
 
 
 
@@ -52,7 +54,8 @@ export default async function RootLayout({ children }) {
               {/* <Manners/> */}
               <Toaster />
               <EmailPopup />
-           
+              <PushNotificationManager />
+              <InstallPrompt />
             </div>
             <Footer />
           </div>
