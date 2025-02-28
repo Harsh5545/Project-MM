@@ -41,7 +41,7 @@ const SocialMobile = () => {
   ];
 
   return (
-    <ul className="lg:hidden flex justify-center mt-5 space-x-4 md:space-x-2">
+    <ul className="lg:hidden flex justify-center mt-0 lg:mt-5 space-x-4 md:space-x-2">
       {links.map((link, index) => (
         <li key={index}>
           <a href={link.href} className="text-gray-500 hover:text-gray-900 dark:hover:text-white dark:text-gray-400">

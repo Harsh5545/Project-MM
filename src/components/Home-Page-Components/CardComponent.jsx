@@ -104,23 +104,26 @@ const CardComponent = () => {
 
 const CourseCard = ({ course, handleReadMore, isMobile }) => (
   <div
-    className={`relative ${styles.container} w-full bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] dark:bg-[#122031] rounded-3xl text-black p-4 text-center flex flex-col items-center justify-between gap-3 ${isMobile ? 'h-[400px] w-[90%] mx-auto' : 'h-[500px]'} dark:hover:bg-[#0e1a2b] shadow-2xl hover:shadow-md hover:shadow-[#8c9c88] dark:hover:shadow-[#3a4e4f] transform hover:scale-105 transition-transform duration-300 ease-in-out`}
+    className={`relative ${styles.container} w-full bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] 
+    dark:bg-[#122031] rounded-3xl text-black p-4 text-center flex flex-col items-center justify-between gap-2 
+    h-[500px] dark:hover:bg-[#0e1a2b] shadow-2xl hover:shadow-md hover:shadow-[#8c9c88] 
+    dark:hover:shadow-[#3a4e4f] transform hover:scale-105 transition-transform duration-300 ease-in-out`}
   >
     {course.isBestSelling && (
       <div className={`${styles.card_box}`}>
         <span></span>
       </div>
     )}
-    <div className="w-full mb-2 flex justify-center items-center dark:bg-[#021625] rounded-2xl overflow-hidden">
+    <div className="w-full h-[250px] flex justify-center items-center dark:bg-[#021625] rounded-2xl overflow-hidden">
       <Image
         alt={course.title}
-        className="object-cover w-full"
-        height={isMobile ? 200 : 200}
-        width={isMobile ? 200 : 200}
+        className="object-cover w-[380px] h-[250px]"
+        height={250}
+        width={250}
         src={course.image}
       />
     </div>
-    <div className="flex flex-col gap-3 flex-grow">
+    <div className="flex flex-col gap-3 ">
       <p className="font-semibold text-lg dark:text-white text-[#000000]">
         {course.title}
       </p>
@@ -130,11 +133,13 @@ const CourseCard = ({ course, handleReadMore, isMobile }) => (
     </div>
     <button
       onClick={() => handleReadMore(course.title)}
-      className={`${dm_Sans.className} flex items-center justify-center tracking-wider bg-black text-[#DEC29F] font-bold p-2 px-4 rounded-xl transition-colors duration-300 ease-in-out text-sm`}
+      className={`${dm_Sans.className} flex items-center justify-center tracking-wider bg-black 
+      text-[#DEC29F] font-bold p-2 px-4 rounded-xl transition-colors duration-300 ease-in-out text-sm`}
     >
       Read more <MdOutlineArrowForwardIos className="ml-2" />
     </button>
   </div>
 );
+
 
 export default CardComponent;
