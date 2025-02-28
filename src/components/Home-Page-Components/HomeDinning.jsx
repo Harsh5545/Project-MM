@@ -33,8 +33,8 @@ const HomeDinning = () => {
         <div className="hidden lg:block lg:w-1/2"></div>
 
         {/* Content Area */}
-        <div className="lg:w-1/2 w-full h-full lg:max-h-screen bg-opacity-80 bg-[#793600] dark:bg-[#793600] flex flex-col gap-16 lg:gap-20 items-center justify-center text-center p-6 lg:p-8">
-          <h2 className={`${dm_Sans.className} uppercase text-lg md:text-2xl lg:text-3xl font-semibold text-white dark:text-gray-300`}>
+        <div className="lg:w-1/2 w-full h-full lg:h-screen overflow-hidden bg-opacity-80 bg-[#793600] dark:bg-[#793600] flex flex-col gap-16 md:gap-24 items-center justify-center text-center p-6  ">
+          <h2 className={`${dm_Sans.className} uppercase pt-24 text-lg md:text-2xl lg:text-3xl font-semibold text-white dark:text-gray-300`}>
             Want to create a good <br /> impression during networking <br /> or business dinners?
           </h2>
 
