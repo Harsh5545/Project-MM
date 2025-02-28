@@ -40,7 +40,7 @@ const ServicePage = ({ data }) => {
   }
   
   return (
-    <div className="flex h-full dark:bg-[rgb(0,0,31)] bg-[#FFFFFF] items-center pb-4  justify-center w-full flex-col  ">
+    <div className="flex h-full dark:bg-[rgb(0,0,31)] bg-[#FFFFFF] items-center  justify-center w-full flex-col  ">
 
 
       <div className="  w-full  pb-5 bg-cover bg-center flex items-end justify-center">

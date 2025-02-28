@@ -1,106 +1,178 @@
-"use client";
+"use client"
 
-import { useEffect, useState } from "react";
-import Socials from "./SocialIcons";
-import SocialMobile from "./SocialMobile";
+import { useRouter } from 'next/navigation';
+import React, { useState, useEffect } from "react";
+import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaGithub, FaMoon, FaSun, FaChevronUp, FaGlobe } from "react-icons/fa";
+
 
 const Footer = () => {
-  const [theme, setTheme] = useState("light");
-
+  const [darkMode, setDarkMode] = useState(false);
+  const [showScrollTop, setShowScrollTop] = useState(false);
+  const [cookieConsent, setCookieConsent] = useState(false);
+  const [email, setEmail] = useState("");
+  const  router = useRouter();
   useEffect(() => {
-    const savedTheme = localStorage.getItem("theme") || "light";
-    setTheme(savedTheme);
-    document.documentElement.className = savedTheme;
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 300);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const toggleTheme = () => {
-    const newTheme = theme === "light" ? "dark" : "light";
-    setTheme(newTheme);
-    document.documentElement.className = newTheme;
-    localStorage.setItem("theme", newTheme);
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleNewsletterSubmit = (e) => {
+    e.preventDefault();
+    setEmail("");
+    alert("Thanks for subscribing!");
   };
 
   return (
-    <footer className="dark:bg-[#00001F] bg-gray-50 text-black dark:text-white p-5 border-t-10 flex flex-col relative h-full md:h-[40vh] lg:h-[60vh]">
-      {/* "Contact Us" Header in Top Left */}
-      <div className=" text-left  top-8 left-8 text-4xl md:text-6xl font-semibold">
-        Get in Touch
-      </div>
-
-      {/* Main Content */}
-      <div className="flex-1 flex justify-center items-center">
-        <div className="container mx-auto flex flex-col md:flex-row justify-center items-center gap-10 md:gap-24 lg:gap-20 px-0 py-6 lg:py-12">
-          {/* Phone Section */}
-          <div className="text-center flex flex-col items-center md:w-1/4">
-            <span className="text-lg font-semibold mb-10">Phone</span>
-            <a
-              href="tel:+919867831324"
-              className="text-lg font-medium hover:underline"
-            >
-              +91 9867831324
-            </a>
+    <footer className={`relative ${darkMode ? "bg-gray-900 text-white" : "bg-white text-gray-800"} transition-colors duration-300`}>
+      <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-24 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {/* Company Information */}
+          <div className="space-y-6">
+            <div className="flex items-center space-x-3">
+              <img
+                src="/assets/MM.png"
+                alt="Company Logo"
+                className=" h-16 "
+              />
+          
+            </div>
+            <p className="text-sm">A sophisticated guide to cultural manner & etiquette</p>
+            <div className="flex items-center space-x-2">
+              <span className="px-3 py-1 text-xs rounded-full bg-[#DEC29F] text-black">Soft Skills</span>
+              <span className="px-3 py-1 text-xs rounded-full bg-[#DEC29F] text-black">Personality Enhancement</span>
+            </div>
           </div>
 
-          {/* Email Section */}
-          <div className="text-center flex flex-col items-center md:w-1/4">
-            <span className="text-lg font-semibold mb-10">Email</span>
-            <a
-              href="mailto:modernmannerism@gmail.com"
-              className="text-lg font-medium hover:underline"
-            >
-              modernmannerism@gmail.com
-            </a>
+          {/* Quick Navigation */}
+          <div className="space-y-4">
+            <p className="text-lg font-semibold">Quick Links</p>
+            <ul className="space-y-3">
+              {["About Us", "Services", "Blogs"].map((item) => (
+                <li key={item}>
+                  <button
+                    onClick={() => router.push(`/${item.toLowerCase().replace(" ", "-")}`)}
+                    className="hover:text-[#eabf91] transition-colors duration-200 flex items-center space-x-2"
+                  >
+                    <span>{item}</span>
+                  </button>
+                </li>
+              ))}
+            </ul>
           </div>
 
-          {/* Social Media Section */}
-          <div className="text-center flex flex-col items-center md:w-1/4">
-            <span className="text-lg font-semibold mb-1">Social</span>
-            <div className="flex justify-center items-center mt-1">
-              <Socials />
-              <SocialMobile />
+          {/* Contact & Social */}
+          <div className="space-y-4">
+            <p className="text-lg font-semibold">Connect With Us</p>
+            <div className="flex space-x-4">
+              {[FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaGithub].map((Icon, index) => (
+                <button
+                  key={index}
+                  className="hover:text-[#eabf91] transition-colors duration-200"
+                  aria-label="Social Media"
+                >
+                  <Icon className="h-6 w-6" />
+                </button>
+              ))}
+            </div>
+            <div className="space-y-2 flex flex-col text-sm">
+              {/* <span className="text-sm font-semibold mb-0 lg:mb-10">Email</span> */}
+              <a
+                href="mailto:modernmannerism@gmail.com"
+                className="text-base font-normal hover:underline"
+              >
+                modernmannerism@gmail.com
+              </a>
+              <a
+                href="tel:+919867831324"
+                className="text-base font-normal hover:underline"
+              >
+                +91 9867831324
+              </a>
+            </div>
+          </div>
+
+          {/* Newsletter & Language */}
+          <div className="space-y-6">
+            <div className="space-y-4">
+              <p className="text-lg font-semibold">Newsletter</p>
+              <form onSubmit={handleNewsletterSubmit} className="space-y-3">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter your email"
+                  className="w-full px-4 py-2 rounded-lg bg-opacity-10 backdrop-blur-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#eabf91]"
+                  required
+                />
+                <button
+                  type="submit"
+                  className="w-full px-4 py-2 tracking-widest bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] text-slate-50 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
+                >
+                  Subscribe
+                </button>
+              </form>
+            </div>
+
+            <div className="flex items-center space-x-4">
+              <button
+                onClick={() => setDarkMode(!darkMode)}
+                className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
+                aria-label="Toggle Dark Mode"
+              >
+                {darkMode ? <FaSun className="h-5 w-5" /> : <FaMoon className="h-5 w-5" />}
+              </button>
+              {/* <button className="flex items-center space-x-2 text-sm">
+                <FaGlobe className="h-5 w-5" />
+                <span>English</span>
+              </button> */}
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Bar */}
+        <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
+          <div className="flex flex-wrap justify-between items-center gap-4">
+            <p className="text-sm">&copy; 2025 Harsh Kajale. All rights reserved.</p>
+            <div className="flex space-x-4 text-sm">
+              <button onClick={()=> router.push('/privacy-policy')} className="hover:text-[#eabf91] transition-colors duration-200">Privacy Policy</button>
+              <button onClick={()=> router.push('/terms')} className="hover:text-[#eabf91] transition-colors duration-200">Terms of Service</button>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Custom Theme Toggle Button */}
-      <div className="absolute bottom-4 left-4 sm:left-8 sm:bottom-5">
-        <label className="inline-flex items-center relative">
-          <input
-            className="peer hidden"
-            id="toggle"
-            type="checkbox"
-            onChange={toggleTheme}
-            checked={theme === "dark"}
-          />
-          <div className="relative w-[90px] h-[40px] bg-white peer-checked:bg-zinc-500 rounded-full after:absolute after:content-[''] after:w-[35px] after:h-[35px] after:bg-gray-400 peer-checked:after:bg-gray-400 after:rounded-full after:top-[2.5px] after:left-[5px] peer-checked:after:left-[50px] after:transition-all duration-300 shadow-md"></div>
-          <svg
-            height="0"
-            width="100"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-            className="fill-black absolute w-5 h-5 left-[10px] peer-checked:opacity-0 peer-checked:fill-black transition-opacity duration-300"
-          >
-            <path d="M12,17c-2.76,0-5-2.24-5-5s2.24-5,5-5,5,2.24,5,5-2.24,5-5,5ZM13,0h-2V5h2V0Zm0,19h-2v5h2v-5ZM5,11H0v2H5v-2Zm19,0h-5v2h5v-2Zm-2.81-6.78l-1.41-1.41-3.54,3.54,1.41,1.41,3.54-3.54ZM7.76,17.66l-1.41-1.41-3.54,3.54,1.41,1.41,3.54-3.54Zm0-11.31l-3.54-3.54-1.41,1.41,3.54,3.54,1.41-1.41Zm13.44,13.44l-3.54-3.54-1.41,1.41,3.54,3.54,1.41-1.41Z"></path>
-          </svg>
-          <svg
-            height="512"
-            width="512"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-            className="fill-white absolute w-5 h-5 right-[10px] peer-checked:opacity-100 opacity-0 transition-opacity duration-300"
-          >
-            <path d="M12.009,24A12.067,12.067,0,0,1,.075,10.725,12.121,12.121,0,0,1,10.1.152a13,13,0,0,1,5.03.206,2.5,2.5,0,0,1,1.8,1.8,2.47,2.47,0,0,1-.7,2.425c-4.559,4.168-4.165,10.645.807,14.412h0a2.5,2.5,0,0,1-.7,4.319A13.875,13.875,0,0,1,12.009,24Zm.074-22a10.776,10.776,0,0,0-1.675.127,10.1,10.1,0,0,0-8.344,8.8A9.928,9.928,0,0,0,4.581,18.7a10.473,10.473,0,0,0,11.093,2.734.5.5,0,0,0,.138-.856h0C9.883,16.1,9.417,8.087,14.865,3.124a.459.459,0,0,0,.127-.465.491.491,0,0,0-.356-.362A10.68,10.68,0,0,0,12.083,2ZM20.5,12a1,1,0,0,1-.97-.757l-.358-1.43L17.74,9.428a1,1,0,0,1,.035-1.94l1.4-.325.351-1.406a1,1,0,0,1,1.94,0l.355,1.418,1.418.355a1,1,0,0,1,0,1.94l-1.418.355-.355,1.418A1,1,0,0,1,20.5,12ZM16,14a1,1,0,0,0,2,0A1,1,0,0,0,16,14Zm6,4a1,1,0,0,0,2,0A1,1,0,0,0,22,18Z"></path>
-          </svg>
-        </label>
-      </div>
+      {/* Scroll to Top Button */}
+      {showScrollTop && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-8 right-8 p-3 rounded-full bg-[#eabf91] text-white shadow-lg hover:bg-[#eba255] transition-all duration-200 z-50"
+          aria-label="Scroll to top"
+        >
+          <FaChevronUp className="h-5 w-5" />
+        </button>
+      )}
 
-      {/* Footer Bottom */}
-      <div className="text-center py-10 md:py-4 text-sm">
-        &copy; 2024 Modern Mannerism |
-        <span className="px-1 cursor-pointer">Privacy Policy</span> |{" "}
-        <span className="px-1 cursor-pointer">Terms</span> | Designed by Harsh
-      </div>
+      {/* Cookie Consent */}
+      {!cookieConsent && (
+        <div className="fixed bottom-0 left-0 right-0 bg-gray-800 bg-opacity-95 text-white p-4 z-50">
+          <div className="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-4">
+            <p className="text-sm">We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.</p>
+            <button
+              onClick={() => setCookieConsent(true)}
+              className="px-4 py-2 tracking-widest bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] text-white rounded-lg hover:bg-[#eba255] transition-colors duration-200"
+            >
+              Accept
+            </button>
+          </div>
+        </div>
+      )}
     </footer>
   );
 };
