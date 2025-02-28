@@ -46,7 +46,7 @@ const Faq = ({data}) => {
                   <AccordionTrigger className="text-lg font-medium text-gray-900 dark:text-white p-4 rounded-t-lg">
                     {faq.question}
                   </AccordionTrigger>
-                  <AccordionContent className="text-gray-700 bg-gray-100 bg-opacity-70  dark:text-gray-300 p-4  rounded-b-lg">
+                  <AccordionContent className="text-gray-700 bg-gray-100 bg-opacity-40  dark:text-gray-300 p-4  rounded-b-lg">
                     {faq.answer}
                   </AccordionContent>
                 </Card>

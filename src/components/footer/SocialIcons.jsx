@@ -48,11 +48,11 @@ const Socials = () => {
   ];
 
   return (
-    <div className="md:flex hidden  items-center justify-center">
+    <div className="lg:flex hidden  items-center justify-center">
       <FloatingDock
         mobileClassName="translate-y-20 "
         items={links}
-        iconWrapperClassName="bg-[#c3965d] bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] p-2 rounded-full "
+        iconWrapperClassName="bg-[#c3965d] bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] p-2 rounded-full"
       />
     </div>
   );

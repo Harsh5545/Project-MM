@@ -21,15 +21,15 @@ const Footer = () => {
   };
 
   return (
-    <footer className="dark:bg-[#00001F] bg-gray-50 text-black dark:text-white p-5 border-t-10 flex flex-col relative h-[80vh]">
+    <footer className="dark:bg-[#00001F] bg-gray-50 text-black dark:text-white p-5 border-t-10 flex flex-col relative h-full md:h-[40vh] lg:h-[60vh]">
       {/* "Contact Us" Header in Top Left */}
-      <div className="absolute top-8 left-8 text-4xl md:text-6xl font-semibold">
+      <div className=" text-left  top-8 left-8 text-4xl md:text-6xl font-semibold">
         Get in Touch
       </div>
 
       {/* Main Content */}
       <div className="flex-1 flex justify-center items-center">
-        <div className="container mx-auto flex flex-col md:flex-row justify-center items-center gap-12 md:gap-16 px-0 py-12">
+        <div className="container mx-auto flex flex-col md:flex-row justify-center items-center gap-10 md:gap-24 lg:gap-20 px-0 py-6 lg:py-12">
           {/* Phone Section */}
           <div className="text-center flex flex-col items-center md:w-1/4">
             <span className="text-lg font-semibold mb-10">Phone</span>
