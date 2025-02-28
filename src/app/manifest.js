@@ -1,7 +1,7 @@
 export default function manifest() {
     return {
         id: '1234584695',
-        name: 'Next.js PWA',
+        name: 'Modern Mannerism',
         short_name: 'NextPWA',
         description: 'A Progressive Web App built with Next.js',
         start_url: '/',

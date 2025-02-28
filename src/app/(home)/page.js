@@ -40,7 +40,7 @@ export const metadata = {
   author: "Modern Mannerism",
   ogTitle: "Modern Mannerism - Elevating Etiquette and Personality",
   ogDescription: "Learn essential skills for professional and personal growth with Modern Mannerism's coaching programs on etiquette and personality development.",
-  ogImage: "https://www.modernmannerism.com/og-image.jpg",
+  ogImage: "/web-app-manifest-192x192.png",
   ogUrl: "https://www.modernmannerism.com",
   twitter: {
     card: "summary_large_image",
