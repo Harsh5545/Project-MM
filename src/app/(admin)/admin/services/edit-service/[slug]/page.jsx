@@ -5,7 +5,6 @@ const page = async ({params}) => {
     const slug = (await params).slug;
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/services/service-details?slug=${slug}`);
     const result = await response.json();
-    console.log(result,"RES")
   return (
     <div>
         <EditServices data={result?.data} />
