@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Navlink from "../navlink/Navlink";
 import { useRouter } from "next/navigation";
 
-const AllLinks = ({onClose}) => {
+const AllLinks = ({ onClose }) => {
   const router = useRouter();
   const [openDropdown, setOpenDropdown] = useState(false);
   const [hoveredSubLink, setHoveredSubLink] = useState(null);
@@ -15,7 +15,6 @@ const AllLinks = ({onClose}) => {
     {
       title: "Services",
       path: "/services",
-     
     },
     { title: "Blog", path: "/blogs" },
   ];
@@ -60,18 +59,21 @@ const AllLinks = ({onClose}) => {
     }, 300); // Delay to prevent the flicker
   };
 
+  const handleLinkClick = (path) => {
+    router.push(path);
+    if (isMobile) {
+      onClose();
+    }
+  };
+
   return (
-    <div className={`flex ${isMobile ? "flex-col space-y-4" : "flex-row space-x-6"} justify-center items-center`}>
+    <div className={`flex ${isMobile ? "flex-col space-y-3" : "flex-row space-x-6"} justify-center items-center`}>
       {links.map((link, i) => (
         <div key={i} className="relative">
           {!link.subLinks ? (
-          <div onClick={()=>{
-            if(isMobile) {
-              onClose()
-            }
-          }}>
-            <Navlink item={link}/>
-          </div>
+            <div onClick={() => handleLinkClick(link.path)}>
+              <Navlink item={link} />
+            </div>
           ) : (
             <div
               className="inline-block"
@@ -82,15 +84,14 @@ const AllLinks = ({onClose}) => {
                 className="font-medium text-base cursor-pointer flex items-center"
                 onClick={() => {
                   if (isMobile) {
-                    router.push(link.path); // Directly navigate on mobile
-                    onClose()
+                    handleLinkClick(link.path);
                   } else {
                     setOpenDropdown(!openDropdown);
                   }
                 }}
               >
                 {link.title}
-                {!isMobile && ( // Show dropdown arrow only for desktop view
+                {!isMobile && ( 
                   <svg
                     className="ml-2 w-4 h-4"
                     fill="none"
@@ -114,7 +115,7 @@ const AllLinks = ({onClose}) => {
                     >
                       <button
                         className="block px-4 py-2 text-sm font-semibold text-left w-full text-nowrap"
-                        onClick={() => router.push(subLink.path)}
+                        onClick={() => handleLinkClick(subLink.path)}
                       >
                         {subLink.title}
                       </button>

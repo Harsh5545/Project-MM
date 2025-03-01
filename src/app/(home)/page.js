@@ -5,6 +5,7 @@ import HomeConsultation from "@/components/Home-Page-Components/HomeConsultation
 import HomeDinning from "@/components/Home-Page-Components/HomeDinning";
 import HomeSection from "@/components/Home-Page-Components/HomeSection";
 import HomeTestimonial from "@/components/Home-Page-Components/HomeTestimonial";
+import RecentBlogCarousel from "@/components/Home-Page-Components/RecentBloogs";
 
 
 const homepageSchema = {
@@ -65,9 +66,13 @@ export default function Home() {
       <HomeAbout />
 
       <HomeTestimonial />
+     
+    
+
       <div id="testimonials">
         <HomeConsultation /></div>
-      <HomeSection />
+        <HomeSection />
+        <RecentBlogCarousel/>
     </>
   );
 }

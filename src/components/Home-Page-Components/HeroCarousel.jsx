@@ -100,7 +100,7 @@ const HeroSection = () => {
             variants={itemVariants}
             className="lg:w-1/2 flex flex-col gap-12  mb-10 lg:mb-0"
           >
-         <p className={`${EBGaramond.className} uppercase font-serif text-4xl md:text-5xl lg:text-4xl font-light text-gray-900 mb-1 leading-tight`}>
+         <p className={`${EBGaramond.className} uppercase font-serif text-2xl md:text-5xl lg:text-4xl font-light text-gray-900 mb-1 leading-tight`}>
   Your personality is your <span className="bg-clip-text text-transparent bg-gradient-to-r whitespace-nowrap from-amber-500 to-amber-700">BRAND</span>
   <br />
   <p className="pt-3" >that Makes you <span className="bg-clip-text text-transparent bg-gradient-to-r whitespace-nowrap from-amber-500 to-amber-700">SHINE!</span></p>

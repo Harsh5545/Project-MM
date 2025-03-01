@@ -36,17 +36,17 @@ const Faq = ({data}) => {
         </span>
         <Accordion type="single" collapsible className="space-y-8">
           {data?.faqs?.map((faq, index) => (
-            <AccordionItem key={index} value={`faq-${index}`}>
+            <AccordionItem key={index} value={`faq-${index} `} className="border-transparent">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
               >
-                <Card className="dark:bg-gray-800 bg-white bg-opacity-80 shadow-md">
-                  <AccordionTrigger className="text-lg font-medium text-gray-900 dark:text-white p-4 rounded-t-lg">
+                <Card className="bg-transparent border-none outline-none  shadow-md">
+                  <AccordionTrigger className="text-lg bg-white bg-opacity-85 font-medium text-gray-900 dark:text-white p-4 rounded-t-lg">
                     {faq.question}
                   </AccordionTrigger>
-                  <AccordionContent className="text-gray-700 bg-gray-100 bg-opacity-90  dark:text-gray-300 p-4  rounded-b-lg">
+                  <AccordionContent className="text-gray-700 bg-white bg-opacity-35   dark:text-gray-300 p-4 rounded-b-lg">
                     {faq.answer}
                   </AccordionContent>
                 </Card>

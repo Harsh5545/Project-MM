@@ -43,13 +43,13 @@ const ServicePage = ({ data }) => {
     <div className="flex h-full dark:bg-[rgb(0,0,31)] bg-[#FFFFFF] items-center  justify-center w-full flex-col  ">
 
 
-      <div className="  w-full  pb-5 bg-cover bg-center flex items-end justify-center">
+      <div className="  w-full pb-5 bg-cover bg-center flex items-end justify-center">
         <ServicesHero data={testimonials.heroImage} className="relative" />
 
 
-        <div className=" flex absolute pb-8 flex-col justify-center items-center text-center text-black">
-          <h1 className="text-4xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#9e7033] via-[#c3965d] to-[#9e7033]  uppercase">{heading}</h1>
-          <h2 className={`${dm_Sans.className} mt-4 px-2 text-lg lg:text-xl`}>{subheading}</h2>
+        <div className=" flex absolute pb-4 lg:pb-8 flex-col justify-center items-center text-center text-black">
+          <h1 className="lg:text-4xl md:text-3xl text-2xl  font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#9e7033] via-[#c3965d] to-[#9e7033]  uppercase">{heading}</h1>
+          <h2 className={`${dm_Sans.className} mt-4 px-2 text-base lg:text-xl`}>{subheading}</h2>
 
 
         </div>
