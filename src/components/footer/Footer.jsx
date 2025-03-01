@@ -44,10 +44,7 @@ const Footer = () => {
           
             </div>
             <p className="text-sm">A sophisticated guide to cultural manner & etiquette</p>
-            <div className="flex items-center space-x-2">
-              <span className="px-3 py-1 text-xs rounded-full bg-[#DEC29F] text-black">Soft Skills</span>
-              <span className="px-3 py-1 text-xs rounded-full bg-[#DEC29F] text-black">Personality Enhancement</span>
-            </div>
+          
           </div>
 
           {/* Quick Navigation */}
@@ -142,7 +139,7 @@ const Footer = () => {
             <p className="text-sm">&copy; 2025 Harsh Kajale. All rights reserved.</p>
             <div className="flex space-x-4 text-sm">
               <button onClick={()=> router.push('/privacy-policy')} className="hover:text-[#eabf91] transition-colors duration-200">Privacy Policy</button>
-              <button onClick={()=> router.push('/terms')} className="hover:text-[#eabf91] transition-colors duration-200">Terms of Service</button>
+              <button onClick={()=> router.push('/terms')} className="hover:text-[#eabf91] transition-colors duration-200">Terms</button>
             </div>
           </div>
         </div>
@@ -160,7 +157,7 @@ const Footer = () => {
       )}
 
       {/* Cookie Consent */}
-      {!cookieConsent && (
+      {/* {!cookieConsent && (
         <div className="fixed bottom-0 left-0 right-0 bg-gray-800 bg-opacity-95 text-white p-4 z-50">
           <div className="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-4">
             <p className="text-sm">We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.</p>
@@ -172,7 +169,7 @@ const Footer = () => {
             </button>
           </div>
         </div>
-      )}
+      )} */}
     </footer>
   );
 };

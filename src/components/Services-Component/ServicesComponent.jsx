@@ -49,8 +49,8 @@ function ServicesComponent({ data }) {
 
   return (
     <>
-      <div className="w-full min-h-screen bg-gradient-to-b from-[#f9f5f0] to-[#eae6e0] dark:from-[#00001F] dark:to-[#1a1a2e] py-16">
-        <div className=" lg:max-w-7xl mx-auto">
+      <div className="w-full px-3 min-h-screen bg-gradient-to-b from-[#f9f5f0] to-[#eae6e0] dark:from-[#00001F] dark:to-[#1a1a2e] py-16">
+        <div className=" max-w-2xl md:max-w-6xl lg:max-w-7xl mx-auto">
           {/* Heading */}
           <div className="text-center">
             <motion.h4
