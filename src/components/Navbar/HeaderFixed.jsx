@@ -39,7 +39,7 @@ const navVariants = {
 function HeaderFixed() {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isClient, setIsClient] = useState(false);
-
+  const [navInput, setNavInput] = useState(false);
   const toggleMobileMenu = () => {
     setMobileMenuOpen((prev) => !prev);
   };
@@ -55,6 +55,7 @@ function HeaderFixed() {
 
   useEffect(() => {
     setIsClient(true);
+    setNavInput((prev) => !prev);
   }, []);
 
   const handlePhoneClick = () => {
