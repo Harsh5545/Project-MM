@@ -114,7 +114,7 @@ const RecentBlogCarousel = () => {
   }
 
   return (
-    <div className="relative w-full py-12 bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
+    <div className="relative w-full px-24 py-12 bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-900 dark:text-white">
           Recent Blog Posts

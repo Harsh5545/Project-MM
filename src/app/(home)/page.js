@@ -65,14 +65,14 @@ export default function Home() {
       <HomeDinning />
       <HomeAbout />
 
-      <HomeTestimonial />
+   
      
-    
-
+      <RecentBlogCarousel/>
+      
+      <HomeTestimonial />
       <div id="testimonials">
         <HomeConsultation /></div>
-        <HomeSection />
-        <RecentBlogCarousel/>
+
     </>
   );
 }
