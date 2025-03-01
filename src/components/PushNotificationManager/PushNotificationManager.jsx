@@ -7,6 +7,7 @@
 //     const [isSupported, setIsSupported] = useState(false);
 //     const [subscription, setSubscription] = useState(null);
 //     const [message, setMessage] = useState('');
+//     const [showNotificationPrompt, setShowNotificationPrompt] = useState(false);
 
 //     // Register the service worker
 //     async function registerServiceWorker() {
@@ -52,6 +53,9 @@
 //             }
 //         } else if (Notification.permission === "granted") {
 //             subscribeToPush();
+//         } else if (Notification.permission === "denied") {
+//             // Notify user about enabling notifications manually in the browser settings
+//             setShowNotificationPrompt(true);
 //         }
 //     }
 
@@ -75,8 +79,8 @@
 //     // Unsubscribe from push notifications
 //     async function unsubscribeFromPush() {
 //         try {
-//            const data = await subscription?.unsubscribe();
-//            console.log(subscription,'UNSCUBSCRIBED');
+//             const data = await subscription?.unsubscribe();
+//             console.log(subscription, 'UNSCUBSCRIBED');
 //             setSubscription(null);
 //             await unsubscribeUser(subscription);
 //         } catch (error) {
@@ -90,6 +94,12 @@
 //             await sendNotification(message);
 //             setMessage('');
 //         }
+//     }
+
+//     // Handle showing notification prompt
+//     const handleManualEnableNotifications = () => {
+//         setShowNotificationPrompt(false); // Hide prompt
+//         alert("Please enable notifications in your browser settings.");
 //     }
 
 //     useEffect(() => {
@@ -117,10 +127,16 @@
 //                     <button onClick={subscribeToPush}>Subscribe</button>
 //                 </>
 //             )}
+
+//             {showNotificationPrompt && (
+//                 <div className="notification-prompt">
+//                     <p>You have denied push notifications. To enable them, please go to your browser settings and enable notifications for this site.</p>
+//                     <button onClick={handleManualEnableNotifications}>Got it!</button>
+//                 </div>
+//             )}
 //         </div>
 //     );
 // }
-
 
 
 'use client';
@@ -133,6 +149,7 @@ export default function PushNotificationManager() {
     const [subscription, setSubscription] = useState(null);
     const [message, setMessage] = useState('');
     const [showNotificationPrompt, setShowNotificationPrompt] = useState(false);
+    const [waitingServiceWorker, setWaitingServiceWorker] = useState(null); // Track waiting service worker for update
 
     // Register the service worker
     async function registerServiceWorker() {
@@ -144,6 +161,19 @@ export default function PushNotificationManager() {
 
             const sub = await registration.pushManager.getSubscription();
             setSubscription(sub);
+
+            // Listen for a new service worker being installed
+            registration.onupdatefound = () => {
+                const installingWorker = registration.installing;
+                if (installingWorker) {
+                    installingWorker.onstatechange = () => {
+                        if (installingWorker.state === 'installed') {
+                            // A new service worker is installed and waiting to take control
+                            setWaitingServiceWorker(installingWorker);
+                        }
+                    };
+                }
+            };
         } catch (error) {
             console.error("Service Worker registration failed:", error);
         }
@@ -205,7 +235,7 @@ export default function PushNotificationManager() {
     async function unsubscribeFromPush() {
         try {
             const data = await subscription?.unsubscribe();
-            console.log(subscription, 'UNSCUBSCRIBED');
+            console.log(subscription, 'UNSUBSCRIBED');
             setSubscription(null);
             await unsubscribeUser(subscription);
         } catch (error) {
@@ -227,12 +257,29 @@ export default function PushNotificationManager() {
         alert("Please enable notifications in your browser settings.");
     }
 
+    // Handle update prompt and refresh the page when a new service worker is available
+    const handleServiceWorkerUpdate = () => {
+        if (waitingServiceWorker) {
+            waitingServiceWorker.postMessage({ action: 'skipWaiting' });
+            // Optionally reload the page after activating the new service worker
+            window.location.reload();
+        }
+    };
+
     useEffect(() => {
         if ('serviceWorker' in navigator && 'PushManager' in window) {
             setIsSupported(true);
             registerServiceWorker();
             requestNotificationPermission();
         }
+
+        // Listen for the 'controllerchange' event to detect when the new service worker takes control
+        navigator.serviceWorker.addEventListener('controllerchange', () => {
+            console.log('New service worker has taken control.');
+            // Automatically reload or prompt user to reload the page
+            window.location.reload();
+        });
+
     }, []); // Empty dependency array ensures this effect runs once
 
     if (!isSupported) {
@@ -257,6 +304,13 @@ export default function PushNotificationManager() {
                 <div className="notification-prompt">
                     <p>You have denied push notifications. To enable them, please go to your browser settings and enable notifications for this site.</p>
                     <button onClick={handleManualEnableNotifications}>Got it!</button>
+                </div>
+            )}
+
+            {waitingServiceWorker && (
+                <div className="update-prompt">
+                    <p>A new version of the app is available. Click below to refresh.</p>
+                    <button onClick={handleServiceWorkerUpdate}>Update Now</button>
                 </div>
             )}
         </div>
