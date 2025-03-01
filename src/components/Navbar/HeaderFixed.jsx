@@ -119,9 +119,8 @@ function HeaderFixed() {
       <div className="flex flex-col items-start">
         {isClient && (
           <div
-            className={`${
-              isMobile ? (isMobileMenuOpen ? "block" : "hidden") : "flex"
-            } flex-col-reverse text-white md:flex-row font-poppins items-center gap-8 md:gap-4 h-[20rem] md:h-0 justify-center  font-medium `}
+            className={`${isMobile ? (isMobileMenuOpen ? "block" : "hidden") : "flex"
+              }  text-white md:flex-row font-poppins items-center gap-8 md:gap-4 h-[15rem] md:h-0 justify-center  font-medium `}
           >
             <AllLinks onClose={toggleMobileMenu} />
           </div>
@@ -130,13 +129,12 @@ function HeaderFixed() {
 
       {isClient && (
         <div
-          className={`${
-            isMobile
+          className={`${isMobile
               ? isMobileMenuOpen
                 ? "block"
                 : "hidden"
               : "flex items-center pr-0 lg:pr-16 gap-2"
-          }`}
+            }`}
         >
           <div className="flex items-center justify-center gap-8 lg:gap-16">
             <PhoneCall

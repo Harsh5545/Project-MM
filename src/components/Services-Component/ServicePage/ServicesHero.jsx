@@ -4,7 +4,7 @@ import Image from "next/image";
 function ServicesHero({ data }) {
   return (
     <div className="w-full  relative">
-      <div className="w-full min-h-[40vh] md:min-h-[30vh] relative">
+      <div className="w-full min-h-[35vh] md:min-h-[30vh] relative">
         <Image
           src={data}
           alt="Service Hero"

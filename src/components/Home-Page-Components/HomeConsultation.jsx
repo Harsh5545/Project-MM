@@ -71,26 +71,27 @@ const HomeConsultation = () => {
   };
 
   return (
-    <div className="flex flex-col items-center dark:bg-[#00001F] p-8 md:py-36 md:px-16 gap-10 justify-center">
+    <div className="flex flex-col bg-gradient-to-r from-gray-50 to-gray-100 items-center dark:bg-[#00001F] p-8 md:pt-16 md:px-2 gap-10 justify-center">
       <h3 className="text-2xl md:text-4xl text-center font-semibold text-gray-800 dark:text-white">
         Book Your Consultation Now
         <hr className="border-t-2  border-[#eabf91] w-1/4 mx-auto mt-2" />
       </h3>
 
-      <div className="flex flex-col md:flex-row items-center justify-between w-full max-w-5xl gap-8">
+      <div className="flex flex-col md:flex-row items-center justify-between w-full max-w-7xl gap-8">
         <Image
           src="/assets/course2.jpg"
           alt="Modern Mannerism Consultation"
-          width={400}
-          height={400}
+          width={500}
+          height={500}
           className="rounded-xl shadow-md" 
         />
 
         <form
           onSubmit={handleSubmit}
-          className="w-full md:w-1/2 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-xl"
+          className="w-full md:w-1/2 flex justify-center  flex-col bg-white dark:bg-gray-800 p-12  rounded-xl shadow-md"
+          style={{ height: '500px' }}
         >
-          <div className="flex flex-col md:flex-row gap-6 ">
+          <div className="flex flex-col justify-center items-center md:flex-row gap-8 ">
             <div className="w-full">
               <Label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                 Name *
@@ -109,24 +110,8 @@ const HomeConsultation = () => {
               />
             </div>
             <div className="w-full flex gap-2">
-              <div className="w-1/3">
-                <Label htmlFor="countryCode" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                  Country *
-                </Label>
-                <Input
-                  id="countryCode"
-                  type="text"
-                  name="countryCode"
-                  value={formData.countryCode}
-                  onChange={handleInputChange}
-                  placeholder="+1"
-                  pattern="^\+\d{1,3}$" // Country code pattern
-                  title="Country code should start with + followed by 1 to 3 digits."
-                  required
-                  className="w-full"
-                />
-              </div>
-              <div className="w-2/3">
+              
+              <div className="w-full">
                 <Label htmlFor="phone" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                   Phone *
                 </Label>

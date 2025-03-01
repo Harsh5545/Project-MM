@@ -67,7 +67,7 @@ const AllLinks = ({ onClose }) => {
   };
 
   return (
-    <div className={`flex ${isMobile ? "flex-col space-y-3" : "flex-row space-x-6"} justify-center items-center`}>
+    <div className={`flex ${isMobile ? "flex-col space-y-6" : "flex-row space-x-6"} justify-center items-center`}>
       {links.map((link, i) => (
         <div key={i} className="relative">
           {!link.subLinks ? (

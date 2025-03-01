@@ -73,7 +73,7 @@ const CardComponent = () => {
   };
 
   return (
-    <div className="w-full dark:bg-[#00001F] flex flex-col justify-center items-center pb-16">
+    <div className="w-full bg-gradient-to-br from-neutral-50 to-neutral-100 dark:bg-[#00001F] flex flex-col justify-center items-center pb-16">
       <div className="md:w-[90%] w-[95%]">
         <div className="flex flex-col items-center justify-center">
           <h4
@@ -91,7 +91,7 @@ const CardComponent = () => {
             ))}
           </Carousel>
         ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-28 w-full px-4">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-24 w-full px-4">
             {courses.map((course, index) => (
               <CourseCard key={index} course={course} handleReadMore={handleReadMore} isMobile={isMobile} />
             ))}

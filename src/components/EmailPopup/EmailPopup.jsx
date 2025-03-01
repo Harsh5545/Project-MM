@@ -103,13 +103,13 @@ export default function EmailPopup() {
         onClick={(e) => e.stopPropagation()} 
       >
         {/* Left Side - Image */}
-        <div className="flex-1 hidden md:flex justify-start items-center w-full max-w-[450px] lg:max-w-[550px]">
+        <div className="flex-1  md:flex justify-start items-center w-full max-w-[450px] lg:max-w-[550px]">
           <Image src="/assets/Book.png" alt="Branding" width={400} height={600} className="object-cover rounded-l-lg" />
         </div>
 
         {/* Right Side - Form */}
-        <div className="flex-1 px-4 lg:px-6 flex flex-col items-center gap-4 lg:gap-4 justify-stretch w-full">
-          <DialogHeader>
+        <div className="flex-1 px-2 flex flex-col items-center gap-4 lg:gap-8 justify-stretch w-[90%] md:w-[50%]">
+        <DialogHeader>
             <DialogTitle className={`${dm_Sansss.className} bg-clip-text text-transparent bg-gradient-to-r uppercase from-amber-500 to-[#B8860B] lg:text-xl text-lg font-semibold text-center`}>
               A Step-by-Step Guide to Polished Professional & Social Grace
             </DialogTitle>
@@ -117,45 +117,28 @@ export default function EmailPopup() {
 
           {!submitted ? (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }}>
-        <p className={`${dm_Sanss.className} text-gray-700 text-lg font-medium`}>
-          Get your FREE e-book – a step-by-step guide to refine your professional & social presence.
-        </p>
+        <p className={`${aleo.className} text-gray-700 text-base tracking-wider text-center font-medium`}>
+                Get your free e-book to unlock your path to Elegance & Confidence!
+              </p>
 
-        <div className="flex flex-col gap-3 mt-4">
-          <div className="flex gap-3">
-            <Input
-              type="text" placeholder="First Name"
-              className="px-4 py-2 border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-            />
-            <Input
-              type="text" placeholder="Last Name"
-              className="px-4 py-2 border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-            />
-          </div>
-          <Input
-            type="email" placeholder="Enter your email"
-            className="px-4 py-2 border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
+              <div className="flex flex-col gap-3 mt-4">
+                <div className="flex lg:flex-row gap-2 flex-col">
+                  <Input type="text" placeholder="First Name" className="w-full lg:max-w-[200px] py-2 border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+                  <Input type="text" placeholder="Last Name" className="w-full lg:max-w-[200px] py-2 border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+                </div>
+                <Input type="email" placeholder="Enter your email" className="w-full lg:max-w-[400px] py-2 border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500" value={email} onChange={(e) => setEmail(e.target.value)} />
+              </div>
 
-        {/* Error message with better UI */}
-        {error && (
+              {error && (
           <p className="mt-2 text-red-500 text-sm">
             {error}
           </p>
         )}
 
-        {/* CTA Buttons */}
-        <div className="flex flex-col lg:flex-row justify-center gap-3 lg:gap-6 mt-5">
-          <Button variant="outline" className="text-gray-600 hover:bg-gray-200" onClick={handleClose}>
-            Maybe Later
-          </Button>
+              <div className="flex flex-col pb-6 lg:flex-row justify-center gap-3 lg:gap-6 mt-5">
+                <Button variant="outline" className="text-gray-600 w-full max-w-[300px] py-2 hover:bg-gray-200" onClick={handleClose}>
+                  Maybe Later
+                </Button>
           <Button
             onClick={handleSubmit}
             className="bg-[#D4AF37] hover:bg-[#B8860B] text-white px-6 py-2 rounded-md transition-all"
