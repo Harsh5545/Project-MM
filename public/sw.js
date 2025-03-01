@@ -32,3 +32,54 @@ self.addEventListener('push', function (event) {
     event.waitUntil(self.registration.showNotification(data.title, options));
   }
 });
+
+// self.addEventListener('notificationclick', function (event) {
+//   const url = event.notification.data.link; // Get the URL from the notification's data
+
+//   // Close the notification
+//   event.notification.close();
+
+//   // Open the URL in a new window or tab
+//   event.waitUntil(
+//     clients.openWindow(url)
+//   );
+// });
+
+// self.addEventListener('notificationclick', function (event) {
+//   const url = event.notification.data.link; // Get the URL from the notification's data
+
+//   // Close the notification
+//   event.notification.close();
+
+//   // Try to open the URL in a new window/tab and bring it to the foreground
+//   event.waitUntil(
+//     clients.matchAll({ type: 'window' }).then((windowClients) => {
+//       // If a client window is already open, focus on it
+//       for (const client of windowClients) {
+//         if (client.url === url) {
+//           return client.focus();
+//         }
+//       }
+
+//       // Otherwise, open a new window
+//       return clients.openWindow(url);
+//     })
+//   );
+// });
+
+
+self.addEventListener('notificationclick', function (event) {
+  const url = event.notification.data.link; // Get the URL from the notification's data
+
+  // Close the notification
+  event.notification.close();
+
+  // Adding a short delay before opening the window to ensure the page loads properly
+  event.waitUntil(
+    new Promise((resolve) => {
+      setTimeout(() => {
+        clients.openWindow(url).then(resolve);
+      }, 100); // Delay added (100ms) to ensure it opens correctly
+    })
+  );
+});
