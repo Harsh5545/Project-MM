@@ -108,10 +108,10 @@ export default function EmailPopup() {
         </div>
 
         {/* Right Side - Form */}
-        <div className="flex-1 px-4 lg:px-6 flex flex-col items-center gap-4 lg:gap-4 justify-stretch w-full">
+        <div className="flex-1 px-2 flex flex-col items-center gap-4 lg:gap-8 justify-stretch w-[90%] md:w-[50%]">
           <DialogHeader>
-            <DialogTitle className={`${dm_Sansss.className} bg-clip-text text-transparent bg-gradient-to-r uppercase from-amber-500 to-[#B8860B] lg:text-xl text-lg font-semibold text-center`}>
-              A Step-by-Step Guide to Polished Professional & Social Grace
+            <DialogTitle className={`${dm_Sansss.className} lg:text-3xl text-xl font-semibold text-center`}>
+              Unlock Your Path to Elegance & Confidence!
             </DialogTitle>
           </DialogHeader>
 
