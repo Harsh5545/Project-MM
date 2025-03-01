@@ -15,7 +15,6 @@ export const metadata = {
 const page = async () => {
   try {
     const url = new URL(`${process.env.NEXT_PUBLIC_API_URL}/api/blog/list-blog`);
-    // console.log("Fetching from: ", `${process.env.NEXT_PUBLIC_API_URL}/api/blog/list-blog`);
     const page = 1;  
     const pageSize = 10;  
     url.searchParams.set("page", page);
@@ -28,7 +27,6 @@ const page = async () => {
     }
 
     const result = await response.json();
-    console.log(result)
     if (result && result.data && result.data.length > 0) {
       return (
         <div>

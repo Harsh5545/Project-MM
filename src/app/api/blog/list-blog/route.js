@@ -76,16 +76,11 @@ export async function GET(req) {
     const sortBy = url.searchParams.get("sortBy") || "createdAt"; // Default sorting by `createdAt`
     const sortOrder = url.searchParams.get("sortOrder") || "desc"; // Default sort order is `desc`
 
-    // Log the query parameters for debugging
-    console.log('Query Parameters:', { page, pageSize, filterBy, categoryId, tags, published, sortBy, sortOrder });
-
     // Prepare query options
     const sortOptions = handleSorting(sortBy, sortOrder);
     const filterOptions = handleFiltering(filterBy, categoryId, tags, published);
 
-    // Log the filters being applied
-    console.log('Filter Options:', filterOptions);
-    console.log('Sort Options:', sortOptions);
+
 
     // Fetch blog posts with pagination, sorting, and filtering
     const blogs = await prisma.blog.findMany({

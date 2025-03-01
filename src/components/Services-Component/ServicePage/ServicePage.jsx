@@ -34,7 +34,7 @@ const ServicePage = ({ data }) => {
 
   } = data;
 
-  console.log(data, 'harsh')
+
   if (!data) {
     return <div>Loading...</div>;
   }

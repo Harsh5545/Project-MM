@@ -21,7 +21,7 @@ const blogSchema = z.object({
 });
 
 export async function POST(req) {
-    console.log(req)
+
     try {
         const data = await req.json();
         const parsedData = blogSchema.parse(data);

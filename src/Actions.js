@@ -30,28 +30,72 @@ export async function handleSignOut() {
 
 let subscription = null;
 
+// export async function subscribeUser(sub) {
+//     subscription = sub;
+//     console.log(sub, 'SUBSCRIBED');
+//     const { endpoint, keys } = sub;
+//     // Save the subscription to the database
+//     const data = await prisma.subscription.create({
+//         data: {
+//             endpoint,
+//             keys_p256dh: keys.p256dh,
+//             keys_auth: keys.auth,
+//         },
+//     });
+//     // In a production environment, you would want to store the subscription in a database
+//     // For example: await db.subscriptions.create({ data: sub })
+//     return { success: true };
+// }
+
 export async function subscribeUser(sub) {
-    subscription = sub;
     const { endpoint, keys } = sub;
-    // Save the subscription to the database
+    const { p256dh, auth } = keys;
+
+    // Check if a subscription with the same keys_auth already exists
+    const existingSubscription = await prisma.subscription.findUnique({
+        where: { keys_auth: auth },
+    });
+
+    if (existingSubscription) {
+        return { success: false, message: 'Subscription already exists' };
+    }
+
+    // If the subscription does not exist, create a new one
     const data = await prisma.subscription.create({
         data: {
             endpoint,
-            keys_p256dh: keys.p256dh,
-            keys_auth: keys.auth,
+            keys_p256dh: p256dh,
+            keys_auth: auth,
         },
     });
-    // In a production environment, you would want to store the subscription in a database
-    // For example: await db.subscriptions.create({ data: sub })
-    return { success: true };
+
+    return { success: true, message: 'Subscription created successfully' };
 }
 
-export async function unsubscribeUser() {
-    subscription = null;
-    // In a production environment, you would want to remove the subscription from the database
-    // For example: await db.subscriptions.delete({ where: { ... } })
-    return { success: true };
+export async function unsubscribeUser(sub) {
+    const { endpoint, keys } = sub;
+    const { p256dh, auth } = keys;
+    try {
+        // Check if a subscription with the same keys_auth exists
+        const existingSubscription = await prisma.subscription.findUnique({
+            where: { keys_auth: auth },
+        });
+
+        if (existingSubscription) {
+            // If subscription exists, delete it
+            await prisma.subscription.delete({
+                where: { keys_auth: auth },
+            });
+            return { success: true, message: 'Subscription deleted successfully' };
+        } else {
+            return { success: false, message: 'No subscription found to delete' };
+        }
+
+    } catch (error) {
+        return { success: false, error: error.message };
+    }
 }
+
 
 // export async function sendNotification(message) {
 //     if (!subscription) {
@@ -107,7 +151,7 @@ export async function unsubscribeUser() {
 //             // Handle re-subscription logic, for example, notify the client to re-subscribe
 //             return { success: false, error: 'Subscription expired, please re-subscribe' };
 //         }
-        
+
 //         console.error('Error sending push notification:', error);
 //         return { success: false, error: 'Failed to send notification' };
 //     }
@@ -115,14 +159,14 @@ export async function unsubscribeUser() {
 
 
 
-export async function sendNotification(title,message,link,users) {
+export async function sendNotification(title, message, link, users) {
 
     // Retrieve all subscriptions from the database
     let subscriptions = [];
 
-    if(users){
+    if (users) {
         subscriptions = users;
-    }else{
+    } else {
         subscriptions = await prisma.subscription.findMany();
     }
 
@@ -136,9 +180,8 @@ export async function sendNotification(title,message,link,users) {
         icon: '/icon.png',
         url: link || process.env.NEXT_PUBLIC_SITE_URL,
     };
-    console.log(notificationPayload)
-    const results = [];
 
+    const results = [];
     // Loop through each subscription and send a notification
     for (const subscription of subscriptions) {
         try {
@@ -154,7 +197,7 @@ export async function sendNotification(title,message,link,users) {
             );
 
             // Track success for each notification
-            results.push({ endpoint: subscription.endpoint,res, success: true });
+            results.push({ endpoint: subscription.endpoint, res, success: true });
         } catch (error) {
             // Check if the error is a 410 Gone error
             if (error.statusCode === 410) {
