@@ -140,9 +140,14 @@ model Visit {
 }
 
 model Subscription {
-  id          Int    @id @default(autoincrement())
-  endpoint    String @db.Text
-  keys_p256dh String
-  keys_auth   String
-  createdAt   DateTime @default(now())
+  id           Int      @id @default(autoincrement())
+  endpoint     String   @db.VarChar(2048) // You can keep this column as is or adjust the length if needed
+  keys_p256dh  String
+  keys_auth    String   @unique          // Make `keys_auth` unique
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
+
+
+
+

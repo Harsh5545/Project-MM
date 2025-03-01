@@ -94,11 +94,11 @@ const HeroSection = () => {
           initial="hidden"
           animate={isLoaded ? "visible" : "hidden"}
           variants={containerVariants}
-          className="flex flex-col lg:flex-row items-center justify-between py-12 lg:py-24"
+          className="flex flex-col lg:flex-row items-center justify-between py-12 lg:pt-24"
         >
           <motion.div
             variants={itemVariants}
-            className="lg:w-1/2 flex flex-col gap-8  mb-10 lg:mb-0"
+            className="lg:w-1/2 flex flex-col gap-12  mb-10 lg:mb-0"
           >
          <p className={`${EBGaramond.className} uppercase font-serif text-4xl md:text-5xl lg:text-4xl font-light text-gray-900 mb-1 leading-tight`}>
   Your personality is your <span className="bg-clip-text text-transparent bg-gradient-to-r whitespace-nowrap from-amber-500 to-amber-700">BRAND</span>
@@ -110,13 +110,13 @@ const HeroSection = () => {
 <p className={`${Montserratt.className} text-base  md:text-lg text-gray-600 font-light leading-relaxed`}>
 We help individuals & professionals from all walks of life, enhance their communication, image & etiquette to succeed in their personal & professional life.
  </p>
-<p className={`${Cinzells.className} text-base  md:text-xl text-gray-600 mb-8 font-light leading-relaxed`}>
+<p className={`${Cinzells.className} text-base  md:text-xl text-gray-600  font-light leading-relaxed`}>
 Ready to start your image transformation journey? </p></div>
           <motion.div className="flex items-center justify-center">
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className={`${dm_Sans.className} flex text-lg items-center justify-center max-w-max px-16 py-2 tracking-wider bg-gradient-to-r from-[#793600] to-[#eabf91]  text-slate-50 rounded-full font-medium shadow-lg hover:shadow-xl transition-all duration-300`}
+              className={`${dm_Sans.className} flex text-lg items-center justify-center max-w-max px-16 py-2   tracking-wider bg-gradient-to-r from-[#793600] to-[#eabf91]  text-slate-50 rounded-full font-medium shadow-lg hover:shadow-xl transition-all duration-300`}
             >
               Know more
               {/* <FaArrowRight className="ml-2" /> */}

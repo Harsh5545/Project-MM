@@ -73,7 +73,7 @@ const CardComponent = () => {
   };
 
   return (
-    <div className="w-full dark:bg-[#00001F] flex flex-col justify-center items-center py-10">
+    <div className="w-full dark:bg-[#00001F] flex flex-col justify-center items-center pb-16">
       <div className="md:w-[90%] w-[95%]">
         <div className="flex flex-col items-center justify-center">
           <h4

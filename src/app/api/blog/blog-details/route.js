@@ -19,7 +19,7 @@ const parseStringifiedFields = (data) => {
 export async function GET(req) {
     const url = new URL(req.url);
     const slug = url.searchParams.get("slug");
-    console.log(slug, "SLUG")
+
 
     if (!slug) {
         return NextResponse.json({ Success: false, error: "Slug is required" });
@@ -57,7 +57,6 @@ export async function GET(req) {
 
         // Parse stringified fields before sending to the frontend
         const parsedBlog = parseStringifiedFields(blog);
-        console.log(parsedBlog);
 
         return NextResponse.json({
             Success: true,

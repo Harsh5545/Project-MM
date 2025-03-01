@@ -47,7 +47,6 @@ export async function POST(req) {
           downloaded:true
         },
       });
-      console.log(EmailUser)
     }
     await transporter.sendMail(mailOptionsAdmin);
 

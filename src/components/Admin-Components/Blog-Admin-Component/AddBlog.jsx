@@ -99,7 +99,6 @@ export default function BlogEditor({ existingBlog, userId }) {
         variant: "destructive"
       })
     }
-    console.log(blogData)
   }
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900">

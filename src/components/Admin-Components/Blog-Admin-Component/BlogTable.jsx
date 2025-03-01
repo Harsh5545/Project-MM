@@ -79,7 +79,6 @@ export default function BlogTable() {
 
   const confirmDelete = async () => {
     if (!blogToDelete) return;
-    console.log(blogToDelete?.id,"LOG")
     try {
 
       const payload = { id: blogToDelete?.id };

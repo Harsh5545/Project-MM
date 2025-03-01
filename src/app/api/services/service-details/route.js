@@ -49,7 +49,7 @@ export async function GET(req) {
 
         // Parse stringified fields before sending to the frontend
         const parsedService = parseStringifiedFields(service);
-        console.log(parsedService)
+
         return NextResponse.json({
             Success: true,
             data: parsedService,
