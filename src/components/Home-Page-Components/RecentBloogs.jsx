@@ -1,169 +1,192 @@
 "use client"
-import { useState, useEffect, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { format } from "date-fns";
-import { FiChevronLeft, FiChevronRight, FiClock, FiUser } from "react-icons/fi";
+import { useState, useEffect } from "react"
+import { motion } from "framer-motion"
+import { format } from "date-fns"
+import { Cormorant_Garamond } from "next/font/google"
+import { ChevronLeft, ChevronRight, Clock, User } from "lucide-react"
+import Link from "next/link"
 
-const RecentBlogCarousel = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+const cormorantGaramond = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+})
 
-  const singleBlogPosts = [
-    {
-      id: 1,
-      title: "The Future of Web Development: AI Integration",
-      excerpt: "Exploring how artificial intelligence is reshaping modern web development practices and what it means for developers.",
-      author: "Alex Wilson",
-      date: new Date("2024-01-15"),
-      category: "Technology",
-      image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e",
-    },
-    {
-      id: 2,
-      title: "Mastering Responsive Design Patterns",
-      excerpt: "A comprehensive guide to implementing responsive design patterns for modern web applications.",
-      author: "Jane Smith",
-      date: new Date("2024-01-14"),
-      category: "Design",
-      image: "https://images.unsplash.com/photo-1558655146-d09347e92766",
-    },
-    {
-      id: 3,
-      title: "Understanding Web Performance Optimization",
-      excerpt: "Deep dive into techniques and strategies for optimizing web application performance.",
-      author: "Mike Johnson",
-      date: new Date("2024-01-13"),
-      category: "Performance",
-      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f",
-    }
-  ];
+// Sample blog posts - replace with your actual data
+const blogPosts = [
+  {
+    id: 1,
+    title: "The Art of First Impressions: Why They Matter",
+    excerpt:
+      "Discover the science behind first impressions and learn practical techniques to make a positive impact in any professional or social setting.",
+    author: "Manasi Kadam",
+    date: new Date("2023-11-15"),
+    category: "Professional Etiquette",
+    image: "/assets/BusinessHandshake.jpg",
+    slug: "art-of-first-impressions",
+  },
+  {
+    id: 2,
+    title: "Teaching Children Manners: A Modern Approach",
+    excerpt:
+      "Modern approaches to teaching etiquette to children that focus on empathy, respect, and social awareness rather than rigid rules.",
+    author: "Manasi Kadam",
+    date: new Date("2023-10-28"),
+    category: "Children's Etiquette",
+    image: "/assets/manasi-about.jpg",
+    slug: "teaching-children-manners",
+  },
+  {
+    id: 3,
+    title: "Business Dining: Navigating Complex Table Settings",
+    excerpt:
+      "A comprehensive guide to formal dining etiquette, from understanding place settings to proper use of utensils in business contexts.",
+    author: "Manasi Kadam",
+    date: new Date("2023-10-10"),
+    category: "Dining Etiquette",
+    image: "/assets/manasi-about1.jpg",
+    slug: "business-dining-table-settings",
+  },
+]
 
-  const blogPosts = [...singleBlogPosts, ...singleBlogPosts];
+const RecentBloogs = () => {
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [visiblePosts, setVisiblePosts] = useState(1)
 
+  // Determine how many posts to show based on screen size
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1500);
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) {
+        setVisiblePosts(3)
+      } else if (window.innerWidth >= 768) {
+        setVisiblePosts(2)
+      } else {
+        setVisiblePosts(1)
+      }
+    }
 
-    return () => clearTimeout(timer);
-  }, []);
+    handleResize()
+    window.addEventListener("resize", handleResize)
+    return () => window.removeEventListener("resize", handleResize)
+  }, [])
 
-  const nextSlide = useCallback(() => {
-    setCurrentIndex((prev) => (prev === blogPosts.length - 1 ? 0 : prev + 1));
-  }, [blogPosts.length]);
+  const nextSlide = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + visiblePosts >= blogPosts.length ? 0 : prevIndex + visiblePosts))
+  }
 
-  const prevSlide = useCallback(() => {
-    setCurrentIndex((prev) => (prev === 0 ? blogPosts.length - 1 : prev - 1));
-  }, [blogPosts.length]);
+  const prevSlide = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex - visiblePosts < 0 ? Math.max(0, blogPosts.length - visiblePosts) : prevIndex - visiblePosts,
+    )
+  }
 
-  const BlogCard = ({ post, index }) => (
-    <motion.div
-      key={post.id}
-      className="relative flex-none w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.33%-1rem)] p-4"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ duration: 0.3 }}
-      whileHover={{ scale: 1.02 }}
-    >
-      <div className="h-full bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
-        <div className="relative aspect-[16/9] overflow-hidden">
-          <img
-            src={post.image}
-            alt={post.title}
-            className="object-cover w-full h-full transition-transform duration-300 hover:scale-105"
-            loading="lazy"
-            onError={(e) => {
-              e.target.src = "https://images.unsplash.com/photo-1516259762381-22954d7d3ad2";
-            }}
-          />
-          <div className="absolute top-4 left-4">
-            <span className="px-3 py-1 text-sm font-medium text-white bg-gradient-to-r from-purple-500 to-pink-500 rounded-full">
-              {post.category}
-            </span>
-          </div>
-        </div>
-        <div className="p-6">
-          <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white line-clamp-2">
-            {post.title}
-          </h3>
-          <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">
-            {post.excerpt}
-          </p>
-          <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
-            <div className="flex items-center space-x-2">
-              <FiUser className="w-4 h-4" />
-              <span>{post.author}</span>
-            </div>
-          </div>
-          <div className="mt-4 text-sm text-gray-500 dark:text-gray-400">
-            {format(post.date, "MMM dd, yyyy")}
-          </div>
-        </div>
-      </div>
-    </motion.div>
-  );
-
-  if (error) {
-    return (
-      <div className="text-center py-12">
-        <p className="text-red-500">Error loading blog posts: {error}</p>
-      </div>
-    );
+  // Get the posts to display based on current index and visible posts count
+  const getVisiblePosts = () => {
+    const posts = []
+    for (let i = 0; i < visiblePosts; i++) {
+      const index = (currentIndex + i) % blogPosts.length
+      posts.push(blogPosts[index])
+    }
+    return posts
   }
 
   return (
-    <div className="relative w-full px-24 py-12 bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
-      <div className="container mx-auto px-4">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-900 dark:text-white">
-          Recent Blog Posts
-        </h2>
+    <section className="py-16 lg:py-24 bg-gradient-to-br from-gray-50 to-gray-100">
+      <div className="container w-[90%] mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="flex flex-col items-center mb-12"
+        >
+          <h2 className={`${cormorantGaramond.className} text-4xl font-bold text-gray-900 mb-4`}>Latest Insights</h2>
+          <div className="h-1 w-16 bg-gradient-to-r from-[#c3965d] to-[#eabf91] rounded-full"></div>
+          <p className="text-gray-700 text-center max-w-2xl mt-4">
+            Explore our latest articles on etiquette, personal development, and professional growth
+          </p>
+        </motion.div>
 
-        {isLoading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[...Array(3)].map((_, index) => (
-              <div
-                key={index}
-                className="animate-pulse bg-gray-200 dark:bg-gray-700 rounded-xl h-96"
-              />
+        <div className="relative">
+          <div className="flex flex-wrap -mx-4">
+            {getVisiblePosts().map((post, index) => (
+              <motion.div
+                key={post.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="w-full md:w-1/2 lg:w-1/3 px-4 mb-8"
+              >
+                <Link href={`/blog/${post.slug}`} className="block h-full">
+                  <div className="bg-white rounded-lg overflow-hidden shadow-lg h-full transition-transform duration-300 hover:transform hover:scale-[1.02]">
+                    <div className="relative">
+                      <img
+                        src={post.image || "/placeholder.svg"}
+                        alt={post.title}
+                        className="w-full h-48 object-cover"
+                      />
+                      <div className="absolute top-2 left-2">
+                        <span className="px-3 py-1 text-xs font-medium text-white bg-gradient-to-r from-[#c3965d] to-[#eabf91] rounded-full">
+                          {post.category}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="p-6">
+                      <h3
+                        className={`${cormorantGaramond.className} text-xl font-bold text-gray-900 mb-3 line-clamp-2`}
+                      >
+                        {post.title}
+                      </h3>
+                      <p className="text-gray-700 mb-4 line-clamp-3">{post.excerpt}</p>
+                      <div className="flex items-center justify-between text-sm text-gray-500">
+                        <div className="flex items-center space-x-2">
+                          <User className="w-4 h-4" />
+                          <span>{post.author}</span>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <Clock className="w-4 h-4" />
+                          <span>{format(post.date, "MMM dd, yyyy")}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
             ))}
           </div>
-        ) : (
-          <div className="relative">
-            <div className="overflow-hidden">
-              <motion.div
-                className="flex space-x-6 transition-transform duration-300"
-                animate={{ x: `-${currentIndex * 100}%` }}
-              >
-                <AnimatePresence>
-                  {blogPosts.map((post, index) => (
-                    <BlogCard key={`${post.id}-${index}`} post={post} index={index} />
-                  ))}
-                </AnimatePresence>
-              </motion.div>
-            </div>
 
+          {/* Navigation buttons */}
+          <div className="flex justify-center mt-8 gap-4">
             <button
               onClick={prevSlide}
-              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 bg-white dark:bg-gray-800 p-3 rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
-              aria-label="Previous slide"
+              className="w-10 h-10 rounded-full bg-white shadow-md flex items-center justify-center text-[#c3965d] hover:bg-amber-100 transition-colors"
+              aria-label="Previous posts"
             >
-              <FiChevronLeft className="w-6 h-6 text-gray-600 dark:text-gray-300" />
+              <ChevronLeft size={20} />
             </button>
 
             <button
               onClick={nextSlide}
-              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 bg-white dark:bg-gray-800 p-3 rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
-              aria-label="Next slide"
+              className="w-10 h-10 rounded-full bg-white shadow-md flex items-center justify-center text-[#c3965d] hover:bg-amber-100 transition-colors"
+              aria-label="Next posts"
             >
-              <FiChevronRight className="w-6 h-6 text-gray-600 dark:text-gray-300" />
+              <ChevronRight size={20} />
             </button>
           </div>
-        )}
-      </div>
-    </div>
-  );
-};
+        </div>
 
-export default RecentBlogCarousel;
+        <div className="text-center mt-12">
+          <Link
+            href="/blog"
+            className={`${cormorantGaramond.className} bg-gradient-to-r from-[#c3965d] to-[#eabf91] inline-block px-8 py-3  text-white rounded-full font-medium shadow-md hover:shadow-lg transition-all duration-300`}
+          >
+            View All Articles
+          </Link>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+export default RecentBloogs
+

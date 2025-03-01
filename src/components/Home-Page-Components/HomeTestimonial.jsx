@@ -1,156 +1,137 @@
 "use client"
-
 import { useState } from "react"
 import Image from "next/image"
+import { motion, AnimatePresence } from "framer-motion"
 import { Cormorant_Garamond } from "next/font/google"
-import { ChevronLeft, ChevronRight } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
+import { ChevronLeft, ChevronRight, Quote } from "lucide-react"
 
-const dmSans = Cormorant_Garamond({
+const cormorantGaramond = Cormorant_Garamond({
   subsets: ["latin"],
-  weight: ["700"],
+  weight: ["400", "700"],
 })
 
-const HomeTestimonial = () => {
-  // Sample testimonial data - replace with your actual data
-  const testimonialData = [
-    {
-      id: 1,
-      Name: "Sarah Johnson",
-      Description:
-        "The business etiquette workshop completely transformed how I present myself in professional settings. The personalized coaching helped me identify areas for improvement I wasn't even aware of. I've received numerous compliments on my enhanced communication skills since completing the program.",
-      Image: "/assets/testimonial1.jpg",
-      City: "New York",
-    },
-    {
-      id: 2,
-      Name: "Michael Chen",
-      Description:
-        "As a parent, I was concerned about my children's social skills. The children's etiquette program was engaging and effective. My kids now understand the importance of good manners and apply them naturally. The instructor's patience and expertise made all the difference.",
-      Image: "/assets/testimonial2.jpg",
-      City: "Chicago",
-    },
-    {
-      id: 3,
-      Name: "Emily Rodriguez",
-      Description:
-        "The dining etiquette workshop was eye-opening! I never realized how many subtle cues I was missing at business dinners. The practical, hands-on approach gave me confidence to navigate formal dining situations with ease. This has been invaluable for my career advancement.",
-      Image: "/assets/testimonial3.jpg",
-      City: "Los Angeles",
-    },
-  ]
+// Sample testimonial data
+const testimonials = [
+  {
+    id: 1,
+    Name: "Sarah Johnson",
+    Description:
+      "The business etiquette workshop completely transformed how I present myself in professional settings. The personalized coaching helped me identify areas for improvement I wasn't even aware of. Now I feel confident in any business situation!",
+    Image: "/placeholder.svg?height=80&width=80",
+  },
+  {
+    id: 2,
+    Name: "Michael Chen",
+    Description:
+      "I enrolled my 10-year-old daughter in the children's etiquette program, and the results have been remarkable. She's more confident, polite, and socially aware. The coach made learning manners fun and engaging!",
+    Image: "/placeholder.svg?height=80&width=80",
+  },
+  {
+    id: 3,
+    Name: "Priya Sharma",
+    Description:
+      "The fine dining workshop was eye-opening! I learned so much about proper table manners and dining etiquette that I now feel completely at ease during business dinners. Highly recommend for any professional.",
+    Image: "/placeholder.svg?height=80&width=80",
+  },
+]
 
+const HomeTestimonial = () => {
   const [currentIndex, setCurrentIndex] = useState(0)
 
-  const nextSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === testimonialData.length - 1 ? 0 : prevIndex + 1))
+  const nextTestimonial = () => {
+    setCurrentIndex((prevIndex) => (prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1))
   }
 
-  const prevSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === 0 ? testimonialData.length - 1 : prevIndex - 1))
+  const prevTestimonial = () => {
+    setCurrentIndex((prevIndex) => (prevIndex === 0 ? testimonials.length - 1 : prevIndex - 1))
   }
 
   return (
-    <section
-      className="relative w-full py-16 lg:py-24"
-      style={{
-        backgroundImage:
-          "linear-gradient(to right, rgba(0,0,0,0.7), rgba(0,0,0,0.1)), url('/assets/Website-Background.jpg')",
-        backgroundAttachment: "fixed",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
-    >
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-black/50 dark:bg-black/70"></div>
+    <section className="py-16 lg:py-24 bg-gradient-to-br from-gray-50 to-gray-100">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="flex flex-col items-center mb-12"
+        >
+          <h2 className={`${cormorantGaramond.className} text-4xl font-bold text-gray-900 mb-4`}>
+            Client Testimonials
+          </h2>
+          <div className="h-1 w-16 bg-gradient-to-r from-[#c3965d] to-[#eabf91] rounded-full"></div>
+        </motion.div>
 
-      {/* Content */}
-      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center">
-        <h2 className={`${dmSans.className} text-3xl md:text-4xl font-bold text-center mb-12 text-white`}>
-          Client Testimonials
-        </h2>
+        <div className="relative max-w-4xl mx-auto">
+          {/* Large quote mark */}
+          <div className="absolute -top-10 -left-10 opacity-10">
+            <Quote size={80} className="text-[#c3965d]" />
+          </div>
 
-        <Card className="bg-white dark:bg-gray-800 shadow-xl max-w-5xl w-full mx-auto">
-          <CardContent className="p-8 md:p-12">
-            <div className="flex flex-col items-center gap-8">
-              <div className="relative">
-                <Image
-                  src={testimonialData[currentIndex].Image || "/placeholder-user.jpg"}
-                  width={100}
-                  height={100}
-                  alt={testimonialData[currentIndex].Name}
-                  className="rounded-full border-4 border-[#eabf91] shadow-lg object-cover"
-                />
-                <div className="absolute -bottom-2 -right-2 bg-[#eabf91] text-white p-1 rounded-full">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path>
-                    <path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"></path>
-                  </svg>
-                </div>
-              </div>
-
-              <blockquote className="text-center">
-                <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
-                  "{testimonialData[currentIndex].Description}"
+          <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12 relative z-10">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentIndex}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.5 }}
+                className="flex flex-col items-center"
+              >
+                <p className="text-gray-700 text-lg md:text-xl italic text-center mb-8 leading-relaxed">
+                  "{testimonials[currentIndex].Description}"
                 </p>
 
-                <footer className="flex flex-col items-center">
-                  <cite className="text-xl font-semibold text-gray-900 dark:text-white not-italic">
-                    {testimonialData[currentIndex].Name}
-                  </cite>
-                  {testimonialData[currentIndex].City && (
-                    <span className="text-sm text-gray-500 dark:text-gray-400">
-                      {testimonialData[currentIndex].City}
-                    </span>
-                  )}
-                </footer>
-              </blockquote>
+                <div className="flex flex-col items-center">
+                  <div className="w-20 h-20 rounded-full overflow-hidden mb-4 border-2 border-amber-200">
+                    <Image
+                      src={testimonials[currentIndex].Image || "/placeholder.svg"}
+                      width={80}
+                      height={80}
+                      alt={testimonials[currentIndex].Name}
+                      className="object-cover w-full h-full"
+                    />
+                  </div>
+                  <h3 className={`${cormorantGaramond.className} text-xl font-bold text-gray-900`}>
+                    {testimonials[currentIndex].Name}
+                  </h3>
+                </div>
+              </motion.div>
+            </AnimatePresence>
 
-              <div className="flex gap-4 mt-4">
-                <Button
-                  onClick={prevSlide}
-                  variant="outline"
-                  size="icon"
-                  className="rounded-full border-[#eabf91] text-[#eabf91] hover:bg-[#eabf91] hover:text-white"
-                >
-                  <ChevronLeft className="h-5 w-5" />
-                </Button>
-                <Button
-                  onClick={nextSlide}
-                  variant="outline"
-                  size="icon"
-                  className="rounded-full border-[#eabf91] text-[#eabf91] hover:bg-[#eabf91] hover:text-white"
-                >
-                  <ChevronRight className="h-5 w-5" />
-                </Button>
+            {/* Navigation buttons */}
+            <div className="flex justify-center mt-8 gap-4">
+              <button
+                onClick={prevTestimonial}
+                className="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center text-amber-800 hover:bg-[#eabf91] transition-colors"
+                aria-label="Previous testimonial"
+              >
+                <ChevronLeft size={20} />
+              </button>
+
+              {/* Dots indicator */}
+              <div className="flex items-center gap-2">
+                {testimonials.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentIndex(index)}
+                    className={`w-2 h-2 rounded-full transition-all ${
+                      index === currentIndex ? "bg-[#c3965d] w-3 h-3" : "bg-gray-300"
+                    }`}
+                    aria-label={`Go to testimonial ${index + 1}`}
+                  />
+                ))}
               </div>
-            </div>
-          </CardContent>
-        </Card>
 
-        {/* Pagination indicators */}
-        <div className="flex justify-center mt-6 gap-2">
-          {testimonialData.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentIndex(index)}
-              className={`w-3 h-3 rounded-full transition-all ${
-                index === currentIndex ? "bg-[#eabf91] w-6" : "bg-white/50"
-              }`}
-              aria-label={`Go to testimonial ${index + 1}`}
-            />
-          ))}
+              <button
+                onClick={nextTestimonial}
+                className="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center text-amber-800 hover:bg-[#eabf91] transition-colors"
+                aria-label="Next testimonial"
+              >
+                <ChevronRight size={20} />
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </section>

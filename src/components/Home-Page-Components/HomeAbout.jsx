@@ -1,87 +1,120 @@
-import React from "react";
-import { Cormorant_Garamond } from "next/font/google";
-import Image from "next/image"; // Ensure Image is imported
-// Import the custom ShadCN Button you created
-import { Star, Award } from "lucide-react"; // Use Lucide icons
-import { EB_Garamond } from "next/font/google";
-const dm_Sans = Cormorant_Garamond({
+"use client"
+import { Cormorant_Garamond } from "next/font/google"
+import Image from "next/image"
+import { Star, Award } from "lucide-react"
+import { motion } from "framer-motion"
+
+const cormorantGaramond = Cormorant_Garamond({
   subsets: ["latin"],
-  weight: ["400"],
-});
+  weight: ["400", "700"],
+})
 
 const HomeAbout = () => {
   return (
-    <div className="flex flex-col py-6 md:py-16 w-full">
-      {/* Main Content */}
-      <div className="flex dark:bg-[#00001F] gap-6 justify-center flex-col md:flex-row items-center">
-        {/* Image Section */}
-        <div className="w-[90%] md:w-2/5 flex justify-center m-2 items-center">
-          <div>
-            <Image
-              width={500}
-              height={400}
-              alt="modern Mannerism image"
-              src="/assets/AboutUsModernMannerism.jpg"
-              className="shadow-2xl object-contain p-0 lg:p-0.5 shadow-[#859199]"
-              style={{
-                boxShadow:
-                  "black 0px 0px 0px 2px inset, rgba(255, 255, 255, 0.658) 10px -10px 0px -3px, #eabf91 10px -10px",
-              }}
-            />
-          </div>
-        </div>
+    <section className="py-16 lg:py-24 bg-gradient-to-br from-neutral-50 to-neutral-100">
+      <div className="container w-[90%] mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16"
+        >
+          {/* Image Section */}
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="lg:w-2/5 w-full"
+          >
+            <div className="relative">
+              {/* Decorative elements */}
+              
+              <Image
+                width={600}
+                height={800}
+                alt="Modern Mannerism Coach"
+                src="/assets/AboutUsModernMannerism.jpg"
+                className="rounded-lg shadow-2xl relative z-10"
+                style={{
+                  boxShadow:
+                    "rgba(0, 0, 0, 0.3) 0px 0px 0px 2px inset, rgba(255, 255, 255, 0.5) 10px -10px 0px -3px, rgba(201, 148, 81, 0.8) 10px -10px",
+                }}
+              />
+            </div>
+          </motion.div>
 
-        {/* About Section */}
-        <div className="w-full md:w-3/5 flex flex-col gap-10">
-          {/* Header */}
-          <div className="flex flex-col items-center gap-2 justify-center">
-            <h1
-              className={`${dm_Sans.className} text-black dark:text-white text-center text-4xl font-bold`}
-            >
-              About Modern Mannerism
-            </h1>
-            <hr className="h-1 bg-[#eabf91] w-16" />
-          </div>
+          {/* About Content */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="lg:w-3/5 w-full"
+          >
+            <div className="flex flex-col gap-8">
+              {/* Header */}
+              <div className="flex flex-col items-center lg:items-start gap-3">
+                <h2 className={`${cormorantGaramond.className} text-4xl font-bold text-gray-900`}>
+                  About Modern Mannerism
+                </h2>
+                <div className="h-1 w-16 bg-gradient-to-r from-[#c3965d] to-[#eabf91] rounded-full"></div>
+              </div>
 
-          {/* Description */}
-          <p className="text-gray-800 dark:text-white p-2 text-center">
-            Modern Mannerism provides professional-quality training and learning globally. We help professionals, corporates, and organizations to embrace transformation and accomplish breakthrough performance by becoming proficient at the skills.
-          </p>
-
-          <div className="flex flex-col md:flex-row gap-8 justify-between items-stretch p-4 md:p-6">
-            {/* Vision Section */}
-            <div className="flex-1 flex flex-col items-center gap-4 bg-gray-50 dark:bg-[#1A1A3B] p-6 rounded-lg shadow-lg">
-              <Star size={40} color="#eabf91" />
-              <span className={`${dm_Sans.className} font-bold dark:text-white md:text-2xl text-xl text-[#06273A]`}>
-                Vision
-              </span>
-              <p className="text-gray-700 dark:text-gray-300 md:text-sm text-xs text-start">
-                We aim to empower individuals with the confidence, polish, and grace needed to thrive in today's modern world.
+              {/* Description */}
+              <p className="text-gray-700 text-lg leading-relaxed">
+                Modern Mannerism provides professional-quality training and learning globally. We help professionals,
+                corporates, and organizations to embrace transformation and accomplish breakthrough performance by
+                becoming proficient at essential social and business skills.
               </p>
-            </div>
 
-            {/* Divider for desktop */}
-            <div className="hidden md:block" style={{ height: "auto", width: 2, backgroundColor: "#eabf91" }} />
+              {/* Vision and Values */}
+              <div className="grid md:grid-cols-2 gap-8 mt-4">
+                {/* Vision Section */}
+                <motion.div
+                  whileHover={{ y: -10, transition: { duration: 0.3 } }}
+                  className="bg-white rounded-xl p-6 shadow-lg flex flex-col items-center lg:items-start gap-4"
+                >
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#c3965d] to-[#eabf91] flex items-center justify-center">
+                    <Star size={24} className="text-white" />
+                  </div>
+                  <h3 className={`${cormorantGaramond.className} text-2xl font-bold text-gray-900`}>Our Vision</h3>
+                  <p className="text-gray-700">
+                    We aim to empower individuals with the confidence, polish, and grace needed to thrive in today's
+                    modern world, creating lasting impressions in every interaction.
+                  </p>
+                </motion.div>
 
-            {/* Our Values Section */}
-            <div className="flex-1 flex flex-col items-center gap-4 bg-gray-50 dark:bg-[#1A1A3B] p-2 md:p-6 rounded-lg shadow-lg">
-              <Award size={40} color="#eabf91" />
-              <span className={`${dm_Sans.className} font-bold dark:text-white md:text-2xl text-xl text-[#06273A]`}>
-                Our Values
-              </span>
-              <ul className="text-gray-700 dark:text-gray-300 md:text-sm text-xs space-y-2 text-start">
-                <li>▫ Professionalism: Excellence in every detail.</li>
-                <li>▫ Personalization: Tailored strategies for unique needs.</li>
-                <li>▫ Inclusivity: Adapting to cross-cultural environments with ease.</li>
-              </ul>
+                {/* Values Section */}
+                <motion.div
+                  whileHover={{ y: -10, transition: { duration: 0.3 } }}
+                  className="bg-white rounded-xl p-6 shadow-lg flex flex-col items-center lg:items-start gap-4"
+                >
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#c3965d] to-[#eabf91] flex items-center justify-center">
+                    <Award size={24} className="text-white" />
+                  </div>
+                  <h3 className={`${cormorantGaramond.className} text-2xl font-bold text-gray-900`}>Our Values</h3>
+                  <ul className="text-gray-700 space-y-2">
+                    <li className="flex items-center gap-2">
+                      <span className="text-amber-500">▪</span> Professionalism: Excellence in every detail
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="text-amber-500">▪</span> Personalization: Tailored strategies for unique needs
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="text-amber-500">▪</span> Inclusivity: Adapting to cross-cultural environments
+                    </li>
+                  </ul>
+                </motion.div>
+              </div>
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
+    </section>
+  )
+}
 
-      {/* Vision and Values Section */}
-    </div>
-  );
-};
+export default HomeAbout
 
-export default HomeAbout;
