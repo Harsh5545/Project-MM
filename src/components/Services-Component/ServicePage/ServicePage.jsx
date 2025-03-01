@@ -48,8 +48,8 @@ const ServicePage = ({ data }) => {
 
 
         <div className=" flex absolute pb-4 lg:pb-8 flex-col justify-center items-center text-center text-black">
-          <h1 className="lg:text-4xl md:text-3xl text-2xl  font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#9e7033] via-[#c3965d] to-[#9e7033]  uppercase">{heading}</h1>
-          <h2 className={`${dm_Sans.className} mt-4 px-2 text-base lg:text-xl`}>{subheading}</h2>
+          <h1 className="lg:text-4xl md:text-3xl text-3xl  font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#9e7033] via-[#c3965d] to-[#9e7033]  uppercase">{heading}</h1>
+          <h2 className={`${dm_Sans.className} mt-4 px-2 text-lg lg:text-xl`}>{subheading}</h2>
 
 
         </div>
