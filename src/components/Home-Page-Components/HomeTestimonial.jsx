@@ -48,7 +48,7 @@ const HomeTestimonial = () => {
 
   return (
     <section className="py-16 lg:py-24 bg-gradient-to-br from-gray-50 to-gray-100">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto px-2 overflow-hidden sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

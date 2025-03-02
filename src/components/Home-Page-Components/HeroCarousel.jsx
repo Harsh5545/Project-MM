@@ -64,7 +64,7 @@ const HeroCarousel = () => {
         </svg>
       </div>
 
-      <div className="container  w-[90%] mx-auto px-3 sm:px-2 lg:px-8 py-32 lg:py-24 relative z-10">
+      <div className="container w-[95%] md:w-[90%] mx-auto px-3 sm:px-2 lg:px-8 py-24 lg:py-24 relative z-10">
         <motion.div
           initial="hidden"
           animate={isLoaded ? "visible" : "hidden"}
@@ -72,15 +72,15 @@ const HeroCarousel = () => {
           className="flex flex-col-reverse lg:flex-row items-center justify-between gap-12"
         >
           {/* Text Content */}
-          <motion.div variants={itemVariants} className="lg:w-1/2 flex flex-col gap-8">
+          <motion.div variants={itemVariants} className="lg:w-1/2 w-full flex flex-col gap-8 lg:gap-16">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2, duration: 0.8 }}
-              className="flex flex-col gap-3"
+              className="flex flex-col gap-4"
             >
               <p
-                className={`${ebGaramond.className} uppercase font-serif text-2xl md:text-4xl lg:text-5xl font-light text-gray-900 leading-tight`}
+                className={`${ebGaramond.className} uppercase md:text-left text-center whitespace-nowrap font-serif text-lg md:text-3xl lg:text-4xl font-light text-gray-900 leading-tight`}
               >
                 Your personality is your{" "}
                 <span className="bg-clip-text text-transparent bg-gradient-to-r from-amber-600 to-amber-800 whitespace-nowrap">
@@ -94,17 +94,17 @@ const HeroCarousel = () => {
               </p>
             </motion.div>
 
-            <motion.div variants={itemVariants} className="flex flex-col gap-6">
-              <p className={`${montserrat.className} text-base md:text-lg text-gray-700 leading-relaxed max-w-xl`}>
+            <motion.div variants={itemVariants} className="flex flex-col gap-5 lg:gap-8">
+              <p className={`${montserrat.className} text-sm md:text-base text-gray-700 leading-relaxed max-w-xl`}>
                 We help individuals & professionals from all walks of life enhance their communication, image &
                 etiquette to succeed in their personal & professional life.
               </p>
-              <p className={`${montserrat.className} text-base md:text-xl text-gray-800 font-medium leading-relaxed`}>
+              <p className={`${montserrat.className} text-base md:text-lg text-gray-800 font-medium leading-relaxed`}>
                 Ready to start your image transformation journey?
               </p>
             </motion.div>
 
-            <motion.div variants={itemVariants} className="flex items-start">
+            <motion.div variants={itemVariants} className=" w-full  ">
               <Link href="/services">
                 <motion.button
                   whileHover={{ scale: 1.05, boxShadow: "0 10px 25px -5px rgba(201, 148, 81, 0.3)" }}
@@ -123,22 +123,23 @@ const HeroCarousel = () => {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.5, duration: 1, ease: "easeOut" }}
-              className="relative"
+              className="relative flex justify-center  w-full"
             >
               {/* Decorative elements */}
               {/* <div className="absolute -top-6 -left-6 w-24 h-24 border-t-2 border-l-2 border-amber-500 rounded-tl-3xl opacity-70"></div>
               <div className="absolute -bottom-6 -right-6 w-24 h-24 border-b-2 border-r-2 border-amber-500 rounded-br-3xl opacity-70"></div> */}
 
-              {/* Main image container with gradient background */}
-              <div className="relative overflow-hidden rounded-tl-[100px] rounded-br-[100px] rounded-tr-3xl rounded-bl-3xl bg-gradient-to-r from-[#c3965d] to-[#eabf91] shadow-2xl">
+<div className=" relative w-full flex justify-end"> {/* Main image container with gradient background */}
+              <div className="relative flex min-h-xl w-[75%] bg-[#c3965d] bg-opacity-35 justify-center lg:justify-end overflow-hidden rounded-tl-[100px] rounded-br-[100px] rounded-tr-3xl rounded-bl-3xl shadow-2xl">
+              
                 <Image
                   src="/assets/Manasi_png_bg_png_bg.png"
-                  width={500}
-                  height={400}
-                  alt="Modern Mannerism Coach"
-                  className="object-contain w-full h-[60%]"
+                  width={600}
+                  height={500}
+                  alt="Modern Mannerism Coach Manasi Kadam"
+                  className="object-contain w-full  "
                   priority
-                />
+                />  </div>
               </div>
             </motion.div>
           </motion.div>

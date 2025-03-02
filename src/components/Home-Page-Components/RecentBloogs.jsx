@@ -62,7 +62,7 @@ const RecentBlogs = ({ blogs = [] }) => {
 
   return (
     <section className="py-16 lg:py-24 bg-gradient-to-br from-gray-50 to-gray-100">
-      <div className="container w-[90%] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="container w-[90%] mx-auto px-4 sm:px-4 lg:px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -70,7 +70,7 @@ const RecentBlogs = ({ blogs = [] }) => {
           transition={{ duration: 0.6 }}
           className="flex flex-col items-center mb-12"
         >
-          <h2 className={`${cormorantGaramond.className} text-4xl font-bold text-gray-900 mb-4`}>Latest Insights</h2>
+          <p className={`${cormorantGaramond.className} text-4xl font-bold text-gray-900 mb-4`}>Latest Blogs</p>
           <div className="h-1 w-16 bg-gradient-to-r from-[#c3965d] to-[#eabf91] rounded-full"></div>
           <p className="text-gray-700 text-center max-w-2xl mt-4">
             Explore our latest articles on etiquette, personal development, and professional growth
@@ -78,7 +78,7 @@ const RecentBlogs = ({ blogs = [] }) => {
         </motion.div>
 
         <div className="relative">
-          <div className="flex flex-wrap -mx-4">
+          <div className="flex flex-wrap -mx-3">
             {getVisiblePosts().map((post, index) => (
               <motion.div
                 key={post.id || index}
@@ -86,7 +86,7 @@ const RecentBlogs = ({ blogs = [] }) => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="w-full md:w-1/2 lg:w-1/3 px-4 mb-8"
+                className="w-full md:w-1/2 lg:w-1/3 px-3 mb-4"
               >
                 <Link href={`/blogs/${post.slug}`} className="block h-full">
                   <div className="bg-white rounded-lg overflow-hidden shadow-lg h-full transition-transform duration-300 hover:transform hover:scale-[1.02]">
@@ -94,7 +94,7 @@ const RecentBlogs = ({ blogs = [] }) => {
                       <img
                         src={post.image || "/placeholder.svg"}
                         alt={post.title}
-                        className="w-full h-48 object-cover"
+                        className="w-full h-60 object-cover"
                       />
                       <div className="absolute top-2 left-2">
                         <span className="px-3 py-1 text-xs font-medium text-white bg-gradient-to-r from-[#c3965d] to-[#eabf91] rounded-full">
