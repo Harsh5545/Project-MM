@@ -4,7 +4,7 @@ import { notFound } from "next/navigation"
 
 const page = async ({ params }) => {
   try {
-    const slug = params.slug
+    const slug = (await params).slug
 
     // Fetch the blog details
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blog/blog-details?slug=${slug}`, {

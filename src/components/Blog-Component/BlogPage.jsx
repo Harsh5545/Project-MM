@@ -1,9 +1,11 @@
 "use client";
+
 import { motion } from "framer-motion";
 import Image from "next/image";
 import parse from "html-react-parser";
 import Link from "next/link";
 import { formatDistanceToNow } from "date-fns";
+import { useEffect } from "react";
 
 const BlogPage = ({ data }) => {
   if (!data) {
@@ -12,6 +14,29 @@ const BlogPage = ({ data }) => {
 
   // Format the date if available
   const formattedDate = data.createdAt ? formatDistanceToNow(new Date(data.createdAt), { addSuffix: true }) : "";
+
+
+  const updateViewCount = async () => {
+    try {
+      const response = await fetch(`/api/blog/update-view-count`, {
+        method: 'POST',
+        body: JSON.stringify({ id: data?.id, slug: data?.slug }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to update view count");
+      }
+
+      const responseData = await response.json();
+      console.log("View count updated successfully:", responseData);
+    } catch (error) {
+      console.error("Error updating view count:", error);
+    }
+  };
+
+  useEffect(() => {
+    updateViewCount();
+  }, []);
 
   return (
     <div className="container max-w-max px-4 sm:px-6 lg:pl-16 lg:pr-24 py-16 md:py-24 flex justify-center flex-col md:flex-row gap-10">
