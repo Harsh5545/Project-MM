@@ -8,7 +8,10 @@ const cormorantGaramond = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["400", "700"],
 })
-
+const cormorantGaramonds = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: [ "700"],
+})
 const HomeAbout = () => {
   return (
     <section className="py-16 lg:py-24 bg-gradient-to-br from-neutral-50 to-neutral-100">
@@ -28,7 +31,7 @@ const HomeAbout = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="lg:w-2/5 w-full"
           >
-            <div className="relative">
+            <div className="relative flex justify-center items-center">
               {/* Decorative elements */}
               
               <Image
@@ -55,15 +58,15 @@ const HomeAbout = () => {
           >
             <div className="flex flex-col gap-8">
               {/* Header */}
-              <div className="flex flex-col items-center lg:items-start gap-3">
-                <h2 className={`${cormorantGaramond.className} text-4xl font-bold text-gray-900`}>
+              <div className="flex flex-col items-center  gap-3">
+                <h2 className={`${cormorantGaramonds.className} text-2xl md:text-4xl font-bold text-gray-900`}>
                   About Modern Mannerism
                 </h2>
                 <div className="h-1 w-16 bg-gradient-to-r from-[#c3965d] to-[#eabf91] rounded-full"></div>
               </div>
 
               {/* Description */}
-              <p className="text-gray-700 text-lg leading-relaxed">
+              <p className="text-gray-700 text-sm lg:text-lg leading-relaxed">
                 Modern Mannerism provides professional-quality training and learning globally. We help professionals,
                 corporates, and organizations to embrace transformation and accomplish breakthrough performance by
                 becoming proficient at essential social and business skills.
@@ -74,12 +77,12 @@ const HomeAbout = () => {
                 {/* Vision Section */}
                 <motion.div
                   whileHover={{ y: -10, transition: { duration: 0.3 } }}
-                  className="bg-white rounded-xl p-6 shadow-lg flex flex-col items-center lg:items-start gap-4"
+                  className="bg-white rounded-xl p-6 shadow-lg flex flex-col items-center  gap-4"
                 >
                   <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#c3965d] to-[#eabf91] flex items-center justify-center">
                     <Star size={24} className="text-white" />
                   </div>
-                  <h3 className={`${cormorantGaramond.className} text-2xl font-bold text-gray-900`}>Our Vision</h3>
+                  <p className={`${cormorantGaramond.className} text-2xl font-bold text-gray-900`}>Our Vision</p>
                   <p className="text-gray-700">
                     We aim to empower individuals with the confidence, polish, and grace needed to thrive in today's
                     modern world, creating lasting impressions in every interaction.
@@ -89,12 +92,12 @@ const HomeAbout = () => {
                 {/* Values Section */}
                 <motion.div
                   whileHover={{ y: -10, transition: { duration: 0.3 } }}
-                  className="bg-white rounded-xl p-6 shadow-lg flex flex-col items-center lg:items-start gap-4"
+                  className="bg-white rounded-xl p-6 shadow-lg flex flex-col items-center  gap-4"
                 >
                   <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#c3965d] to-[#eabf91] flex items-center justify-center">
                     <Award size={24} className="text-white" />
                   </div>
-                  <h3 className={`${cormorantGaramond.className} text-2xl font-bold text-gray-900`}>Our Values</h3>
+                  <p className={`${cormorantGaramond.className} text-2xl font-bold text-gray-900`}>Our Values</p>
                   <ul className="text-gray-700 space-y-2">
                     <li className="flex items-center gap-2">
                       <span className="text-amber-500">▪</span> Professionalism: Excellence in every detail

@@ -15,13 +15,14 @@
 
 .mySwiper .swiper-button-next:hover,
 .mySwiper .swiper-button-prev:hover {
-  background-color: #910A67; /* Hover color for light theme */
+  background-color: #910a67; /* Hover color for light theme */
   color: white;
 }
 
-
-
-
+.container {
+  position: relative;
+  overflow: hidden;
+}
 
 .card_box span {
   position: absolute;
@@ -36,11 +37,11 @@
 }
 
 .card_box span::before {
-  content: 'Best Selling';
+  content: "Best Selling";
   position: absolute;
   width: 150%;
   height: 40px;
-  background-image: linear-gradient(45deg, #ff6547 0%, #ffb144  51%, #ff7053  100%);
+  background-image: linear-gradient(45deg, #ff6547 0%, #ffb144 51%, #ff7053 100%);
   transform: rotate(-45deg) translateY(-20px);
   display: flex;
   align-items: center;
@@ -49,7 +50,7 @@
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  box-shadow: 0 5px 10px rgba(0,0,0,0.23);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.23);
 }
 
 .mySwiper .swiper-button-next:after,
@@ -68,17 +69,17 @@
 
 .dark .mySwiper .swiper-button-next,
 .dark .mySwiper .swiper-button-prev {
-  background-color: rgba(0, 0, 0, 0.8); 
+  background-color: rgba(0, 0, 0, 0.8);
   color: #b3bdca; /* Icon color for dark theme */
 }
 
 .dark .mySwiper .swiper-button-next:hover,
 .dark .mySwiper .swiper-button-prev:hover {
-  background-color: #910A67; 
+  background-color: #910a67;
   color: white;
 }
-
 
 .mySwiper .swiper-pagination {
   display: none; /* Hide pagination bullets */
 }
+

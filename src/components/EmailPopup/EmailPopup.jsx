@@ -93,7 +93,7 @@ export default function EmailPopup() {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen} modal={true}>
       <DialogContent
-        className="w-[90%] lg:w-full max-h-fit rounded-md max-w-[800px] min-h-fit md:p-0 p-2 bg-gray-100 lg:bg-[#fffcfc] flex flex-col lg:flex-row items-center md:gap-4 gap-0"
+        className="w-[90%] lg:w-full max-h-fit rounded-md max-w-[800px] min-h-fit md:p-0 p-2 bg-gray-100 lg:bg-[#fffcfc] flex flex-col lg:flex-row items-center "
         onClick={(e) => e.stopPropagation()}
       >
         {/* Left Side - Image */}

@@ -56,18 +56,18 @@ const Footer = () => {
           <div className="space-y-6">
             <div className="flex items-center space-x-3">
               <img
-                src="/assets/MM.png"
+                src="/assets/MM-Logo.png"
                 alt="Company Logo"
-                className="h-16"
+                className="md:h-16 h-12"
               />
             </div>
             <p className="text-sm">A sophisticated guide to cultural manner & etiquette</p>
           </div>
 
           {/* Quick Navigation */}
-          <div className="space-y-4">
-            <p className="text-lg font-semibold">Quick Links</p>
-            <ul className="space-y-3">
+          <div className="space-y-4  w-full">
+            <p className="text-lg  font-semibold">Quick Links</p>
+            <ul className="space-y-3 text-center ">
               {["About Us", "Services", "Blogs"].map((item) => (
                 <li key={item}>
                   <button
