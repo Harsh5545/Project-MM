@@ -5,52 +5,54 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select"
 import { useToast } from "@/hooks/use-toast"
-import UploadServices from "./UploadServices"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { Dialog, DialogContent } from "@/components/ui/dialog"
 import icons from "@/hooks/icons"
+import UploadServices from "../Add-Service/UploadServices"
 
-const EditServices = ({ serviceId, onClose }) => {
+const EditServices = ({ data}) => {
   const { toast } = useToast()
   const [isFormValid, setIsFormValid] = useState(false)
   const [showSuccessDialog, setShowSuccessDialog] = useState(false)
   const router = useRouter()
-  const [formData, setFormData] = useState({
-    heading: "",
-    subheading: "",
-    courseDescription: "",
-    image: "",
-    category: "",
-    courseDetails: {
-      courseHeadings: [{ heading: "", subheading: "", icon: "" }],
-      courseDetail: [{ icon: "", description: "" }],
-      programHighlights: [{ icon: "FaCheckCircle", heading: "", description: "" }],
-      overviewImage: "",
-      overviewDescription: "",
-    },
-    programDetails: {
-      ageGroups: [{ subheading: "" }],
-      formats: [{ heading: "", subheading: "" }],
-      durations: [{ heading: "", subheading: "" }],
-      locations: [{ heading: "", subheading: "" }],
-    },
-    testimonials: {
-      taglineHeading: "",
-      mmDescription: "",
-      testimonials: [{ comment: "", name: "" }],
-      faqs: [{ question: "", answer: "" }],
-      heroImage: "",
-      outsideImage: "",
-    },
-    seo: {
-      meta_title: "",
-      meta_description: "",
-      og_title: "",
-      og_image: "",
-      keywords: [],
-    },
-  })
+  // const [formData, setFormData] = useState({
+  //   heading: data.heading||"",
+  //   subheading: data.subheading||"",
+  //   courseDescription: data.courseDescription||"",
+  //   image: data.image||"",
+  //   category: data.categoryId||"",
+  //   courseDetails: {
+  //     courseHeadings: [{ heading: "", subheading: "", icon: "" }],
+  //     courseDetail: [{ icon: "", description: "" }],
+  //     programHighlights: [{ icon: "FaCheckCircle", heading: "", description: "" }],
+  //     overviewImage: "",
+  //     overviewDescription: "",
+  //   },
+  //   programDetails: {
+  //     ageGroups: [{ subheading: "" }],
+  //     formats: [{ heading: "", subheading: "" }],
+  //     durations: [{ heading: "", subheading: "" }],
+  //     locations: [{ heading: "", subheading: "" }],
+  //   },
+  //   testimonials: {
+  //     taglineHeading: "",
+  //     mmDescription: "",
+  //     testimonials: [{ comment: "", name: "" }],
+  //     faqs: [{ question: "", answer: "" }],
+  //     heroImage:data.heroImage||"",
+  //     outsideImage: "",
+  //   },
+  //   seo: {
+  //     meta_title: "",
+  //     meta_description: "",
+  //     og_title: "",
+  //     og_image: "",
+  //     keywords: [],
+  //   },
+  // })
+
+  const [ formData, setFormData ] = useState(data)
 
   const [categories, setCategories] = useState([])
   const [loading, setLoading] = useState(true)
@@ -81,30 +83,6 @@ const EditServices = ({ serviceId, onClose }) => {
     fetchCategories()
   }, [toast])
 
-  useEffect(() => {
-    const fetchServiceData = async () => {
-      try {
-        const response = await fetch(`/api/services/${serviceId}`)
-        const data = await response.json()
-        if (data.success) {
-          setFormData(data.service)
-        } else {
-          throw new Error("Failed to fetch service data")
-        }
-      } catch (error) {
-        console.error("Error fetching service data:", error)
-        toast({
-          title: "Error",
-          description: "Failed to fetch service data. Please try again.",
-          variant: "destructive",
-        })
-      }
-    }
-
-    if (serviceId) {
-      fetchServiceData()
-    }
-  }, [serviceId, toast])
 
   const validateForm = useCallback(() => {
     const isValid =
@@ -122,17 +100,20 @@ const EditServices = ({ serviceId, onClose }) => {
   }, [])
 
   const handleSelectChange = useCallback((value) => {
+    console.log(value,'VALUE')
     setFormData((prevData) => ({ ...prevData, category: value }))
   }, [])
 
   const handleFormSubmit = async (e) => {
     e.preventDefault()
     try {
-      const response = await fetch(`/api/services/edit-service/${serviceId}`, {
-        method: "PUT",
+      console.log(formData,'FORMDATA')
+      const response = await fetch(`/api/services/update-service`, {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
+        
         body: JSON.stringify(formData),
       })
 
@@ -201,7 +182,7 @@ const EditServices = ({ serviceId, onClose }) => {
   }, [])
 
   return (
-    <div className="bg-gradient-to-r from-gray-200 to-gray-100 min-h-screen p-8">
+    <div className="bg-gradient-to-r from-gray-200 to-gray-100 min-h-screen ">
       <div className="w-full mx-auto bg-white dark:bg-gray-800 rounded-lg p-8 space-y-8">
         <h1 className="text-3xl font-bold mb-6">Edit Service</h1>
         <form onSubmit={handleFormSubmit} className="space-y-6">
@@ -240,7 +221,7 @@ const EditServices = ({ serviceId, onClose }) => {
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700">Category</label>
-              <Select onValueChange={handleSelectChange} value={formData.category}>
+              <Select onValueChange={handleSelectChange} value={formData.categoryId}>
                 <SelectTrigger className="w-full mt-1">
                   <SelectValue placeholder="Select a category" />
                 </SelectTrigger>
@@ -897,7 +878,7 @@ const EditServices = ({ serviceId, onClose }) => {
           </div>
 
           <div className="flex justify-end space-x-4">
-            <Button type="button" variant="outline" onClick={onClose}>
+            <Button type="button" variant="outline" onClick={() => router.push("/admin/services")}>
               Cancel
             </Button>
             <Button type="submit" disabled={!isFormValid}>

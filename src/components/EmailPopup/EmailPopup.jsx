@@ -12,6 +12,7 @@ const Montserratt = Montserrat({ subsets: ["latin"], weight: ["400"] });
 const dm_Sansss = Cormorant_Garamond({ subsets: ["latin"], weight: ["700"] });
 const aleo = Aleo({ subsets: ["latin"], style: "italic", weight: ["500"] });
 const dm_Sanss = Lato({ subsets: ["latin"], weight: ["300"] });
+
 export default function EmailPopup() {
   const [isOpen, setIsOpen] = useState(false);
   const [firstName, setFirstName] = useState("");
@@ -19,7 +20,6 @@ export default function EmailPopup() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
-
   const [error, setError] = useState(""); // Store error messages for UI
 
   useEffect(() => {
@@ -45,9 +45,9 @@ export default function EmailPopup() {
       alert("Please enter valid details.");
       return;
     }
-  
+
     setLoading(true);
-  
+
     try {
       const response = await fetch("/api/sendEmail", {
         method: "POST",
@@ -75,20 +75,15 @@ export default function EmailPopup() {
     }
   };
 
-
   const handleClose = () => {
     localStorage.setItem("popupDismissed", new Date().toISOString());
     setIsOpen(false);
   };
+
   const downloadPDF = () => {
-    // const link = document.createElement("a");
-    // link.href = `${process.env.NEXT_PUBLIC_API_URL}/sample-5.pdf`; // Replace with actual hosted file URL
-    // link.download = "free-tips.pdf";
-    // document.body.appendChild(link);
-    // link.click();
-    // document.body.removeChild(link);
     window.open(`${process.env.NEXT_PUBLIC_API_URL}/sample-5.pdf`, "_blank");
   };
+
   const resetForm = () => {
     setFirstName("");
     setLastName("");
@@ -97,75 +92,55 @@ export default function EmailPopup() {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen} modal={true}>
-
-      <DialogContent 
-        className="w-[90%] lg:w-full rounded-md max-w-[800px] min-h-fit md:p-0 p-4 bg-gray-100 lg:bg-[#fffcfc] flex flex-col lg:flex-row items-center gap-4" 
-        onClick={(e) => e.stopPropagation()} 
+      <DialogContent
+        className="w-[90%] lg:w-full max-h-fit rounded-md max-w-[800px] min-h-fit md:p-0 p-2 bg-gray-100 lg:bg-[#fffcfc] flex flex-col lg:flex-row items-center md:gap-4 gap-0"
+        onClick={(e) => e.stopPropagation()}
       >
         {/* Left Side - Image */}
-        <div className="flex-1 hidden md:flex justify-start items-center w-full max-w-[450px] lg:max-w-[550px]">
-          <Image src="/assets/Book.png" alt="Branding" width={400} height={600} className="object-cover rounded-l-lg" />
+        <div className="flex-1 h-full md:flex justify-start  items-center w-full max-w-[450px] lg:max-w-[550px]">
+          <Image src="/assets/Book.png" alt="Branding" width={400} height={300} className="object-cover md:h-full h-[24vh] rounded-l-lg" />
         </div>
 
         {/* Right Side - Form */}
-        <div className="flex-1 px-2 flex flex-col items-center gap-4 lg:gap-8 justify-stretch w-[90%] md:w-[50%]">
+        <div className="flex-1 px-0 md:px-2 flex flex-col items-center gap-4 lg:gap-8 justify-stretch w-[90%] md:w-[50%]">
           <DialogHeader>
-            <DialogTitle className={`${dm_Sansss.className} lg:text-3xl text-xl font-semibold text-center`}>
-              Unlock Your Path to Elegance & Confidence!
+            <DialogTitle className={`${dm_Sansss.className} bg-clip-text text-transparent bg-gradient-to-r uppercase from-amber-500 to-[#B8860B] lg:text-xl text-base font-semibold text-center`}>
+              A Step-by-Step Guide to Polished Professional & Social Grace
             </DialogTitle>
           </DialogHeader>
 
           {!submitted ? (
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }}>
-        <p className={`${dm_Sanss.className} text-gray-700 text-lg font-medium`}>
-          Get your FREE e-book – a step-by-step guide to refine your professional & social presence.
-        </p>
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }}>
+              <p className={`${aleo.className} text-gray-700 text-xs tracking-wider text-center font-medium`}>
+                Get your free e-book to unlock your path to Elegance & Confidence!
+              </p>
 
-        <div className="flex flex-col gap-3 mt-4">
-          <div className="flex gap-3">
-            <Input
-              type="text" placeholder="First Name"
-              className="px-4 py-2 border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-            />
-            <Input
-              type="text" placeholder="Last Name"
-              className="px-4 py-2 border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-            />
-          </div>
-          <Input
-            type="email" placeholder="Enter your email"
-            className="px-4 py-2 border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
+              <div className="flex flex-col gap-1 md:gap-3 mt-2 lg:mt-4">
+                <div className="flex lg:flex-row gap-1 md:gap-2 flex-col">
+                  <Input type="text" placeholder="First Name" className="w-full lg:max-w-[200px] py-2 border-gray-300 rounded-md focus:ring-2 focus:ring-[#eabf91]" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+                  <Input type="text" placeholder="Last Name" className="w-full lg:max-w-[200px] py-2 border-gray-300 rounded-md focus:ring-2 focus:ring-[#eabf91]" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+                </div>
+                <Input type="email" placeholder="Enter your email" className="w-full lg:max-w-[400px] py-2 border-gray-300 rounded-md focus:ring-2 focus:ring-[#eabf91]" value={email} onChange={(e) => setEmail(e.target.value)} />
+              </div>
 
-        {/* Error message with better UI */}
-        {error && (
-          <p className="mt-2 text-red-500 text-sm">
-            {error}
-          </p>
-        )}
+              {error && (
+                <p className="mt-2 text-red-500 text-sm">
+                  {error}
+                </p>
+              )}
 
-        {/* CTA Buttons */}
-        <div className="flex flex-col lg:flex-row justify-center gap-3 lg:gap-6 mt-5">
-          <Button variant="outline" className="text-gray-600 hover:bg-gray-200" onClick={handleClose}>
-            Maybe Later
-          </Button>
-          <Button
-            onClick={handleSubmit}
-            className="bg-[#D4AF37] hover:bg-[#B8860B] text-white px-6 py-2 rounded-md transition-all"
-          >
-
-            Get Your Free E-Book Now
-          </Button>
-        </div>
-      </motion.div>
-    
+              <div className="flex flex-col pb-0 md:pb-6 lg:flex-row justify-center gap-3 lg:gap-6 mt-2  md:mt-5">
+                <Button variant="outline" className="text-gray-600  w-full max-w-[300px] py-2 hover:bg-gray-200" onClick={handleClose}>
+                  Maybe Later
+                </Button>
+                <Button
+                  onClick={handleSubmit}
+                  className="bg-[#D4AF37] hover:bg-[#B8860B] text-white px-6 py-2 rounded-md transition-all"
+                >
+                  Get Your Free E-Book Now
+                </Button>
+              </div>
+            </motion.div>
           ) : (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }}>
               <div className="w-12 h-12 mx-auto flex items-center justify-center rounded-full bg-green-500">

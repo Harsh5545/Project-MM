@@ -91,17 +91,17 @@ model Notification {
 
 model Blog {
   id          Int        @id @default(autoincrement())
-  title       String     // Blog title
-  content     String     @db.LongText // Blog content
-  published   Boolean    @default(false) // Whether the blog is published
-  authorId    Int        // Author (reference to the User model)
+  title       String     
+  content     String     @db.LongText 
+  published   Boolean    @default(false) 
+  authorId    Int        
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
-  categoryId  Int        // Blog's category
-  slug        String     @unique // Unique slug for SEO and URL
-  meta_title  String?    // Meta title for SEO
-  meta_desc   String?    // Meta description for SEO
-  tags        Tag[]      @relation("BlogTags") // Many-to-many relation with Tag
+  categoryId  Int        
+  slug        String     @unique 
+  meta_title  String?    
+  meta_desc   String?    
+  tags        Tag[]      @relation("BlogTags") 
   image       String?
   author      User       @relation(fields: [authorId], references: [id])
   category    Category   @relation(fields: [categoryId], references: [id])
@@ -116,7 +116,7 @@ model Tag {
   name      String    @unique
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  blogs     Blog[]    @relation("BlogTags") // Many-to-many relation with Blog
+  blogs     Blog[]    @relation("BlogTags") 
   @@index([name], name: "Tag_name_idx")
 }
 
@@ -141,13 +141,22 @@ model Visit {
 
 model Subscription {
   id           Int      @id @default(autoincrement())
-  endpoint     String   @db.VarChar(2048) // You can keep this column as is or adjust the length if needed
+  endpoint     String   @db.VarChar(2048) 
   keys_p256dh  String
-  keys_auth    String   @unique          // Make `keys_auth` unique
+  keys_auth    String   @unique         
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 }
 
+model ConsultationRequest {
+  id                  Int      @id @default(autoincrement()) 
+  fullName            String   
+  phoneNumber         String   
+  emailAddress        String   
+  serviceOfInterest   String   
+  message             String   
+  createdAt           DateTime @default(now()) 
+}
 
 
 

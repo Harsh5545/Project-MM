@@ -39,7 +39,6 @@ const navVariants = {
 function HeaderFixed() {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isClient, setIsClient] = useState(false);
-  const [navInput, setNavInput] = useState(false);
   const toggleMobileMenu = () => {
     setMobileMenuOpen((prev) => !prev);
   };
@@ -55,7 +54,6 @@ function HeaderFixed() {
 
   useEffect(() => {
     setIsClient(true);
-    setNavInput((prev) => !prev);
   }, []);
 
   const handlePhoneClick = () => {
@@ -82,10 +80,10 @@ function HeaderFixed() {
       animate="animate"
       exit="exit"
       variants={navVariants}
-      className="fixed z-[999] bg-black bg-opacity-65 nav top-2 left-1/2 border-none -translate-x-1/2 rounded-xl p-2 md:px-10 flex-col justify-between flex md:flex-row items-center"
+      className="fixed z-[999] bg-black bg-opacity-65 nav top-2 left-1/2 border-none -translate-x-1/2 rounded-xl p-2 md:px-10 flex flex-col md:flex-row items-center justify-between"
       style={{ width: "90%" }}
     >
-      <div className="flex justify-between items-center w-full md:w-0">
+      <div className="flex justify-between items-center w-full md:w-auto">
         <span className="text-xl">
           <Link href="/" passHref>
             <Image
@@ -106,21 +104,18 @@ function HeaderFixed() {
               checked={isMobileMenuOpen} // Ensure this is tied to the state
             />
             <svg viewBox="0 0 32 32">
-              <path
-                className="line line-top-bottom"
-                d="M27 10 13 10C10.8 10 9 8.2 9 6 9 3.5 10.8 2 13 2 15.2 2 17 3.8 17 6L17 26C17 28.2 18.8 30 21 30 23.2 30 25 28.2 25 26 25 23.8 23.2 22 21 22L7 22"
-              ></path>
-              <path className="line" d="M7 16 27 16"></path>
+              <path className="line line-top-bottom" d="M27 10 13 10C10.8 10 9 8.2 9 6 9 3.5 10.8 2 13 2 15.2 2 17 3.8 17 6L17 26C17 28.2 18.8 30 21 30 23.2 30 25 28.2 25 26 25 23.8 23.2 22 21 22L7 22"></path>
+              <path className="line stroke-white dark:stroke-black" d="M7 16 27 16"></path>
             </svg>
           </label>
         </div>
       </div>
 
-      <div className="flex flex-col items-start">
+      <div className="flex flex-col items-center md:items-start w-full md:w-auto">
         {isClient && (
           <div
             className={`${isMobile ? (isMobileMenuOpen ? "block" : "hidden") : "flex"
-              }  text-white md:flex-row font-poppins items-center gap-8 md:gap-4 h-[15rem] md:h-0 justify-center  font-medium `}
+              } text-white md:flex-row font-poppins items-center gap-8 md:gap-4 h-[15rem] md:h-auto justify-center font-medium`}
           >
             <AllLinks onClose={toggleMobileMenu} />
           </div>
@@ -133,7 +128,7 @@ function HeaderFixed() {
               ? isMobileMenuOpen
                 ? "block"
                 : "hidden"
-              : "flex items-center pr-0 lg:pr-16 gap-2"
+              : "flex items-center pr-0 md:pr-16 gap-2"
             }`}
         >
           <div className="flex items-center justify-center gap-8 lg:gap-16">

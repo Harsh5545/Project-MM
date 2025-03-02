@@ -40,14 +40,14 @@ const CardComponent = () => {
   const courses = [
     {
       image: "/assets/Personality Development.jpeg",
-      title: "Personality Enhancement Programme",
+      title: "Young Adult Finishing Programme",
       description:
-        "Unlock your full potential with our Personality Enhancement Programme.",
+        "Elevate Confidence, Charm, and Life Skills for a Bright Future.",
       isBestSelling: false,
     },
     {
       image: "/assets/BusinessHandshake.jpg",
-      title: "Business Etiquette & Corporate Image Programme",
+      title: "Building Business Programme",
       description:
         "Master the art of business etiquette and elevate your corporate image.",
       isBestSelling: true,
@@ -73,7 +73,7 @@ const CardComponent = () => {
   };
 
   return (
-    <div className="w-full dark:bg-[#00001F] flex flex-col justify-center items-center pb-16">
+    <div className="w-full bg-gradient-to-br from-neutral-50 to-neutral-100 dark:bg-[#00001F] flex flex-col justify-center items-center pb-16">
       <div className="md:w-[90%] w-[95%]">
         <div className="flex flex-col items-center justify-center">
           <h4
@@ -87,13 +87,13 @@ const CardComponent = () => {
         {isMobile ? (
           <Carousel responsive={responsive} infinite={true} autoPlay={true} autoPlaySpeed={3000} itemClass="px-2">
             {courses.map((course, index) => (
-              <CourseCard key={index} course={course} handleReadMore={handleReadMore} isMobile={isMobile} />
+              <CourseCard key={index} course={course} handleReadMore={handleReadMore} />
             ))}
           </Carousel>
         ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-28 w-full px-4">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-12 w-full px-4">
             {courses.map((course, index) => (
-              <CourseCard key={index} course={course} handleReadMore={handleReadMore} isMobile={isMobile} />
+              <CourseCard key={index} course={course} handleReadMore={handleReadMore} />
             ))}
           </div>
         )}
@@ -102,28 +102,29 @@ const CardComponent = () => {
   );
 };
 
-const CourseCard = ({ course, handleReadMore, isMobile }) => (
+const CourseCard = ({ course, handleReadMore }) => (
   <div
+    onClick={() => handleReadMore(course.title)}
     className={`relative ${styles.container} w-full bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] 
-    dark:bg-[#122031] rounded-3xl text-black p-4 text-center flex flex-col items-center justify-between gap-2 
+    dark:bg-[rgb(18,32,49)] rounded-3xl text-black p-4 text-center flex flex-col items-center justify-between gap-4 
     h-[500px] dark:hover:bg-[#0e1a2b] shadow-2xl hover:shadow-md hover:shadow-[#8c9c88] 
-    dark:hover:shadow-[#3a4e4f] transform hover:scale-105 transition-transform duration-300 ease-in-out`}
+    dark:hover:shadow-[#3a4e4f] transform hover:scale-105 transition-transform duration-300 ease-in-out cursor-pointer`}
   >
     {course.isBestSelling && (
       <div className={`${styles.card_box}`}>
         <span></span>
       </div>
     )}
-    <div className="w-full h-[250px] flex justify-center items-center dark:bg-[#021625] rounded-2xl overflow-hidden">
+    <div className="w-full h-[250px] flex justify-start items-start dark:bg-[#021625] rounded-2xl overflow-hidden">
       <Image
         alt={course.title}
-        className="object-cover w-[380px] h-[250px]"
+        className="object-cover w-full h-full"
         height={250}
-        width={250}
+        width={380}
         src={course.image}
       />
     </div>
-    <div className="flex flex-col gap-3 ">
+    <div className="flex flex-col gap-3">
       <p className="font-semibold text-lg dark:text-white text-[#000000]">
         {course.title}
       </p>
@@ -132,7 +133,10 @@ const CourseCard = ({ course, handleReadMore, isMobile }) => (
       </p>
     </div>
     <button
-      onClick={() => handleReadMore(course.title)}
+      onClick={(e) => {
+        e.stopPropagation();
+        handleReadMore(course.title);
+      }}
       className={`${dm_Sans.className} flex items-center justify-center tracking-wider bg-black 
       text-[#DEC29F] font-bold p-2 px-4 rounded-xl transition-colors duration-300 ease-in-out text-sm`}
     >
@@ -140,6 +144,5 @@ const CourseCard = ({ course, handleReadMore, isMobile }) => (
     </button>
   </div>
 );
-
 
 export default CardComponent;
