@@ -107,6 +107,7 @@ model Blog {
   category    Category   @relation(fields: [categoryId], references: [id])
   og_image    String?
   visits      Visit[]  @relation("BlogVisits")
+  views       Int        @default(0)
   @@index([slug], name: "Blog_slug_idx")
 }
 
@@ -134,7 +135,6 @@ model DownloadEntry {
 model Visit {
   id        Int      @id @default(autoincrement())
   blogId    Int
-  userId    Int
   visitedAt DateTime @default(now())
   blog      Blog     @relation("BlogVisits", fields: [blogId], references: [id])
 }
