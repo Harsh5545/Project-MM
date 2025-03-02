@@ -17,15 +17,15 @@ const cormorantGaramond = Cormorant_Garamond({
 
 const HomeConsultation = () => {
   const [formData, setFormData] = useState({
-    name: "",
-    phone: "",
-    email: "",
-    service: "",
+    fullName: "",
+    phoneNumber: "",
+    emailAddress: "",
+    serviceOfInterest: "",
     message: "",
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
-
+  const [errors, setErrors] = useState({});
   // Sample services - replace with your actual services
   const services = [
     "Personality Enhancement Programme",
@@ -39,12 +39,12 @@ const HomeConsultation = () => {
     const { name, value } = e.target
 
     // Validation for name field to not accept numbers
-    if (name === "name" && /[0-9]/.test(value)) {
+    if (name === "fullName" && /[0-9]/.test(value)) {
       return
     }
 
     // Validation for phone field to not accept alphabets
-    if (name === "phone" && /[a-zA-Z]/.test(value)) {
+    if (name === "phoneNumber" && /[a-zA-Z]/.test(value)) {
       return
     }
 
@@ -54,28 +54,61 @@ const HomeConsultation = () => {
     }))
   }
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault()
+  //   setIsSubmitting(true)
+
+  //   // Simulate API call
+  //   setTimeout(() => {
+  //     setIsSubmitting(false)
+  //     setIsSuccess(true)
+
+  //     // Reset form after showing success message
+  //     setTimeout(() => {
+  //       setIsSuccess(false)
+  //       setFormData({
+  //         name: "",
+  //         phone: "",
+  //         email: "",
+  //         service: "",
+  //         message: "",
+  //       })
+  //     }, 3000)
+  //   }, 1500)
+  // }
+
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    setIsSubmitting(true)
+    e.preventDefault();
 
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitting(false)
-      setIsSuccess(true)
+    const response = await fetch("/api/consultation-request", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
 
-      // Reset form after showing success message
-      setTimeout(() => {
-        setIsSuccess(false)
-        setFormData({
-          name: "",
-          phone: "",
-          email: "",
-          service: "",
-          message: "",
-        })
-      }, 3000)
-    }, 1500)
-  }
+    const result = await response.json();
+    console.log('first', result);
+    if (response.ok) {
+      // Handle success
+      alert("Request submitted successfully!");
+      setFormData({
+        fullName: "",
+        phoneNumber: "",
+        emailAddress: "",
+        serviceOfInterest: "",
+        message: "",
+      });
+      setErrors({});
+    } else {
+      const errorMessages = result.errors.reduce((acc, error) => {
+        acc[error.path] = error.message;
+        return acc;
+      }, {});
+      setErrors(errorMessages);
+    }
+  };
 
   return (
     <section id="consultation" className="py-16 lg:py-24 bg-gradient-to-br from-gray-50 to-gray-100">
@@ -107,14 +140,14 @@ const HomeConsultation = () => {
             className="lg:w-1/2 w-full"
           >
             <div className="relative flex justify-center">
-             <Image
+              <Image
                 src="/assets/course2.jpg"
                 alt="Modern Mannerism Consultation"
                 width={500}
                 height={500}
                 className="rounded-lg shadow-xl object-cover"
               />
-             </div>
+            </div>
           </motion.div>
 
           {/* Form */}
@@ -148,45 +181,48 @@ const HomeConsultation = () => {
                       Full Name *
                     </Label>
                     <Input
-                      id="name"
-                      name="name"
-                      value={formData.name}
+                      id="fullName"
+                      name="fullName"
+                      value={formData.fullName}
                       onChange={handleInputChange}
                       placeholder="Enter your full name"
                       required
                       className="mt-1"
                     />
+                    {errors.fullName && <div className="error text-red-500">{errors.fullName}</div>}
                   </div>
                   <div>
-                    <Label htmlFor="phone" className="text-gray-700">
+                    <Label htmlFor="phoneNumber" className="text-gray-700">
                       Phone Number *
                     </Label>
                     <Input
-                      id="phone"
-                      name="phone"
-                      value={formData.phone}
+                      id="phoneNumber"
+                      name="phoneNumber"
+                      value={formData.phoneNumber}
                       onChange={handleInputChange}
                       placeholder="Enter your phone number"
                       required
                       className="mt-1"
                     />
+                    {errors.phoneNumber && <div className="error text-red-500">{errors.phoneNumber}</div>}
                   </div>
                 </div>
 
                 <div className="mb-6">
-                  <Label htmlFor="email" className="text-gray-700">
+                  <Label htmlFor="emailAddress" className="text-gray-700">
                     Email Address *
                   </Label>
                   <Input
-                    id="email"
-                    name="email"
+                    id="emailAddress"
+                    name="emailAddress"
                     type="email"
-                    value={formData.email}
+                    value={formData.emailAddress}
                     onChange={handleInputChange}
                     placeholder="Enter your email address"
                     required
                     className="mt-1"
                   />
+                  {errors.emailAddress && <div className="error text-red-500">{errors.emailAddress}</div>}
                 </div>
 
                 <div className="mb-6">
@@ -194,8 +230,8 @@ const HomeConsultation = () => {
                     Service of Interest *
                   </Label>
                   <Select
-                    value={formData.service}
-                    onValueChange={(value) => setFormData({ ...formData, service: value })}
+                    value={formData.serviceOfInterest}
+                    onValueChange={(value) => setFormData({ ...formData, serviceOfInterest: value })}
                     required
                   >
                     <SelectTrigger id="service" className="mt-1">
@@ -209,6 +245,7 @@ const HomeConsultation = () => {
                       ))}
                     </SelectContent>
                   </Select>
+                  {errors.serviceOfInterest && <div className="error text-red-500">{errors.serviceOfInterest}</div>}
                 </div>
 
                 <div className="mb-6">
@@ -224,6 +261,7 @@ const HomeConsultation = () => {
                     className="mt-1"
                     rows={4}
                   />
+                  {errors.message && <div className="error text-red-500">{errors.message}</div>}
                 </div>
 
                 <Button

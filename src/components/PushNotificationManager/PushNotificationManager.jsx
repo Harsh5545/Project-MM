@@ -286,33 +286,34 @@ export default function PushNotificationManager() {
         return <p>Push notifications are not supported in this browser.</p>;
     }
 
-    return (
-        <div>
-            {subscription ? (
-                <>
-                    <p>You are subscribed to push notifications.</p>
-                    <button onClick={unsubscribeFromPush}>Unsubscribe</button>
-                </>
-            ) : (
-                <>
-                    <p>You are not subscribed to push notifications.</p>
-                    <button onClick={subscribeToPush}>Subscribe</button>
-                </>
-            )}
+    return  null ;
+    // (
+    //     <div>
+    //         {subscription ? (
+    //             <>
+    //                 <p>You are subscribed to push notifications.</p>
+    //                 <button onClick={unsubscribeFromPush}>Unsubscribe</button>
+    //             </>
+    //         ) : (
+    //             <>
+    //                 <p>You are not subscribed to push notifications.</p>
+    //                 <button onClick={subscribeToPush}>Subscribe</button>
+    //             </>
+    //         )}
 
-            {showNotificationPrompt && (
-                <div className="notification-prompt">
-                    <p>You have denied push notifications. To enable them, please go to your browser settings and enable notifications for this site.</p>
-                    <button onClick={handleManualEnableNotifications}>Got it!</button>
-                </div>
-            )}
+    //         {showNotificationPrompt && (
+    //             <div className="notification-prompt">
+    //                 <p>You have denied push notifications. To enable them, please go to your browser settings and enable notifications for this site.</p>
+    //                 <button onClick={handleManualEnableNotifications}>Got it!</button>
+    //             </div>
+    //         )}
 
-            {waitingServiceWorker && (
-                <div className="update-prompt">
-                    <p>A new version of the app is available. Click below to refresh.</p>
-                    <button onClick={handleServiceWorkerUpdate}>Update Now</button>
-                </div>
-            )}
-        </div>
-    );
+    //         {waitingServiceWorker && (
+    //             <div className="update-prompt">
+    //                 <p>A new version of the app is available. Click below to refresh.</p>
+    //                 <button onClick={handleServiceWorkerUpdate}>Update Now</button>
+    //             </div>
+    //         )}
+    //     </div>
+    // );
 }
