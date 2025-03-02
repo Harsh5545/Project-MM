@@ -31,7 +31,7 @@ const HomeAbout = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="lg:w-2/5 w-full"
           >
-            <div className="relative">
+            <div className="relative flex justify-center items-center">
               {/* Decorative elements */}
               
               <Image

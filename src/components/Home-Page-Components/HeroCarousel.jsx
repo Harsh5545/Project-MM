@@ -118,7 +118,38 @@ const HeroCarousel = () => {
           </motion.div>
 
           {/* Image */}
-          <motion.div variants={itemVariants} className="lg:w-1/2 relative">
+        
+          <motion.div
+            variants={itemVariants}
+            className="lg:w-1/3 relative"
+          >
+
+            <div className="relative hidden lg:flex overflow-hidden shadow-3xl bg-[#F4DCD3] rounded-br-[40%] rounded-tl-[60%] lg:rounded-br-[150px] lg:rounded-tl-[150px] rounded-tr-3xl px-2 p-0 items-center justify-center">
+              <Image
+                src={"/assets/Manasi_png_bg_png_bg.png"}
+                  width={500}
+                  height={400}
+                alt="Modern Mannerism "
+                className="object-contain  max-w-screen-2xl rounded-3xl"
+              />
+
+              <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent">
+                <div className="absolute bottom-8 left-8 right-8">
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5 }}
+                    className="text-white text-sm font-medium"
+                  >
+
+                  </motion.div>
+                </div>
+              </div>
+            </div>
+
+          </motion.div>
+
+          <motion.div variants={itemVariants} className="lg:w-1/2 lg:hidden flex relative">
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -129,8 +160,8 @@ const HeroCarousel = () => {
               {/* <div className="absolute -top-6 -left-6 w-24 h-24 border-t-2 border-l-2 border-amber-500 rounded-tl-3xl opacity-70"></div>
               <div className="absolute -bottom-6 -right-6 w-24 h-24 border-b-2 border-r-2 border-amber-500 rounded-br-3xl opacity-70"></div> */}
 
-<div className=" relative w-full flex justify-end"> {/* Main image container with gradient background */}
-              <div className="relative flex min-h-xl w-[75%] bg-[#c3965d] bg-opacity-35 justify-center lg:justify-end overflow-hidden rounded-tl-[100px] rounded-br-[100px] rounded-tr-3xl rounded-bl-3xl shadow-2xl">
+<div className=" relative w-full flex justify-center"> {/* Main image container with gradient background */}
+              <div className="relative flex min-h-xl w-[75%] bg-[#F4DCD3] bg-opacity-35 justify-center lg:justify-end overflow-hidden rounded-tl-[100px] rounded-br-[100px] rounded-tr-3xl rounded-bl-3xl shadow-2xl">
               
                 <Image
                   src="/assets/Manasi_png_bg_png_bg.png"
@@ -141,8 +172,8 @@ const HeroCarousel = () => {
                   priority
                 />  </div>
               </div>
+              </motion.div>
             </motion.div>
-          </motion.div>
         </motion.div>
       </div>
     </section>
