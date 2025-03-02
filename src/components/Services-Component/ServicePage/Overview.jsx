@@ -1,95 +1,88 @@
-import React from "react";
-import { Cormorant_Garamond } from "next/font/google";
-import { UsersRound, GlobeLock, Handshake , LaptopMinimal } from 'lucide-react';
-import icons from "@/hooks/icons";
-import Image from "next/image"; // Ensure Image is imported
-// Import the custom ShadCN Button you created
+import React from "react"
+import { Cormorant_Garamond } from "next/font/google"
+import icons from "@/hooks/icons"
+import Image from "next/image"
 
 const dm_Sans = Cormorant_Garamond({
-    subsets: ["latin"],
-    weight: ["400"],
-});
+  subsets: ["latin"],
+  weight: ["400"],
+})
 
-const Overview = ({data}) => {
-   
-    return (
-        <div className="flex  bg-slate-50 dark:bg-[rgb(0,0,31)] rounded-2xl flex-col py-6 md:py-16 w-full">
-            {/* Main Content */}
-            <div className="flex relative dark:bg-[#00001F] gap-6 justify-center flex-col md:flex-row items-center">
-                {/* Image Section */}
-                <div className="w-[90%] relative md:w-2/5 flex  justify-center m-2 items-center">
-                    <div className="relative">
-                <div className="absolute right-[-80] top-[-180] circle-animation">
-					{/* <div style={{clipPath:'circle(50% at 0 100%)'}} className="bg-gradient-to-b hidden md:block from-[#c3965d] to-[#eabf91] w-[100px] h-[200px]"></ div>														 */}
-                </div>
-                        <Image
-                            width={400}
-                            height={500}
-                            alt={`${data?.overviewDescription.slice(0, 3)}`}
-                            src={data?.overviewImage}
-                            className="shadow-2xl h-auto lg:h-[60vh] rounded-2xl  object-cover p-0 lg:p-0.5 shadow-[#d1d9df]"
-                            style={{
-                                boxShadow:
-                                    " black 0px 0px 0px 2px inset, rgba(255, 255, 255, 1) 10px -10px 0px -2px, #eabf91 10px -10px",
-                            }}
-                        />
-                    </div>
-                   
-                </div>
-
-                {/* About Section */}
-                <div className="w-full md:w-3/5 flex flex-col gap-10">
-                    {/* Header */}
-                    <div className="flex flex-col items-center gap-2 justify-center">
-                        <h3
-                            className={`${dm_Sans.className} text-5xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] mb-6`}
-                        >
-                            Overview
-                        </h3>
-                        {/* <hr className="h-1 bg-[#eabf91] w-16" /> */}
-                    </div>
-
-                    {/* Description */}
-                    <p className="text-gray-800 dark:text-white p-2 text-center">
-                        {data?.overviewDescription}
-                    </p>
-
-                    <div className="flex flex-col md:flex-row gap-8 justify-between items-stretch p-4 md:p-6">
-                        {data?.courseHeadings?.map((option, index) => (
-                            <div key={index} className="flex justify-center items-center gap-8">
-                                <div className=" flex flex-col items-center gap-4 bg-gray-50 dark:bg-[#1A1A3B] p-6 rounded-lg shadow-lg">
-                                    {/* {index == 0 && <UsersRound size={40} color="#eabf91" />}
-                                    {index == 1 && <Handshake    size={40} color="#eabf91" />} */}
-                                    {/* {index == 1 && <p className="p-1 text-4xl font-semibold text-[#eabf91]">1:1</p>} */}
-                                    {/* {index == 2 && <LaptopMinimal size={40} color="#eabf91" />} */}
-                                    {icons[option.icon] ? React.cloneElement(icons[option.icon], { size: 40, color: "#eabf91" }) : null}
-                                    <span
-                                        className={`${dm_Sans.className} font-bold dark:text-white md:text-2xl text-xl text-[#06273A]`}
-                                    >
-                                        {option.heading}
-                                    </span>
-                                    <p className="text-gray-700 dark:text-gray-300 md:text-sm text-xs text-start">
-                                        {option.subheading}
-                                    </p>
-                                </div>
-                                <div
-                                    className={`hidden md:block ${index == data?.courseHeadings.length - 1 ? "invisible" : "visible"
-                                        }`}
-                                    style={{
-                                        height: "auto",
-                                        width: 2,
-                                        backgroundColor: "#eabf91",
-                                    }}
-                                />
-                            </div>
-                        ))}
-                    </div>
-                </div>
+const Overview = ({ data }) => {
+  return (
+    <div className="flex bg-slate-50 dark:bg-[rgb(0,0,31)] rounded-2xl flex-col py-6 md:py-12 lg:py-16 w-full">
+      {/* Main Content */}
+      <div className="flex relative dark:bg-[#00001F] gap-4 md:gap-6 justify-center flex-col md:flex-row items-center">
+        {/* Image Section */}
+        <div className="w-full max-w-[90%] md:max-w-none md:w-2/5 relative flex justify-center mx-auto md:mx-2 mb-6 md:mb-0 items-center">
+          <div className="relative">
+            <div className="absolute right-[-80px] top-[-180px] circle-animation">
+              {/* Animation circle placeholder */}
             </div>
-
-            {/* Vision and Values Section */}
+            <Image
+              width={400}
+              height={500}
+              alt={`${data?.overviewDescription?.slice(0, 3) || "Overview image"}`}
+              src={data?.overviewImage || "/placeholder.svg?height=500&width=400"}
+              className="shadow-2xl h-auto max-h-[40vh] md:max-h-[50vh] lg:max-h-[60vh] rounded-2xl object-cover p-0 lg:p-0.5 shadow-[#d1d9df]"
+              style={{
+                boxShadow:
+                  "black 0px 0px 0px 2px inset, rgba(255, 255, 255, 1) 10px -10px 0px -2px, #eabf91 10px -10px",
+              }}
+            />
+          </div>
         </div>
-    );
-};
 
-export default Overview;
+        {/* About Section */}
+        <div className="w-full px-4 md:px-0 md:w-3/5 flex flex-col gap-6 md:gap-10">
+          {/* Header */}
+          <div className="flex flex-col items-center gap-2 justify-center">
+            <h3
+              className={`${dm_Sans.className} text-4xl md:text-5xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] mb-4 md:mb-6`}
+            >
+              Overview
+            </h3>
+          </div>
+
+          {/* Description */}
+          <p className="text-gray-800 dark:text-white p-2 text-center text-sm md:text-base">
+            {data?.overviewDescription}
+          </p>
+
+          <div className="flex flex-col gap-6 md:flex-row md:gap-4 lg:gap-8 justify-between items-stretch p-2 md:p-4 lg:p-6">
+            {data?.courseHeadings?.map((option, index) => (
+              <div key={index} className="flex justify-center items-center gap-2 md:gap-4 lg:gap-8">
+                <div className="flex flex-col items-center gap-3 md:gap-4 bg-gray-50 dark:bg-[#1A1A3B] p-3 md:p-4 lg:p-6 rounded-lg shadow-lg w-full">
+                  {icons[option.icon]
+                    ? React.cloneElement(icons[option.icon], {
+                        size: 30,
+                        className: "w-7 h-7 md:w-9 md:h-9 lg:w-10 lg:h-10",
+                        color: "#eabf91",
+                      })
+                    : null}
+                  <span
+                    className={`${dm_Sans.className} font-bold dark:text-white text-lg md:text-xl lg:text-2xl text-[#06273A] text-center`}
+                  >
+                    {option.heading}
+                  </span>
+                  <p className="text-gray-700 dark:text-gray-300 text-xs md:text-sm text-center">{option.subheading}</p>
+                </div>
+                <div
+                  className={`hidden md:block ${index == data?.courseHeadings?.length - 1 ? "invisible" : "visible"}`}
+                  style={{
+                    height: "auto",
+                    width: 2,
+                    backgroundColor: "#eabf91",
+                  }}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default Overview
+
