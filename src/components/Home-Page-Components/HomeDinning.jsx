@@ -14,7 +14,7 @@ const dm_Sans = Cormorant_Garamond({
 const HomeDinning = () => {
   const router = useRouter();
   return (
-    <div className="relative w-full max-h-screen lg:max-h-screen bg-gray-100 dark:bg-gray-300">
+    <div className="relative overflow-hidden w-full max-h-screen lg:max-h-screen bg-gray-100 dark:bg-gray-300">
       {/* Background Image */}
       <div className="absolute inset-0">
         <img
@@ -34,9 +34,9 @@ const HomeDinning = () => {
 
         {/* Content Area */}
         <div className="lg:w-1/2 w-full h-full lg:h-screen overflow-hidden bg-opacity-80 bg-[#793600] dark:bg-[#793600] flex flex-col gap-16 md:gap-16 items-center justify-center text-center p-2 lg:p-6  ">
-          <h2 className={`${dm_Sans.className} uppercase pt-8 lg:pt-24 text-lg md:text-2xl lg:text-3xl font-semibold text-white dark:text-gray-300`}>
+          <span className={`${dm_Sans.className} uppercase pt-8 lg:pt-24 text-lg md:text-2xl lg:text-3xl font-semibold text-white dark:text-gray-300`}>
             Want to create a good <br /> impression during networking <br /> or business dinners?
-          </h2>
+          </span>
 
           <h5 className={`${dm_Sans.className} text-2xl lg:text-6xl font-bold text-white dark:text-gray-100`}>
             Fine Dining <br /> Etiquette Workshop
@@ -47,7 +47,7 @@ const HomeDinning = () => {
           </p>
 
           <ShadcnButton
-            className={`${dm_Sans.className} bg-white text-[#793600] outline-none text-sm md:text-base lg:text-lg px-6 py-3 rounded-full hover:bg-white hover:text-[#910A67] dark:hover:bg-[#910A67] dark:hover:text-white transition-all duration-300 transform hover:scale-105`}
+            className={`${dm_Sans.className} bg-white text-[#793600] outline-none text-sm md:text-base lg:text-lg px-6 py-3 rounded-full hover:bg-white hover:text-[#910A67] dark:hover:bg-[#910A67] dark:hover:text-white mt-5 transition-all duration-300 transform hover:scale-105`}
             onClick={() => router.push("/services/fine-dining-etiquette-workshop")}
           >
             Learn More

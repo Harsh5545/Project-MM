@@ -11,6 +11,7 @@ import styles from "./styles.module.css"
 const dm_Sans = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["700"],
+  display: "swap",
 })
 
 const responsive = {
@@ -69,7 +70,7 @@ const CardComponent = () => {
   }
 
   return (
-    <div className="w-full bg-gradient-to-br from-neutral-50 to-neutral-100 dark:bg-[#00001F] flex flex-col justify-center items-center pb-16">
+    <div className="w-full overflow-hidden bg-gradient-to-br from-neutral-50 to-neutral-100 dark:bg-[#00001F] flex flex-col justify-center items-center pb-16">
       <div className="md:w-[90%] w-[95%]">
       <div className="flex flex-col items-center lg:mb-5 mb-4 gap-0 lg:gap-3">
                 <h2 className={`${dm_Sans.className} text-2xl md:text-4xl font-bold text-gray-900`}>
@@ -99,7 +100,7 @@ const CardComponent = () => {
 const CourseCard = ({ course, handleReadMore }) => (
   <div
     onClick={() => handleReadMore(course.title)}
-    className={`relative ${styles.container} w-full bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] 
+    className={`relative overflow-hidden ${styles.container} w-full bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] 
     dark:bg-[rgb(18,32,49)] rounded-3xl text-black p-3 text-center flex flex-col items-center h-[400px] lg:h-[450px] 
     dark:hover:bg-[#0e1a2b] shadow-2xl hover:shadow-md hover:shadow-[#8c9c88] 
     dark:hover:shadow-[#3a4e4f] transform hover:scale-105 transition-transform duration-300 ease-in-out cursor-pointer`}

@@ -4,10 +4,10 @@ import { motion } from "framer-motion"
 import { ClipboardCopy, FilePen, FilePenLineIcon as Signature, TableColumnsSplit } from "lucide-react"
 
 const icons = {
-  ageGroup: <ClipboardCopy className="h-5 h-5 md:h-6 md:w-6 text-primary" />,
-  duration: <Signature className="h-5 h-5 md:h-6 md:w-6 text-primary" />,
-  format: <FilePen className="h-5 h-5 md:h-6 md:w-6 text-primary" />,
-  location: <TableColumnsSplit className="h-5 h-5 md:h-6 md:w-6 text-primary" />,
+  ageGroup: <ClipboardCopy className=" h-5 md:h-6 md:w-6 text-primary" />,
+  duration: <Signature className=" h-5 md:h-6 md:w-6 text-primary" />,
+  format: <FilePen className=" h-5 md:h-6 md:w-6 text-primary" />,
+  location: <TableColumnsSplit className=" h-5 md:h-6 md:w-6 text-primary" />,
 }
 
 const ProgramDetails = ({ data }) => {
