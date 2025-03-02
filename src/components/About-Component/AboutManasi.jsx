@@ -1,6 +1,11 @@
+import { Montserrat } from "next/font/google";
 import Image from "next/image";
 import React from "react";
-
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  display: "swap",
+});
 export const AboutManasi = () => {
   return (
     <div className="flex justify-evenly dark:bg-[rgb(0,0,31)] w-full items-center gap-5 py-24">
@@ -16,7 +21,7 @@ export const AboutManasi = () => {
           
         </div>
         <div className="flex-col flex-1 flex items-end justify-end gap-5 md:w-[70%]">
-          <div className="content px-2 md:w-[90%] w-full flex flex-col gap-6">
+          <div className={`${montserrat.className} content px-2 md:w-[90%] w-full flex flex-col gap-6`}>
             <div className="header flex md:pb-5 pb-2 lg:pb-10 flex-col items-center gap-2 justify-center">
               <h2 className="text-black text-center text-xl md:text-4xl font-semibold dark:text-white">
                 ABOUT HEAD CONSULTANT & FOUNDER

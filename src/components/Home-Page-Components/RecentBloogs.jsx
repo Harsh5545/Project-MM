@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { format } from "date-fns"
-import { Cormorant_Garamond } from "next/font/google"
+import { Cormorant_Garamond, Montserrat } from "next/font/google"
 import { ChevronLeft, ChevronRight, Clock, User } from "lucide-react"
 import Link from "next/link"
 
@@ -10,7 +10,11 @@ const cormorantGaramond = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["400", "700"],
 })
-
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  display: "swap",
+});
 const RecentBlogs = ({ blogs = [] }) => {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [visiblePosts, setVisiblePosts] = useState(1)
@@ -61,7 +65,7 @@ const RecentBlogs = ({ blogs = [] }) => {
   }
 
   return (
-    <section className="py-16 lg:py-24 bg-gradient-to-br from-gray-50 to-gray-100">
+    <section className="py-16 lg:py-24 overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
       <div className="container w-[90%] mx-auto px-4 sm:px-4 lg:px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -70,7 +74,7 @@ const RecentBlogs = ({ blogs = [] }) => {
           transition={{ duration: 0.6 }}
           className="flex flex-col items-center mb-12"
         >
-          <p className={`${cormorantGaramond.className} text-4xl font-bold text-gray-900 mb-4`}>Latest Blogs</p>
+          <h4 className={`${montserrat  .className} text-4xl font-bold text-gray-900 mb-4`}>Latest Blogs</h4>
           <div className="h-1 w-16 bg-gradient-to-r from-[#c3965d] to-[#eabf91] rounded-full"></div>
           <p className="text-gray-700 text-center max-w-2xl mt-4">
             Explore our latest articles on etiquette, personal development, and professional growth
@@ -103,11 +107,11 @@ const RecentBlogs = ({ blogs = [] }) => {
                       </div>
                     </div>
                     <div className="p-6">
-                      <h3
+                      <span
                         className={`${cormorantGaramond.className} text-xl font-bold text-gray-900 mb-3 line-clamp-2`}
                       >
                         {post.title}
-                      </h3>
+                      </span>
                       <p className="text-gray-700 mb-4 line-clamp-3">{post.meta_desc || post.excerpt}</p>
                       <div className="flex items-center justify-between text-sm text-gray-500">
                         <div className="flex items-center space-x-2">

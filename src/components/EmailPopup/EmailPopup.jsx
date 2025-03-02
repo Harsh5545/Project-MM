@@ -93,7 +93,7 @@ export default function EmailPopup() {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen} modal={true}>
       <DialogContent
-        className="w-[90%] lg:w-full max-h-fit rounded-md max-w-[800px] min-h-fit md:p-0 p-2 bg-gray-100 lg:bg-[#fffcfc] flex flex-col lg:flex-row items-center "
+        className="w-[90%] overflow-hidden lg:w-full max-h-fit rounded-md max-w-[800px] min-h-fit md:p-0 p-2 bg-gray-100 lg:bg-[#fffcfc] flex flex-col lg:flex-row items-center "
         onClick={(e) => e.stopPropagation()}
       >
         {/* Left Side - Image */}
@@ -102,7 +102,7 @@ export default function EmailPopup() {
         </div>
 
         {/* Right Side - Form */}
-        <div className="flex-1 px-0 md:px-2 flex flex-col items-center gap-4 lg:gap-8 justify-stretch w-[90%] md:w-[50%]">
+        <div className="flex-1 px-0 md:px-5 flex flex-col items-center gap-4 lg:gap-8 justify-stretch w-[90%] md:w-[50%]">
           <DialogHeader>
             <DialogTitle className={`${dm_Sansss.className} bg-clip-text text-transparent bg-gradient-to-r uppercase from-amber-500 to-[#B8860B] lg:text-xl text-base font-semibold text-center`}>
               A Step-by-Step Guide to Polished Professional & Social Grace
@@ -130,12 +130,12 @@ export default function EmailPopup() {
               )}
 
               <div className="flex flex-col pb-0 md:pb-6 lg:flex-row justify-center gap-3 lg:gap-6 mt-2  md:mt-5">
-                <Button variant="outline" className="text-gray-600  w-full max-w-[300px] py-2 hover:bg-gray-200" onClick={handleClose}>
+                <Button variant="outline" className="text-gray-600  w-full lg:max-w-[300px] py-2 hover:bg-gray-200" onClick={handleClose}>
                   Maybe Later
                 </Button>
                 <Button
                   onClick={handleSubmit}
-                  className="bg-[#D4AF37] hover:bg-[#B8860B] text-white px-6 py-2 rounded-md transition-all"
+                  className="bg-gradient-to-r from-[#c3965d] to-[#eabf91] text-white px-6 py-2 rounded-md transition-all"
                 >
                   Get Your Free E-Book Now
                 </Button>
@@ -148,7 +148,7 @@ export default function EmailPopup() {
                   <path fill="none" stroke="currentColor" strokeWidth="4" d="M14 27l7 7 16-16" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </div>
-              <p className="text-lg font-semibold text-[#B8860B] mt-3">Thank you! Your PDF is downloading...</p>
+              <p className="text-lg font-semibold text-[#c3965d] mt-3">Thank you! Your PDF is downloading...</p>
             </motion.div>
           )}
         </div>

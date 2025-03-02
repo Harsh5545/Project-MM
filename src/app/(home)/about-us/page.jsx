@@ -35,8 +35,9 @@ const page = () => {
   return (
     <div><AboutHero/>
     <Aboutpage/>
-    <HomeSection/>
+    
     <AboutManasi/>
+    <HomeSection/>
     </div>
     )
 }

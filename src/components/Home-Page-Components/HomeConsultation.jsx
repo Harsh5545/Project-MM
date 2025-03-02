@@ -13,6 +13,7 @@ import { CheckCircle2 } from "lucide-react"
 const cormorantGaramond = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["400", "700"],
+  display: "swap",
 })
 
 const HomeConsultation = () => {
@@ -111,7 +112,7 @@ const HomeConsultation = () => {
   };
 
   return (
-    <section id="consultation" className="py-16 lg:py-24 bg-gradient-to-br from-gray-50 to-gray-100">
+    <section id="consultation" className="py-16 overflow-hidden lg:py-24 bg-gradient-to-br from-gray-50 to-gray-100">
       <div className="container w-[90%] mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -120,13 +121,12 @@ const HomeConsultation = () => {
           transition={{ duration: 0.6 }}
           className="flex flex-col items-center mb-12"
         >
-          <h2 className={`${cormorantGaramond.className} text-center text-4xl font-bold text-gray-900 mb-4`}>
+          <h6 className={`${cormorantGaramond.className} text-center text-2xl md:text-4xl font-bold text-gray-900 mb-4`}>
             Book Your Consultation
-          </h2>
+          </h6>
           <div className="h-1 w-16 bg-gradient-to-r from-[#c3965d] to-[#eabf91] rounded-full"></div>
-          <p className="text-gray-700 text-center max-w-2xl mt-4">
-            Take the first step towards enhancing your personal and professional presence. Schedule a consultation with
-            our expert coaches.
+          <p className="text-gray-700 text-base md:text-lg text-center max-w-2xl mt-4">
+            Take the first step towards enhancing your personal and professional presence.
           </p>
         </motion.div>
 
@@ -167,14 +167,14 @@ const HomeConsultation = () => {
                 <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
                   <CheckCircle2 className="w-8 h-8 text-green-600" />
                 </div>
-                <h3 className={`${cormorantGaramond.className} text-2xl font-bold text-gray-900 mb-2`}>Thank You!</h3>
+                <span className={`${cormorantGaramond.className} text-2xl font-bold text-gray-900 mb-2`}>Thank You!</span>
                 <p className="text-gray-700">
                   Your consultation request has been submitted successfully. We'll contact you shortly to confirm your
                   appointment.
                 </p>
               </motion.div>
             ) : (
-              <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-lg">
+              <form onSubmit={handleSubmit} className="bg-white p-5 lg:p-6 rounded-lg shadow-lg">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                   <div>
                     <Label htmlFor="name" className="text-gray-700">
@@ -267,7 +267,7 @@ const HomeConsultation = () => {
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-gradient-to-r from-[#c3965d] to-[#eabf91] text-white py-3 rounded-lg hover:from-amber-800 hover:to-amber-600 transition-all duration-300"
+                  className="w-full bg-gradient-to-r from-[#c3965d] to-[#eabf91] text-white py-3 rounded-lg hover:brightness-110 hover:-translate-y-[2px]  transition-all duration-300"
                 >
                   {isSubmitting ? "Submitting..." : "Book Consultation"}
                 </Button>

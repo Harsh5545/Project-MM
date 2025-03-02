@@ -47,7 +47,7 @@ const HomeTestimonial = () => {
   }
 
   return (
-    <section className="py-16 lg:py-24 bg-gradient-to-br from-gray-50 to-gray-100">
+    <section className="py-16 lg:py-16 overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
       <div className="container mx-auto px-2 overflow-hidden sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -56,9 +56,9 @@ const HomeTestimonial = () => {
           transition={{ duration: 0.6 }}
           className="flex flex-col items-center mb-12"
         >
-          <h2 className={`${cormorantGaramond.className} text-4xl font-bold text-gray-900 mb-4`}>
+          <h5 className={`${cormorantGaramond.className} text-4xl font-bold text-gray-900 mb-4`}>
             Client Testimonials
-          </h2>
+          </h5>
           <div className="h-1 w-16 bg-gradient-to-r from-[#c3965d] to-[#eabf91] rounded-full"></div>
         </motion.div>
 
@@ -68,7 +68,7 @@ const HomeTestimonial = () => {
             <Quote size={80} className="text-[#c3965d]" />
           </div>
 
-          <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12 relative z-10">
+          <div className="bg-white rounded-2xl shadow-xl p-6 md:p-12 relative z-10">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentIndex}
@@ -92,9 +92,9 @@ const HomeTestimonial = () => {
                       className="object-cover w-full h-full"
                     />
                   </div>
-                  <h3 className={`${cormorantGaramond.className} text-xl font-bold text-gray-900`}>
+                  <span className={`${cormorantGaramond.className} text-xl font-bold text-gray-900`}>
                     {testimonials[currentIndex].Name}
-                  </h3>
+                  </span>
                 </div>
               </motion.div>
             </AnimatePresence>

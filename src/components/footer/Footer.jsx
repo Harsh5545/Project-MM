@@ -6,7 +6,22 @@ import { FaFacebook, FaInstagram, FaLinkedin, FaMedium, FaChevronUp } from "reac
 import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button"; // ShadCN Button
 import { Moon, Sun } from "lucide-react"; // Icons from ShadCN
+import { Cormorant_Garamond, EB_Garamond, Montserrat } from "next/font/google"
 
+const cormorantGaramond = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["700"],
+})
+
+const ebGaramond = EB_Garamond({
+  subsets: ["latin"],
+  weight: ["400"],
+})
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+})
 const Footer = () => {
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [email, setEmail] = useState("");
@@ -49,7 +64,7 @@ const Footer = () => {
   const currentTheme = theme === "system" ? systemTheme : theme;
 
   return (
-    <footer className={`relative ${currentTheme === "dark" ? "bg-gray-900 text-white" : "bg-white text-gray-800"} transition-colors duration-300`}>
+    <footer className={`relative overflow-hidden ${currentTheme === "dark" ? "bg-gray-900 text-white" : "bg-white text-gray-800"} transition-colors duration-300`}>
       <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-24 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Information */}
@@ -61,13 +76,13 @@ const Footer = () => {
                 className="md:h-16 h-12"
               />
             </div>
-            <p className="text-sm">A sophisticated guide to cultural manner & etiquette</p>
+            <p className={`${ebGaramond.className} text-lg`}>A sophisticated guide to cultural manner & etiquette</p>
           </div>
 
           {/* Quick Navigation */}
-          <div className="space-y-4  w-full">
+          <div className={`${montserrat.className} space-y-4  w-full`}>
             <p className="text-lg  font-semibold">Quick Links</p>
-            <ul className="space-y-3 text-center ">
+            <ul className={`${ebGaramond.className} space-y-3 text-center `}>
               {["About Us", "Services", "Blogs"].map((item) => (
                 <li key={item}>
                   <button
@@ -83,22 +98,22 @@ const Footer = () => {
 
           {/* Contact & Social */}
           <div className="space-y-4">
-            <p className="text-lg font-semibold">Connect With Us</p>
+            <p className={`${montserrat.className} text-lg font-semibold`}>Connect With Us</p>
             <div className="flex space-x-4">
-              <a href="https://www.facebook.com/modernmannerism/" target="_blank" rel="noopener noreferrer" className="hover:text-[#eabf91] transition-colors duration-200" aria-label="Facebook">
-                <FaFacebook className="h-6 w-6" />
+            <a href="https://www.linkedin.com/company/modernmannerism/posts/?feedView=all" target="_blank" rel="noopener noreferrer" className="hover:text-[#eabf91] transition-colors duration-200" aria-label="LinkedIn">
+                <FaLinkedin className="h-6 w-6" />
               </a>
               <a href="https://www.instagram.com/modernmannerism/" target="_blank" rel="noopener noreferrer" className="hover:text-[#eabf91] transition-colors duration-200" aria-label="Instagram">
                 <FaInstagram className="h-6 w-6" />
               </a>
-              <a href="https://www.linkedin.com/company/modernmannerism/posts/?feedView=all" target="_blank" rel="noopener noreferrer" className="hover:text-[#eabf91] transition-colors duration-200" aria-label="LinkedIn">
-                <FaLinkedin className="h-6 w-6" />
-              </a>
+             
               <a href="https://medium.com/@modernmannerism" target="_blank" rel="noopener noreferrer" className="hover:text-[#eabf91] transition-colors duration-200" aria-label="Medium">
                 <FaMedium className="h-6 w-6" />
+              </a><a href="https://www.facebook.com/modernmannerism/" target="_blank" rel="noopener noreferrer" className="hover:text-[#eabf91] transition-colors duration-200" aria-label="Facebook">
+                <FaFacebook className="h-6 w-6" />
               </a>
             </div>
-            <div className="space-y-2 flex flex-col text-sm">
+            <div className={`${ebGaramond.className} space-y-2 flex flex-col gap-4 lg:gap-1 text-base`}>
               <a
                 href="mailto:modernmannerism@gmail.com"
                 className="text-base font-normal hover:underline"
@@ -117,7 +132,7 @@ const Footer = () => {
           {/* Newsletter & Theme Switcher */}
           <div className="space-y-6">
             <div className="space-y-4">
-              <p className="text-lg font-semibold">Newsletter</p>
+              <p className={`${montserrat.className} text-lg font-semibold`}>Newsletter</p>
               <form onSubmit={handleNewsletterSubmit} className="space-y-3">
                 <input
                   type="email"
@@ -129,7 +144,7 @@ const Footer = () => {
                 />
                 <button
                   type="submit"
-                  className="w-full px-4 py-2 tracking-widest bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] text-slate-50 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
+                  className={`${ebGaramond.className} w-full px-4 py-2 tracking-widest bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] text-slate-50 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300`}
                 >
                   Subscribe
                 </button>
@@ -160,15 +175,16 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
-          <div className="flex flex-wrap justify-between items-center gap-4">
+        <div className={`${ebGaramond.className} mt-12 pt-8 border-t border-gray-200 dark:border-gray-700`}>
+          <div className="flex justify-between md:flex-row flex-col items-center lg:gap-0 gap-4">
             <p className="text-sm">&copy; 2025 ModernMannerism. All rights reserved.</p>
+           
+            <div className="flex gap-2 text-center text-sm">
+              <button onClick={() => router.push('/privacy-policy')} className="hover:text-[#eabf91] transition-colors duration-200">Privacy Policy</button><span >|</span>
+              <button onClick={() => router.push('/terms')} className="hover:text-[#eabf91] transition-colors duration-200">Terms</button>
+            </div>
             <div className="text-center">
               <p className="text-sm">Developed by <a href="https://alberow.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#eabf91] transition-colors duration-200">Alberow</a></p>
-            </div>
-            <div className="flex space-x-4 text-sm">
-              <button onClick={() => router.push('/privacy-policy')} className="hover:text-[#eabf91] transition-colors duration-200">Privacy Policy</button>
-              <button onClick={() => router.push('/terms')} className="hover:text-[#eabf91] transition-colors duration-200">Terms</button>
             </div>
           </div>
         </div>
