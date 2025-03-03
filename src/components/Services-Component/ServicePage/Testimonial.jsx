@@ -43,7 +43,7 @@ const Testimonials = ({ data }) => {
   }
 
   return (
-    <section className="py-6 md:py-8 w-full px-4 md:px-8 lg:px-16 bg-gradient-to-b from-gray-100 to-white dark:from-gray-800 dark:to-gray-900 rounded-lg text-center shadow-lg relative z-10">
+    <section className="py-6 md:py-8 w-full px-4 md:px-8 lg:px-16 bg-gradient-to-b from-gray-100 to-white dark:from-gray-800 dark:to-gray-900 rounded-lg text-center md:shadow-none shadow-lg relative z-10">
       <span className="text-2xl sm:text-3xl md:text-4xl w-full font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] mb-4 md:mb-6 block">
         Testimonials
       </span>

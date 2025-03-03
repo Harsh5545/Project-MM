@@ -30,7 +30,7 @@ const ProgramHighlights = ({ data }) => {
   }
 
   return (
-    <section className="py-6 md:py-8 mt-8 md:mt-16 px-4 md:px-6 lg:px-6 bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-800 rounded-lg shadow-lg w-full relative z-10">
+    <section className="py-6 md:py-8 mt-8 md:mt-16 px-4 md:px-6 lg:px-6 bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-800 rounded-lg w-full relative z-10">
       <h4 className="text-2xl sm:text-3xl md:text-4xl pb-4 font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] mb-4">
         Program Highlights
       </h4>

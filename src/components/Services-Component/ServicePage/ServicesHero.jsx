@@ -13,7 +13,7 @@ function ServicesHero({ data }) {
           priority
           className="z-0"
         />
-        <div className="absolute inset-0 dark:bg-[#060507] bg-[#BEBEBE] dark:bg-opacity-60 bg-opacity-80 z-1"></div>
+        <div className="absolute inset-0 dark:bg-[#060507] bg-[#BEBEBE] dark:bg-opacity-70 bg-opacity-90 z-1"></div>
       </div>
     </div>
   )
