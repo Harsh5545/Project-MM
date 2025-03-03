@@ -9,7 +9,9 @@ body{
   color: #333333;
   overflow-x: hidden;
 }
-
+body.overflow-hidden {
+  overflow: hidden;
+}
 
 @layer base {
   :root {
@@ -91,6 +93,7 @@ body{
 /* Dark theme scrollbar */
 .dark::-webkit-scrollbar {
   width: 10px;
+  overflow: hidden;
 }
 :root {
   --swiper-theme-color: #c3965d !important;
@@ -101,12 +104,12 @@ body{
 
 .dark::-webkit-scrollbar-thumb {
   background: #06273a;
-  border-radius: 6px;
+  border-radius: 5px;
 }
 
 /* Light theme scrollbar */
 .light::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
 }
 
 .light::-webkit-scrollbar-track {

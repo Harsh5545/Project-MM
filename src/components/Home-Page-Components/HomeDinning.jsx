@@ -33,7 +33,7 @@ const HomeDinning = () => {
         <div className="hidden lg:block lg:w-1/2"></div>
 
         {/* Content Area */}
-        <div className="lg:w-1/2 w-full h-full lg:h-screen overflow-hidden bg-opacity-80 bg-[#793600] dark:bg-[#793600] flex flex-col gap-16 md:gap-16 items-center justify-center text-center p-2 lg:p-6  ">
+        <div className="lg:w-1/2 w-full h-full lg:h-screen overflow-hidden bg-opacity-80 bg-[#793600] dark:bg-[#793600] flex flex-col gap-16 md:gap-12 lg:gap-12 xl:gap-20 items-center justify-center text-center p-2 lg:p-6  ">
           <span className={`${dm_Sans.className} uppercase pt-8 lg:pt-24 text-lg md:text-2xl lg:text-3xl font-semibold text-white dark:text-gray-300`}>
             Want to create a good <br /> impression during networking <br /> or business dinners?
           </span>
@@ -46,12 +46,12 @@ const HomeDinning = () => {
             Learn the dos and don’ts to create a lasting impression.
           </p>
 
-          <ShadcnButton
-            className={`${dm_Sans.className} bg-white text-[#793600] outline-none text-sm md:text-base lg:text-lg px-6 py-3 rounded-full hover:bg-white hover:text-[#910A67] dark:hover:bg-[#910A67] dark:hover:text-white mt-5 transition-all duration-300 transform hover:scale-105`}
+         <div className="mt-0"> <ShadcnButton
+            className={`${dm_Sans.className} bg-white text-[#793600] outline-none text-sm md:text-base lg:text-lg px-6 py-3 rounded-full hover:bg-white hover:text-[#910A67] dark:hover:bg-[#910A67] dark:hover:text-white  transition-all duration-300 transform hover:scale-105`}
             onClick={() => router.push("/services/fine-dining-etiquette-workshop")}
           >
             Learn More
-          </ShadcnButton>;
+          </ShadcnButton></div>
         </div>
       </div>
     </div>

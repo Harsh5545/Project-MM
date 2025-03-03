@@ -1,19 +1,30 @@
-import React from "react"
-import { Cormorant_Garamond } from "next/font/google"
-import icons from "@/hooks/icons"
-import Image from "next/image"
+import React from "react";
+import { Cormorant_Garamond } from "next/font/google";
+import icons from "@/hooks/icons";
+import Image from "next/image";
 
 const dm_Sans = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["400"],
-})
+});
 
 const Overview = ({ data }) => {
   return (
     <div className="flex bg-slate-50 dark:bg-[rgb(0,0,31)] rounded-2xl flex-col py-6 md:py-12 lg:py-16 w-full">
       {/* Main Content */}
-      <div className="flex relative dark:bg-[#00001F] gap-4 md:gap-6 justify-center flex-col md:flex-row items-center">
+      <div className="flex relative dark:bg-[#00001F] gap-4 md:gap-6 justify-center flex-col  items-center">
         {/* Image Section */}
+        <div className="flex flex-col items-center justify-center">
+            <h3
+              className={`${dm_Sans.className} text-4xl md:text-5xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] mb-4 md:mb-6`}
+            >
+              Overview
+            </h3>
+            <p className="text-gray-800 dark:text-white p-2 text-center text-sm md:text-base">
+            {data?.overviewDescription}
+          </p>
+          </div>
+          <div className="flex flex-col md:flex-row">
         <div className="w-full max-w-[90%] md:max-w-none md:w-2/5 relative flex justify-center mx-auto md:mx-2 mb-6 md:mb-0 items-center">
           <div className="relative">
             <div className="absolute right-[-80px] top-[-180px] circle-animation">
@@ -36,23 +47,15 @@ const Overview = ({ data }) => {
         {/* About Section */}
         <div className="w-full px-4 md:px-0 md:w-3/5 flex flex-col gap-6 md:gap-10">
           {/* Header */}
-          <div className="flex flex-col items-center gap-2 justify-center">
-            <h3
-              className={`${dm_Sans.className} text-4xl md:text-5xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] mb-4 md:mb-6`}
-            >
-              Overview
-            </h3>
-          </div>
+         
 
           {/* Description */}
-          <p className="text-gray-800 dark:text-white p-2 text-center text-sm md:text-base">
-            {data?.overviewDescription}
-          </p>
+        
 
           <div className="flex flex-col gap-6 md:flex-row md:gap-4 lg:gap-8 justify-between items-stretch p-2 md:p-4 lg:p-6">
             {data?.courseHeadings?.map((option, index) => (
               <div key={index} className="flex justify-center items-center gap-2 md:gap-4 lg:gap-8">
-                <div className="flex flex-col items-center gap-3 md:gap-4 bg-gray-50 dark:bg-[#1A1A3B] p-3 md:p-4 lg:p-6 rounded-lg shadow-lg w-full">
+                <div className="flex flex-col items-center gap-3 md:gap-4 bg-gray-50 dark:bg-[#1A1A3B] p-3 md:p-4 lg:p-6 rounded-lg shadow-lg w-full h-full">
                   {icons[option.icon]
                     ? React.cloneElement(icons[option.icon], {
                         size: 30,
@@ -78,11 +81,10 @@ const Overview = ({ data }) => {
               </div>
             ))}
           </div>
-        </div>
+        </div></div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Overview
-
+export default Overview;

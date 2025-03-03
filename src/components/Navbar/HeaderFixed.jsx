@@ -80,7 +80,7 @@ function HeaderFixed() {
       animate="animate"
       exit="exit"
       variants={navVariants}
-      className="fixed z-[999] bg-black bg-opacity-65 nav top-2 left-1/2 border-none -translate-x-1/2 rounded-xl p-2 md:px-10 flex flex-col md:flex-row items-center justify-between"
+      className="fixed z-[999] bg-black overflow-hidden bg-opacity-65 nav top-2 left-1/2 border-none -translate-x-1/2 rounded-xl p-2 md:px-10 flex flex-col md:flex-row items-center justify-between"
       style={{ width: "90%" }}
     >
       <div className="flex justify-between items-center w-full md:w-auto">

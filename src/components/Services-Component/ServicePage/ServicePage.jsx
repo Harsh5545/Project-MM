@@ -31,7 +31,7 @@ const ServicePage = ({ data }) => {
 
   return (
     <div className="flex h-full dark:bg-[rgb(0,0,31)] bg-[#FFFFFF] items-center justify-center w-full flex-col">
-      <div className="w-full pb-5 bg-cover bg-center flex items-end justify-center">
+      <div className="w-full  bg-cover bg-center flex items-end justify-center">
         <ServicesHero data={testimonials?.heroImage} className="relative" />
 
         <div className="flex absolute pb-6 lg:pb-8 flex-col justify-center items-center text-center text-black z-10 mt-16 sm:mt-20 md:mt-24">
@@ -48,7 +48,7 @@ const ServicePage = ({ data }) => {
 
       <div className="w-full flex items-center justify-center dark:bg-[rgb(0,0,31)] bg-[#F7F7F7]">
         <div className="w-full max-w-[96%] md:max-w-[90%] lg:max-w-[80%] xl:max-w-[70%]">
-          <section className="mt-4 px-4 md:px-8 lg:px-12 py-0 text-center">
+          <section className="md:my-10 my-6 px-4 md:px-8 lg:px-12 py-0 text-center">
             <p
               className={`${dm_Sans.className} text-center text-gray-900 dark:text-gray-100 text-sm sm:text-base lg:text-lg mx-2`}
             >

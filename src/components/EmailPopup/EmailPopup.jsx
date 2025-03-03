@@ -39,7 +39,13 @@ export default function EmailPopup() {
       }
     }
   }, []);
-
+  useEffect(() => {
+    if (isOpen) {
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.body.classList.remove("overflow-hidden");
+    }
+  }, [isOpen]); 
   const handleSubmit = async () => {
     if (!firstName.trim() || !lastName.trim() || !email.match(/\S+@\S+\.\S+/)) {
       alert("Please enter valid details.");
