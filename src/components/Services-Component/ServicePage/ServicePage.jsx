@@ -16,7 +16,11 @@ const dm_Sans = DM_Sans({
   subsets: ["latin"],
   weight: ["400"],
 })
-
+const dm_Sansss = DM_Sans({
+  subsets: ["latin"],
+  style: ["italic"],
+  weight: ["400"],
+})
 const dm_Sanss = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["700"],
@@ -30,7 +34,7 @@ const ServicePage = ({ data }) => {
   }
 
   return (
-    <div className="flex h-full dark:bg-[rgb(0,0,31)] bg-[#FFFFFF] items-center justify-center w-full flex-col">
+    <div className="flex h-full dark:bg-[rgb(0,0,31)] bg-gradient-to-t from-neutral-50 to-neutral-800 items-center justify-center w-full flex-col">
       <div className="w-full  bg-cover bg-center flex items-end justify-center">
         <ServicesHero data={testimonials?.heroImage} className="relative" />
 
@@ -39,24 +43,24 @@ const ServicePage = ({ data }) => {
             {heading}
           </h1>
           <h2
-            className={`${dm_Sans.className} mt-2 md:mt-4 px-4 text-base sm:text-lg lg:text-xl text-center max-w-3xl`}
+            className={`${dm_Sans.className} mt-2 md:mt-4 px-4 text-base sm:text-lg lg:text-xl text-center max-w-6xl`}
           >
-            {subheading}
+            {courseDescription}
           </h2>
         </div>
       </div>
 
-      <div className="w-full flex items-center justify-center dark:bg-[rgb(0,0,31)] bg-[#F7F7F7]">
-        <div className="w-full max-w-[96%] md:max-w-[90%] lg:max-w-[80%] xl:max-w-[70%]">
-          <section className="md:my-10 my-6 px-4 md:px-8 lg:px-12 py-0 text-center">
+      <div className="w-full flex items-center justify-center dark:bg-[rgb(0,0,31)] bg-gradient-to-t from-neutral-50 to-neutral-100">
+        <div className="w-full max-w-[85%]">
+          {/* <section className="md:my-10 my-6 px-4 md:px-8 lg:px-12 py-0 text-center">
             <p
-              className={`${dm_Sans.className} text-center text-gray-900 dark:text-gray-100 text-sm sm:text-base lg:text-lg mx-2`}
+              className={`${dm_Sansss.className} text-center text-gray-900 dark:text-gray-100 text-sm sm:text-base text-opacity-75 lg:text-lg mx-2`}
             >
               {courseDescription}
             </p>
-          </section>
+          </section> */}
 
-          <Overview data={courseDetails} />
+          <Overview data={courseDetails}  />
           <ProgramHighlights data={courseDetails} />
 
           <section className="mt-8 py-6 md:py-8 px-4 md:px-8 lg:px-16 bg-gradient-to-b from-gray-100 to-white dark:from-gray-800 dark:to-gray-900 rounded-lg shadow-lg">

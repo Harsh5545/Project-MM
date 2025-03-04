@@ -3,7 +3,7 @@ import Image from "next/image"
 function ServicesHero({ data }) {
   return (
     <div className="w-full relative">
-      <div className="w-full min-h-[30vh] sm:min-h-[35vh] md:min-h-[35vh] relative pt-16 sm:pt-20 md:pt-24">
+      <div className="w-full min-h-[30vh] sm:min-h-[40vh] md:min-h-[40vh] relative pt-16 sm:pt-20 md:pt-24">
         <Image
           src={data || "/placeholder.svg?height=500&width=1000"}
           alt="Service Hero"

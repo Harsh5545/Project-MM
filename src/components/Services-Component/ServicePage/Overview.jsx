@@ -8,9 +8,9 @@ const dm_Sans = Cormorant_Garamond({
   weight: ["400"],
 })
 
-const Overview = ({ data }) => {
+const Overview = ({ data}) => {
   return (
-    <div className="flex bg-slate-50 dark:bg-[rgb(0,0,31)] rounded-2xl flex-col py-6 md:py-12 lg:py-16 w-full">
+    <div className="flex flex-col py-6 md:py-6 lg:py-8 w-full">
       {/* Main Content */}
       <div className="flex relative dark:bg-[#00001F] gap-4 md:gap-6 justify-center flex-col md:flex-row items-center">
         {/* Image Section */}
@@ -20,8 +20,8 @@ const Overview = ({ data }) => {
               {/* Animation circle placeholder */}
             </div>
             <Image
-              width={400}
-              height={500}
+              width={800}
+              height={600}
               alt={`${data?.overviewDescription?.slice(0, 3) || "Overview image"}`}
               src={data?.overviewImage || "/placeholder.svg?height=500&width=400"}
               className="shadow-2xl h-auto max-h-[40vh] md:max-h-[50vh] lg:max-h-[60vh] rounded-2xl object-cover p-0 lg:p-0.5 shadow-[#d1d9df]"
@@ -34,7 +34,7 @@ const Overview = ({ data }) => {
         </div>
 
         {/* About Section */}
-        <div className="w-full px-4 md:px-0 md:w-3/5 flex flex-col gap-6 md:gap-10">
+        <div className="w-full px-4 md:px-0 md:w-3/5 flex flex-col justify-between items-center gap-6 md:gap-10">
           {/* Header */}
           <div className="flex flex-col items-center gap-2 justify-center">
             <h3
@@ -52,7 +52,7 @@ const Overview = ({ data }) => {
           <div className="flex flex-col gap-6 md:flex-row md:gap-4 lg:gap-8 justify-between items-stretch p-2 md:p-4 lg:p-6">
             {data?.courseHeadings?.map((option, index) => (
               <div key={index} className="flex justify-center items-center gap-2 md:gap-4 lg:gap-8">
-                <div className="flex flex-col items-center gap-3 md:gap-4 bg-gray-50 dark:bg-[#1A1A3B] p-3 md:p-4 lg:p-6 rounded-lg shadow-lg w-full">
+                <div className="flex flex-col items-center gap-3 md:gap-4 border-2 border-[#eabf91] border-opacity-90 dark:border-[#eabf91]  bg-gray-50 dark:bg-[#1A1A3B] p-3 md:p-4 lg:p-6 rounded-lg shadow-lg w-full">
                   {icons[option.icon]
                     ? React.cloneElement(icons[option.icon], {
                         size: 30,
