@@ -1,4 +1,5 @@
-import BlogPage from "@/components/Blog-Component/BlogPage"
+
+import BlogPage from "@/components/Blog-Component/Blog-Landing-Page/BlogPage"
 import HomeSection from "@/components/Home-Page-Components/HomeSection"
 import { notFound } from "next/navigation"
 

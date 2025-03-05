@@ -2,94 +2,101 @@
 import { useState } from "react"
 import { motion } from "framer-motion"
 import { ClipboardCopy, FilePen, FilePenLineIcon as Signature, TableColumnsSplit } from "lucide-react"
+import { Playfair_Display, Cormorant_Garamond } from "next/font/google"
+
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+})
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+})
 
 const icons = {
-  ageGroup: <ClipboardCopy className=" h-5 md:h-6 md:w-6 text-primary" />,
-  duration: <Signature className=" h-5 md:h-6 md:w-6 text-primary" />,
-  format: <FilePen className=" h-5 md:h-6 md:w-6 text-primary" />,
-  location: <TableColumnsSplit className=" h-5 md:h-6 md:w-6 text-primary" />,
+  ageGroup: <ClipboardCopy className="h-6 md:h-7 md:w-7 text-[#eabf91]" />,
+  duration: <Signature className="h-6 md:h-7 md:w-7 text-[#eabf91]" />,
+  format: <FilePen className="h-6 md:h-7 md:w-7 text-[#eabf91]" />,
+  location: <TableColumnsSplit className="h-6 md:h-7 md:w-7 text-[#eabf91]" />,
 }
 
 const ProgramDetails = ({ data }) => {
-  const [selectedDetail, setSelectedDetail] = useState("age")
+  const [selectedDetail, setSelectedDetail] = useState(null)
 
   if (!data || Object.keys(data).length === 0) {
     return null
   }
 
   return (
-    <section className="py-6 mt-16 md:py-8 px-4 md:px-8 lg:px-16 bg-gradient-to-b from-gray-100 to-white dark:from-gray-800 dark:to-gray-900 rounded-lg shadow-lg w-full">
-      <p className="text-2xl sm:text-3xl md:text-4xl pb-4 md:pb-6 font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] mb-4 md:mb-8 leading-tight">
+    <motion.section
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      transition={{ duration: 0.8 }}
+      viewport={{ once: true }}
+      className="py-10 mt-16 md:py-14 px-6 md:px-10 lg:px-16 lg:bg-transparent md:bg-none bg-gradient-to-b from-gray-100 to-white dark:from-gray-800 dark:to-gray-900 lg:rounded-none lg:shadow-none  rounded-xl shadow-xl w-full"
+    >
+      <p
+        className={`${cormorant.className} text-2xl sm:text-3xl md:text-4xl pb-6 md:pb-8 font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] mb-8 md:mb-10 leading-tight tracking-wide`}
+      >
         Program Details
       </p>
 
-      {/* Vertical Layout for Tablets and Desktops */}
-      <div className="hidden sm:flex flex-col gap-4 md:gap-8">
+      {/* Decorative element */}
+    
+      {/* Accordion for All Devices */}
+      <div className="grid gap-4 md:gap-6 max-w-4xl mx-auto">
         {Object.keys(data).map((detail, index) => (
-          <div key={index} className="flex gap-3 md:gap-4 p-4 md:p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md">
-            {/* Icon */}
-            <div className="shrink-0">{icons[detail]}</div>
-            {/* Detail Section */}
-            <div>
-              <span className="text-base md:text-lg font-semibold capitalize text-gray-900 dark:text-white">
-                {detail}
-              </span>
-              <div className="mt-2">
-                {Array.isArray(data[detail]) ? (
-                  <ul className="space-y-2">
-                    {data[detail].map((item, idx) => (
-                      <li key={idx} className="text-gray-700 dark:text-gray-300 text-sm md:text-base">
-                        <strong>{item.heading}:</strong> {item.subheading}
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p className="text-gray-700 dark:text-gray-300 text-sm md:text-base">{data[detail]}</p>
-                )}
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Accordion for Mobile View */}
-      <div className="sm:hidden">
-        {Object.keys(data).map((detail, index) => (
-          <div key={index} className="mb-3">
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
+            className="mb-4"
+          >
             <motion.div
-              whileHover={{ scale: 1.02 }}
-              className="flex items-center justify-between p-3 bg-white dark:bg-gray-800 rounded-lg shadow-md cursor-pointer"
-              onClick={() => setSelectedDetail((prev) => (prev === detail ? "" : detail))}
+              whileHover={{ scale: 1.01 }}
+              className={`flex items-center justify-between p-5 md:p-6  bg-white dark:bg-gray-800 rounded-xl shadow-md cursor-pointer border border-gray-100 dark:border-gray-700 transition-all duration-300 ${selectedDetail === detail ? "bg-gradient-to-r from-[#c3965d]/5 via-[#eabf91]/5 to-[#c3965d]/5" : ""}`}
+              onClick={() => setSelectedDetail((prev) => (prev === detail ? null : detail))}
             >
-              <span className="text-base font-medium capitalize flex items-center gap-2 text-gray-900 dark:text-white">
-                {icons[detail]}
-                <span className="ml-1">{detail}</span>
+              <span className="text-base font-medium capitalize flex items-center gap-4 text-gray-900 dark:text-white">
+                <span className="bg-gradient-to-r from-[#c3965d]/10 via-[#eabf91]/10 to-[#c3965d]/10 p-3 rounded-full">
+                  {icons[detail]}
+                </span>
+                <span className={`${cormorant.className} text-lg md:text-xl lg:text-2xl font-semibold`}>{detail}</span>
               </span>
-              <span className="text-xl">{selectedDetail === detail ? "−" : "+"}</span>
+              <span className="text-xl text-[#c3965d] font-semibold">{selectedDetail === detail ? "−" : "+"}</span>
             </motion.div>
             {selectedDetail === detail && (
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3 }}
-                className="p-3 mt-1 bg-white dark:bg-gray-800 rounded-lg shadow-md"
+                className="p-5 md:p-6 mt-2 bg-white dark:bg-gray-800 rounded-xl shadow-md border border-gray-100 dark:border-gray-700"
               >
                 {Array.isArray(data[selectedDetail]) ? (
-                  data[selectedDetail].map((item, idx) => (
-                    <div key={idx} className="mb-3 bg-gray-100 dark:bg-gray-700 p-2 rounded-lg">
-                      <span className="text-sm font-semibold text-gray-900 dark:text-white">{item.heading}</span>
-                      <p className="text-xs text-gray-700 dark:text-gray-300 mt-1">{item.subheading}</p>
-                    </div>
-                  ))
+                  <div className="grid gap-4 md:grid-cols-2">
+                    {data[selectedDetail].map((item, idx) => (
+                      <div
+                        key={idx}
+                        className="bg-gray-50 dark:bg-gray-700 p-4 md:p-5 rounded-lg hover:shadow-md transition-all duration-300"
+                      >
+                        <span className="text-base md:text-lg font-semibold text-[#c3965d] dark:text-[#eabf91]">
+                          {item.heading}
+                        </span>
+                        <p className="text-sm md:text-base text-gray-700 dark:text-gray-300 mt-2">{item.subheading}</p>
+                      </div>
+                    ))}
+                  </div>
                 ) : (
-                  <p className="text-sm text-gray-700 dark:text-gray-300">{data[selectedDetail]}</p>
+                  <p className="text-base md:text-lg text-gray-700 dark:text-gray-300">{data[selectedDetail]}</p>
                 )}
               </motion.div>
             )}
-          </div>
+          </motion.div>
         ))}
       </div>
-    </section>
+    </motion.section>
   )
 }
 

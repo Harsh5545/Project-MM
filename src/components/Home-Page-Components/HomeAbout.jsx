@@ -3,6 +3,7 @@ import { Cormorant_Garamond, Montserrat } from "next/font/google";
 import Image from "next/image";
 import { Star, Award } from "lucide-react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 const dm_Sans = Cormorant_Garamond({
   subsets: ["latin"],
@@ -75,7 +76,7 @@ const HomeAbout = () => {
               {/* Header */}
               <div className="flex flex-col items-center gap-3">
                 <h3 className={`${dm_Sans.className} text-2xl md:text-4xl font-bold text-gray-900`}>
-                  About Modern Mannerism
+                 <Link href='/about-us' > About Modern Mannerism</Link>
                   {/* our services */}
                 </h3>
                 <div className="h-1 w-16 bg-gradient-to-r from-[#c3965d] to-[#eabf91] rounded-full"></div>
