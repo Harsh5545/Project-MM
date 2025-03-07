@@ -1,6 +1,6 @@
 "use client"
 import React from "react"
-import { Cormorant_Garamond, DM_Sans } from "next/font/google"
+import { Cormorant_Garamond, DM_Sans, Montserrat, Playfair_Display } from "next/font/google"
 import { motion } from "framer-motion"
 import ShadcnButton from "@/components/Atom/button/ShadcnButton"
 import "react-multi-carousel/lib/styles.css"
@@ -11,100 +11,142 @@ import ProgramDetails from "./ProgramDetails"
 import Testimonials from "./Testimonial"
 import ServicesHero from "./ServicesHero"
 import icons from "@/hooks/icons"
+import Link from "next/link"
 
-const dm_Sans = DM_Sans({
+const dm_Sans = Montserrat({
   subsets: ["latin"],
+  weight: ["400", "500", "600"],
+})
+
+const dm_Sansss = DM_Sans({
+  subsets: ["latin"],
+  style: ["italic"],
   weight: ["400"],
 })
 
-const dm_Sanss = Cormorant_Garamond({
+const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
-  weight: ["700"],
+  weight: ["400", "500", "600", "700"],
 })
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+})
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+})
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 60 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } },
+}
 
 const ServicePage = ({ data }) => {
   const { heading, subheading, courseDescription, courseDetails, programDetails, testimonials } = data || {}
 
   if (!data) {
-    return <div className="flex justify-center items-center h-screen">Loading...</div>
+    return (
+      <div className="flex justify-center items-center h-screen bg-gradient-to-b from-neutral-50 to-neutral-100">
+        <div className="w-24 h-24 border-4 border-gold-400 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    )
   }
 
   return (
-    <div className="flex h-full dark:bg-[rgb(0,0,31)] bg-[#FFFFFF] items-center justify-center w-full flex-col">
+    <div className="flex h-full dark:bg-[rgb(0,0,31)] bg-gradient-to-b from-neutral-50 to-neutral-100 items-center justify-center w-full flex-col">
+      {/* Hero Section */}
       <div className="w-full  bg-cover bg-center flex items-end justify-center">
         <ServicesHero data={testimonials?.heroImage} className="relative" />
 
-        <div className="flex absolute pb-6 lg:pb-8 flex-col justify-center items-center text-center text-black z-10 mt-16 sm:mt-20 md:mt-24">
-          <h1 className="text-xl sm:text-2xl lg:text-4xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#9e7033] via-[#c3965d] to-[#9e7033] uppercase px-2 md:px-0">
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={fadeInUp}
+          className="flex absolute pb-8 lg:pb-10 flex-col justify-center items-center text-center z-10 mt-24 sm:mt-24 md:mt-24 px-4 sm:px-6 md:px-20"
+        >
+          <h1
+            className=" text-2xl sm:text-3xl lg:text-3xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#9e7033] via-[#d4a76b] to-[#9e7033] uppercase tracking-wide"  
+          >
             {heading}
           </h1>
           <h2
-            className={`${dm_Sans.className} mt-2 md:mt-4 px-4 text-base sm:text-lg lg:text-xl text-center max-w-3xl`}
+            className={`${dm_Sans.className} mt-4 md:mt-6 text-base sm:text-lg lg:text-lg text-center max-w-6xl text-black/90`}
           >
-            {subheading}
+            {courseDescription}
           </h2>
-        </div>
+        </motion.div>
       </div>
 
-      <div className="w-full flex items-center justify-center dark:bg-[rgb(0,0,31)] bg-[#F7F7F7]">
-        <div className="w-full max-w-[96%] md:max-w-[90%] lg:max-w-[80%] xl:max-w-[70%]">
-          <section className="md:my-10 my-6 px-4 md:px-8 lg:px-12 py-0 text-center">
-            <p
-              className={`${dm_Sans.className} text-center text-gray-900 dark:text-gray-100 text-sm sm:text-base lg:text-lg mx-2`}
-            >
-              {courseDescription}
-            </p>
-          </section>
-
+      <div className="w-full flex items-center justify-center dark:bg-[rgb(0,0,31)] bg-gradient-to-b from-neutral-50 to-neutral-100">
+        <div className="w-full max-w-[90%] xl:max-w-[85%]">
           <Overview data={courseDetails} />
           <ProgramHighlights data={courseDetails} />
 
-          <section className="mt-8 py-6 md:py-8 px-4 md:px-8 lg:px-16 bg-gradient-to-b from-gray-100 to-white dark:from-gray-800 dark:to-gray-900 rounded-lg shadow-lg">
-            <h5 className="text-2xl sm:text-3xl md:text-4xl font-bold bg-clip-text text-center text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] leading-tight pb-4 md:pb-6">
+          <motion.section
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.2 }}
+            viewport={{ once: true }}
+            className="mt-12 py-10 md:py-14 px-4 md:px-8 lg:px-16 bg-gradient-to-b lg:bg-none md:bg-none lg:shadow-none md:shadow-none from-gray-100 to-white dark:from-gray-800 dark:to-gray-900 rounded-xl shadow-xl"
+          >
+            <h5
+              className={`${cormorant.className}  font-bold bg-clip-text text-center text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] leading-tight text-2xl md:text-5xl pb-6 md:pb-8`}
+            >
               Curriculum Overview
             </h5>
-            <div className={`${dm_Sanss.className} mt-4 md:mt-8 grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4`}>
+            <div className={`${montserrat.className} mt-6 md:mt-10 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6`}>
               {courseDetails?.courseDetail?.map((point, index) => (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
-                  className="flex items-center gap-3 md:gap-4 p-3 md:p-4 bg-white dark:bg-gray-800 rounded-lg shadow-md"
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  className="flex items-center gap-4 md:gap-5 p-4 md:p-6 bg-white dark:bg-gray-800/80 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border border-gold-100"
                 >
-                  <div className="flex justify-center items-center w-6 h-6 md:w-7 md:h-7 bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] rounded-full shadow-lg flex-shrink-0">
+                  <div className="flex justify-center items-center w-10 h-10 md:w-12 md:h-12 bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] rounded-full shadow-lg flex-shrink-0">
                     {icons[point.icon]
                       ? React.cloneElement(icons[point.icon], {
-                          size: 18,
-                          className: "w-4 h-4 md:w-5 md:h-5",
+                          size: 20,
+                          className: "w-5 h-5 md:w-6 md:h-6",
                           color: "#ffffff",
                         })
                       : null}
                   </div>
                   <div className="flex flex-col">
-                    <span className="text-base md:text-lg font-normal text-gray-900 dark:text-white">
+                    <span className="text-sm md:text-sm lg:text-base font-medium text-gray-900 dark:text-white">
                       {point?.description || "No Heading Available"}
                     </span>
                   </div>
                 </motion.div>
               ))}
             </div>
-          </section>
+          </motion.section>
 
           <ProgramDetails data={programDetails} />
 
           {/* Call to Action */}
-          <section className="my-10 md:my-14 py-4 bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] opacity-90 rounded-lg text-center px-4">
-            <p className="text-xl sm:text-2xl lg:text-4xl mb-4 md:mb-6 font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-50">
-              {testimonials?.taglineHeading || "No Heading Available"}
-            </p>
+          <motion.section
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.1 }}
+            viewport={{ once: true }}
+            className="my-14 md:my-20 py-8 md:py-10 bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] opacity-95 rounded-xl text-center px-6 md:px-10 shadow-xl"
+          >
+            <p
+              className={`${playfair.className} text-2xl sm:text-3xl lg:text-4xl mb-6 md:mb-8 font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-50 tracking-wide`}
+            >
+              {testimonials?.taglineHeading || "Transform Your Etiquette Today"}
+            </p><Link href={"/contact-us"}>
             <ShadcnButton
               variant="contained"
-              className={`${dm_Sanss.className} rounded-full w-auto bg-gradient-to-r from-white to-slate-50 text-[#dd9f5d] border-2 border-[#dd9f5d] hover:text-gray-900 p-2 px-4 sm:px-6 md:px-8 text-sm sm:text-base shadow-lg`}
+              className={`${cormorant.className} rounded-full w-auto bg-white hover:bg-gray-50 text-[#c3965d] border-2 border-[#dd9f5d] hover:text-[#b07d3a] p-3 px-6 sm:px-8 md:px-10 text-base sm:text-lg font-semibold shadow-lg transition-all duration-300 hover:shadow-xl`}
             >
-              Register Now
-            </ShadcnButton>
-          </section>
+             Register Now
+            </ShadcnButton></Link>
+          </motion.section>
 
           <Testimonials data={testimonials} />
           <Faq data={testimonials} />

@@ -11,7 +11,7 @@ import styles from "./styles.module.css"
 const dm_Sans = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["700"],
-  display: "swap",
+  
 })
 
 const responsive = {
@@ -74,7 +74,7 @@ const CardComponent = () => {
       <div className="md:w-[90%] w-[95%]">
       <div className="flex flex-col items-center lg:mb-5 mb-4 gap-0 lg:gap-3">
                 <h2 className={`${dm_Sans.className} text-2xl md:text-4xl font-bold text-gray-900`}>
-                  Our Services
+                    Our Services
                 </h2>
                 <div className="h-1 w-16 bg-gradient-to-r from-[#c3965d] to-[#eabf91] rounded-full"></div>
               </div>

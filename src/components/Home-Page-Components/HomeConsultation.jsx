@@ -13,7 +13,7 @@ import { CheckCircle2 } from "lucide-react"
 const cormorantGaramond = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["400", "700"],
-  display: "swap",
+ 
 })
 
 const HomeConsultation = () => {
@@ -112,7 +112,7 @@ const HomeConsultation = () => {
   };
 
   return (
-    <section id="consultation" className="py-16 overflow-hidden lg:py-24 bg-gradient-to-br from-gray-50 to-gray-100">
+    <section id="consultation" className="py-16 overflow-hidden lg:py-20 bg-gradient-to-br from-gray-50 to-gray-100">
       <div className="container w-[90%] mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

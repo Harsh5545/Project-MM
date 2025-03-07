@@ -14,24 +14,24 @@ const cormorantGaramond = Cormorant_Garamond({
 const testimonials = [
   {
     id: 1,
-    Name: "Sarah Johnson",
+    Name: "Harsh Jaiswal",
     Description:
       "The business etiquette workshop completely transformed how I present myself in professional settings. The personalized coaching helped me identify areas for improvement I wasn't even aware of. Now I feel confident in any business situation!",
-    Image: "/placeholder.svg?height=80&width=80",
+    Image: "/assets/MenTest.png",
   },
   {
     id: 2,
-    Name: "Michael Chen",
+    Name: "Vishal More",
     Description:
       "I enrolled my 10-year-old daughter in the children's etiquette program, and the results have been remarkable. She's more confident, polite, and socially aware. The coach made learning manners fun and engaging!",
-    Image: "/placeholder.svg?height=80&width=80",
+    Image: "/assets/MenTest.png",
   },
   {
     id: 3,
     Name: "Priya Sharma",
     Description:
       "The fine dining workshop was eye-opening! I learned so much about proper table manners and dining etiquette that I now feel completely at ease during business dinners. Highly recommend for any professional.",
-    Image: "/placeholder.svg?height=80&width=80",
+    Image: "/assets/WomenTest.png",
   },
 ]
 
@@ -47,14 +47,14 @@ const HomeTestimonial = () => {
   }
 
   return (
-    <section className="py-16 lg:py-16 overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
+    <section className="py-16 lg:py-12 overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
       <div className="container mx-auto px-2 overflow-hidden sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="flex flex-col items-center mb-12"
+          className="flex flex-col items-center mb-10 "
         >
           <h5 className={`${cormorantGaramond.className} text-4xl font-bold text-gray-900 mb-4`}>
             Client Testimonials
@@ -62,7 +62,7 @@ const HomeTestimonial = () => {
           <div className="h-1 w-16 bg-gradient-to-r from-[#c3965d] to-[#eabf91] rounded-full"></div>
         </motion.div>
 
-        <div className="relative max-w-4xl mx-auto">
+        <div className="relative max-w-5xl mx-auto">
           {/* Large quote mark */}
           <div className="absolute -top-10 -left-10 opacity-10">
             <Quote size={80} className="text-[#c3965d]" />
@@ -83,13 +83,13 @@ const HomeTestimonial = () => {
                 </p>
 
                 <div className="flex flex-col items-center">
-                  <div className="w-20 h-20 rounded-full overflow-hidden mb-4 border-2 border-amber-200">
+                  <div className="w-20 h-20 rounded-full overflow-hidden mb-4 border-2 ">
                     <Image
                       src={testimonials[currentIndex].Image || "/placeholder.svg"}
                       width={80}
                       height={80}
                       alt={testimonials[currentIndex].Name}
-                      className="object-cover w-full h-full"
+                      className="object-cover opacity-75 w-full h-full"
                     />
                   </div>
                   <span className={`${cormorantGaramond.className} text-xl font-bold text-gray-900`}>

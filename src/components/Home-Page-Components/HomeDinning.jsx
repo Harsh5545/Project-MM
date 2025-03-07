@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 const dm_Sans = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["400"],
-  display: "swap",
+
 });
 
 const HomeDinning = () => {

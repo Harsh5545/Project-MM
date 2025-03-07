@@ -7,6 +7,7 @@ import { Badge } from "../ui/badge"
 import Pagination from "@/hooks/Pagination"
 import Link from "next/link"
 import { motion } from "framer-motion"
+import { ChevronDown } from "lucide-react"
 
 export function BentoGridDemo({ blogs }) {
   const [searchTerm, setSearchTerm] = useState("")
@@ -14,12 +15,11 @@ export function BentoGridDemo({ blogs }) {
   const [currentPage, setCurrentPage] = useState(1)
   const [itemsPerPage, setItemsPerPage] = useState(9)
   const [featuredBlogs, setFeaturedBlogs] = useState([])
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   useEffect(() => {
-    // Set featured blogs (top 3)
     setFeaturedBlogs(blogs.slice(0, 3))
 
-    // Adjust items per page based on screen size
     const updateItemsPerPage = () => {
       if (window.innerWidth < 640) {
         setItemsPerPage(4)
@@ -35,7 +35,6 @@ export function BentoGridDemo({ blogs }) {
     return () => window.removeEventListener("resize", updateItemsPerPage)
   }, [blogs])
 
-  // Filter blogs by search term and category
   const filteredBlogs = blogs.filter((blog) => {
     const matchesSearch = blog.title.toLowerCase().includes(searchTerm.toLowerCase())
     const matchesCategory = selectedCategory === "" || blog.category?.category_name === selectedCategory
@@ -45,7 +44,6 @@ export function BentoGridDemo({ blogs }) {
   const totalPages = Math.ceil(filteredBlogs.length / itemsPerPage)
   const paginatedBlogs = filteredBlogs.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
 
-  // Get unique categories
   const categories = Array.from(new Set(blogs.map((blog) => blog.category?.category_name).filter(Boolean)))
 
   return (
@@ -59,20 +57,30 @@ export function BentoGridDemo({ blogs }) {
           className="w-full border p-3 rounded-md"
         />
 
-        <div className="mt-6">
-          <label className="block text-sm font-medium mb-2">Category</label>
-          <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-            <option value="">All Categories</option>
-            {categories.map((category) => (
-              <option key={category} value={category}>
-                {category}
-              </option>
-            ))}
-          </Select>
+        <div className="mt-6 relative">
+          <button
+            className="w-full flex justify-between items-center border p-3 rounded-md bg-white dark:bg-gray-800"
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+          >
+            {selectedCategory || "All Categories"}
+            <ChevronDown className="w-5 h-5" />
+          </button>
+          {isDropdownOpen && (
+            <div className="absolute left-0 w-full mt-2 bg-white dark:bg-gray-800 border rounded-md shadow-lg z-10">
+              <button className="w-full text-left p-3 hover:bg-gray-100 dark:hover:bg-gray-700" onClick={() => setSelectedCategory("")}>All Categories</button>
+              {categories.map((category) => (
+                <button key={category} className="w-full text-left p-3 hover:bg-gray-100 dark:hover:bg-gray-700" onClick={() => { setSelectedCategory(category); setIsDropdownOpen(false); }}>
+                  {category}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
 
         <div className="mt-8 hidden md:block">
-          <h3 className="text-lg font-semibold mb-4">Top Blogs</h3>
+          <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+            Trending Blogs 
+          </h3>
           <HoverEffect
             items={featuredBlogs.map((blog) => ({
               title: blog.title,
@@ -101,11 +109,6 @@ export function BentoGridDemo({ blogs }) {
                         alt={item.title}
                         className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
                       />
-                      {/* {item.category?.category_name && (
-                        <Badge className="absolute top-3 right-3 bg-blue-600 text-white">
-                          {item.category.category_name}
-                        </Badge>
-                      )} */}
                     </div>
 
                     <h3 className="text-lg font-semibold line-clamp-2 mb-2">{item.title}</h3>
@@ -140,4 +143,3 @@ export function BentoGridDemo({ blogs }) {
     </div>
   )
 }
-

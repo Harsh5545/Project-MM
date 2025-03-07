@@ -13,8 +13,14 @@ const cormorantGaramond = Cormorant_Garamond({
 const montserrat = Montserrat({
   subsets: ["latin"],
   weight: ["400", "500"],
-  display: "swap",
+
 });
+
+const dm_Sans = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["700"],
+
+})
 const RecentBlogs = ({ blogs = [] }) => {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [visiblePosts, setVisiblePosts] = useState(1)
@@ -74,7 +80,7 @@ const RecentBlogs = ({ blogs = [] }) => {
           transition={{ duration: 0.6 }}
           className="flex flex-col items-center mb-12"
         >
-          <h4 className={`${montserrat  .className} text-4xl font-bold text-gray-900 mb-4`}>Latest Blogs</h4>
+          <h4 className={`${dm_Sans.className} text-2xl md:text-4xl font-bold text-gray-900`}>Latest Blogs</h4>
           <div className="h-1 w-16 bg-gradient-to-r from-[#c3965d] to-[#eabf91] rounded-full"></div>
           <p className="text-gray-700 text-center max-w-2xl mt-4">
             Explore our latest articles on etiquette, personal development, and professional growth

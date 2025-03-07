@@ -63,10 +63,9 @@ const HomeSection = () => {
         }}
       >
         {/* Overlay */}
-        <div className="absolute inset-0 bg-opacity-25 dark:bg-opacity-30 dark:bg-[#060507] bg-[#FAE7F3]"></div>
-
+        <div className="absolute inset-0 dark:bg-[#060507] bg-[#BEBEBE] dark:bg-opacity-60 bg-opacity-80"></div>
         {/* Content */}
-        <div className="flex flex-col md:flex-row h-auto lg:h-72 gap-5 p-4 justify-evenly items-center">
+        <div className="flex relative flex-col md:flex-row h-auto lg:h-72 gap-5 p-4 justify-evenly items-center">
           <p
             style={{ wordSpacing: "0.1rem" }}
             className="p-1 font-semibold text-sm md:text-base lg:text-2xl w-[90%] md:w-[60%] leading-relaxed md:leading-loose text-center text-black"

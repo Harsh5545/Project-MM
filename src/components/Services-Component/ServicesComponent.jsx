@@ -321,7 +321,7 @@ function ServicesComponent({ data }) {
                         {/* Remove Price and Button */}
                         <div className="flex items-center justify-between mt-4">
                           <button className="flex items-center justify-center bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] text-white text-sm dark:bg-[#eabf91] dark:text-[#1a1a2e] py-2 px-4 rounded-full font-semibold shadow-md hover:bg-[#1e3346] dark:hover:bg-[#d4a971] transition-colors duration-300">
-                            See more
+                            Know More
                             <MdOutlineArrowForwardIos className="ml-2" />
                           </button>
                         </div>
