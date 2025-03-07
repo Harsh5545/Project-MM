@@ -32,7 +32,11 @@ const homepageSchema = {
 }
 
 export const metadata = {
-  title: "Modern Mannerism - Elevating Etiquette and Personality",
+  // title: "Modern Mannerism - Elevating Etiquette and Personality",
+  title: {
+    default: "Modern Mannerism",
+    template: "Modern Mannerism | %s",
+  },
   description:
     "Modern Mannerism offers personalized coaching in business etiquette, children's manners, and personality development.",
   keywords:
@@ -64,7 +68,6 @@ async function getRecentBlogs() {
     url.searchParams.set("published", "true")
 
     const response = await fetch(url, {
-      next: { revalidate: 3600 },
       headers: {
         "Content-Type": "application/json",
       },

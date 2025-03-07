@@ -7,7 +7,7 @@ export async function POST(req) {
     try {
         const body = await req.json();
 
-        const { id, slug } = body;
+        const { id, slug,status } = body;
 
         if (!id) {
             return NextResponse.json({ message: "ID is required" }, { status: 400 });
@@ -24,15 +24,18 @@ export async function POST(req) {
         if (!existingBlog) {
             return NextResponse.json({ message: "Blog not found" }, { status: 404 });
         }
-
-        existingBlog.views += 1;
-
+        if(status === 'unlike'){
+            existingBlog.likes -= 1;
+        }else{
+            existingBlog.likes += 1;
+        }
+        
         await prisma.blog.update({
             where: { id },
-            data: { views: existingBlog.views },
+            data: { likes: existingBlog.likes },
         });
 
-        return NextResponse.json({ message: "Updated blog view count successfully." }, { status: 200 });
+        return NextResponse.json({ message: `${status} Added successfully.` }, { status: 200 });
 
     } catch (error) {
         return NextResponse.json({ message: error }, { status: 500 });

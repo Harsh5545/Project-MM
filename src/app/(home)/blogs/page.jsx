@@ -21,7 +21,7 @@ const page = async () => {
     url.searchParams.set("sortBy", "createdAt")
     url.searchParams.set("sortOrder", "desc")
 
-    const response = await fetch(url, { next: { revalidate: 3600 } }) // Cache for 1 hour
+    const response = await fetch(url);
 
     if (!response.ok) {
       throw new Error("Failed to fetch blog posts")

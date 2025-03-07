@@ -3,14 +3,53 @@ import BlogPage from "@/components/Blog-Component/Blog-Landing-Page/BlogPage"
 import HomeSection from "@/components/Home-Page-Components/HomeSection"
 import { notFound } from "next/navigation"
 
+
+
+export async function generateMetadata({ params }) {
+  const slug = (await params).slug
+
+  // Fetch the blog details
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blog/blog-details?slug=${slug}`)
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch blog details")
+  }
+
+  const result = await response.json()
+
+  if (!result?.data) {
+    return notFound()
+  }
+
+  const { title, description, image } = result.data
+
+  return {
+    title: title,
+    description: description,
+    alternates: {
+      canonical: `/blogs/${slug}`,
+    },
+
+    openGraph: {
+      title: title,
+      description: description,
+      images: [
+        {
+          url: image,
+          width: 800,
+          height: 600,
+        },
+      ],
+    },
+  }
+}
+
 const page = async ({ params }) => {
   try {
     const slug = (await params).slug
 
     // Fetch the blog details
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blog/blog-details?slug=${slug}`, {
-      next: { revalidate: 3600 }, // Cache for 1 hour
-    })
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blog/blog-details?slug=${slug}`)
 
     if (!response.ok) {
       throw new Error("Failed to fetch blog details")
@@ -29,9 +68,7 @@ const page = async ({ params }) => {
     recentBlogsUrl.searchParams.set("sortBy", "createdAt")
     recentBlogsUrl.searchParams.set("sortOrder", "desc")
 
-    const recentBlogsResponse = await fetch(recentBlogsUrl, {
-      next: { revalidate: 3600 }, // Cache for 1 hour
-    })
+    const recentBlogsResponse = await fetch(recentBlogsUrl)
 
     let recentBlogs = []
     if (recentBlogsResponse.ok) {

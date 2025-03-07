@@ -5,7 +5,7 @@ import Image from "next/image"
 import parse from "html-react-parser"
 import Link from "next/link"
 import { formatDistanceToNow } from "date-fns"
-import { useEffect, useState } from "react"
+import { use, useEffect, useState } from "react"
 import {
   Share2,
   BookmarkPlus,
@@ -26,7 +26,9 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 
 const BlogPage = ({ data }) => {
+  console.log(data)
   const [isScrolled, setIsScrolled] = useState(false)
+  const [likesCount, setLikesCount] = useState(data?.likes || 0)  // Initialize with data.likes
   const [liked, setLiked] = useState(false)
 
   if (!data) {
@@ -61,7 +63,28 @@ const BlogPage = ({ data }) => {
     }
   }
 
+  const updateLikeCount = async (status) => {
+    try {
+      const response = await fetch(`/api/blog/update-likes-count`, {
+        method: "POST",
+        body: JSON.stringify({ id: data?.id, slug: data?.slug, status }),  // Include 'status' (like/unlike)
+      })
+
+      if (!response.ok) {
+        throw new Error("Failed to update like count")
+      }
+
+      const responseData = await response.json()
+      console.log("Like count updated successfully:", responseData)
+    } catch (error) {
+      console.error("Error updating like count:", error)
+    }
+  }
+
   useEffect(() => {
+    const storedLikedStatus = localStorage.getItem(`liked_${data.id}`) === 'true'
+    setLiked(storedLikedStatus)
+    setLikesCount(storedLikedStatus ? likesCount + 1 : likesCount)  // If liked previously, increment likes count
     updateViewCount()
 
     const handleScroll = () => {
@@ -70,11 +93,19 @@ const BlogPage = ({ data }) => {
 
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
-  }, [data]) // Added data to dependencies
+  }, [data])
+
+
+  const toggleLike = () => {
+    const newLikedStatus = !liked
+    setLiked(newLikedStatus)
+    setLikesCount(newLikedStatus ? likesCount + 1 : likesCount - 1)  // Adjust the like count based on the new status
+    updateLikeCount(newLikedStatus ? "like" : "unlike")  // Send "like" or "unlike" to the API
+    localStorage.setItem(`liked_${data.id}`, newLikedStatus)  // Save the new liked status in localStorage
+  }
 
   return (
     <div className="relative pt-20">
-      {" "}
       {/* Added pt-20 for navbar space */}
       {/* Floating share bar on scroll */}
       <motion.div
@@ -122,7 +153,7 @@ const BlogPage = ({ data }) => {
                 variant="ghost"
                 size="icon"
                 className={`rounded-full hover:bg-primary/10 h-10 w-10 ${liked ? "text-red-500" : "text-gray-400"}`}
-                onClick={() => setLiked(!liked)}
+                onClick={toggleLike}
               >
                 <Heart className="h-5 w-5" fill={liked ? "currentColor" : "none"} />
               </Button>
@@ -144,9 +175,8 @@ const BlogPage = ({ data }) => {
           </Tooltip>
         </TooltipProvider>
       </motion.div>
-      <div className="container max-w-[1200px] mx-auto px-4 sm:px-6 py-8">
-       
 
+      <div className="container max-w-[1200px] mx-auto px-4 sm:px-6 py-8">
         <div className="flex flex-col lg:flex-row-reverse gap-10">
           {/* Main Content */}
           <motion.article
@@ -162,7 +192,6 @@ const BlogPage = ({ data }) => {
                   {data.category.category_name}
                 </Badge>
               ) : null}
-
 
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-gray-900 dark:text-white leading-tight">
                 {data.title}
@@ -209,10 +238,10 @@ const BlogPage = ({ data }) => {
                     variant="ghost"
                     size="sm"
                     className={`h-8 rounded-full md:hidden ${liked ? "text-red-500" : ""}`}
-                    onClick={() => setLiked(!liked)}
+                    onClick={toggleLike}
                   >
                     <Heart className="h-4 w-4 mr-1" fill={liked ? "currentColor" : "none"} />
-                    {liked ? "Liked" : "Like"}
+                    {likesCount} {liked ? "Liked" : "Like"}
                   </Button>
                 </div>
               </div>
@@ -232,11 +261,10 @@ const BlogPage = ({ data }) => {
 
             {/* Blog Content */}
             <div className="prose prose-lg dark:prose-invert max-w-none">
-            {parse(typeof data?.content === "string" ? data?.content : "<p>No Content</p>")}
-
+              {parse(typeof data?.content === "string" ? data?.content : "<p>No Content</p>")}
             </div>
 
-            {/* Tags */}
+            {/* Tags (Commented out) */}
             {/* {data.tags.map((tag, index) => (
               <Badge key={index} variant="outline" className="px-3 py-1">
                 {typeof tag === "string" ? tag : JSON.stringify(tag)}
@@ -250,10 +278,10 @@ const BlogPage = ({ data }) => {
                   variant="outline"
                   size="sm"
                   className={`rounded-full ${liked ? "text-red-500 border-red-200" : ""}`}
-                  onClick={() => setLiked(!liked)}
+                  onClick={toggleLike}
                 >
                   <Heart className="h-4 w-4 mr-1.5" fill={liked ? "currentColor" : "none"} />
-                  {liked ? "Liked" : "Like"}
+                  {likesCount} {liked ? "Liked" : "Like"}
                 </Button>
 
                 <Button
@@ -282,7 +310,6 @@ const BlogPage = ({ data }) => {
             </div>
 
             {/* Author Bio Card */}
-           
           </motion.article>
 
           {/* Sidebar */}
@@ -430,5 +457,4 @@ const BlogPage = ({ data }) => {
   )
 }
 
-export default BlogPage
-
+export default BlogPage;
