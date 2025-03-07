@@ -108,6 +108,7 @@ model Blog {
   og_image    String?
   visits      Visit[]  @relation("BlogVisits")
   views       Int        @default(0)
+  likes       Int        @default(0) 
   @@index([slug], name: "Blog_slug_idx")
 }
 

@@ -20,18 +20,18 @@ const dm_Sans = Montserrat({
 
 const dm_Sansss = DM_Sans({
   subsets: ["latin"],
-  style: ["italic"],
+  // style: ["italic"],
   weight: ["400"],
 })
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: [ "700"],
 })
 
 const montserrat = Montserrat({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400"],
 })
 
 const playfair = Playfair_Display({
@@ -85,25 +85,20 @@ const ServicePage = ({ data }) => {
           <Overview data={courseDetails} />
           <ProgramHighlights data={courseDetails} />
 
-          <motion.section
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.2 }}
-            viewport={{ once: true }}
+          <div
+            
             className="mt-12 py-10 md:py-14 px-4 md:px-8 lg:px-16 bg-gradient-to-b lg:bg-none md:bg-none lg:shadow-none md:shadow-none from-gray-100 to-white dark:from-gray-800 dark:to-gray-900 rounded-xl shadow-xl"
           >
             <h5
-              className={`${cormorant.className}  font-bold bg-clip-text text-center text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] leading-tight text-2xl md:text-5xl pb-6 md:pb-8`}
+              className={`${cormorant.className} font-semibold bg-clip-text text-center text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] leading-tight text-4xl md:text-5xl pb-6 md:pb-8`}
             >
               Curriculum Overview
             </h5>
-            <div className={`${montserrat.className} mt-6 md:mt-10 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6`}>
+            <div className={` font-thin mt-6 md:mt-10 grid  grid-cols-1 md:grid-cols-2 gap-4 md:gap-6`}>
               {courseDetails?.courseDetail?.map((point, index) => (
-                <motion.div
+                <div
                   key={index}
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
+                
                   className="flex items-center gap-4 md:gap-5 p-4 md:p-6 bg-white dark:bg-gray-800/80 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border border-gold-100"
                 >
                   <div className="flex justify-center items-center w-10 h-10 md:w-12 md:h-12 bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] rounded-full shadow-lg flex-shrink-0">
@@ -116,14 +111,14 @@ const ServicePage = ({ data }) => {
                       : null}
                   </div>
                   <div className="flex flex-col">
-                    <span className="text-sm md:text-sm lg:text-base font-medium text-gray-900 dark:text-white">
+                    <span className={`${dm_Sansss.className} text-sm md:text-sm lg:text-lg  font-medium text-gray-900 dark:text-white`}>
                       {point?.description || "No Heading Available"}
                     </span>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
-          </motion.section>
+          </div>
 
           <ProgramDetails data={programDetails} />
 

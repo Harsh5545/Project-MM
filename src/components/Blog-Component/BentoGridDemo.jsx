@@ -1,13 +1,12 @@
 "use client"
 import { useState, useEffect } from "react"
 import { Input } from "../ui/input"
-import { Select } from "../ui/select"
 import { HoverEffect } from "../ui/card-hover-effect"
-import { Badge } from "../ui/badge"
 import Pagination from "@/hooks/Pagination"
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { ChevronDown } from "lucide-react"
+import { format } from "date-fns"
 
 export function BentoGridDemo({ blogs }) {
   const [searchTerm, setSearchTerm] = useState("")
@@ -77,11 +76,11 @@ export function BentoGridDemo({ blogs }) {
           )}
         </div>
 
-        <div className="mt-8 hidden md:block">
-          <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-            Trending Blogs 
+        <div className="mt-8 hidden md:block shadow-lg rounded-lg">
+          <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 p-2">
+            Trending Blogs
           </h3>
-          <HoverEffect
+          <HoverEffect 
             items={featuredBlogs.map((blog) => ({
               title: blog.title,
               description: blog.meta_desc || `By ${blog.author?.first_name || "Author"}`,
@@ -92,7 +91,7 @@ export function BentoGridDemo({ blogs }) {
       </aside>
 
       <main className="w-full md:w-3/4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-4 h-[1200px]">
           {paginatedBlogs.length > 0 ? (
             paginatedBlogs.map((item, index) => (
               <motion.div
@@ -101,7 +100,7 @@ export function BentoGridDemo({ blogs }) {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: index * 0.05 }}
               >
-                <Link href={`/blogs/${item.slug}`} className="block h-full">
+                <Link href={`/blogs/${item.slug}`} className="block ">
                   <div className="relative bg-white dark:bg-gray-800 p-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 h-full flex flex-col">
                     <div className="relative aspect-video mb-4 overflow-hidden rounded-lg">
                       <img
@@ -121,7 +120,9 @@ export function BentoGridDemo({ blogs }) {
                       <span>
                         By {item.author?.first_name || "Author"} {item.author?.last_name || ""}
                       </span>
-                      {item.createdAt && <span>{new Date(item.createdAt).toLocaleDateString()}</span>}
+                      {item.createdAt && (
+                        <span>{format(new Date(item.createdAt), "dd MMMM yyyy")}</span>
+                      )}
                     </div>
                   </div>
                 </Link>

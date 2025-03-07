@@ -9,6 +9,7 @@ import Script from "next/script";
 import EmailPopup from "@/components/EmailPopup/EmailPopup";
 import { Manners } from "@/components/Chat-Bot/Manners";
 import PushNotificationManager from "@/components/PushNotificationManager/PushNotificationManager";
+import NextTopLoader from "nextjs-toploader";
 
 
 
@@ -44,7 +45,20 @@ export default async function RootLayout({ children }) {
           }}
         />
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`} >
-
+          <NextTopLoader
+            color="#c3965d"
+            initialPosition={0.08}
+            crawlSpeed={200}
+            height={5}
+            crawl={true}
+            showSpinner={false}
+            easing="ease"
+            speed={200}
+            shadow="0 0 10px #c3965d,0 0 5px #c3965d"
+            template='<div class="bar" role="bar"><div class="peg"></div></div>'
+            zIndex={1600}
+            showAtBottom={false}
+          />
           <div className="flex flex-col">
             <Header />
             <div className="flex-grow">

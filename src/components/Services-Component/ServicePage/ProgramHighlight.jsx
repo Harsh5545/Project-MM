@@ -3,13 +3,16 @@ import React, { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import icons from "@/hooks/icons"
-import { Playfair_Display, Cormorant_Garamond } from "next/font/google"
+import { Playfair_Display, Cormorant_Garamond, DM_Sans } from "next/font/google"
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 })
-
+const dmsans = DM_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+})
 const playfair = Playfair_Display({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
@@ -49,7 +52,7 @@ const ProgramHighlights = ({ data }) => {
       className="py-10 md:py-14 px-6  md:px-8 lg:px-10 lg:bg-none md:bg-none lg:shadow-none md:shadow-none bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-800 rounded-xl shadow-xl w-full relative z-10"
     >
       <h4
-        className={`${cormorant.className} md:mb-10  text-2xl md:text-5xl pb-6 font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] mb-8 tracking-wide`}
+        className={`${cormorant.className} md:mb-10 text-4xl md:text-5xl pb-6 font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-[#c3965d]  to-[#eabf91] mb-8 tracking-wide`}
       >
         Program Highlights
       </h4>
@@ -91,7 +94,7 @@ const ProgramHighlights = ({ data }) => {
                 {/* Header Section */}
                 <CardHeader className="text-center py-2 md:py-3 space-y-1 px-4 md:px-6 flex-grow">
                   <CardTitle
-                    className={`${cormorant.className} text-base sm:text-lg lg:text-xl font-bold transition-all duration-300 line-clamp-2 group-hover:text-white text-gray-800 dark:text-gray-100`}
+                    className={`${dmsans.className} font-medium  tracking-wide  leading-relaxed text-base md:text-lg lg:text-xl  transition-all duration-300 line-clamp-2 group-hover:text-white text-gray-800 dark:text-gray-100`}
                   >
                     {highlight?.heading}
                   </CardTitle>
@@ -99,7 +102,7 @@ const ProgramHighlights = ({ data }) => {
 
                 {/* Content Section */}
                 <CardContent className="text-center pb-6 md:pb-8 px-4 md:px-6">
-                  <p className="transition-all text-sm sm:text-base duration-300 line-clamp-3 group-hover:text-white text-gray-600 dark:text-gray-300">
+                  <p className={`${dmsans.className} font-light tracking-wide text-sm md:text-sm leading-relaxed transition-all  duration-300 line-clamp-3 group-hover:text-white text-gray-600 dark:text-gray-300`}>
                     {highlight.description}
                   </p>
                 </CardContent>
