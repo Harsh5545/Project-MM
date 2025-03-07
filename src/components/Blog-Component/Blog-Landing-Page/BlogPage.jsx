@@ -436,7 +436,7 @@ const BlogPage = ({ data }) => {
             {/* Newsletter Signup */}
             <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm overflow-hidden border border-gray-100 dark:border-gray-700">
               <div className="p-6 space-y-4">
-                <h3 className="text-lg font-serif font-bold">Join Our Modern Mannerism Community</h3>
+                <h3 className="text-lg  font-serif font-bold">Join Our Modern Mannerism Community</h3>
                 <p className="text-sm text-gray-600 dark:text-gray-300">
                   Subscribe to receive etiquette tips, event invitations, and exclusive content.
                 </p>
@@ -447,7 +447,7 @@ const BlogPage = ({ data }) => {
                     className="w-full px-4 py-2 rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-sm"
                     required
                   />
-                  <Button className="w-full">Subscribe</Button>
+                  <Button className="bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] text-slate-50 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 w-full">Subscribe</Button>
                 </form>
                 <p className="text-xs text-gray-500 dark:text-gray-400">
                   We respect your privacy. Unsubscribe at any time.
