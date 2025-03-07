@@ -15,9 +15,7 @@ import {
   Heart,
   MessageSquare,
   ArrowLeft,
-  Facebook,
-  Twitter,
-  Linkedin,
+
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
@@ -25,6 +23,9 @@ import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { DM_Sans } from "next/font/google"
+import { FaFacebook, FaFacebookF, FaInstagram, FaLinkedin } from "react-icons/fa"
+import { AiFillInstagram } from "react-icons/ai"
+import { BsInstagram, BsLinkedin } from "react-icons/bs"
 const dmsans = DM_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
@@ -121,7 +122,7 @@ const BlogPage = ({ data }) => {
           <Tooltip>
             <TooltipTrigger asChild>
               <Button variant="ghost" size="icon" className="rounded-full hover:bg-primary/10 h-10 w-10">
-                <Facebook className="h-5 w-5 text-primary" />
+                <FaFacebookF className="h-5 w-5 text-primary" />
               </Button>
             </TooltipTrigger>
             <TooltipContent side="right">
@@ -132,7 +133,7 @@ const BlogPage = ({ data }) => {
           <Tooltip>
             <TooltipTrigger asChild>
               <Button variant="ghost" size="icon" className="rounded-full hover:bg-primary/10 h-10 w-10">
-                <Twitter className="h-5 w-5 text-primary" />
+                <BsInstagram className="h-5 w-5 text-primary" />
               </Button>
             </TooltipTrigger>
             <TooltipContent side="right">
@@ -143,7 +144,7 @@ const BlogPage = ({ data }) => {
           <Tooltip>
             <TooltipTrigger asChild>
               <Button variant="ghost" size="icon" className="rounded-full hover:bg-primary/10 h-10 w-10">
-                <Linkedin className="h-5 w-5 text-primary" />
+                <BsLinkedin className="h-5 w-5 text-primary" />
               </Button>
             </TooltipTrigger>
             <TooltipContent side="right">
@@ -299,18 +300,46 @@ const BlogPage = ({ data }) => {
                 </Button>
               </div>
 
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-gray-500">Share:</span>
-                <Button variant="ghost" size="icon" className="rounded-full h-8 w-8">
-                  <Facebook className="h-4 w-4 text-[#1877F2]" />
-                </Button>
-                <Button variant="ghost" size="icon" className="rounded-full h-8 w-8">
-                  <Twitter className="h-4 w-4 text-[#1DA1F2]" />
-                </Button>
-                <Button variant="ghost" size="icon" className="rounded-full h-8 w-8">
-                  <Linkedin className="h-4 w-4 text-[#0A66C2]" />
-                </Button>
-              </div>
+              <div className="flex items-center gap-1">
+  <span className="text-sm text-gray-500">Share:</span>
+  <Button
+    variant="ghost"
+    size="icon"
+    className="rounded-full h-8 w-8"
+    as="a"
+    href="https://www.linkedin.com/company/modernmannerism/posts/?feedView=all"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="LinkedIn"
+  >
+    <FaLinkedin className="h-4 w-4 text-[#0A66C2]" />
+  </Button>
+  <Button
+    variant="ghost"
+    size="icon"
+    className="rounded-full h-8 w-8"
+    as="a"
+    href="https://www.instagram.com/modernmannerism/"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Instagram"
+  >
+    <FaInstagram className="h-4 w-4 text-[#E4405F]" />
+  </Button>
+  
+  <Button
+    variant="ghost"
+    size="icon"
+    className="rounded-full h-8 w-8"
+    as="a"
+    href="https://www.facebook.com/modernmannerism/"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Facebook"
+  >
+    <FaFacebook className="h-4 w-4 text-[#1877F2]" />
+  </Button>
+</div>
             </div>
 
             {/* Author Bio Card */}
