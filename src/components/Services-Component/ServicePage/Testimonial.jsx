@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { FaQuoteLeft } from "react-icons/fa"
 import Carousel from "react-multi-carousel"
 import "react-multi-carousel/lib/styles.css"
-import { Playfair_Display, Cormorant_Garamond } from "next/font/google"
+import { Playfair_Display, Cormorant_Garamond, DM_Sans } from "next/font/google"
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -15,7 +15,10 @@ const playfair = Playfair_Display({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 })
-
+const dmsans = DM_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+})
 const responsive = {
   superLargeDesktop: {
     breakpoint: { max: 4000, min: 1280 },
@@ -42,7 +45,7 @@ const Testimonials = ({ data }) => {
     return (
       <section className="py-10 md:py-14 px-6 md:px-10 lg:px-16 bg-gradient-to-b from-gray-100 to-white dark:from-gray-800 dark:to-gray-900 rounded-xl shadow-xl w-full relative z-10">
         <h6
-          className={`${cormorant.className} text-2xl sm:text-3xl md:text-5xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] mb-6 md:mb-8  tracking-wide`}
+          className={`${cormorant.className} text-4xl sm:text-4xl md:text-5xl font-semibold text-center bg-clip-text text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] mb-6 md:mb-8  tracking-wide`}
         >
           Testimonials
         </h6>
@@ -66,7 +69,7 @@ const Testimonials = ({ data }) => {
       className="py-10 md:py-14 w-full lg:bg-none md:bg-none lg:shadow-none md:shadow-none px-6 md:px-10 lg:px-16 bg-gradient-to-b from-gray-100 to-white dark:from-gray-800 dark:to-gray-900 rounded-xl shadow-xl text-center relative z-10"
     >
       <span
-        className={`${playfair.className} text-2xl sm:text-3xl md:text-4xl w-full font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] mb-6 md:mb-8 block tracking-wide`}
+        className={`${cormorant.className} text-4xl md:text-5xl w-full font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] mb-6 md:mb-8 block tracking-wide`}
       >
         Testimonials
       </span>
@@ -103,13 +106,13 @@ const Testimonials = ({ data }) => {
               </CardHeader>
               <CardContent className="px-4 sm:px-6 pb-6">
                 <p
-                  className={`${cormorant.className} italic text-gray-700 text-center dark:text-gray-300 text-lg sm:text-xl md:text-2xl leading-relaxed`}
+                  className={`${dmsans.className} font-light tracking-wide md:tracking-wider text-base md:text-xl leading-relaxed md:leading-loose italic text-gray-700 text-center dark:text-gray-300  sm:text-xl `}
                 >
                   "{testimonial.comment}"
                 </p>
                 <footer className="text-center mt-6 md:mt-8">
                   <div className="w-12 h-1 bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] mx-auto mb-4"></div>
-                  <p className="text-gray-900 dark:text-white text-base sm:text-lg font-medium">{testimonial.name}</p>
+                  <p className={`${dmsans.className} font-light  tracking-wide  leading-relaxed text-base text-center md:text-lg lg:text-xl text-gray-900 dark:text-white sm:text-lg `}>{testimonial.name}</p>
                 </footer>
               </CardContent>
             </Card>

@@ -1,10 +1,14 @@
 "use client";
 import React from "react";
-import { Cormorant_Garamond, Montserrat, Playfair_Display } from "next/font/google";
+import { Cormorant_Garamond, DM_Sans, Montserrat, Playfair_Display } from "next/font/google";
 import icons from "@/hooks/icons";
 import Image from "next/image";
 import { motion } from "framer-motion";
 
+const dmsans = DM_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+})
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
@@ -71,7 +75,7 @@ const Overview = ({ data }) => {
           {/* Header */}
           <div className="flex flex-col items-center gap-2 justify-center">
             <h3
-              className={`${cormorant.className} text-2xl md:text-5xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] mb-6 md:mb-8 tracking-wide`}
+              className={`${cormorant.className} text-4xl md:text-5xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] mb-6 md:mb-8 tracking-wide`}
             >
               Overview
             </h3>
@@ -105,7 +109,7 @@ const Overview = ({ data }) => {
                   >
                     {option.heading}
                   </span>
-                  <p className={`${montserrat.className} text-gray-700 dark:text-gray-300 text-sm md:text-sm text-center`}>
+                  <p className={`${dmsans.className} font-light tracking-wide text-base md:text-base leading-relaxed text-gray-700 dark:text-gray-300 text-center`}>
                     {option.subheading}
                   </p>
                 </div>

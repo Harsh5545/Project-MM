@@ -24,7 +24,11 @@ import { Separator } from "@/components/ui/separator"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
-
+import { DM_Sans } from "next/font/google"
+const dmsans = DM_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+})
 const BlogPage = ({ data }) => {
   console.log(data)
   const [isScrolled, setIsScrolled] = useState(false)
@@ -111,7 +115,7 @@ const BlogPage = ({ data }) => {
       <motion.div
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: isScrolled ? 1 : 0, x: isScrolled ? 0 : -50 }}
-        className="fixed left-4 top-1/3 z-50 hidden lg:flex flex-col gap-3 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm p-3 rounded-full shadow-md"
+        className="fixed  top-1/3 z-50 hidden lg:flex flex-col gap-3 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm  rounded-full shadow-md"
       >
         <TooltipProvider>
           <Tooltip>
@@ -176,7 +180,7 @@ const BlogPage = ({ data }) => {
         </TooltipProvider>
       </motion.div>
 
-      <div className="container max-w-[1200px] mx-auto px-4 sm:px-6 py-8">
+      <div className="container max-w-[88%] mx-auto px-4 sm:px-6 py-8">
         <div className="flex flex-col lg:flex-row-reverse gap-10">
           {/* Main Content */}
           <motion.article
@@ -193,11 +197,11 @@ const BlogPage = ({ data }) => {
                 </Badge>
               ) : null}
 
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-gray-900 dark:text-white leading-tight">
+              <h1 className={`${dmsans.className} font-medium text-center  tracking-wide leading-loose text-base md:text-lg   lg:text-4xl font-serif  text-gray-900 dark:text-white `}>
                 {data.title}
               </h1>
 
-              <p className="text-lg text-gray-600 dark:text-gray-300 font-light leading-relaxed">{data.meta_desc}</p>
+              {/* <p className="text-lg text-gray-600 dark:text-gray-300 font-light leading-relaxed">{data.meta_desc}</p> */}
 
               <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
                 <div className="flex items-center gap-2">
@@ -320,7 +324,7 @@ const BlogPage = ({ data }) => {
             className="lg:w-1/3 space-y-8 order-2 lg:order-1"
           >
             {/* Author Card (Mobile Only) */}
-            <div className="lg:hidden bg-primary/5 dark:bg-primary/10 rounded-xl p-6 flex flex-col items-center text-center">
+            {/* <div className="lg:hidden bg-primary/5 dark:bg-primary/10 rounded-xl p-6 flex flex-col items-center text-center">
               <Avatar className="h-20 w-20 border-4 border-white dark:border-gray-800 shadow-md">
                 <AvatarImage
                   src={"/assets/Manasi_kadam_image.jpg"}
@@ -340,7 +344,7 @@ const BlogPage = ({ data }) => {
                   </Button>
                 </Link>
               </div>
-            </div>
+            </div> */}
             <div className="bg-primary/5 dark:bg-primary/10 rounded-xl p-6 flex flex-col  gap-6 items-center">
               <Avatar className="h-64 w-48 border-4 border-white dark:border-gray-800 shadow-md">
                 <AvatarImage
@@ -351,17 +355,17 @@ const BlogPage = ({ data }) => {
               </Avatar>
 
               <div className="text-center sm:text-left">
-                <h3 className="text-xl font-serif font-bold">
+                <h3 className="text-xl text-center font-serif font-bold">
                   Manasi Kadam
                 </h3>
-                <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">Certified Image & Etiquette Consultant</p>
-                <p className="mt-3 text-sm">
+                <p className={`${dmsans.className} text-xs md:text-sm text-center text-gray-600 tracking-wide leading-relaxed dark:text-gray-300 mt-1`}>Certified Image & Etiquette Consultant</p>
+                <p className={`${dmsans.className} font-light tracking-normal md:text-base leading-relaxed mt-3 text-center text-sm`}>
                   I'm passionate about helping you develop confidence, polish, and social grace. My practical approach
                   to etiquette makes it accessible and relevant for today's world.
                 </p>
                 <div className="mt-4 text-center">
                   <Link href="/about-us">
-                    <Button variant="outline" size="sm" className="rounded-full">
+                    <Button variant="outline" size="sm" className={`${dmsans.className}  rounded-full`}>
                       Learn More About Me
                     </Button>
                   </Link>
@@ -371,11 +375,11 @@ const BlogPage = ({ data }) => {
             {/* Trending Blogs */}
             {data.recentBlogs && data.recentBlogs.length > 0 && (
               <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm overflow-hidden border border-gray-100 dark:border-gray-700  top-24">
-                <div className="bg-primary/10 p-4">
-                  <h3 className="text-lg font-serif font-bold flex items-center">
-                    <span className="relative">
+                <div className="bg-[#eabf91] bg-opacity-40 p-4">
+                  <h3 className="text-lg font-serif font-bold flex justify-center items-center">
+                    <span className="text-center relative">
                       Trending Articles
-                      <span className="absolute -top-1 -right-2 h-2 w-2 bg-primary rounded-full animate-pulse"></span>
+                      {/* <span className="absolute -top-1 -right-2 h-2 w-2 bg-primary rounded-full animate-pulse"></span> */}
                     </span>
                   </h3>
                 </div>
@@ -432,7 +436,7 @@ const BlogPage = ({ data }) => {
             {/* Newsletter Signup */}
             <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm overflow-hidden border border-gray-100 dark:border-gray-700">
               <div className="p-6 space-y-4">
-                <h3 className="text-lg font-serif font-bold">Join Our Etiquette Community</h3>
+                <h3 className="text-lg font-serif font-bold">Join Our Modern Mannerism Community</h3>
                 <p className="text-sm text-gray-600 dark:text-gray-300">
                   Subscribe to receive etiquette tips, event invitations, and exclusive content.
                 </p>

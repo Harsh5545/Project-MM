@@ -46,7 +46,7 @@ export default async function RootLayout({ children }) {
         />
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`} >
           <NextTopLoader
-            color="#FFFF00"
+            color="#c3965d"
             initialPosition={0.08}
             crawlSpeed={200}
             height={5}
@@ -54,7 +54,7 @@ export default async function RootLayout({ children }) {
             showSpinner={false}
             easing="ease"
             speed={200}
-            shadow="0 0 10px #2299DD,0 0 5px #2299DD"
+            shadow="0 0 10px #c3965d,0 0 5px #c3965d"
             template='<div class="bar" role="bar"><div class="peg"></div></div>'
             zIndex={1600}
             showAtBottom={false}

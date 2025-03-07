@@ -6,11 +6,6 @@ import { MdOutlineArrowForwardIos, MdFilterList, MdSearch, MdStar, MdStarBorder 
 import { Cormorant_Garamond } from "next/font/google";
 import { motion } from "framer-motion";
 import Pagination from "@/hooks/Pagination";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Slider } from "@/components/ui/slider";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import styles from "./styles.module.css";
 

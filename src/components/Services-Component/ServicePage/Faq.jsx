@@ -2,13 +2,16 @@
 import { motion } from "framer-motion"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Playfair_Display, Cormorant_Garamond, Montserrat } from "next/font/google"
+import { Playfair_Display, Cormorant_Garamond, Montserrat, DM_Sans } from "next/font/google"
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 })
-
+const dmsans= DM_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+})
 const playfair = Playfair_Display({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
@@ -44,15 +47,15 @@ const Faq = ({ data }) => {
           </span>
 
           <Card className="dark:bg-gray-800/90 tracking-wider bg-white/95 w-full md:w-[90%] lg:w-[85%] shadow-lg border-0">
-            <CardHeader className="p-4 md:p-6">
+            {/* <CardHeader className="p-4 md:p-6">
               <CardTitle
-                className={`${cormorant.className} tracking-wide text-gray-800 dark:text-gray-200 text-xl md:text-4xl font-bold`}
+                className={`${montserrat.className} tracking-wide text-gray-800 dark:text-gray-200 text-xl md:text-4xl font-light`}
               >
                 Benefits of Modern Mannerism
               </CardTitle>
-            </CardHeader>
-            <CardContent className="p-4 md:p-6">
-              <p className= {`${montserrat.className} font-semibold tracking-wide text-gray-700 dark:text-gray-300 text-base md:text-base leading-relaxed`}>
+            </CardHeader> */}
+            <CardContent className="pt-3 md:pt-6">
+              <p className= {`${dmsans.className} font-light text-center tracking-wide text-base md:text-base leading-relaxed text-gray-700 dark:text-gray-300 `}>
                 {data?.mmDescription}
               </p>
             </CardContent>
@@ -77,11 +80,11 @@ const Faq = ({ data }) => {
                 >
                   <Card className="bg-transparent tracking-wider border-none outline-none shadow-lg overflow-hidden">
                     <AccordionTrigger
-                      className={`${cormorant.className} text-base md:text-lg font-bold lg:text-xl bg-white/95 dark:bg-gray-800/90  text-gray-900 dark:text-white p-4 md:p-6 rounded-t-xl`}
+                      className={`${dmsans.className} font-light  tracking-wide  leading-relaxed text-base text-left md:text-lg lg:text-xl bg-white/95 dark:bg-gray-800/90  text-gray-900 dark:text-white p-4 md:p-6 rounded-t-xl`}
                     >
                       {faq.question}
                     </AccordionTrigger>
-                    <AccordionContent className={`${montserrat.className} text-gray-800 bg-white/80 dark:bg-gray-800/70 dark:text-gray-200 p-4 md:p-6 rounded-b-xl text-sm md:text-base`}>
+                    <AccordionContent className={`${dmsans.className} font-light tracking-wide text-base md:text-base leading-relaxed text-gray-800 bg-white/80 dark:bg-gray-800/70 dark:text-gray-200 p-4 md:p-6 rounded-b-xl `}>
                       {faq.answer}
                     </AccordionContent>
                   </Card>

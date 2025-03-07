@@ -1,4 +1,5 @@
 
+import BlogCommentSection from "@/components/Blog-Component/Blog-Landing-Page/BlogCommentSection"
 import BlogPage from "@/components/Blog-Component/Blog-Landing-Page/BlogPage"
 import HomeSection from "@/components/Home-Page-Components/HomeSection"
 import { notFound } from "next/navigation"
@@ -85,7 +86,8 @@ const page = async ({ params }) => {
     return (
       <>
         <BlogPage data={blogData} />
-        <HomeSection />
+        {/* <HomeSection /> */}
+        <BlogCommentSection/>
       </>
     )
   } catch (error) {
