@@ -9,19 +9,19 @@ import Link from "next/link";
 const cormorantGaramond = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["700"],
-  display: "swap",
+ 
 });
 
 const ebGaramond = EB_Garamond({
   subsets: ["latin"],
   weight: ["400"],
-  display: "swap",
+ 
 });
 
 const montserrat = Montserrat({
   subsets: ["latin"],
   weight: ["400", "500"],
-  display: "swap",
+ 
 });
 
 const HeroCarousel = () => {

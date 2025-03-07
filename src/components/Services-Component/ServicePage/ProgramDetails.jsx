@@ -37,7 +37,7 @@ const ProgramDetails = ({ data }) => {
       className="py-10 mt-16 md:py-14 px-6 md:px-10 lg:px-16 lg:bg-transparent md:bg-none bg-gradient-to-b from-gray-100 to-white dark:from-gray-800 dark:to-gray-900 lg:rounded-none lg:shadow-none  rounded-xl shadow-xl w-full"
     >
       <p
-        className={`${cormorant.className} text-2xl sm:text-3xl md:text-4xl pb-6 md:pb-8 font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] mb-8 md:mb-10 leading-tight tracking-wide`}
+        className={`${cormorant.className} text-2xl md:text-5xl pb-6 md:pb-8 font-semibold text-center bg-clip-text text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] mb-8 md:mb-10  tracking-wide`}
       >
         Program Details
       </p>

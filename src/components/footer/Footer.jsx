@@ -76,7 +76,7 @@ const Footer = () => {
                 className="md:h-16 h-12"
               />
             </div>
-            <p className={`${ebGaramond.className} text-lg`}>A sophisticated guide to cultural manner & etiquette</p>
+            <p className={`${montserrat.className} text-sm md:text-base`}>A sophisticated guide to cultural manner & etiquette</p>
           </div>
 
           {/* Quick Navigation */}

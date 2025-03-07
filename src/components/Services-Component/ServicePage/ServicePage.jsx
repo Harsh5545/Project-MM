@@ -11,6 +11,7 @@ import ProgramDetails from "./ProgramDetails"
 import Testimonials from "./Testimonial"
 import ServicesHero from "./ServicesHero"
 import icons from "@/hooks/icons"
+import Link from "next/link"
 
 const dm_Sans = Montserrat({
   subsets: ["latin"],
@@ -24,6 +25,11 @@ const dm_Sansss = DM_Sans({
 })
 
 const cormorant = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+})
+
+const montserrat = Montserrat({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 })
@@ -67,7 +73,7 @@ const ServicePage = ({ data }) => {
             {heading}
           </h1>
           <h2
-            className={`${dm_Sans.className} mt-4 md:mt-6 text-base sm:text-lg lg:text-xl text-center max-w-6xl text-black/90`}
+            className={`${dm_Sans.className} mt-4 md:mt-6 text-base sm:text-lg lg:text-lg text-center max-w-6xl text-black/90`}
           >
             {courseDescription}
           </h2>
@@ -87,11 +93,11 @@ const ServicePage = ({ data }) => {
             className="mt-12 py-10 md:py-14 px-4 md:px-8 lg:px-16 bg-gradient-to-b lg:bg-none md:bg-none lg:shadow-none md:shadow-none from-gray-100 to-white dark:from-gray-800 dark:to-gray-900 rounded-xl shadow-xl"
           >
             <h5
-              className={`${playfair.className} text-2xl sm:text-3xl md:text-4xl font-bold bg-clip-text text-center text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] leading-tight pb-6 md:pb-8`}
+              className={`${cormorant.className}  font-bold bg-clip-text text-center text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] leading-tight text-2xl md:text-5xl pb-6 md:pb-8`}
             >
               Curriculum Overview
             </h5>
-            <div className={`${cormorant.className} mt-6 md:mt-10 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6`}>
+            <div className={`${montserrat.className} mt-6 md:mt-10 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6`}>
               {courseDetails?.courseDetail?.map((point, index) => (
                 <motion.div
                   key={index}
@@ -110,7 +116,7 @@ const ServicePage = ({ data }) => {
                       : null}
                   </div>
                   <div className="flex flex-col">
-                    <span className="text-base md:text-lg lg:text-xl font-medium text-gray-900 dark:text-white">
+                    <span className="text-sm md:text-sm lg:text-base font-medium text-gray-900 dark:text-white">
                       {point?.description || "No Heading Available"}
                     </span>
                   </div>
@@ -133,13 +139,13 @@ const ServicePage = ({ data }) => {
               className={`${playfair.className} text-2xl sm:text-3xl lg:text-4xl mb-6 md:mb-8 font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-50 tracking-wide`}
             >
               {testimonials?.taglineHeading || "Transform Your Etiquette Today"}
-            </p>
+            </p><Link href={"/contact-us"}>
             <ShadcnButton
               variant="contained"
               className={`${cormorant.className} rounded-full w-auto bg-white hover:bg-gray-50 text-[#c3965d] border-2 border-[#dd9f5d] hover:text-[#b07d3a] p-3 px-6 sm:px-8 md:px-10 text-base sm:text-lg font-semibold shadow-lg transition-all duration-300 hover:shadow-xl`}
             >
-              Register Now
-            </ShadcnButton>
+             Register Now
+            </ShadcnButton></Link>
           </motion.section>
 
           <Testimonials data={testimonials} />

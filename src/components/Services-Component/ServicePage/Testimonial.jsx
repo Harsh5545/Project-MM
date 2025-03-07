@@ -42,7 +42,7 @@ const Testimonials = ({ data }) => {
     return (
       <section className="py-10 md:py-14 px-6 md:px-10 lg:px-16 bg-gradient-to-b from-gray-100 to-white dark:from-gray-800 dark:to-gray-900 rounded-xl shadow-xl w-full relative z-10">
         <h6
-          className={`${playfair.className} text-2xl sm:text-3xl md:text-4xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] mb-6 md:mb-8 tracking-wide`}
+          className={`${cormorant.className} text-2xl sm:text-3xl md:text-5xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] mb-6 md:mb-8  tracking-wide`}
         >
           Testimonials
         </h6>

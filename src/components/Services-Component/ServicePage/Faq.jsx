@@ -46,13 +46,13 @@ const Faq = ({ data }) => {
           <Card className="dark:bg-gray-800/90 tracking-wider bg-white/95 w-full md:w-[90%] lg:w-[85%] shadow-lg border-0">
             <CardHeader className="p-4 md:p-6">
               <CardTitle
-                className={`${cormorant.className} tracking-wide text-gray-800 dark:text-gray-200 text-xl md:text-2xl font-bold`}
+                className={`${cormorant.className} tracking-wide text-gray-800 dark:text-gray-200 text-xl md:text-4xl font-bold`}
               >
                 Benefits of Modern Mannerism
               </CardTitle>
             </CardHeader>
             <CardContent className="p-4 md:p-6">
-              <p className= {`${cormorant.className} font-semibold tracking-wide text-gray-700 dark:text-gray-300 text-base md:text-base leading-relaxed`}>
+              <p className= {`${montserrat.className} font-semibold tracking-wide text-gray-700 dark:text-gray-300 text-base md:text-base leading-relaxed`}>
                 {data?.mmDescription}
               </p>
             </CardContent>
@@ -77,11 +77,11 @@ const Faq = ({ data }) => {
                 >
                   <Card className="bg-transparent tracking-wider border-none outline-none shadow-lg overflow-hidden">
                     <AccordionTrigger
-                      className={`${cormorant.className} text-base md:text-lg lg:text-xl bg-white/95 dark:bg-gray-800/90 font-medium text-gray-900 dark:text-white p-4 md:p-6 rounded-t-xl`}
+                      className={`${cormorant.className} text-base md:text-lg font-bold lg:text-xl bg-white/95 dark:bg-gray-800/90  text-gray-900 dark:text-white p-4 md:p-6 rounded-t-xl`}
                     >
                       {faq.question}
                     </AccordionTrigger>
-                    <AccordionContent className={`${cormorant.className} text-gray-800 bg-white/80 dark:bg-gray-800/70 dark:text-gray-200 p-4 md:p-6 rounded-b-xl text-base md:text-lg`}>
+                    <AccordionContent className={`${montserrat.className} text-gray-800 bg-white/80 dark:bg-gray-800/70 dark:text-gray-200 p-4 md:p-6 rounded-b-xl text-sm md:text-base`}>
                       {faq.answer}
                     </AccordionContent>
                   </Card>

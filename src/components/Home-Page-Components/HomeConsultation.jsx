@@ -13,7 +13,7 @@ import { CheckCircle2 } from "lucide-react"
 const cormorantGaramond = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["400", "700"],
-  display: "swap",
+ 
 })
 
 const HomeConsultation = () => {

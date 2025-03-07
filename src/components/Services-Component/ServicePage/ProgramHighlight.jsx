@@ -46,10 +46,10 @@ const ProgramHighlights = ({ data }) => {
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
       viewport={{ once: true }}
-      className="py-10 md:py-14 mt-10 md:mt-16 px-6  md:px-8 lg:px-10 lg:bg-none md:bg-none lg:shadow-none md:shadow-none bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-800 rounded-xl shadow-xl w-full relative z-10"
+      className="py-10 md:py-14 px-6  md:px-8 lg:px-10 lg:bg-none md:bg-none lg:shadow-none md:shadow-none bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-800 rounded-xl shadow-xl w-full relative z-10"
     >
       <h4
-        className={`${playfair.className} text-2xl sm:text-3xl md:text-4xl pb-6 font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] mb-8 tracking-wide`}
+        className={`${cormorant.className} md:mb-10  text-2xl md:text-5xl pb-6 font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] mb-8 tracking-wide`}
       >
         Program Highlights
       </h4>

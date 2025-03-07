@@ -8,10 +8,9 @@ body{
   background-color: #f4f4f4;
   color: #333333;
   overflow-x: hidden;
+ 
 }
-body.overflow-hidden {
-  overflow: hidden;
-}
+
 
 @layer base {
   :root {

@@ -71,7 +71,7 @@ const Overview = ({ data }) => {
           {/* Header */}
           <div className="flex flex-col items-center gap-2 justify-center">
             <h3
-              className={`${cormorant.className} text-4xl md:text-5xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] mb-6 md:mb-8 tracking-wide`}
+              className={`${cormorant.className} text-2xl md:text-5xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] mb-6 md:mb-8 tracking-wide`}
             >
               Overview
             </h3>

@@ -4,7 +4,7 @@ import React from "react";
 const montserrat = Montserrat({
   subsets: ["latin"],
   weight: ["400", "500"],
-  display: "swap",
+  
 });
 export const AboutManasi = () => {
   return (
