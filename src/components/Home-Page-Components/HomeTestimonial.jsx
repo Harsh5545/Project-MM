@@ -1,91 +1,142 @@
-"use client";
+"use client"
+import { useState } from "react"
+import Image from "next/image"
+import { motion, AnimatePresence } from "framer-motion"
+import { Cormorant_Garamond } from "next/font/google"
+import { ChevronLeft, ChevronRight, Quote } from "lucide-react"
 
-// import { Button } from "@nextui-org/react";
-import TestimonialData from "@/data";
-import React, { useRef, useState } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Keyboard, Navigation, Autoplay } from "swiper/modules"; // Removed Pagination module
-import "swiper/css";
-import "swiper/css/navigation"; // Import Swiper CSS for navigation
-import "swiper/css/autoplay";
-import Image from "next/image";
-import styles from "./styles.module.css"; // Import the CSS module
+const cormorantGaramond = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+})
+
+// Sample testimonial data
+const testimonials = [
+  {
+    id: 1,
+    Name: "Harsh Jaiswal",
+    Description:
+      "The business etiquette workshop completely transformed how I present myself in professional settings. The personalized coaching helped me identify areas for improvement I wasn't even aware of. Now I feel confident in any business situation!",
+    Image: "/assets/MenTest.png",
+  },
+  {
+    id: 2,
+    Name: "Vishal More",
+    Description:
+      "I enrolled my 10-year-old daughter in the children's etiquette program, and the results have been remarkable. She's more confident, polite, and socially aware. The coach made learning manners fun and engaging!",
+    Image: "/assets/MenTest.png",
+  },
+  {
+    id: 3,
+    Name: "Priya Sharma",
+    Description:
+      "The fine dining workshop was eye-opening! I learned so much about proper table manners and dining etiquette that I now feel completely at ease during business dinners. Highly recommend for any professional.",
+    Image: "/assets/WomenTest.png",
+  },
+]
 
 const HomeTestimonial = () => {
-  const swiperRef = useRef(null);
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0)
 
-  const handleSlideChange = (swiper) => {
-    setCurrentSlide(swiper.realIndex);
-  };
+  const nextTestimonial = () => {
+    setCurrentIndex((prevIndex) => (prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1))
+  }
+
+  const prevTestimonial = () => {
+    setCurrentIndex((prevIndex) => (prevIndex === 0 ? testimonials.length - 1 : prevIndex - 1))
+  }
 
   return (
-    <div
-      className="relative w-full"
-      style={{
-        backgroundImage:
-          "linear-gradient(to right, rgba(0,0,0,0.7), rgba(0,0,0,0.1)), url('/assets/Website-Background.jpg')",
-        backgroundAttachment: "fixed",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
-    >
-      {/* Overlay */}
-      
-      <div className="absolute inset-0 bg-opacity-25 dark:bg-opacity-30 dark:bg-[#060507] bg-[#FAE7F3]"></div>
-      {/* Content */}
-      <div className="flex h-auto md:h-[90vh] gap-5 flex-col p-5 justify-center items-center z-10 relative">
-        <h6 className="font-semibold text-xl md:text-4xl w-[100%] md:w-[100%] text-center text-white">
-        Testimonials
-        </h6>
-        <div
-          className={`bg-white w-[95%] md:w-[60%] shadow-2xl shadow-slate-400 dark:shadow-[#060507] dark:bg-[#00001F] relative p-6 md:p-16 rounded-xl ${styles.testimonialContainer}`}
-          style={{ maxWidth: "100%", overflowX: "hidden" }}
+    <section className="py-16 lg:py-12 overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
+      <div className="container mx-auto px-2 overflow-hidden sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="flex flex-col items-center mb-10 "
         >
-          <Swiper
-            onSlideChange={handleSlideChange}
-            autoplay={{
-              delay: 5000, // Shortened the delay for a more dynamic feel
-              disableOnInteraction: false,
-            }}
-            speed={2000} // Increased speed for smooth transition
-            loop={true}
-            navigation={true} // Enable navigation
-            modules={[Autoplay, Keyboard, Navigation]} // Removed Pagination module
-            className={`mySwiper ${styles.swiper}`}
-            ref={swiperRef}
-          >
-            {TestimonialData.map((testimonial, index) => (
-              <SwiperSlide key={index}>
-                <div className="flex flex-col justify-center mt-2 md:mt-0 items-center gap-8">
-                  <p className="text-sm w-[90%] md:w-[90%] text-center dark:text-white text-[#06273A] leading-relaxed">
-                    {testimonial.Description}
-                  </p>
+          <h5 className={`${cormorantGaramond.className} text-4xl font-bold text-gray-900 mb-4`}>
+            Client Testimonials
+          </h5>
+          <div className="h-1 w-16 bg-gradient-to-r from-[#c3965d] to-[#eabf91] rounded-full"></div>
+        </motion.div>
 
-                  <div className="flex flex-col items-center gap-2">
+        <div className="relative max-w-5xl mx-auto">
+          {/* Large quote mark */}
+          <div className="absolute -top-10 -left-10 opacity-10">
+            <Quote size={80} className="text-[#c3965d]" />
+          </div>
+
+          <div className="bg-white rounded-2xl shadow-xl p-6 md:p-12 relative z-10">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentIndex}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.5 }}
+                className="flex flex-col items-center"
+              >
+                <p className="text-gray-700 text-lg md:text-xl italic text-center mb-8 leading-relaxed">
+                  "{testimonials[currentIndex].Description}"
+                </p>
+
+                <div className="flex flex-col items-center">
+                  <div className="w-20 h-20 rounded-full overflow-hidden mb-4 border-2 ">
                     <Image
-                      src={testimonial.Image}
+                      src={testimonials[currentIndex].Image || "/placeholder.svg"}
                       width={80}
                       height={80}
-                      alt={testimonial.Name}
-                      className="rounded-full  shadow-lg mb-3"
+                      alt={testimonials[currentIndex].Name}
+                      className="object-cover opacity-75 w-full h-full"
                     />
-
-                    <p className="text-lg font-semibold text-center dark:text-white text-[#06273A]">
-                      {testimonial.Name}
-                    </p>
-                    {/* <h4 className="text-md font-medium text-center dark:text-white text-[#7f8c8d]">
-                      {testimonial.City}
-                    </h4> */}
                   </div>
+                  <span className={`${cormorantGaramond.className} text-xl font-bold text-gray-900`}>
+                    {testimonials[currentIndex].Name}
+                  </span>
                 </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
+              </motion.div>
+            </AnimatePresence>
+
+            {/* Navigation buttons */}
+            <div className="flex justify-center mt-8 gap-4">
+              <button
+                onClick={prevTestimonial}
+                className="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center text-amber-800 hover:bg-[#eabf91] transition-colors"
+                aria-label="Previous testimonial"
+              >
+                <ChevronLeft size={20} />
+              </button>
+
+              {/* Dots indicator */}
+              <div className="flex items-center gap-2">
+                {testimonials.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentIndex(index)}
+                    className={`w-2 h-2 rounded-full transition-all ${
+                      index === currentIndex ? "bg-[#c3965d] w-3 h-3" : "bg-gray-300"
+                    }`}
+                    aria-label={`Go to testimonial ${index + 1}`}
+                  />
+                ))}
+              </div>
+
+              <button
+                onClick={nextTestimonial}
+                className="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center text-amber-800 hover:bg-[#eabf91] transition-colors"
+                aria-label="Next testimonial"
+              >
+                <ChevronRight size={20} />
+              </button>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  );
-};
+    </section>
+  )
+}
 
-export default HomeTestimonial;
+export default HomeTestimonial
+

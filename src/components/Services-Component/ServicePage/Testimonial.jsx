@@ -1,60 +1,90 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { FaQuoteLeft } from 'react-icons/fa';
-import Carousel from 'react-multi-carousel';
-import 'react-multi-carousel/lib/styles.css';
+"use client"
+import { motion } from "framer-motion"
+import { Card, CardContent, CardHeader } from "@/components/ui/card"
+import { FaQuoteLeft } from "react-icons/fa"
+import Carousel from "react-multi-carousel"
+import "react-multi-carousel/lib/styles.css"
+import { Playfair_Display, Cormorant_Garamond, DM_Sans } from "next/font/google"
 
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+})
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+})
+const dmsans = DM_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+})
 const responsive = {
   superLargeDesktop: {
-    breakpoint: { max: 4000, min: 1024 },
+    breakpoint: { max: 4000, min: 1280 },
     items: 1,
   },
   desktop: {
-    breakpoint: { max: 1024, min: 768 },
+    breakpoint: { max: 1280, min: 768 },
     items: 1,
   },
   tablet: {
-    breakpoint: { max: 768, min: 464 },
+    breakpoint: { max: 768, min: 480 },
     items: 1,
   },
   mobile: {
-    breakpoint: { max: 464, min: 0 },
+    breakpoint: { max: 480, min: 0 },
     items: 1,
   },
-};
+}
 
 const Testimonials = ({ data }) => {
-  const { testimonials } = data || {};
+  const { testimonials } = data || {}
 
   if (!testimonials || testimonials.length === 0) {
     return (
-      <section className="py-8 px-4 md:px-8 lg:px-16 bg-gradient-to-b from-gray-100 to-white dark:from-gray-800 dark:to-gray-900 rounded-lg shadow-lg w-full relative z-10">
-        <h6 className="text-3xl md:text-4xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] mb-6">
+      <section className="py-10 md:py-14 px-6 md:px-10 lg:px-16 bg-gradient-to-b from-gray-100 to-white dark:from-gray-800 dark:to-gray-900 rounded-xl shadow-xl w-full relative z-10">
+        <h6
+          className={`${cormorant.className} text-4xl sm:text-4xl md:text-5xl font-semibold text-center bg-clip-text text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] mb-6 md:mb-8  tracking-wide`}
+        >
           Testimonials
         </h6>
-        <Card className="transition-all duration-300 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+        <Card className="transition-all duration-300 bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 md:p-8 border border-gray-100 dark:border-gray-700">
           <CardContent>
-            <p className="text-gray-700 dark:text-gray-300">No testimonials available at the moment.</p>
+            <p className="text-gray-700 dark:text-gray-300 text-center text-lg">
+              No testimonials available at the moment.
+            </p>
           </CardContent>
         </Card>
       </section>
-    );
+    )
   }
 
   return (
-    <section className="py-8 w-full px-4 md:px-8 lg:px-16 bg-gradient-to-b from-gray-100 to-white dark:from-gray-800 dark:to-gray-900 rounded-lg text-center shadow-lg relative z-10">
-      <span className="text-3xl w-full md:text-4xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] mb-6">
+    <motion.section
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      transition={{ duration: 0.8 }}
+      viewport={{ once: true }}
+      className="py-10 md:py-14 w-full lg:bg-none md:bg-none lg:shadow-none md:shadow-none px-6 md:px-10 lg:px-16 bg-gradient-to-b from-gray-100 to-white dark:from-gray-800 dark:to-gray-900 rounded-xl shadow-xl text-center relative z-10"
+    >
+      <span
+        className={`${cormorant.className} text-4xl md:text-5xl w-full font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] mb-6 md:mb-8 block tracking-wide`}
+      >
         Testimonials
       </span>
+
+      {/* Decorative element */}
+      {/* <div className="w-24 h-1 bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] mx-auto mb-10"></div> */}
+
       <Carousel
         responsive={responsive}
         infinite={true}
         autoPlay={true}
-        autoPlaySpeed={3000}
+        autoPlaySpeed={5000}
         keyBoardControl={true}
-        customTransition="all .5"
-        transitionDuration={500}
+        customTransition="all .8s"
+        transitionDuration={800}
         containerClass="carousel-container"
         removeArrowOnDeviceType={["tablet", "mobile"]}
         dotListClass="custom-dot-list-style"
@@ -66,23 +96,32 @@ const Testimonials = ({ data }) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="p-4"
+            className="p-4 sm:p-6"
           >
-            <Card className="transition-all duration-300 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
-              <CardHeader className="flex items-center gap-2">
-                <FaQuoteLeft className="text-gray-400 dark:text-gray-500" />
+            <Card className="transition-all duration-300 bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 sm:p-8 md:p-10 border border-gray-100 dark:border-gray-700 max-w-4xl mx-auto">
+              <CardHeader className="flex items-center justify-center gap-2 p-2 sm:p-3">
+                <div className="w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-r from-[#c3965d]/10 via-[#eabf91]/10 to-[#c3965d]/10">
+                  <FaQuoteLeft className="text-[#c3965d] text-xl" />
+                </div>
               </CardHeader>
-              <CardContent>
-                <p className="italic text-gray-700 text-center dark:text-gray-300">{testimonial.comment}</p>
-                <footer className="text-right mt-4 text-gray-900 dark:text-white">- {testimonial.name}</footer>
+              <CardContent className="px-4 sm:px-6 pb-6">
+                <p
+                  className={`${dmsans.className} font-light tracking-wide md:tracking-wider text-base md:text-xl leading-relaxed md:leading-loose italic text-gray-700 text-center dark:text-gray-300  sm:text-xl `}
+                >
+                  "{testimonial.comment}"
+                </p>
+                <footer className="text-center mt-6 md:mt-8">
+                  <div className="w-12 h-1 bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] mx-auto mb-4"></div>
+                  <p className={`${dmsans.className} font-light  tracking-wide  leading-relaxed text-base text-center md:text-lg lg:text-xl text-gray-900 dark:text-white sm:text-lg `}>{testimonial.name}</p>
+                </footer>
               </CardContent>
             </Card>
           </motion.div>
         ))}
       </Carousel>
-    </section>
-  );
-};
+    </motion.section>
+  )
+}
 
-export default Testimonials;
+export default Testimonials
 

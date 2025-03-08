@@ -7,8 +7,8 @@ import { Toaster } from "@/components/ui/toaster";
 import { SessionProvider } from "next-auth/react";
 import Script from "next/script";
 import EmailPopup from "@/components/EmailPopup/EmailPopup";
-import { Manners } from "@/components/Chat-Bot/Manners";
 import PushNotificationManager from "@/components/PushNotificationManager/PushNotificationManager";
+
 
 
 
@@ -44,7 +44,6 @@ export default async function RootLayout({ children }) {
           }}
         />
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`} >
-
           <div className="flex flex-col">
             <Header />
             <div className="flex-grow">

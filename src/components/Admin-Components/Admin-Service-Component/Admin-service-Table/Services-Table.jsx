@@ -15,11 +15,13 @@ import {
 } from "@/components/ui/table"
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, ArrowUpDown } from 'lucide-react'
 import { Shimmer } from '@/components/ui/shimmer'
-
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+
 
 const ServicesTable = () => {
-  const { toast } = useToast()
+  const { toast } = useToast();
+  const router = useRouter();
   const [services, setServices] = useState([])
   const [loading, setLoading] = useState(true)
   const [sortOrder, setSortOrder] = useState('asc')
@@ -105,6 +107,10 @@ const ServicesTable = () => {
     }
   }
 
+  function handleServiceEdit(service) {
+    router.push(`/admin/services/edit-service/${service.slug}`);
+  }
+
   const totalPages = Math.ceil(totalCount / pageSize)
 
   return (
@@ -173,7 +179,7 @@ const ServicesTable = () => {
                   <TableCell>{service?.category?.category_name}</TableCell>
                   <TableCell>
                     <div className="flex space-x-2">
-                      <Button variant="outline" onClick={() => console.log('Edit', index)}>
+                      <Button variant="outline" onClick={() => handleServiceEdit(service)}>
                         Edit
                       </Button>
                       <Button variant="destructive" onClick={() => handleDeleteConfirmation(service.id)}>

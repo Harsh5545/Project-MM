@@ -1,220 +1,284 @@
-"use client";
-import React, { useState, useEffect } from "react";
-import Image from "next/image";
-import ShadcnButton from "../Atom/button/ShadcnButton";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+"use client"
+import { useState } from "react"
+import Image from "next/image"
+import { motion } from "framer-motion"
+import { Cormorant_Garamond } from "next/font/google"
+import { Label } from "@/components/ui/label"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import { Button } from "@/components/ui/button"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { CheckCircle2 } from "lucide-react"
+
+const cormorantGaramond = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+ 
+})
 
 const HomeConsultation = () => {
   const [formData, setFormData] = useState({
-    name: "",
-    countryCode: "",
-    phone: "",
-    email: "",
-    service: "",
+    fullName: "",
+    phoneNumber: "",
+    emailAddress: "",
+    serviceOfInterest: "",
     message: "",
-  });
-  const [categories, setCategories] = useState([]);
-
-  useEffect(() => {
-    // Fetch categories from the backend
-    const fetchCategories = async () => {
-      try {
-        const response = await fetch('/api/categories/list'); // Adjust the URL as needed
-        const data = await response.json();
-        setCategories(data);
-      } catch (error) {
-        console.error('Error fetching categories:', error);
-      }
-    };
-
-    fetchCategories();
-  }, []);
+  })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isSuccess, setIsSuccess] = useState(false)
+  const [errors, setErrors] = useState({});
+  // Sample services - replace with your actual services
+  const services = [
+    "Personality Enhancement Programme",
+    "Business Etiquette & Corporate Image",
+    "Children's Etiquette Programme",
+    "Fine Dining Etiquette Workshop",
+    "Other Services",
+  ]
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
 
     // Validation for name field to not accept numbers
-    if (name === "name" && /[0-9]/.test(value)) {
-      return;
+    if (name === "fullName" && /[0-9]/.test(value)) {
+      return
     }
 
     // Validation for phone field to not accept alphabets
-    if (name === "phone" && /[a-zA-Z]/.test(value)) {
-      return;
+    if (name === "phoneNumber" && /[a-zA-Z]/.test(value)) {
+      return
     }
 
     setFormData((prevState) => ({
       ...prevState,
       [name]: value,
-    }));
-  };
+    }))
+  }
 
-  const handleSubmit = (e) => {
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault()
+  //   setIsSubmitting(true)
+
+  //   // Simulate API call
+  //   setTimeout(() => {
+  //     setIsSubmitting(false)
+  //     setIsSuccess(true)
+
+  //     // Reset form after showing success message
+  //     setTimeout(() => {
+  //       setIsSuccess(false)
+  //       setFormData({
+  //         name: "",
+  //         phone: "",
+  //         email: "",
+  //         service: "",
+  //         message: "",
+  //       })
+  //     }, 3000)
+  //   }, 1500)
+  // }
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setFormData({
-      name: "",
-      countryCode: "",
-      phone: "",
-      email: "",
-      service: undefined, // Reset value
-      message: "",
+
+    const response = await fetch("/api/consultation-request", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
     });
+
+    const result = await response.json();
+    console.log('first', result);
+    if (response.ok) {
+      // Handle success
+      alert("Request submitted successfully!");
+      setFormData({
+        fullName: "",
+        phoneNumber: "",
+        emailAddress: "",
+        serviceOfInterest: "",
+        message: "",
+      });
+      setErrors({});
+    } else {
+      const errorMessages = result.errors.reduce((acc, error) => {
+        acc[error.path] = error.message;
+        return acc;
+      }, {});
+      setErrors(errorMessages);
+    }
   };
 
   return (
-    <div className="flex flex-col items-center dark:bg-[#00001F] p-8 md:py-36 md:px-16 gap-10 justify-center">
-      <h3 className="text-2xl md:text-4xl text-center font-semibold text-gray-800 dark:text-white">
-        Book Your Consultation Now
-        <hr className="border-t-2  border-[#eabf91] w-1/4 mx-auto mt-2" />
-      </h3>
-
-      <div className="flex flex-col md:flex-row items-center justify-between w-full max-w-5xl gap-8">
-        <Image
-          src="/assets/course2.jpg"
-          alt="Modern Mannerism Consultation"
-          width={400}
-          height={400}
-          className="rounded-xl shadow-md" 
-        />
-
-        <form
-          onSubmit={handleSubmit}
-          className="w-full md:w-1/2 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-xl"
+    <section id="consultation" className="py-16 overflow-hidden lg:py-20 bg-gradient-to-br from-gray-50 to-gray-100">
+      <div className="container w-[90%] mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="flex flex-col items-center mb-12"
         >
-          <div className="flex flex-col md:flex-row gap-6 ">
-            <div className="w-full">
-              <Label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                Name *
-              </Label>
-              <Input
-                id="name"
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleInputChange}
-                placeholder="Enter your name"
-                pattern="^[a-zA-Z\s]+$" // Only letters and spaces
-                title="Name should only contain letters and spaces."
-                required
-                className="w-full"
-              />
-            </div>
-            <div className="w-full flex gap-2">
-              <div className="w-1/3">
-                <Label htmlFor="countryCode" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                  Country *
-                </Label>
-                <Input
-                  id="countryCode"
-                  type="text"
-                  name="countryCode"
-                  value={formData.countryCode}
-                  onChange={handleInputChange}
-                  placeholder="+1"
-                  pattern="^\+\d{1,3}$" // Country code pattern
-                  title="Country code should start with + followed by 1 to 3 digits."
-                  required
-                  className="w-full"
-                />
-              </div>
-              <div className="w-2/3">
-                <Label htmlFor="phone" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                  Phone *
-                </Label>
-                <Input
-                  id="phone"
-                  type="tel"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleInputChange}
-                  placeholder="Enter your phone"
-                  pattern="^\d{3}-\d{3}-\d{4}$" 
-                  title="Phone number should be in the format: 123-456-7890."
-                  required
-                  className="w-full"
-                />
-              </div>
-            </div>
-          </div>
-          <div className="flex flex-col md:flex-row gap-8 my-4">
-            <div className="w-full">
-              <Label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                Email *
-              </Label>
-              <Input
-                id="email"
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                placeholder="Enter your email"
-                required
-                className="w-full"
-              />
-            </div>
-            <div className="w-full">
-              <Label htmlFor="service" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                Select Service *
-              </Label>
-              <Select
-                id="service"
-                value={formData.service || undefined}
-                onValueChange={(value) =>
-                  setFormData({ ...formData, service: value })
-                }
-                required
-                className="w-full"
-              >
-                <SelectTrigger className="p-3 w-full">
-                  {formData.service ? (
-                    <span>{formData.service}</span>
-                  ) : (
-                    <span className="text-gray-400">Select Service</span>
-                  )}
-                </SelectTrigger>
-                <SelectContent>
-                  {categories.map((category) => (
-                    <SelectItem key={category._id} value={category.name}>
-                      {category.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-          <div className="my-8">
-            <Label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-              Message
-            </Label>
-            <Textarea
-              id="message"
-              name="message"
-              value={formData.message}
-              onChange={handleInputChange}
-              placeholder="Enter your message"
-              required
-              className="w-full"
-            />
-          </div>
-          <ShadcnButton
-            type="submit"
-            className="w-full bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] text-white p-3 rounded-lg hover:bg-[#eabf91] transition-all duration-300"
-          >
-            Submit
-          </ShadcnButton>
-        </form>
-      </div>
-    </div>
-  );
-};
+          <h6 className={`${cormorantGaramond.className} text-center text-2xl md:text-4xl font-bold text-gray-900 mb-4`}>
+            Book Your Consultation
+          </h6>
+          <div className="h-1 w-16 bg-gradient-to-r from-[#c3965d] to-[#eabf91] rounded-full"></div>
+          <p className="text-gray-700 text-base md:text-lg text-center max-w-2xl mt-4">
+            Take the first step towards enhancing your personal and professional presence.
+          </p>
+        </motion.div>
 
-export default HomeConsultation;
+        <div className="flex flex-col lg:flex-row items-center gap-12">
+          {/* Image */}
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="lg:w-1/2 w-full"
+          >
+            <div className="relative flex justify-center">
+              <Image
+                src="/assets/course2.jpg"
+                alt="Modern Mannerism Consultation"
+                width={500}
+                height={500}
+                className="rounded-lg shadow-xl object-cover"
+              />
+            </div>
+          </motion.div>
+
+          {/* Form */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="lg:w-1/2 w-full"
+          >
+            {isSuccess ? (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="bg-white p-8 rounded-lg shadow-lg flex flex-col items-center text-center"
+              >
+                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
+                  <CheckCircle2 className="w-8 h-8 text-green-600" />
+                </div>
+                <span className={`${cormorantGaramond.className} text-2xl font-bold text-gray-900 mb-2`}>Thank You!</span>
+                <p className="text-gray-700">
+                  Your consultation request has been submitted successfully. We'll contact you shortly to confirm your
+                  appointment.
+                </p>
+              </motion.div>
+            ) : (
+              <form onSubmit={handleSubmit} className="bg-white p-5 lg:p-6 rounded-lg shadow-lg">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                  <div>
+                    <Label htmlFor="name" className="text-gray-700">
+                      Full Name *
+                    </Label>
+                    <Input
+                      id="fullName"
+                      name="fullName"
+                      value={formData.fullName}
+                      onChange={handleInputChange}
+                      placeholder="Enter your full name"
+                      required
+                      className="mt-1"
+                    />
+                    {errors.fullName && <div className="error text-red-500">{errors.fullName}</div>}
+                  </div>
+                  <div>
+                    <Label htmlFor="phoneNumber" className="text-gray-700">
+                      Phone Number *
+                    </Label>
+                    <Input
+                      id="phoneNumber"
+                      name="phoneNumber"
+                      value={formData.phoneNumber}
+                      onChange={handleInputChange}
+                      placeholder="Enter your phone number"
+                      required
+                      className="mt-1"
+                    />
+                    {errors.phoneNumber && <div className="error text-red-500">{errors.phoneNumber}</div>}
+                  </div>
+                </div>
+
+                <div className="mb-6">
+                  <Label htmlFor="emailAddress" className="text-gray-700">
+                    Email Address *
+                  </Label>
+                  <Input
+                    id="emailAddress"
+                    name="emailAddress"
+                    type="email"
+                    value={formData.emailAddress}
+                    onChange={handleInputChange}
+                    placeholder="Enter your email address"
+                    required
+                    className="mt-1"
+                  />
+                  {errors.emailAddress && <div className="error text-red-500">{errors.emailAddress}</div>}
+                </div>
+
+                <div className="mb-6">
+                  <Label htmlFor="service" className="text-gray-700">
+                    Service of Interest *
+                  </Label>
+                  <Select
+                    value={formData.serviceOfInterest}
+                    onValueChange={(value) => setFormData({ ...formData, serviceOfInterest: value })}
+                    required
+                  >
+                    <SelectTrigger id="service" className="mt-1">
+                      <SelectValue placeholder="Select a service" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {services.map((service) => (
+                        <SelectItem key={service} value={service}>
+                          {service}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  {errors.serviceOfInterest && <div className="error text-red-500">{errors.serviceOfInterest}</div>}
+                </div>
+
+                <div className="mb-6">
+                  <Label htmlFor="message" className="text-gray-700">
+                    Your Message
+                  </Label>
+                  <Textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    placeholder="Tell us about your specific needs or questions"
+                    className="mt-1"
+                    rows={4}
+                  />
+                  {errors.message && <div className="error text-red-500">{errors.message}</div>}
+                </div>
+
+                <Button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full bg-gradient-to-r from-[#c3965d] to-[#eabf91] text-white py-3 rounded-lg hover:brightness-110 hover:-translate-y-[2px]  transition-all duration-300"
+                >
+                  {isSubmitting ? "Submitting..." : "Book Consultation"}
+                </Button>
+              </form>
+            )}
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+export default HomeConsultation
+

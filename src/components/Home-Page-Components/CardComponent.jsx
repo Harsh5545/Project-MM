@@ -1,18 +1,18 @@
-"use client";
-import React from "react";
-import Image from "next/image";
-import { MdOutlineArrowForwardIos } from "react-icons/md";
-import { useRouter } from "next/navigation";
-import { Cormorant_Garamond } from "next/font/google";
-import { useMediaQuery } from "react-responsive";
-import Carousel from "react-multi-carousel";
-import "react-multi-carousel/lib/styles.css";
-import styles from "./styles.module.css";
+"use client"
+import Image from "next/image"
+import { MdOutlineArrowForwardIos } from "react-icons/md"
+import { useRouter } from "next/navigation"
+import { Cormorant_Garamond } from "next/font/google"
+import { useMediaQuery } from "react-responsive"
+import Carousel from "react-multi-carousel"
+import "react-multi-carousel/lib/styles.css"
+import styles from "./styles.module.css"
 
 const dm_Sans = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["700"],
-});
+  
+})
 
 const responsive = {
   superLargeDesktop: {
@@ -31,115 +31,112 @@ const responsive = {
     breakpoint: { max: 464, min: 0 },
     items: 1,
   },
-};
+}
 
 const CardComponent = () => {
-  const router = useRouter();
-  const isMobile = useMediaQuery({ maxWidth: 1024 });
+  const router = useRouter()
+  const isMobile = useMediaQuery({ maxWidth: 1024 })
 
   const courses = [
     {
       image: "/assets/Personality Development.jpeg",
-      title: "Personality Enhancement Programme",
-      description:
-        "Unlock your full potential with our Personality Enhancement Programme.",
+      title: "Young Adult Finishing Programme",
+      description: "Elevate Confidence, Charm, and Life Skills for a Bright Future.",
       isBestSelling: false,
     },
     {
       image: "/assets/BusinessHandshake.jpg",
-      title: "Business Etiquette & Corporate Image Programme",
-      description:
-        "Master the art of business etiquette and elevate your corporate image.",
+      title: "Building Business Programme",
+      description: "Master the art of business etiquette and elevate your corporate image.",
       isBestSelling: true,
     },
     {
       image: "/assets/Etiquettechildren.jpg",
       title: "Children’s Etiquette Programme",
-      description:
-        "Teach your children essential etiquette skills in a fun and engaging way.",
+      description: "Teach your children essential etiquette skills in a fun and engaging way.",
       isBestSelling: false,
     },
-  ];
+  ]
 
   const generateSlug = (title) =>
     title
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-|-$/g, "");
+      .replace(/^-|-$/g, "")
 
   const handleReadMore = (title) => {
-    const slug = generateSlug(title);
-    router.push(`/services/${slug}`);
-  };
+    const slug = generateSlug(title)
+    router.push(`/services/${slug}`)
+  }
 
   return (
-    <div className="w-full dark:bg-[#00001F] flex flex-col justify-center items-center pb-16">
+    <div className="w-full overflow-hidden bg-gradient-to-br from-neutral-50 to-neutral-100 dark:bg-[#00001F] flex flex-col justify-center items-center pb-16">
       <div className="md:w-[90%] w-[95%]">
-        <div className="flex flex-col items-center justify-center">
-          <h4
-            className={`${dm_Sans.className} py-10 text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#000000] to-[#28425f] dark:from-[#eabf91] dark:to-[#c3965d]`}
-          >
-            Our Services
-            <hr className="bg-gradient-to-r from-[#28425f] to-[#76766b] dark:from-[#eabf91] dark:to-[#c3965d] h-1 rounded-full w-16 self-center" />
-          </h4>
-        </div>
+      <div className="flex flex-col items-center lg:mb-5 mb-4 gap-0 lg:gap-3">
+                <h2 className={`${dm_Sans.className} text-2xl md:text-4xl font-bold text-gray-900`}>
+                    Our Services
+                </h2>
+                <div className="h-1 w-16 bg-gradient-to-r from-[#c3965d] to-[#eabf91] rounded-full"></div>
+              </div>
 
         {isMobile ? (
-          <Carousel responsive={responsive} infinite={true} autoPlay={true} autoPlaySpeed={3000} itemClass="px-2">
+          <Carousel responsive={responsive} infinite={true} autoPlay={true} autoPlaySpeed={3000} itemClass="px-2 py-2">
             {courses.map((course, index) => (
-              <CourseCard key={index} course={course} handleReadMore={handleReadMore} isMobile={isMobile} />
+              <CourseCard key={index} course={course} handleReadMore={handleReadMore} />
             ))}
           </Carousel>
         ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-28 w-full px-4">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-12 w-full px-4">
             {courses.map((course, index) => (
-              <CourseCard key={index} course={course} handleReadMore={handleReadMore} isMobile={isMobile} />
+              <CourseCard key={index} course={course} handleReadMore={handleReadMore} />
             ))}
           </div>
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
-const CourseCard = ({ course, handleReadMore, isMobile }) => (
+const CourseCard = ({ course, handleReadMore }) => (
   <div
-    className={`relative ${styles.container} w-full bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] 
-    dark:bg-[#122031] rounded-3xl text-black p-4 text-center flex flex-col items-center justify-between gap-2 
-    h-[500px] dark:hover:bg-[#0e1a2b] shadow-2xl hover:shadow-md hover:shadow-[#8c9c88] 
-    dark:hover:shadow-[#3a4e4f] transform hover:scale-105 transition-transform duration-300 ease-in-out`}
+    onClick={() => handleReadMore(course.title)}
+    className={`relative overflow-hidden ${styles.container} w-full bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] 
+    dark:bg-[rgb(18,32,49)] rounded-3xl text-black p-3 text-center flex flex-col items-center h-[400px] lg:h-[450px] 
+    dark:hover:bg-[#0e1a2b] shadow-2xl hover:shadow-md hover:shadow-[#8c9c88] 
+    dark:hover:shadow-[#3a4e4f] transform hover:scale-105 transition-transform duration-300 ease-in-out cursor-pointer`}
   >
     {course.isBestSelling && (
       <div className={`${styles.card_box}`}>
         <span></span>
       </div>
     )}
-    <div className="w-full h-[250px] flex justify-center items-center dark:bg-[#021625] rounded-2xl overflow-hidden">
+    <div className="w-full h-[200px] lg:h-[240px] flex justify-center items-center dark:bg-[#021625] rounded-2xl overflow-hidden">
       <Image
         alt={course.title}
-        className="object-cover w-[380px] h-[250px]"
+        className="object-cover w-full h-full"
         height={250}
-        width={250}
-        src={course.image}
+        width={380}
+        src={course.image || "/placeholder.svg"}
       />
     </div>
-    <div className="flex flex-col gap-3 ">
-      <p className="font-semibold text-lg dark:text-white text-[#000000]">
-        {course.title}
-      </p>
-      <p className="dark:text-gray-400 text-gray-900 text-sm">
-        {course.description}
-      </p>
+    <div className="flex flex-col justify-center items-center gap-3 lg:gap-4 flex-grow py-4">
+      <p className="font-semibold lg:text-xl text-lg dark:text-white text-[#000000]">{course.title}</p>
+      <p className="dark:text-gray-400 w-full lg:w-[90%] text-gray-900 lg:text-base text-sm">{course.description}</p>
     </div>
-    <button
-      onClick={() => handleReadMore(course.title)}
-      className={`${dm_Sans.className} flex items-center justify-center tracking-wider bg-black 
-      text-[#DEC29F] font-bold p-2 px-4 rounded-xl transition-colors duration-300 ease-in-out text-sm`}
-    >
-      Read more <MdOutlineArrowForwardIos className="ml-2" />
-    </button>
+    <div className="mb-4">
+      <button
+        onClick={(e) => {
+          e.stopPropagation()
+          handleReadMore(course.title)
+        }}
+        className={`${dm_Sans.className} flex items-center justify-center tracking-wider bg-black 
+        text-[#DEC29F] font-bold p-2 px-4 rounded-xl transition-colors duration-300 ease-in-out text-sm`}
+      >
+        Read more <MdOutlineArrowForwardIos className="ml-2" />
+      </button>
+    </div>
   </div>
-);
+)
 
+export default CardComponent
 
-export default CardComponent;

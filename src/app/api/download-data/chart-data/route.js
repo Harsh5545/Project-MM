@@ -40,7 +40,7 @@ export async function GET(req) {
       count: Number(entry.count), // Convert BigInt to regular number
     }));
 
-    return NextResponse.json(result);
+    return NextResponse.json({ message: 'Data found successfully.', data: result });
   } catch (error) {
     return NextResponse.json({ message: 'Error fetching data', error: error.message }, { status: 500 });
   }

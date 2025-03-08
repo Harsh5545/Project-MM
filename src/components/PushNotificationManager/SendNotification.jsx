@@ -63,7 +63,7 @@ export default function SendNotification() {
 
     async function sendTestNotification() {
         if (subscription) {
-            await sendNotification('Title',message,'https://www.google.com');
+            await sendNotification('Title',message,process.env.NEXT_PUBLIC_SITE_URL);
             setMessage('');
         }
     }
