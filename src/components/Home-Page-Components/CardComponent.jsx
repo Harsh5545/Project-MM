@@ -52,7 +52,7 @@ const CardComponent = () => {
     },
     {
       image: "/assets/Etiquettechildren.jpg",
-      title: "Children’s Etiquette Programme",
+      title: "Childrens Etiquette Programme",
       description: "Teach your children essential etiquette skills in a fun and engaging way.",
       isBestSelling: false,
     },
