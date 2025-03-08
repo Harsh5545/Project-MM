@@ -44,7 +44,7 @@ export default function BlogTable() {
   }, [pageIndex, pageSize, searchTerm, sortColumn, sortOrder, published]);
 
   const fetchBlogs = async () => {
-    setLoading(true)
+    setLoading(true);
     try {
       const response = await fetch(
         `/api/blog/list-blog?page=${pageIndex + 1}&pageSize=${pageSize}&searchTerm=${searchTerm}&sortBy=${sortColumn}&sortOrder=${sortOrder}&published=${published}`
@@ -54,6 +54,8 @@ export default function BlogTable() {
       }
       const data = await response.json();
       setBlogs(data?.data || []); // Ensure `data?.data` is used if your API response is wrapped under `data`
+      // Ensure to correctly calculate totalPages based on totalCount from API response
+      setTotalPages(Math.ceil(data.totalCount / pageSize));
     } catch (error) {
       console.error("Error fetching blogs:", error);
       toast({
@@ -62,7 +64,7 @@ export default function BlogTable() {
         variant: "destructive",
       });
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   };
 
@@ -80,7 +82,6 @@ export default function BlogTable() {
   const confirmDelete = async () => {
     if (!blogToDelete) return;
     try {
-
       const payload = { id: blogToDelete?.id };
       const response = await fetch(`/api/blog/delete-blog`, {
         method: "POST",
@@ -111,18 +112,11 @@ export default function BlogTable() {
     }
   };
 
-
   const handleEdit = (blog) => {
     router.push(`/admin/blog/edit/${blog.slug}`);
   };
 
-  const paginatedBlogs = useMemo(() => {
-    const startIndex = pageIndex * pageSize;
-    return blogs.slice(startIndex, startIndex + pageSize); // Paginate data here
-  }, [blogs, pageIndex, pageSize]);
-
-  const totalPages = Math.ceil(blogs.length / pageSize);
-
+  const [totalPages, setTotalPages] = useState(0); // New state to store total pages
 
   const TableShimmer = () => (
     <div className="space-y-4">
@@ -135,7 +129,7 @@ export default function BlogTable() {
         </div>
       ))}
     </div>
-  )
+  );
 
   return (
     <div className="container mx-auto py-10">
@@ -151,75 +145,6 @@ export default function BlogTable() {
         />
         <Button onClick={() => router.push("blog/create")}>Add New Blog</Button>
       </div>
-
-      {/* <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>
-              <Button variant="ghost">
-                Image
-              </Button>
-            </TableHead>
-            <TableHead>
-              <Button variant="ghost" onClick={() => handleSort("title")}>
-                Title
-                <ArrowUpDown className="ml-2 h-4 w-4" />
-              </Button>
-            </TableHead>
-            <TableHead>
-              <Button variant="ghost" onClick={() => handleSort("category")}>
-                Category
-                <ArrowUpDown className="ml-2 h-4 w-4" />
-              </Button>
-            </TableHead>
-            <TableHead>
-              <Button variant="ghost" onClick={() => setPublished(!published)}>
-                Published
-                <ArrowUpDown className="ml-2 h-4 w-4" />
-              </Button>
-            </TableHead>
-            <TableHead>Actions</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {loading ? (
-            <TableRow>
-              <TableCell colSpan={5}>
-                <TableShimmer />
-              </TableCell>
-            </TableRow>
-          ) : (paginatedBlogs.map((blog) => (
-            <TableRow key={blog.id}>
-              <TableCell>
-                <Image
-                  src={blog.image || "/default-image.jpg"}
-                  alt={blog.title}
-                  width={50}
-                  height={50}
-                  className="rounded-full"
-                />
-              </TableCell>
-              <TableCell>{blog.title}</TableCell>
-              <TableCell>{blog.category ? blog.category.category_name : "No category"}</TableCell>
-              <TableCell>
-                <Button variant={blog.published ? "default" : "destructive"}>
-                  {blog.published ? "Published" : "Not Published"}
-                </Button>
-              </TableCell>
-
-              <TableCell>
-                <Button variant="outline" className="mr-2" onClick={() => handleEdit(blog)}>
-                  Edit
-                </Button>
-                <Button variant="destructive" onClick={() => handleDelete(blog)}>
-                  Delete
-                </Button>
-              </TableCell>
-            </TableRow>
-          )))}
-        </TableBody>
-      </Table> */}
-
 
       <Table>
         <TableHeader>
@@ -256,7 +181,7 @@ export default function BlogTable() {
               </TableCell>
             </TableRow>
           ) : (
-            paginatedBlogs.map((blog) => (
+            blogs.map((blog) => (
               <TableRow key={blog.id}>
                 <TableCell style={{ width: '100px' }}>
                   <Image
@@ -290,7 +215,6 @@ export default function BlogTable() {
           )}
         </TableBody>
       </Table>
-
 
       <div className="flex justify-center items-center border-t pt-4 space-x-2 mt-4">
         <div className="flex items-center space-x-2">
