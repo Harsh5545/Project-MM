@@ -15,7 +15,6 @@ const Navlink = ({ item }) => {
             ${isActive && theme === "dark"
                     ? StyleSheet.darkActive : isActive
                         ? StyleSheet.lightActive : ""}`}
-            prefetch={false}
         >
             {item.title}
         </Link>

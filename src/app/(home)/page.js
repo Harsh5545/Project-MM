@@ -32,29 +32,25 @@ const homepageSchema = {
 }
 
 export const metadata = {
-  // title: "Modern Mannerism - Elevating Etiquette and Personality",
-  title: {
-    default: "Modern Mannerism",
-    template: "Modern Mannerism | %s",
-  },
-  description:
-    "Modern Mannerism offers personalized coaching in business etiquette, children's manners, and personality development.",
-  keywords:
-    "business etiquette, children's manners, personality development, modern manners, professional skills, children's etiquette, etiquette coaching",
+  title:'Modern Mannerism',
+  description:"Modern Mannerism offers personalized coaching in business etiquette, children's manners, and personality development.",
+  keywords:"business etiquette, children's manners, personality development, modern manners, professional skills, children's etiquette, etiquette coaching",
   author: "Modern Mannerism",
-  ogTitle: "Modern Mannerism - Elevating Etiquette and Personality",
-  ogDescription:
-    "Learn essential skills for professional and personal growth with Modern Mannerism's coaching programs on etiquette and personality development.",
-  ogImage: "/web-app-manifest-192x192.png",
-  ogUrl: "https://www.modernmannerism.com",
-  twitter: {
-    card: "summary_large_image",
-    site: "@modernmannerism",
-    creator: "@modernmannerism",
-    title: "Modern Mannerism - Elevating Etiquette and Personality",
-    description:
-      "Learn essential skills for professional and personal growth with Modern Mannerism's coaching programs on etiquette and personality development.",
-    image: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+  alternates: {
+    canonical: `${process.env.NEXT_PUBLIC_SITE_URL}`,
+  },
+  openGraph: {
+    title: "Modern Mannerism",
+    description: "Modern Mannerism offers personalized coaching in business etiquette, children's manners, and personality development.",
+    url: `${process.env.NEXT_PUBLIC_SITE_URL}`,
+    siteName: "Modern Mannerism",
+    images: [
+      {
+        url: "https://ik.imagekit.io/giol62jyf/static/MM.png?updatedAt=1741423895125",
+        width: 800,
+        height: 600,
+      },
+    ]
   },
 }
 

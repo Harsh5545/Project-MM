@@ -10,19 +10,21 @@ export const metadata = {
   title: "Sign In",
   description: "Sign in to your Modern Mannerism account to access personalized coaching services, courses, and content.",
   keywords: "sign in, login, Modern Mannerism login, account login, coaching platform sign in",
-  author: "Modern Mannerism",
-  ogTitle: "Sign In - Modern Mannerism",
-  ogDescription: "Sign in to your Modern Mannerism account to access your personalized learning and coaching programs.",
-  ogImage: "https://www.modernmannerism.com/sign-in-og-image.jpg",
-  ogUrl: "https://www.modernmannerism.com/sign-in",
-  twitter: {
-    card: "summary_large_image",
-    site: "@modernmannerism",
-    creator: "@modernmannerism",
-    title: "Sign In - Modern Mannerism",
-    description: "Log in to access personalized coaching, business etiquette programs, and personality development courses.",
-    image: "https://www.modernmannerism.com/sign-in-twitter-image.jpg"
+  openGraph: {
+    title: "Modern Mannerism - Sign In",
+    description:"Sign in to your Modern Mannerism account to access personalized coaching services, courses, and content.",
+    images: [
+      {
+        url: "https://ik.imagekit.io/giol62jyf/static/MM.png?updatedAt=1741423895125",
+        width: 1200,
+        height: 630,
+        alt: "Modern Mannerism - Sign In",
+      },
+    ],
+    url: `${process.env.NEXT_PUBLIC_SITE_URL}/sign-in`,
+    type: "website",
   }
+  
 };
 
 const page = async () => {

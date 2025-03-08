@@ -24,7 +24,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Modern Mannerism",
+  title: {
+    template: "Modern Mannerism | %s",
+  }
 };
 
 export default async function RootLayout({ children }) {
