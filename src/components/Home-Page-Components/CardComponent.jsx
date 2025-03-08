@@ -11,7 +11,6 @@ import styles from "./styles.module.css"
 const dm_Sans = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["700"],
-  
 })
 
 const responsive = {
@@ -72,12 +71,12 @@ const CardComponent = () => {
   return (
     <div className="w-full overflow-hidden bg-gradient-to-br from-neutral-50 to-neutral-100 dark:bg-[#00001F] flex flex-col justify-center items-center pb-16">
       <div className="md:w-[90%] w-[95%]">
-      <div className="flex flex-col items-center lg:mb-5 mb-4 gap-0 lg:gap-3">
-                <h2 className={`${dm_Sans.className} text-2xl md:text-4xl font-bold text-gray-900`}>
-                    Our Services
-                </h2>
-                <div className="h-1 w-16 bg-gradient-to-r from-[#c3965d] to-[#eabf91] rounded-full"></div>
-              </div>
+        <div className="flex flex-col items-center lg:mb-5 mb-4 gap-0 lg:gap-3">
+          <h2 className={`${dm_Sans.className} text-2xl md:text-4xl font-bold text-gray-900`}>
+            Our Services
+          </h2>
+          <div className="h-1 w-16 bg-gradient-to-r from-[#c3965d] to-[#eabf91] rounded-full"></div>
+        </div>
 
         {isMobile ? (
           <Carousel responsive={responsive} infinite={true} autoPlay={true} autoPlaySpeed={3000} itemClass="px-2 py-2">
@@ -139,4 +138,3 @@ const CourseCard = ({ course, handleReadMore }) => (
 )
 
 export default CardComponent
-
