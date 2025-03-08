@@ -1,3 +1,4 @@
+import { fetchBlogs } from "@/api"
 import { BentoGridDemo } from "@/components/Blog-Component/BentoGridDemo"
 import BlogHero from "@/components/Blog-Component/BlogHero"
 import HomeSection from "@/components/Home-Page-Components/HomeSection"
@@ -13,26 +14,12 @@ export const metadata = {
 
 const page = async () => {
   try {
-    const url = new URL(`${process.env.NEXT_PUBLIC_API_URL}/api/blog/list-blog`)
-    const page = 1
-    const pageSize = 10
-    url.searchParams.set("page", page)
-    url.searchParams.set("pageSize", pageSize)
-    url.searchParams.set("sortBy", "createdAt")
-    url.searchParams.set("sortOrder", "desc")
-
-    const response = await fetch(url);
-
-    if (!response.ok) {
-      throw new Error("Failed to fetch blog posts")
-    }
-
-    const result = await response.json()
-    if (result && result.data && result.data.length > 0) {
+    const data = await fetchBlogs()
+    if (data && data.data && data.data.length > 0) {
       return (
         <div>
           <BlogHero />
-          <BentoGridDemo blogs={result.data} />
+          <BentoGridDemo blogs={data.data} />
           <HomeSection />
         </div>
       )
