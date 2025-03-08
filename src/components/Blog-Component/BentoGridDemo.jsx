@@ -68,7 +68,7 @@ export function BentoGridDemo({ blogs }) {
             <div className="absolute left-0 w-full mt-2 bg-white dark:bg-gray-800 border rounded-md shadow-lg z-10">
               <button className="w-full text-left p-3 hover:bg-gray-100 dark:hover:bg-gray-700" onClick={() => setSelectedCategory("")}>All Categories</button>
               {categories.map((category) => (
-                <button key={category} className="w-full text-left p-3 hover:bg-gray-100 dark:hover:bg-gray-700" onClick={() => { setSelectedCategory(category); setIsDropdownOpen(false); }}>
+                <button key={category} className=" bg-slate-100 w-full text-left p-3 hover:bg-gray-100 dark:hover:bg-gray-700" onClick={() => { setSelectedCategory(category); setIsDropdownOpen(false); }}>
                   {category}
                 </button>
               ))}
@@ -76,7 +76,7 @@ export function BentoGridDemo({ blogs }) {
           )}
         </div>
 
-        <div className="mt-8 hidden md:block shadow-lg rounded-lg">
+        <div className="mt-10 hidden md:block">
           <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 p-2">
             Trending Blogs
           </h3>
