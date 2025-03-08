@@ -31,7 +31,6 @@ const dmsans = DM_Sans({
   weight: ["400", "500", "600", "700"],
 })
 const BlogPage = ({ data }) => {
-  console.log(data)
   const [isScrolled, setIsScrolled] = useState(false)
   const [likesCount, setLikesCount] = useState(data?.likes || 0)  // Initialize with data.likes
   const [liked, setLiked] = useState(false)

@@ -1,4 +1,5 @@
-"use client"
+"use client";
+
 import { useState } from "react"
 import { motion } from "framer-motion"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"

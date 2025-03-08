@@ -5,7 +5,7 @@ import BlogPage from "@/components/Blog-Component/Blog-Landing-Page/BlogPage"
 import { notFound } from "next/navigation"
 import { cache } from "react"
 
-export const revalidate = 43200;
+export const revalidate = 3600;
 
 export async function generateStaticParams() {
   const data = await fetchBlogs();  
@@ -34,7 +34,6 @@ export async function generateMetadata({ params }) {
     alternates: {
       canonical: `/blogs/${slug}`,
     },
-
     openGraph: {
       title: title,
       description: description,
@@ -45,7 +44,7 @@ export async function generateMetadata({ params }) {
           height: 600,
         },
       ],
-    },
+    }
   }
 }
 
