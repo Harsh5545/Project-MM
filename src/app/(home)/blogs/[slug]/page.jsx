@@ -1,29 +1,33 @@
 
+import { fetchBlogs, GetBlogDetails } from "@/api"
 import BlogCommentSection from "@/components/Blog-Component/Blog-Landing-Page/BlogCommentSection"
 import BlogPage from "@/components/Blog-Component/Blog-Landing-Page/BlogPage"
-import HomeSection from "@/components/Home-Page-Components/HomeSection"
 import { notFound } from "next/navigation"
+import { cache } from "react"
 
+export const revalidate = 43200;
 
+export async function generateStaticParams() {
+  const data = await fetchBlogs();  
+  const allBlogs = data.data || [];
+  return allBlogs.map((tag) => ({
+    slug: tag.slug,
+  }));
+}
+
+const getData = cache(GetBlogDetails)
 
 export async function generateMetadata({ params }) {
   const slug = (await params).slug
-
-  // Fetch the blog details
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blog/blog-details?slug=${slug}`)
-
-  if (!response.ok) {
+  const response = await getData(slug)
+  if (!response.Success) {
     throw new Error("Failed to fetch blog details")
   }
 
-  const result = await response.json()
-
-  if (!result?.data) {
+  if (!response?.data) {
     return notFound()
   }
-
-  const { title, description, image } = result.data
-
+  const { title, description, image } = response.data
   return {
     title: title,
     description: description,
@@ -48,20 +52,13 @@ export async function generateMetadata({ params }) {
 const page = async ({ params }) => {
   try {
     const slug = (await params).slug
-
-    // Fetch the blog details
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blog/blog-details?slug=${slug}`)
-
-    if (!response.ok) {
+    const response = await GetBlogDetails(slug);
+    if (!response.Success) {
       throw new Error("Failed to fetch blog details")
     }
-
-    const result = await response.json()
-
-    if (!result?.data) {
+    if (!response?.data) {
       return notFound()
     }
-
     // Fetch recent blogs for the sidebar
     const recentBlogsUrl = new URL(`${process.env.NEXT_PUBLIC_API_URL}/api/blog/list-blog`)
     recentBlogsUrl.searchParams.set("page", "1")
@@ -79,7 +76,7 @@ const page = async ({ params }) => {
 
     // Add recent blogs to the data
     const blogData = {
-      ...result.data,
+      ...response.data,
       recentBlogs: recentBlogs.filter((blog) => blog.slug !== slug).slice(0, 3),
     }
 
