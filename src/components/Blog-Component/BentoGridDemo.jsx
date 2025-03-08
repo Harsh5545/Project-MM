@@ -91,7 +91,7 @@ export function BentoGridDemo({ blogs }) {
       </aside>
 
       <main className="w-full md:w-3/4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-4 h-[1200px]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-4 h-full md:h-[1200px]">
           {paginatedBlogs.length > 0 ? (
             paginatedBlogs.map((item, index) => (
               <motion.div
