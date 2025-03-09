@@ -87,9 +87,9 @@ export default function ContactForm() {
       }}
     >
       <div className="w-full max-w-6xl mx-auto px-4 py-8">
-        <div className="flex flex-col md:flex-row bg-white dark:bg-[#06273A] bg-opacity-90 dark:bg-opacity-90 rounded-xl shadow-xl overflow-hidden">
+        <div className="flex flex-col-reverse md:flex-row bg-white dark:bg-[#06273A] bg-opacity-90 dark:bg-opacity-90 rounded-xl shadow-xl overflow-hidden">
           {/* Left Section - Info */}
-          <div className="w-full md:w-2/5 p-6 md:p-8 flex flex-col justify-between bg-gradient-to-br from-[#c3965d]/10 to-[#eabf91]/10 dark:from-[#06273A] dark:to-[#0C1522]">
+          <div className="w-full md:w-2/5 p-6 md:p-8 hidden md:flex flex-col justify-between bg-gradient-to-br from-[#c3965d]/10 to-[#eabf91]/10 dark:from-[#06273A] dark:to-[#0C1522]">
             <div>
               <h1 className="text-3xl md:text-4xl font-bold text-[#eabf91] mb-6">Get in Touch</h1>
               <p className="text-gray-700 dark:text-gray-200 mb-8">
@@ -150,15 +150,20 @@ export default function ContactForm() {
             </div>
           </div>
 
-          {/* Right Section - Form */}
+         
           <div className="w-full md:w-3/5 p-6 md:p-8">
+           {/* Right Section - Form 
             <div className="mb-6">
               <h2 className="text-2xl font-bold text-gray-800 dark:text-white">Contact Us</h2>
               <p className="text-gray-600 dark:text-gray-300">
                 Fill out the form below and we'll get back to you shortly
               </p>
-            </div>
-
+            </div>*/}
+<div className="flex flex-col md:hidden text-center justify-center"> <h1 className="text-3xl md:text-4xl font-bold text-[#eabf91] mb-6">Get in Touch</h1>
+              <p className="text-gray-700 text-sm dark:text-gray-200 mb-8">
+                Our team will reach out to you as soon as possible to discuss your needs and how we can help you enhance
+                your personal and professional presence.
+              </p></div>
             <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4">
           <FormField
