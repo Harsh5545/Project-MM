@@ -93,7 +93,7 @@ export default async function Home() {
       <HomeAbout />
       <RecentBlogCarousel blogs={recentBlogs} />
       <HomeTestimonial />
-      <div id="testimonials">
+      <div id="consultation">
         <HomeConsultation />
       </div>
     </>

@@ -151,7 +151,7 @@ const Footer = () => {
               </form>
             </div>
 
-            <div className="flex items-center space-x-4">
+            {/* <div className="flex items-center space-x-4">
               <Button
                 variant="outline"
                 size="sm"
@@ -170,7 +170,7 @@ const Footer = () => {
                   </>
                 )}
               </Button>
-            </div>
+            </div> */}
           </div>
         </div>
 
