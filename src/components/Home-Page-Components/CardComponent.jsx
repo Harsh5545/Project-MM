@@ -81,13 +81,13 @@ const CardComponent = () => {
         {isMobile ? (
           <Carousel responsive={responsive} infinite={true} autoPlay={true} autoPlaySpeed={3000} itemClass="px-2 py-2">
             {courses.map((course, index) => (
-              <CourseCard key={index} course={course} handleReadMore={handleReadMore} />
+              <CourseCard key={index} course={course} handleReadMore={handleReadMore} isMobile={isMobile} />
             ))}
           </Carousel>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-12 w-full px-4">
             {courses.map((course, index) => (
-              <CourseCard key={index} course={course} handleReadMore={handleReadMore} />
+              <CourseCard key={index} course={course} handleReadMore={handleReadMore} isMobile={isMobile} />
             ))}
           </div>
         )}
@@ -96,13 +96,12 @@ const CardComponent = () => {
   )
 }
 
-const CourseCard = ({ course, handleReadMore }) => (
+const CourseCard = ({ course, handleReadMore, isMobile }) => (
   <div
     onClick={() => handleReadMore(course.title)}
     className={`relative overflow-hidden ${styles.container} w-full bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] 
-    dark:bg-[rgb(18,32,49)] rounded-3xl text-black p-3 text-center flex flex-col items-center h-[400px] lg:h-[450px] 
-    dark:hover:bg-[#0e1a2b] shadow-2xl hover:shadow-md hover:shadow-[#8c9c88] 
-    dark:hover:shadow-[#3a4e4f] transform hover:scale-105 transition-transform duration-300 ease-in-out cursor-pointer`}
+    dark:bg-[rgb(18,32,49)] rounded-2xl text-black p-3 text-center flex flex-col items-center h-[450px] lg:h-[450px] 
+    ${!isMobile && "dark:hover:bg-[#0e1a2b] shadow-2xl hover:shadow-md hover:shadow-[#8c9c88] dark:hover:shadow-[#3a4e4f] transform hover:scale-105 transition-transform duration-300 ease-in-out cursor-pointer"}`}
   >
     {course.isBestSelling && (
       <div className={`${styles.card_box}`}>

@@ -11,13 +11,13 @@ export const HoverEffect = ({
 
   return (
     <div
-      className={cn("grid grid-rows-3 grid-flow-row gap-2 py-0 shadow-lg", className)} // Set grid to have 3 rows
+      className={cn("grid grid-rows-3 grid-flow-row gap-2 py-0 ", className)} // Set grid to have 3 rows
     >
       {items.map((item, idx) => (
         <Link
           href={item?.link}
           key={item?.link}
-          className="relative group block p-2 h-full w-full sm:w-full"
+          className="relative group  p-2 h-full w-full sm:w-full"
           onMouseEnter={() => setHoveredIndex(idx)}
           onMouseLeave={() => setHoveredIndex(null)}
         >
