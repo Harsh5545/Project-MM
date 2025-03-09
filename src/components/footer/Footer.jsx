@@ -177,14 +177,14 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className={`${ebGaramond.className} mt-12 pt-8 border-t border-gray-200 dark:border-gray-700`}>
           <div className="flex justify-between md:flex-row flex-col items-center lg:gap-0 gap-4">
-            <p className="text-sm">&copy; 2025 ModernMannerism. All rights reserved.</p>
+            <p className="text-base">&copy; 2025 ModernMannerism. All rights reserved.</p>
            
-            <div className="flex gap-2 text-center text-sm">
+            <div className="flex gap-2 text-center text-base">
               <button onClick={() => router.push('/privacy-policy')} className="hover:text-[#eabf91] transition-colors duration-200">Privacy Policy</button><span >|</span>
               <button onClick={() => router.push('/terms')} className="hover:text-[#eabf91] transition-colors duration-200">Terms</button>
             </div>
             <div className="text-center">
-              <p className="text-sm">Developed by <a href="https://alberow.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#eabf91] transition-colors duration-200">Alberow</a></p>
+              <p className="text-base">Developed by <a href="https://alberow.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#eabf91] transition-colors duration-200">Alberow</a></p>
             </div>
           </div>
         </div>

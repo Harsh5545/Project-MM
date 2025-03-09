@@ -17,21 +17,21 @@ const testimonials = [
     Name: "Harsh Jaiswal",
     Description:
       "The business etiquette workshop completely transformed how I present myself in professional settings. The personalized coaching helped me identify areas for improvement I wasn't even aware of. Now I feel confident in any business situation!",
-    Image: "/assets/MenTest.png",
+    Image: "/assets/menmm.png",
   },
   {
     id: 2,
     Name: "Vishal More",
     Description:
       "I enrolled my 10-year-old daughter in the children's etiquette program, and the results have been remarkable. She's more confident, polite, and socially aware. The coach made learning manners fun and engaging!",
-    Image: "/assets/MenTest.png",
+    Image: "/assets/menmm.png",
   },
   {
     id: 3,
     Name: "Priya Sharma",
     Description:
       "The fine dining workshop was eye-opening! I learned so much about proper table manners and dining etiquette that I now feel completely at ease during business dinners. Highly recommend for any professional.",
-    Image: "/assets/WomenTest.png",
+    Image: "/assets/womenmm.png",
   },
 ]
 
@@ -47,7 +47,7 @@ const HomeTestimonial = () => {
   }
 
   return (
-    <section className="py-16 lg:py-12 overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
+    <section className="py-16 lg:py-12 overflow-x-auto   overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
       <div className="container mx-auto px-2 overflow-hidden sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -116,7 +116,7 @@ const HomeTestimonial = () => {
                     key={index}
                     onClick={() => setCurrentIndex(index)}
                     className={`w-2 h-2 rounded-full transition-all ${
-                      index === currentIndex ? "bg-[#c3965d] w-3 h-3" : "bg-gray-300"
+                      index === currentIndex ? "bg-[#eabf91] w-3 h-3" : "bg-gray-300"
                     }`}
                     aria-label={`Go to testimonial ${index + 1}`}
                   />
