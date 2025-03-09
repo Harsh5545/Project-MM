@@ -8,10 +8,13 @@ import { motion } from "framer-motion"
 import { ChevronDown } from "lucide-react"
 import { format } from "date-fns"
 import { DM_Sans } from "next/font/google"
+import { FaFire } from "react-icons/fa"
+
 const dmsans = DM_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 })
+
 export function BentoGridDemo({ blogs }) {
   const [searchTerm, setSearchTerm] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("")
@@ -72,7 +75,7 @@ export function BentoGridDemo({ blogs }) {
             <div className="absolute left-0 w-full mt-2 bg-white dark:bg-gray-800 border rounded-md shadow-lg z-10">
               <button className="w-full text-left p-3 hover:bg-gray-100 dark:hover:bg-gray-700" onClick={() => setSelectedCategory("")}>All Categories</button>
               {categories.map((category) => (
-                <button key={category} className=" bg-slate-100 w-full text-left p-3 hover:bg-gray-100 dark:hover:bg-gray-700" onClick={() => { setSelectedCategory(category); setIsDropdownOpen(false); }}>
+                <button key={category} className="w-full text-left p-3 hover:bg-gray-100 dark:hover:bg-gray-700" onClick={() => { setSelectedCategory(category); setIsDropdownOpen(false); }}>
                   {category}
                 </button>
               ))}
@@ -81,9 +84,9 @@ export function BentoGridDemo({ blogs }) {
         </div>
 
         <div className="mt-10 hidden md:block">
-          <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 p-2">
-        
-               Trending Blogs
+          <h3 className="text-lg font-semibold text-center mb-4 flex items-center justify-center gap-2 p-2">
+            <FaFire className="text-[#eba255]" />
+            Trending Blogs
           </h3>
           <HoverEffect 
             items={featuredBlogs.map((blog) => ({
