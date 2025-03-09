@@ -7,7 +7,11 @@ import Link from "next/link"
 import { motion } from "framer-motion"
 import { ChevronDown } from "lucide-react"
 import { format } from "date-fns"
-
+import { DM_Sans } from "next/font/google"
+const dmsans = DM_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+})
 export function BentoGridDemo({ blogs }) {
   const [searchTerm, setSearchTerm] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("")
@@ -78,7 +82,8 @@ export function BentoGridDemo({ blogs }) {
 
         <div className="mt-10 hidden md:block">
           <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 p-2">
-            Trending Blogs
+        
+               Trending Blogs
           </h3>
           <HoverEffect 
             items={featuredBlogs.map((blog) => ({
@@ -91,7 +96,7 @@ export function BentoGridDemo({ blogs }) {
       </aside>
 
       <main className="w-full md:w-3/4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-4 h-full ">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-4 h-full md:h-max">
           {paginatedBlogs.length > 0 ? (
             paginatedBlogs.map((item, index) => (
               <motion.div
@@ -110,9 +115,9 @@ export function BentoGridDemo({ blogs }) {
                       />
                     </div>
 
-                    <h3 className="text-lg font-semibold line-clamp-2 mb-2">{item.title}</h3>
+                    <h3 className={`${dmsans.className} font-normal  tracking-wide  leading-relaxed text-base text-left md:text-lg lg:text-xl  line-clamp-2 mb-2`}>{item.title}</h3>
 
-                    <p className="text-sm text-gray-500 dark:text-gray-400 line-clamp-3 mb-4 flex-grow">
+                    <p className={`${dmsans.className} font-light tracking-wide  md:text-sm leading-relaxed text-sm text-gray-500 dark:text-gray-400 line-clamp-3 mb-4 flex-grow`}>
                       {item.meta_desc || "No description available"}
                     </p>
 

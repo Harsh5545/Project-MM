@@ -2,6 +2,12 @@ import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { useState } from "react";
+import { DM_Sans } from "next/font/google";
+
+const dmsans = DM_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
 
 export const HoverEffect = ({
   items,
@@ -71,7 +77,7 @@ export const CardTitle = ({
   children
 }) => {
   return (
-    <h4 className={cn("text-black-100 font-bold tracking-wide mt-0", className)}>
+    <h4 className={cn(`${dmsans.className} font-medium tracking-normal leading-normal text-base text-left md:text-lg lg:text-lg`, className)}>
       {children}
     </h4>
   );
@@ -83,7 +89,7 @@ export const CardDescription = ({
 }) => {
   return (
     <p
-      className={cn("mt-2 text-black-400 tracking-normal leading-relaxed text-sm", className)}
+      className={cn(`${dmsans.className} font-light tracking-wide  md:text-sm leading-relaxed mt-2 text-black-400  text-sm`, className)}
     >
       {children}
     </p>
