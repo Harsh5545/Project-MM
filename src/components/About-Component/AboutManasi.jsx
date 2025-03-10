@@ -20,7 +20,7 @@ export const AboutManasi = () => {
               <hr className="h-1 bg-gradient-to-r  from-[#c3965d] via-[#eabf91] to-[#c3965d]  w-16" />
             </div> */}
               <Image
-                src="/assets/Manasi_kadam_image.jpg"
+                src="/assets/AboutMM.jpg"
                 height={600}
                 width={400}
                 alt="Manasi Kadam - Modern Mannerism"
