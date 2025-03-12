@@ -5,35 +5,58 @@ import Image from "next/image"
 import parse from "html-react-parser"
 import Link from "next/link"
 import { formatDistanceToNow } from "date-fns"
-import { use, useEffect, useState } from "react"
-import {
-  Share2,
-  BookmarkPlus,
-  Eye,
-  Calendar,
-  User,
-  Heart,
-  MessageSquare,
-  ArrowLeft,
-
-} from "lucide-react"
+import { useEffect, useState } from "react"
+import { BookmarkPlus, Eye, Calendar, User, Heart, MessageSquare, Clock, ChevronRight, TrendingUp } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { DM_Sans } from "next/font/google"
-import { FaFacebook, FaFacebookF, FaInstagram, FaLinkedin } from "react-icons/fa"
-import { AiFillInstagram } from "react-icons/ai"
-import { BsInstagram, BsLinkedin } from "react-icons/bs"
+import { FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa"
+import { Card, CardContent } from "@/components/ui/card"
+
 const dmsans = DM_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 })
+
 const BlogPage = ({ data }) => {
   const [isScrolled, setIsScrolled] = useState(false)
-  const [likesCount, setLikesCount] = useState(data?.likes || 0)  // Initialize with data.likes
+  const [likesCount, setLikesCount] = useState(data?.likes || 0)
   const [liked, setLiked] = useState(false)
+  const [estimatedReadTime, setEstimatedReadTime] = useState("5 min")
+
+  const [hasData, setHasData] = useState(false)
+
+  useEffect(() => {
+    if (data) {
+      setHasData(true)
+    }
+  }, [data])
+
+  useEffect(() => {
+    if (hasData) {
+      const storedLikedStatus = localStorage.getItem(`liked_${data.id}`) === "true"
+      setLiked(storedLikedStatus)
+
+      // Calculate estimated read time based on content length
+      if (data.content) {
+        const wordCount = data.content.replace(/<[^>]*>/g, "").split(/\s+/).length
+        const readingTime = Math.ceil(wordCount / 200) // Assuming 200 words per minute
+        setEstimatedReadTime(`${readingTime} min read`)
+      }
+
+      updateViewCount()
+
+      const handleScroll = () => {
+        setIsScrolled(window.scrollY > 200)
+      }
+
+      window.addEventListener("scroll", handleScroll)
+      return () => window.removeEventListener("scroll", handleScroll)
+    }
+  }, [data, hasData])
 
   if (!data) {
     return <div className="flex items-center justify-center min-h-screen text-red-500 text-lg">Blog not found</div>
@@ -43,10 +66,10 @@ const BlogPage = ({ data }) => {
   const formattedDate = data.createdAt ? formatDistanceToNow(new Date(data.createdAt), { addSuffix: true }) : ""
   const exactDate = data.createdAt
     ? new Date(data.createdAt).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    })
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
     : ""
 
   const updateViewCount = async () => {
@@ -71,7 +94,7 @@ const BlogPage = ({ data }) => {
     try {
       const response = await fetch(`/api/blog/update-likes-count`, {
         method: "POST",
-        body: JSON.stringify({ id: data?.id, slug: data?.slug, status }),  // Include 'status' (like/unlike)
+        body: JSON.stringify({ id: data?.id, slug: data?.slug, status }),
       })
 
       if (!response.ok) {
@@ -85,43 +108,49 @@ const BlogPage = ({ data }) => {
     }
   }
 
-  useEffect(() => {
-    const storedLikedStatus = localStorage.getItem(`liked_${data.id}`) === 'true'
-    setLiked(storedLikedStatus)
-    setLikesCount(storedLikedStatus ? likesCount + 1 : likesCount)  // If liked previously, increment likes count
-    updateViewCount()
-
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 200)
-    }
-
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [data])
-
-
   const toggleLike = () => {
     const newLikedStatus = !liked
     setLiked(newLikedStatus)
-    setLikesCount(newLikedStatus ? likesCount + 1 : likesCount - 1)  // Adjust the like count based on the new status
-    updateLikeCount(newLikedStatus ? "like" : "unlike")  // Send "like" or "unlike" to the API
-    localStorage.setItem(`liked_${data.id}`, newLikedStatus)  // Save the new liked status in localStorage
+    setLikesCount(newLikedStatus ? likesCount + 1 : likesCount - 1)
+    updateLikeCount(newLikedStatus ? "like" : "unlike")
+    localStorage.setItem(`liked_${data.id}`, newLikedStatus)
   }
 
   return (
     <div className="relative pt-20">
-      {/* Added pt-20 for navbar space */}
       {/* Floating share bar on scroll */}
       <motion.div
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: isScrolled ? 1 : 0, x: isScrolled ? 0 : -50 }}
-        className="fixed  top-1/3 z-50 hidden lg:flex flex-col gap-3 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm  rounded-full shadow-md"
+        className="fixed left-4 top-1/3 z-50 hidden lg:flex flex-col gap-3 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm p-2 rounded-full shadow-md"
       >
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
               <Button variant="ghost" size="icon" className="rounded-full hover:bg-primary/10 h-10 w-10">
-                <FaFacebookF className="h-5 w-5 text-primary" />
+                <FaLinkedin className="h-5 w-5 text-[#0A66C2]" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent side="right">
+              <p>Share on LinkedIn</p>
+            </TooltipContent>
+          </Tooltip>
+
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button variant="ghost" size="icon" className="rounded-full hover:bg-primary/10 h-10 w-10">
+                <FaInstagram className="h-5 w-5 text-[#E4405F]" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent side="right">
+              <p>Share on Instagram</p>
+            </TooltipContent>
+          </Tooltip>
+
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button variant="ghost" size="icon" className="rounded-full hover:bg-primary/10 h-10 w-10">
+                <FaFacebook className="h-5 w-5 text-[#1877F2]" />
               </Button>
             </TooltipTrigger>
             <TooltipContent side="right">
@@ -129,27 +158,7 @@ const BlogPage = ({ data }) => {
             </TooltipContent>
           </Tooltip>
 
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button variant="ghost" size="icon" className="rounded-full hover:bg-primary/10 h-10 w-10">
-                <BsInstagram className="h-5 w-5 text-primary" />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent side="right">
-              <p>Share on Twitter</p>
-            </TooltipContent>
-          </Tooltip>
-
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button variant="ghost" size="icon" className="rounded-full hover:bg-primary/10 h-10 w-10">
-                <BsLinkedin className="h-5 w-5 text-primary" />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent side="right">
-              <p>Share on LinkedIn</p>
-            </TooltipContent>
-          </Tooltip>
+          <Separator className="mx-auto w-4/5 my-1" />
 
           <Tooltip>
             <TooltipTrigger asChild>
@@ -180,14 +189,34 @@ const BlogPage = ({ data }) => {
         </TooltipProvider>
       </motion.div>
 
-      <div className="container max-w-[88%] mx-auto px-4 sm:px-6 py-8">
-        <div className="flex flex-col lg:flex-row-reverse gap-10">
+      <div className="container max-w-[90%] lg:max-w-[85%] mx-auto px-4 sm:px-6 py-8">
+        {/* Breadcrumb navigation */}
+        <div className="mb-6 flex items-center text-sm text-gray-500 dark:text-gray-400">
+          <Link href="/blogs" className="hover:text-primary transition-colors">
+            Articles
+          </Link>
+          <ChevronRight className="h-4 w-4 mx-2" />
+          {data.category && (
+            <>
+              <Link
+                href={`/blogs?category=${data.category.category_name}`}
+                className="hover:text-primary transition-colors"
+              >
+                {data.category.category_name}
+              </Link>
+              <ChevronRight className="h-4 w-4 mx-2" />
+            </>
+          )}
+          <span className="text-gray-700 dark:text-gray-300 truncate">{data.title}</span>
+        </div>
+
+        <div className="flex flex-col lg:flex-row gap-10">
           {/* Main Content */}
           <motion.article
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="lg:w-2/3 space-y-8 order-1 lg:order-2"
+            className="lg:w-2/3 space-y-8"
           >
             {/* Blog Header */}
             <header className="space-y-4">
@@ -197,62 +226,54 @@ const BlogPage = ({ data }) => {
                 </Badge>
               ) : null}
 
-              <h1 className={`${dmsans.className} font-medium text-center  tracking-wide leading-loose text-base md:text-lg   lg:text-4xl font-serif  text-gray-900 dark:text-white `}>
+              <h1
+                className={`${dmsans.className} font-semibold text-3xl md:text-4xl lg:text-5xl text-gray-900 dark:text-white leading-tight`}
+              >
                 {data.title}
               </h1>
 
-              {/* <p className="text-lg text-gray-600 dark:text-gray-300 font-light leading-relaxed">{data.meta_desc}</p> */}
-
-              <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
+              <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600 dark:text-gray-300">
                 <div className="flex items-center gap-2">
-                  <Avatar className="h-8 w-8">
+                  <Avatar className="h-10 w-10 border-2 border-white dark:border-gray-800 shadow-sm">
                     <AvatarImage
                       src={data.author?.image || "/assets/Manasi_kadam_image.jpg"}
                       alt={data.author?.first_name || "Author"}
                     />
                     <AvatarFallback>{data.author?.first_name?.[0] || "A"}</AvatarFallback>
                   </Avatar>
-                  <span className="font-medium">
-                    {data.author ? `${data.author.first_name} ${data.author.last_name}` : "Manasi Kadam"}
-                  </span>
+                  <div className="flex flex-col">
+                    <span className="font-medium">
+                      {data.author ? `${data.author.first_name} ${data.author.last_name}` : "Manasi Kadam"}
+                    </span>
+                    <span className="text-xs text-gray-500 dark:text-gray-400">Certified Consultant</span>
+                  </div>
                 </div>
 
-                <Separator orientation="vertical" className="h-4" />
+                <Separator orientation="vertical" className="h-6" />
 
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-1.5">
                   <Calendar className="h-4 w-4" />
                   <span>{exactDate}</span>
                 </div>
 
-                <Separator orientation="vertical" className="h-4" />
+                <Separator orientation="vertical" className="h-6" />
 
-                <div className="flex items-center gap-1">
-                  <Eye className="h-4 w-4" />
-                  <span>{data.views || 0} views</span>
+                <div className="flex items-center gap-1.5">
+                  <Clock className="h-4 w-4" />
+                  <span>{estimatedReadTime}</span>
                 </div>
 
-                <div className="flex-grow"></div>
+                <Separator orientation="vertical" className="h-6" />
 
-                <div className="flex items-center gap-2 sm:ml-auto">
-                  <Button variant="ghost" size="sm" className="h-8 rounded-full md:hidden">
-                    <Share2 className="h-4 w-4 mr-1" />
-                    Share
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className={`h-8 rounded-full md:hidden ${liked ? "text-red-500" : ""}`}
-                    onClick={toggleLike}
-                  >
-                    <Heart className="h-4 w-4 mr-1" fill={liked ? "currentColor" : "none"} />
-                    {likesCount} {liked ? "Liked" : "Like"}
-                  </Button>
+                <div className="flex items-center gap-1.5">
+                  <Eye className="h-4 w-4" />
+                  <span>{data.views || 0} views</span>
                 </div>
               </div>
             </header>
 
             {/* Featured Image */}
-            <div className="relative w-full aspect-[16/9] overflow-hidden rounded-xl">
+            <div className="relative w-full aspect-[16/9] overflow-hidden rounded-xl shadow-md">
               <Image
                 src={data.image || "/assets/manasi-box.png"}
                 alt={data.title}
@@ -268,15 +289,8 @@ const BlogPage = ({ data }) => {
               {parse(typeof data?.content === "string" ? data?.content : "<p>No Content</p>")}
             </div>
 
-            {/* Tags (Commented out) */}
-            {/* {data.tags.map((tag, index) => (
-              <Badge key={index} variant="outline" className="px-3 py-1">
-                {typeof tag === "string" ? tag : JSON.stringify(tag)}
-              </Badge>
-            ))} */}
-
             {/* Article Actions */}
-            <div className="flex flex-wrap items-center justify-between gap-4 py-4 border-t border-b border-gray-200 dark:border-gray-700">
+            <div className="flex flex-wrap items-center justify-between gap-4 py-6 border-t border-b border-gray-200 dark:border-gray-700">
               <div className="flex items-center gap-3">
                 <Button
                   variant="outline"
@@ -299,49 +313,76 @@ const BlogPage = ({ data }) => {
                 </Button>
               </div>
 
-              <div className="flex items-center gap-1">
-  <span className="text-sm text-gray-500">Share:</span>
-  <Button
-    variant="ghost"
-    size="icon"
-    className="rounded-full h-8 w-8"
-    as="a"
-    href="https://www.linkedin.com/company/modernmannerism/posts/?feedView=all"
-    target="_blank"
-    rel="noopener noreferrer"
-    aria-label="LinkedIn"
-  >
-    <FaLinkedin className="h-4 w-4 text-[#0A66C2]" />
-  </Button>
-  <Button
-    variant="ghost"
-    size="icon"
-    className="rounded-full h-8 w-8"
-    as="a"
-    href="https://www.instagram.com/modernmannerism/"
-    target="_blank"
-    rel="noopener noreferrer"
-    aria-label="Instagram"
-  >
-    <FaInstagram className="h-4 w-4 text-[#E4405F]" />
-  </Button>
-  
-  <Button
-    variant="ghost"
-    size="icon"
-    className="rounded-full h-8 w-8"
-    as="a"
-    href="https://www.facebook.com/modernmannerism/"
-    target="_blank"
-    rel="noopener noreferrer"
-    aria-label="Facebook"
-  >
-    <FaFacebook className="h-4 w-4 text-[#1877F2]" />
-  </Button>
-</div>
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-gray-500">Share:</span>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="rounded-full h-8 w-8"
+                  as="a"
+                  href="https://www.linkedin.com/company/modernmannerism/posts/?feedView=all"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="LinkedIn"
+                >
+                  <FaLinkedin className="h-4 w-4 text-[#0A66C2]" />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="rounded-full h-8 w-8"
+                  as="a"
+                  href="https://www.instagram.com/modernmannerism/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Instagram"
+                >
+                  <FaInstagram className="h-4 w-4 text-[#E4405F]" />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="rounded-full h-8 w-8"
+                  as="a"
+                  href="https://www.facebook.com/modernmannerism/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Facebook"
+                >
+                  <FaFacebook className="h-4 w-4 text-[#1877F2]" />
+                </Button>
+              </div>
             </div>
 
-            {/* Author Bio Card */}
+            {/* Related Articles */}
+            {data.recentBlogs && data.recentBlogs.length > 0 && (
+              <div className="mt-12">
+                <h3 className={`${dmsans.className} text-2xl font-semibold mb-6`}>You May Also Like</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {data.recentBlogs.slice(0, 2).map((blog, index) => (
+                    <Link key={index} href={`/blogs/${blog.slug}`}>
+                      <Card className="overflow-hidden h-full hover:shadow-md transition-shadow">
+                        <div className="relative aspect-[16/9]">
+                          <Image
+                            src={blog.image || "/assets/default-blog.png"}
+                            alt={blog.title}
+                            fill
+                            className="object-cover"
+                          />
+                        </div>
+                        <CardContent className="p-4">
+                          <h4 className={`${dmsans.className} font-medium text-lg mb-2 line-clamp-2`}>{blog.title}</h4>
+                          <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
+                            <span>{blog.author?.first_name || "Author"}</span>
+                            {blog.createdAt && <span>{new Date(blog.createdAt).toLocaleDateString()}</span>}
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
           </motion.article>
 
           {/* Sidebar */}
@@ -349,75 +390,57 @@ const BlogPage = ({ data }) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-            className="lg:w-1/3 space-y-8 order-2 lg:order-1"
+            className="lg:w-1/3 space-y-8"
           >
-            {/* Author Card (Mobile Only) */}
-            {/* <div className="lg:hidden bg-primary/5 dark:bg-primary/10 rounded-xl p-6 flex flex-col items-center text-center">
-              <Avatar className="h-20 w-20 border-4 border-white dark:border-gray-800 shadow-md">
-                <AvatarImage
-                  src={"/assets/Manasi_kadam_image.jpg"}
-                  alt="Manasi Kadam"
-                />
-                <AvatarFallback>{data.author?.first_name?.[0] || "M"}</AvatarFallback>
-              </Avatar>
+            {/* Author Card */}
+            <Card className="overflow-hidden border-0 shadow-md bg-gradient-to-br from-primary/5 to-primary/10 dark:from-primary/10 dark:to-primary/20">
+              <CardContent className="p-6">
+                <div className="flex flex-col items-center text-center">
+                  <Avatar className="h-24 w-24 border-4 border-white dark:border-gray-800 shadow-md mb-4">
+                    <AvatarImage src={"/assets/Manasi_kadam_image.jpg"} alt="Manasi Kadam" />
+                    <AvatarFallback>MK</AvatarFallback>
+                  </Avatar>
 
-              <h3 className="text-lg font-serif font-bold mt-4">
-                Manasi Kadam
-              </h3>
-              <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">Certified Image & Etiquette Consultant</p>
-              <div className="mt-4">
-                <Link href="/about-us">
-                  <Button variant="outline" size="sm" className="rounded-full">
-                    Learn More
-                  </Button>
-                </Link>
-              </div>
-            </div> */}
-            <div className="bg-primary/5 dark:bg-primary/10 rounded-xl p-6 flex flex-col  gap-6 items-center">
-              <Avatar className="h-64 w-48 border-4 border-white dark:border-gray-800 shadow-md">
-                <AvatarImage
-                  src={"/assets/Manasi_kadam_image.jpg"}
-                  alt="Manasi Kadam"
-                />
-                <AvatarFallback>{"Manasi Kadam"}</AvatarFallback>
-              </Avatar>
+                  <h3 className="text-xl font-serif font-bold">Manasi Kadam</h3>
+                  <p className={`${dmsans.className} text-sm text-gray-600 dark:text-gray-300 mt-1`}>
+                    Certified Image & Etiquette Consultant
+                  </p>
 
-              <div className="text-center sm:text-left">
-                <h3 className="text-xl text-center font-serif font-bold">
-                  Manasi Kadam
-                </h3>
-                <p className={`${dmsans.className} text-xs md:text-sm text-center text-gray-600 tracking-wide leading-relaxed dark:text-gray-300 mt-1`}>Certified Image & Etiquette Consultant</p>
-                <p className={`${dmsans.className} font-light tracking-normal md:text-base leading-relaxed mt-3 text-center text-sm`}>
-                  I'm passionate about helping you develop confidence, polish, and social grace. My practical approach
-                  to etiquette makes it accessible and relevant for today's world.
-                </p>
-                <div className="mt-4 text-center">
-                  <Link href="/about-us">
-                    <Button variant="outline" size="sm" className={`${dmsans.className}  rounded-full`}>
-                      Learn More About Me
+                  <Separator className="w-16 my-4" />
+
+                  <p className={`${dmsans.className} text-sm leading-relaxed text-gray-700 dark:text-gray-300`}>
+                    I'm passionate about helping you develop confidence, polish, and social grace. My practical approach
+                    to etiquette makes it accessible and relevant for today's world.
+                  </p>
+
+                  <div className="flex items-center gap-3 mt-4">
+                    <Button variant="outline" size="sm" className="rounded-full" asChild>
+                      <Link href="/about-us">About Me</Link>
                     </Button>
-                  </Link>
+                    <Button variant="outline" size="sm" className="rounded-full" asChild>
+                      <Link href="/contact-us">Contact</Link>
+                    </Button>
+                  </div>
                 </div>
-              </div>
-            </div>
+              </CardContent>
+            </Card>
+
             {/* Trending Blogs */}
             {data.recentBlogs && data.recentBlogs.length > 0 && (
-              <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm overflow-hidden border border-gray-100 dark:border-gray-700  top-24">
-                <div className="bg-[#eabf91] bg-opacity-40 p-4">
-                  <h3 className="text-lg font-serif font-bold flex justify-center items-center">
-                    <span className="text-center relative">
-                      Trending Articles
-                      {/* <span className="absolute -top-1 -right-2 h-2 w-2 bg-primary rounded-full animate-pulse"></span> */}
-                    </span>
+              <Card className="overflow-hidden border border-gray-100 dark:border-gray-700 shadow-sm">
+                <div className="bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10 p-4">
+                  <h3 className="text-lg font-serif font-bold flex items-center gap-2">
+                    <TrendingUp className="h-4 w-4" />
+                    <span>Trending Articles</span>
                   </h3>
                 </div>
 
-                <div className="divide-y divide-gray-100 dark:divide-gray-700">
+                <div className="divide-y divide-gray-100 dark:divide-gray-800">
                   {data.recentBlogs.map((blog, index) => (
                     <Link
                       key={index}
                       href={`/blogs/${blog.slug}`}
-                      className="block hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
+                      className="block hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors"
                     >
                       <div className="p-4 flex gap-3">
                         <div className="relative h-16 w-16 flex-shrink-0 rounded-md overflow-hidden">
@@ -430,7 +453,9 @@ const BlogPage = ({ data }) => {
                         </div>
 
                         <div className="flex-1 min-w-0">
-                          <h4 className="text-sm font-medium line-clamp-2">{blog.title}</h4>
+                          <h4 className="text-sm font-medium line-clamp-2 hover:text-primary transition-colors">
+                            {blog.title}
+                          </h4>
                           <div className="flex items-center gap-2 mt-1 text-xs text-gray-500 dark:text-gray-400">
                             <User className="h-3 w-3" />
                             <span>{blog.author?.first_name || "Author"}</span>
@@ -441,30 +466,32 @@ const BlogPage = ({ data }) => {
                   ))}
                 </div>
 
-                <div className="p-4 bg-gray-50 dark:bg-gray-800">
+                <div className="p-4 bg-gray-50 dark:bg-gray-800/50">
                   <Link href="/blogs">
                     <Button variant="ghost" size="sm" className="w-full">
                       View All Articles
                     </Button>
                   </Link>
                 </div>
-              </div>
+              </Card>
             )}
 
             {/* Etiquette Quote */}
-            <div className="bg-primary/10 dark:bg-primary/20 rounded-xl p-6 text-center">
-              <div className="text-4xl font-serif text-primary mb-4">"</div>
-              <p className="italic text-gray-700 dark:text-gray-200">
-                "Etiquette is not about rules, but about creating a comfortable environment for everyone. It's the
-                foundation of meaningful connections."
-              </p>
-              <div className="mt-4 text-sm font-medium">— Manasi Kadam</div>
-            </div>
+            <Card className="overflow-hidden border-0 shadow-md bg-gradient-to-br from-primary/10 to-primary/5 dark:from-primary/20 dark:to-primary/10">
+              <CardContent className="p-6 text-center">
+                <div className="text-4xl font-serif text-primary mb-4">"</div>
+                <p className="italic text-gray-700 dark:text-gray-200">
+                  "Etiquette is not about rules, but about creating a comfortable environment for everyone. It's the
+                  foundation of meaningful connections."
+                </p>
+                <div className="mt-4 text-sm font-medium">— Manasi Kadam</div>
+              </CardContent>
+            </Card>
 
             {/* Newsletter Signup */}
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm overflow-hidden border border-gray-100 dark:border-gray-700">
-              <div className="p-6 space-y-4">
-                <h3 className="text-lg  font-serif font-bold">Join Our Modern Mannerism Community</h3>
+            <Card className="overflow-hidden border border-gray-100 dark:border-gray-700 shadow-sm">
+              <CardContent className="p-6 space-y-4">
+                <h3 className="text-lg font-serif font-bold">Join Our Community</h3>
                 <p className="text-sm text-gray-600 dark:text-gray-300">
                   Subscribe to receive etiquette tips, event invitations, and exclusive content.
                 </p>
@@ -475,13 +502,15 @@ const BlogPage = ({ data }) => {
                     className="w-full px-4 py-2 rounded-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-sm"
                     required
                   />
-                  <Button className="bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] text-slate-50 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 w-full">Subscribe</Button>
+                  <Button className="bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] text-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 w-full">
+                    Subscribe
+                  </Button>
                 </form>
                 <p className="text-xs text-gray-500 dark:text-gray-400">
                   We respect your privacy. Unsubscribe at any time.
                 </p>
-              </div>
-            </div>
+              </CardContent>
+            </Card>
           </motion.aside>
         </div>
       </div>
@@ -489,4 +518,5 @@ const BlogPage = ({ data }) => {
   )
 }
 
-export default BlogPage;
+export default BlogPage
+
