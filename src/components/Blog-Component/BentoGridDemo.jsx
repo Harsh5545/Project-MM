@@ -57,8 +57,9 @@ export function BentoGridDemo({ blogs }) {
 
   return (
     <div className="flex flex-col md:flex-row w-full md:px-12 lg:px-24 mx-auto py-10 px-6 gap-10">
-      <aside className="w-full md:w-1/4 space-y-8 bg-white dark:bg-gray-900 p-6 rounded-lg border border-gray-100 dark:border-gray-800 shadow-sm">
-        <div className="space-y-2">
+      <aside className="w-full md:w-1/4 space-y-8 bg-transparent md:bg-white dark:bg-gray-900 p-6 rounded-lg border h-fit border-gray-100 dark:border-gray-800 shadow-none md:shadow-sm">
+       <div className="w-full space-y-8 ">
+       <div className="space-y-2">
           <h3 className={`${dmsans.className} text-base font-medium text-gray-700 dark:text-gray-300`}>
             Search Articles
           </h3>
@@ -74,7 +75,7 @@ export function BentoGridDemo({ blogs }) {
           </div>
         </div>
 
-        <div className="space-y-2">
+        <div className="space-y-2 md:block hidden">
           <h3 className={`${dmsans.className} text-base font-medium text-gray-700 dark:text-gray-300`}>
             Filter by Category
           </h3>
@@ -119,6 +120,7 @@ export function BentoGridDemo({ blogs }) {
             )}
           </div>
         </div>
+       </div>
 
         <div className="pt-2 border-t border-gray-100 dark:border-gray-800 hidden md:block">
           <div className="flex items-center gap-2 mb-4">
@@ -175,11 +177,11 @@ export function BentoGridDemo({ blogs }) {
                         height={225}
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />
-                      {item.category?.category_name && (
+                      {/* {item.category?.category_name && (
                         <Badge className="absolute top-3 left-3 bg-white/90 dark:bg-gray-900/90 text-primary hover:bg-white dark:hover:bg-gray-900 backdrop-blur-sm">
                           {item.category.category_name}
                         </Badge>
-                      )}
+                      )} */}
                     </div>
 
                     <div className="p-5 flex flex-col flex-grow">
