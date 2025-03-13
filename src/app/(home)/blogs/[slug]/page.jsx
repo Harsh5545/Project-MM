@@ -83,7 +83,7 @@ const page = async ({ params }) => {
       <>
         <BlogPage data={blogData} />
         {/* <HomeSection /> */}
-        <BlogCommentSection/>
+        {/* <BlogCommentSection/> */}
       </>
     )
   } catch (error) {

@@ -15,6 +15,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { DM_Sans } from "next/font/google"
 import { FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa"
 import { Card, CardContent } from "@/components/ui/card"
+import BlogCommentSection from "./BlogCommentSection"
 
 const dmsans = DM_Sans({
   subsets: ["latin"],
@@ -220,11 +221,11 @@ const BlogPage = ({ data }) => {
           >
             {/* Blog Header */}
             <header className="space-y-4">
-              {data.category && typeof data.category.category_name === "string" ? (
-                <Badge className="bg-primary/20 text-primary hover:bg-primary/30 px-3 py-1 text-xs uppercase tracking-wider font-medium">
-                  {data.category.category_name}
-                </Badge>
-              ) : null}
+              {/* {data.category && typeof data.category.category_name === "string" ? (
+                // <Badge className="bg-primary/20 text-primary hover:bg-primary/30 px-3 py-1 text-xs uppercase tracking-wider font-medium">
+                //   {data.category.category_name}
+                // </Badge>
+              ) : null} */}
 
               <h1
                 className={`${dmsans.className} font-semibold text-3xl md:text-4xl lg:text-5xl text-gray-900 dark:text-white leading-tight`}
@@ -236,7 +237,7 @@ const BlogPage = ({ data }) => {
                 <div className="flex items-center gap-2">
                   <Avatar className="h-10 w-10 border-2 border-white dark:border-gray-800 shadow-sm">
                     <AvatarImage
-                      src={data.author?.image || "/assets/Manasi_kadam_image.jpg"}
+                      src={data.author?.image || "/assets/MMMMM.png"}
                       alt={data.author?.first_name || "Author"}
                     />
                     <AvatarFallback>{data.author?.first_name?.[0] || "A"}</AvatarFallback>
@@ -352,37 +353,9 @@ const BlogPage = ({ data }) => {
                   <FaFacebook className="h-4 w-4 text-[#1877F2]" />
                 </Button>
               </div>
+           
             </div>
-
-            {/* Related Articles */}
-            {data.recentBlogs && data.recentBlogs.length > 0 && (
-              <div className="mt-12">
-                <h3 className={`${dmsans.className} text-2xl font-semibold mb-6`}>You May Also Like</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {data.recentBlogs.slice(0, 2).map((blog, index) => (
-                    <Link key={index} href={`/blogs/${blog.slug}`}>
-                      <Card className="overflow-hidden h-full hover:shadow-md transition-shadow">
-                        <div className="relative aspect-[16/9]">
-                          <Image
-                            src={blog.image || "/assets/default-blog.png"}
-                            alt={blog.title}
-                            fill
-                            className="object-cover"
-                          />
-                        </div>
-                        <CardContent className="p-4">
-                          <h4 className={`${dmsans.className} font-medium text-lg mb-2 line-clamp-2`}>{blog.title}</h4>
-                          <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
-                            <span>{blog.author?.first_name || "Author"}</span>
-                            {blog.createdAt && <span>{new Date(blog.createdAt).toLocaleDateString()}</span>}
-                          </div>
-                        </CardContent>
-                      </Card>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            )}
+           
           </motion.article>
 
           {/* Sidebar */}
@@ -397,7 +370,7 @@ const BlogPage = ({ data }) => {
               <CardContent className="p-6">
                 <div className="flex flex-col items-center text-center">
                   <Avatar className="h-24 w-24 border-4 border-white dark:border-gray-800 shadow-md mb-4">
-                    <AvatarImage src={"/assets/Manasi_kadam_image.jpg"} alt="Manasi Kadam" />
+                    <AvatarImage src={"/assets/MMMMM.png"} alt="Manasi Kadam" />
                     <AvatarFallback>MK</AvatarFallback>
                   </Avatar>
 
@@ -415,11 +388,11 @@ const BlogPage = ({ data }) => {
 
                   <div className="flex items-center gap-3 mt-4">
                     <Button variant="outline" size="sm" className="rounded-full" asChild>
-                      <Link href="/about-us">About Me</Link>
+                      <Link href="/about-us">Know More</Link>
                     </Button>
-                    <Button variant="outline" size="sm" className="rounded-full" asChild>
+                    {/* <Button variant="outline" size="sm" className="rounded-full" asChild>
                       <Link href="/contact-us">Contact</Link>
-                    </Button>
+                    </Button> */}
                   </div>
                 </div>
               </CardContent>
@@ -512,7 +485,38 @@ const BlogPage = ({ data }) => {
               </CardContent>
             </Card>
           </motion.aside>
+          
         </div>
+        <BlogCommentSection/>
+            {/* Related Articles */}
+            {data.recentBlogs && data.recentBlogs.length > 0 && (
+              <div className="mt-12">
+                <h3 className={`${dmsans.className} text-2xl font-semibold mb-6`}>You May Also Like</h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {data.recentBlogs.slice(0, 3).map((blog, index) => (
+                    <Link key={index} href={`/blogs/${blog.slug}`}>
+                      <Card className="overflow-hidden h-full hover:shadow-md transition-shadow">
+                        <div className="relative aspect-[16/9]">
+                          <Image
+                            src={blog.image || "/assets/default-blog.png"}
+                            alt={blog.title}
+                            fill
+                            className="object-cover"
+                          />
+                        </div>
+                        <CardContent className="p-4">
+                          <h4 className={`${dmsans.className} font-medium text-lg mb-2 line-clamp-2`}>{blog.title}</h4>
+                          <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
+                            <span>Manasi Kadam</span>
+                            {/* {blog.createdAt && <span>{new Date(blog.createdAt).toLocaleDateString()}</span>} */}
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
       </div>
     </div>
   )

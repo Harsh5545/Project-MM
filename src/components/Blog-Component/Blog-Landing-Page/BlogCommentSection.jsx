@@ -22,7 +22,7 @@ export default function BlogCommentSection({ blogId, comments = [] }) {
   const mockComments = [
     {
       id: 1,
-      name: "Sarah Johnson",
+      name: "Shalini Gupta",
       date: "2 weeks ago",
       content:
         "This article was incredibly insightful! I've been struggling with proper dining etiquette at formal events, and your tips about European vs. American dining styles were exactly what I needed. Thank you for sharing your expertise.",
@@ -41,7 +41,7 @@ export default function BlogCommentSection({ blogId, comments = [] }) {
     },
     {
       id: 2,
-      name: "Michael Chen",
+      name: "Aniket Singh",
       date: "3 weeks ago",
       content:
         "I appreciate how you broke down business meeting etiquette across different cultures. As someone who frequently travels for work, these insights will definitely help me navigate international business relationships more effectively.",

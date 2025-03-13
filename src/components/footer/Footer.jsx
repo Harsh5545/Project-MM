@@ -131,7 +131,7 @@ const Footer = () => {
 
           {/* Newsletter & Theme Switcher */}
           <div className="space-y-6">
-            <div className="space-y-4">
+            <div className="space-y-4 flex justify-center flex-col">
               <p className={`${montserrat.className} text-lg font-semibold`}>Newsletter</p>
               <form onSubmit={handleNewsletterSubmit} className="space-y-3">
                 <input
@@ -144,7 +144,7 @@ const Footer = () => {
                 />
                 <button
                   type="submit"
-                  className={`${ebGaramond.className} w-full px-4 py-2 tracking-widest bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] text-slate-50 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300`}
+                  className={`${ebGaramond.className} w-fit md:w-full px-4 py-2 tracking-widest bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] text-slate-50 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300`}
                 >
                   Subscribe
                 </button>
