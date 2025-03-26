@@ -34,7 +34,7 @@ export default function BlogCommentSection({ blogId, comments = [] }) {
           isAuthor: true,
           date: "2 weeks ago",
           content:
-            "Thank you for your kind words, Sarah! I'm glad you found the dining etiquette tips helpful. Feel free to reach out if you have any specific questions about formal dining situations.",
+            "Thank you for your kind words, Shalini! I'm glad you found the dining etiquette tips helpful. Feel free to reach out if you have any specific questions about formal dining situations.",
           likes: 3,
         },
       ],

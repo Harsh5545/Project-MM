@@ -76,7 +76,7 @@ import 'ckeditor5/ckeditor5.css';
 
 
 
-const LICENSE_KEY = 'eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3NDI1MTUxOTksImp0aSI6IjQyZmRmOWM3LTZiOTgtNDhmYi1hMmRmLWZhMWYxMzBmZmFkYSIsInVzYWdlRW5kcG9pbnQiOiJodHRwczovL3Byb3h5LWV2ZW50LmNrZWRpdG9yLmNvbSIsImRpc3RyaWJ1dGlvbkNoYW5uZWwiOlsiY2xvdWQiLCJkcnVwYWwiLCJzaCJdLCJ3aGl0ZUxhYmVsIjp0cnVlLCJsaWNlbnNlVHlwZSI6InRyaWFsIiwiZmVhdHVyZXMiOlsiKiJdLCJ2YyI6IjcwODYyZGY5In0.jV2w_4ONvyaZZZ0qA3b6gD0kuJyZ9O24YhuxA8XwsKS6FDdQ3jcRywOQB3yLEzpUsuKIgqgIn-uxTUeDAyUdPQ';
+const LICENSE_KEY = 'eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3NDQyNDMxOTksImp0aSI6IjY2MjgzMjQ4LWM4OGItNDE1MC1iNDY0LTYzMjQ1ZmUxNzc0ZSIsInVzYWdlRW5kcG9pbnQiOiJodHRwczovL3Byb3h5LWV2ZW50LmNrZWRpdG9yLmNvbSIsImRpc3RyaWJ1dGlvbkNoYW5uZWwiOlsiY2xvdWQiLCJkcnVwYWwiLCJzaCJdLCJ3aGl0ZUxhYmVsIjp0cnVlLCJsaWNlbnNlVHlwZSI6InRyaWFsIiwiZmVhdHVyZXMiOlsiKiJdLCJ2YyI6IjkzMzU5NWY1In0.Q03F-dVZPV06enxZQfkY1hUPHcI4EBTmbql9J6n_tPa_NGmWTe1yaLdXpi9qtUCWLKFyTSnSa0aglKrloa6gIg';
 
 export default function Editor({ onChange, content }) {
 	const editorContainerRef = useRef(null);
@@ -315,9 +315,9 @@ export default function Editor({ onChange, content }) {
 		onChange(data); 
 	};
 	return (
-		<div className="main-container">
-			<div className="editor-container editor-container_classic-editor editor-container_include-word-count" ref={editorContainerRef}>
-				<div className="editor-container__editor">
+		<div className="w-full">
+			<div className="editor-container editor-container_classic-editor editor-container_include-word-count w-full" ref={editorContainerRef}>
+				<div className="editor-container__editor w-full">
 					<div ref={editorRef}>
 						{editorConfig && (
 							<CKEditor
@@ -332,7 +332,11 @@ export default function Editor({ onChange, content }) {
 									Array.from(editorWordCountRef.current.children).forEach(child => child.remove());
 								}}
 								editor={ClassicEditor}
-								config={editorConfig}
+								config={{
+									...editorConfig,
+									height: '100%', // Adjust height if needed
+									width: '100%',  // Ensure full width
+								  }}
 
 							/>
 						)}
