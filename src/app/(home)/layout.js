@@ -52,7 +52,7 @@ export default async function RootLayout({ children }) {
               {children}
               {/* <Manners/> */}
               <Toaster />
-              {/* <EmailPopup /> */}
+              <EmailPopup />
               <PushNotificationManager />
             </div>
             <Footer />

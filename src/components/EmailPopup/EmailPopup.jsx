@@ -87,7 +87,7 @@ export default function EmailPopup() {
   };
 
   const downloadPDF = () => {
-    window.open(`${process.env.NEXT_PUBLIC_API_URL}/sample-5.pdf`, "_blank");
+    window.open(`${process.env.NEXT_PUBLIC_API_URL}/Modern_mannerism.pdf`, "_blank");
   };
 
   const resetForm = () => {
