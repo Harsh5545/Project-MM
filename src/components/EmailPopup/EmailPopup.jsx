@@ -69,7 +69,7 @@ export default function EmailPopup() {
         setTimeout(() => {
           setIsOpen(false);
           downloadPDF();
-        }, 1500);
+        }, 1000);
       } else {
         alert(data.error || "Error sending email. Please try again.");
       }
@@ -86,9 +86,39 @@ export default function EmailPopup() {
     setIsOpen(false);
   };
 
-  const downloadPDF = () => {
-    window.open(`${process.env.NEXT_PUBLIC_API_URL}/sample-5.pdf`, "_blank");
+  // const downloadPDF = () => {
+  //   window.open(`${process.env.NEXT_PUBLIC_API_URL}/Modern_mannerism.pdf`, "_blank");
+  // };
+
+  const downloadPDF = async () => {
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/download`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/pdf',
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to fetch PDF');
+      }
+  
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+  
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'Modern_mannerism.pdf'; // You can rename the downloaded file here
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+  
+      window.URL.revokeObjectURL(url); // Clean up
+    } catch (error) {
+      console.error('Error downloading PDF:', error);
+    }
   };
+  
 
   const resetForm = () => {
     setFirstName("");
