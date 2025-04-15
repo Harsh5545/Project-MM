@@ -55,13 +55,13 @@ const ContactFormHandler = async (req, res) => {
     `;
 
     // Send confirmation email to user
-    await transporter.sendMail({
+    const data = await transporter.sendMail({
       from: '"Modern Mannerism" <modernmannerism@gmail.com>',
       to: email,
       subject: "Thank You for Contacting Modern Mannerism",
       html: userEmailHtml,
     });
-
+    console.log(data,'DATA')
     // Send notification email to admin
     await transporter.sendMail({
       from: '"Modern Mannerism Website" <modernmannerism@gmail.com>',

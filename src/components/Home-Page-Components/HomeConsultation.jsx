@@ -90,7 +90,6 @@ const HomeConsultation = () => {
     });
 
     const result = await response.json();
-    console.log('first', result);
     if (response.ok) {
       // Handle success
       alert("Request submitted successfully!");
