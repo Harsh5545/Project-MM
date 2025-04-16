@@ -140,7 +140,7 @@ const HomeConsultation = () => {
           >
             <div className="relative flex justify-center">
               <Image
-                src="/assets/course2.jpg"
+                src="/assets/course2.webp"
                 alt="Modern Mannerism Consultation"
                 width={500}
                 height={500}

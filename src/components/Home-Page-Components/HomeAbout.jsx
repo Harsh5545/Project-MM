@@ -54,7 +54,7 @@ const HomeAbout = () => {
                 width={600}
                 height={800}
                 alt="Modern Mannerism Coach"
-                src="/assets/AboutUsModernMannerism.jpg"
+                src="/assets/AboutUsModernMannerism.webp"
                 className="rounded-lg shadow-2xl relative z-10"
                 style={{
                   boxShadow:

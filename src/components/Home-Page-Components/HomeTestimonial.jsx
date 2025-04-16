@@ -17,21 +17,21 @@ const testimonials = [
     Name: "Harsh Jaiswal",
     Description:
       "The business etiquette workshop completely transformed how I present myself in professional settings. The personalized coaching helped me identify areas for improvement I wasn't even aware of. Now I feel confident in any business situation!",
-    Image: "/assets/menmm.png",
+    Image: "/assets/menmm.webp",
   },
   {
     id: 2,
     Name: "Vishal More",
     Description:
       "I enrolled my 10-year-old daughter in the children's etiquette program, and the results have been remarkable. She's more confident, polite, and socially aware. The coach made learning manners fun and engaging!",
-    Image: "/assets/menmm.png",
+    Image: "/assets/menmm.webp",
   },
   {
     id: 3,
     Name: "Priya Sharma",
     Description:
       "The fine dining workshop was eye-opening! I learned so much about proper table manners and dining etiquette that I now feel completely at ease during business dinners. Highly recommend for any professional.",
-    Image: "/assets/womenmm.png",
+    Image: "/assets/womenmm.webp",
   },
 ]
 
