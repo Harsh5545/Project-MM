@@ -124,7 +124,7 @@ const HeroCarousel = () => {
           <motion.div variants={itemVariants} className="lg:w-1/3 relative z-10">
             <div className="relative hidden lg:flex overflow-hidden shadow-3xl bg-[#F4DCD3] rounded-br-[40%] rounded-tl-[60%] lg:rounded-br-[150px] lg:rounded-tl-[150px] rounded-tr-3xl px-2 p-0 items-center justify-center">
               <Image
-                src={"/assets/Manasi_png_bg_png_bg.png"}
+                src={"/assets/Manasi_png_bg_png_bg.webp"}
                 width={500}
                 height={400}
                 alt="Modern Mannerism"
@@ -155,7 +155,7 @@ const HeroCarousel = () => {
               <div className="relative w-full flex justify-center">
                 <div className="relative flex min-h-xl w-[75%] bg-[#F4DCD3] bg-opacity-35 justify-center lg:justify-end overflow-hidden rounded-tl-[100px] rounded-br-[100px] rounded-tr-3xl rounded-bl-3xl shadow-2xl">
                   <Image
-                    src="/assets/Manasi_png_bg_png_bg.png"
+                    src="/assets/Manasi_png_bg_png_bg.webp"
                     width={600}
                     height={500}
                     alt="Modern Mannerism Coach Manasi Kadam"

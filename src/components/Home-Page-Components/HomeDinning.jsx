@@ -18,7 +18,7 @@ const HomeDinning = () => {
       {/* Background Image */}
       <div className="absolute inset-0">
         <img
-          src="/assets/DiningSection.jpg"
+          src="/assets/DiningSection.webp"
           alt="Dining Section"
           className="w-full h-full object-cover"
         />
