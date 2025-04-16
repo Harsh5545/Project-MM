@@ -56,7 +56,7 @@ const HomeSection = () => {
       <div
         className="relative w-full"
         style={{
-          backgroundImage: "url('/assets/Website-Background.jpg')",
+          backgroundImage: "url('/assets/Website-Background.webp')",
           backgroundAttachment: "fixed",
           backgroundSize: "cover",
           backgroundPosition: "center",

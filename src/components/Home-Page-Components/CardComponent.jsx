@@ -38,19 +38,19 @@ const CardComponent = () => {
 
   const courses = [
     {
-      image: "/assets/Personality Development.jpeg",
+      image: "/assets/PersonalityDevelopment.webp",
       title: "Young Adult Finishing Programme",
       description: "Elevate Confidence, Charm, and Life Skills for a Bright Future.",
       isBestSelling: false,
     },
     {
-      image: "/assets/BusinessHandshake.jpg",
+      image: "/assets/BusinessHandshake.webp",
       title: "Building Business Programme",
       description: "Master the art of business etiquette and elevate your corporate image.",
       isBestSelling: true,
     },
     {
-      image: "/assets/Etiquettechildren.jpg",
+      image: "/assets/Etiquettechildren.webp",
       title: "Childrens Etiquette Programme",
       description: "Teach your children essential etiquette skills in a fun and engaging way.",
       isBestSelling: false,
