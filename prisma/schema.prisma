@@ -32,6 +32,7 @@ model User {
   blogs          Blog[]
 
   @@index([roleId], map: "User_roleId_fkey")
+  Comment Comment[]
 }
 
 model Category {
@@ -110,6 +111,7 @@ model Blog {
   views       Int        @default(0)
   likes       Int        @default(0) 
   @@index([slug], name: "Blog_slug_idx")
+  Comment Comment[]
 }
 
 
@@ -159,5 +161,33 @@ model ConsultationRequest {
   createdAt           DateTime @default(now()) 
 }
 
+enum CommentStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model Comment {
+  id          Int           @id @default(autoincrement())
+  content     String        @db.Text
+  status      CommentStatus @default(PENDING)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  // Foreign keys
+  blogId      Int
+  userId      Int
+  parentId    Int?
+
+  // Relations
+  blog        Blog          @relation(fields: [blogId], references: [id], onDelete: Cascade)
+  user        User          @relation(fields: [userId], references: [id])
+  parent      Comment?      @relation("CommentReplies", fields: [parentId], references: [id])
+  replies     Comment[]     @relation("CommentReplies")
+
+  @@index([blogId], map: "Comment_blogId_idx")
+  @@index([userId], map: "Comment_userId_idx")
+  @@index([parentId], map: "Comment_parentId_idx")
+}
 
 
