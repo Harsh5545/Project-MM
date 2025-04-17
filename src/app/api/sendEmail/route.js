@@ -24,7 +24,7 @@ export async function POST(req) {
       subject: "Your Free E-Book - Modern Mannerism",
       html: `<p>Dear ${firstName},</p>
       <p>Here’s your free e-book:</p>
-      <a href="${process.env.NEXT_PUBLIC_API_URL}/sample-5.pdf" download>Download E-Book</a>
+      <a href="${process.env.NEXT_PUBLIC_API_URL}/Modern_mannerism.pdf" download>Download E-Book</a>
       <p>Best Regards,<br>Modern Mannerism Team</p>`,
     };
 
