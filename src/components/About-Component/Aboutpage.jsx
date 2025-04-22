@@ -51,7 +51,7 @@ function Aboutpage() {
               <hr className="h-1 bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] w-24" />
             </div>
           <Image
-            src="/assets/AboutUsModernMannerism.jpg"
+            src="/assets/AboutUsModernMannerism.webp"
             height={300}
             width={500}
             className="border-2 border-[#c3965d] dark:border-[#eabf91] shadow-2xl rounded-lg  border-5"
