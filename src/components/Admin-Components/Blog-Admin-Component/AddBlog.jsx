@@ -10,6 +10,7 @@ import { useToast } from "@/hooks/use-toast"
 import { useCategories } from "./Admin-Blog-Table/UseCategories"
 import EnhancedEditor from "./enhanced-editor"
 import BlogImageUploader from "./BlogImageUploder"
+import BlogContentRenderer from "@/components/Blog-Component/Blog-Landing-Page/BlogContentRenderer"
 
 export default function BlogEditor({ existingBlog, userId }) {
   const { toast } = useToast()
@@ -347,20 +348,17 @@ export default function BlogEditor({ existingBlog, userId }) {
 
         {/* Preview Section */}
         <div className="mt-12 border-t border-gray-200 dark:border-gray-700 pt-8">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-semibold text-gray-800 dark:text-white">Preview:</h2>
-          </div>
-          <div className={previewMode === "mobile" ? "max-w-sm mx-auto" : "w-full"}>
-            {blogData.image && (
-              <img src={blogData.image || "/placeholder.svg"} alt="Hero" className="w-full mb-4 rounded-lg" />
-            )}
-            <h3 className="text-2xl font-bold mb-4">{blogData.title}</h3>
-            <div
-              className="prose dark:prose-invert max-w-none"
-              dangerouslySetInnerHTML={{ __html: blogData.content }}
-            />
-          </div>
-        </div>
+  <div className="flex justify-between items-center mb-4">
+    <h2 className="text-xl font-semibold text-gray-800 dark:text-white">Preview:</h2>
+  </div>
+  <div className={previewMode === "mobile" ? "max-w-sm mx-auto" : "w-full"}>
+    {blogData.image && (
+      <img src={blogData.image || "/placeholder.svg"} alt="Hero" className="w-full mb-4 rounded-lg" />
+    )}
+    <h3 className="text-2xl font-bold mb-4">{blogData.title}</h3>
+    <BlogContentRenderer content={blogData.content} />
+  </div>
+</div>
       </div>
     </div>
   )

@@ -16,7 +16,7 @@ import { DM_Sans } from "next/font/google"
 import { FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa"
 import { Card, CardContent } from "@/components/ui/card"
 import BlogCommentSection from "./BlogCommentSection"
-
+import BlogContentRenderer from "./BlogContentRenderer"
 const dmsans = DM_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
@@ -286,9 +286,12 @@ const BlogPage = ({ data }) => {
             </div>
 
             {/* Blog Content */}
-            <div className="prose prose-lg dark:prose-invert max-w-none">
+            {/* <div className="prose prose-lg dark:prose-invert max-w-none">
               {parse(typeof data?.content === "string" ? data?.content : "<p>No Content</p>")}
-            </div>
+            </div> */}
+
+
+<BlogContentRenderer content={typeof data?.content === "string" ? data?.content : "<p>No Content</p>"} />
 
             {/* Article Actions */}
             <div className="flex flex-wrap items-center justify-between gap-4 py-6 border-t border-b border-gray-200 dark:border-gray-700">

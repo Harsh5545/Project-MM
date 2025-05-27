@@ -100,6 +100,11 @@ export default function EnhancedEditor({ content, onChange, formData, setFormDat
       StarterKit.configure({
         bulletList: false, // Disable the default bulletList to use our custom one
         orderedList: false, // Disable the default orderedList to use our custom one
+        paragraph: {
+          HTMLAttributes: {
+            class: "editor-paragraph",
+          },
+        },
       }),
       CustomBulletList,
       CustomOrderedList,
@@ -171,13 +176,6 @@ export default function EnhancedEditor({ content, onChange, formData, setFormDat
     if (!editor) return
     editor.chain().focus().setImage({ src: url }).run()
   }
-  const resizeImage = (size) => {
-    if (!editor) return;
-    const selectedNode = editor.state.selection.node;
-    if (selectedNode?.type.name === "image") {
-      editor.chain().focus().updateAttributes("image", { style: `width: ${size}; height: auto;` }).run();
-    }
-  };
 
   const addYoutubeVideo = () => {
     if (!youtubeUrl || !editor) return
@@ -300,31 +298,31 @@ export default function EnhancedEditor({ content, onChange, formData, setFormDat
               <div className="w-px h-6 bg-gray-200 dark:bg-gray-700 mx-1" />
 
               <Popover>
-  <PopoverTrigger asChild>
-    <Button variant="ghost" size="sm" className="gap-1 h-8">
-      <Type className="h-4 w-4" />
-      <span className="text-xs">{currentFontSize}</span>
-    </Button>
-  </PopoverTrigger>
-  <PopoverContent className="w-56 p-2">
-    <div className="grid grid-cols-2 gap-1">
-      {fontSizes.map((size) => (
-        <Button
-          key={size}
-          variant="ghost"
-          size="sm"
-          className="justify-start text-xs"
-          onClick={(e) => {
-            preventScrollJump(e);
-            setFontSize(size);
-          }}
-        >
-          <span style={{ fontSize: "14px" }}>{size}</span> {/* Consistent size for UI */}
-        </Button>
-      ))}
-    </div>
-  </PopoverContent>
-</Popover>
+                <PopoverTrigger asChild>
+                  <Button variant="ghost" size="sm" className="gap-1 h-8">
+                    <Type className="h-4 w-4" />
+                    <span className="text-xs">{currentFontSize}</span>
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-56 p-2">
+                  <div className="grid grid-cols-2 gap-1">
+                    {fontSizes.map((size) => (
+                      <Button
+                        key={size}
+                        variant="ghost"
+                        size="sm"
+                        className="justify-start text-xs"
+                        onClick={(e) => {
+                          preventScrollJump(e)
+                          setFontSize(size)
+                        }}
+                      >
+                        <span style={{ fontSize: size }}>{size}</span>
+                      </Button>
+                    ))}
+                  </div>
+                </PopoverContent>
+              </Popover>
 
               <div className="w-px h-6 bg-gray-200 dark:bg-gray-700 mx-1" />
 
@@ -497,7 +495,7 @@ export default function EnhancedEditor({ content, onChange, formData, setFormDat
                 </PopoverContent>
               </Popover>
 
-              {/* <Popover>
+              <Popover>
                 <PopoverTrigger asChild>
                   <Button variant="ghost" size="icon" onClick={preventScrollJump}>
                     <ImageIcon className="h-4 w-4" />
@@ -581,30 +579,8 @@ export default function EnhancedEditor({ content, onChange, formData, setFormDat
                     </div>
                   </div>
                 </PopoverContent>
-              </Popover> */}
-<Popover>
-                <PopoverTrigger asChild>
-                  <Button variant="ghost" size="icon">
-                    <ImageIcon className="h-4 w-4" />
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-80">
-                  <div className="flex flex-col gap-4">
-                    <h3 className="text-sm font-medium">Upload Image</h3>
-                    <BlogImageUploader
-                      formData={formData}
-                      setFormData={setFormData}
-                      type="image"
-                      onSuccess={handleImageUploadSuccess}
-                    />
-                    <div className="flex gap-2">
-                      <Button onClick={() => resizeImage("50%")}>50%</Button>
-                      <Button onClick={() => resizeImage("100%")}>100%</Button>
-                      <Button onClick={() => resizeImage("150%")}>150%</Button>
-                    </div>
-                  </div>
-                </PopoverContent>
               </Popover>
+
               <Popover>
                 <PopoverTrigger asChild>
                   <Button variant="ghost" size="icon" onClick={preventScrollJump}>
@@ -642,71 +618,71 @@ export default function EnhancedEditor({ content, onChange, formData, setFormDat
               </Popover>
 
               <Popover>
-  <PopoverTrigger asChild>
-    <Button variant="ghost" size="icon">
-      <Palette className="h-4 w-4" />
-    </Button>
-  </PopoverTrigger>
-  <PopoverContent className="w-80">
-    <div className="flex flex-col gap-2">
-      <h3 className="text-sm font-medium">Text Color</h3>
-      <div className="grid grid-cols-8 gap-2">
-        {[
-          "#000000",
-          "#434343",
-          "#666666",
-          "#999999",
-          "#b7b7b7",
-          "#cccccc",
-          "#d9d9d9",
-          "#efefef",
-          "#f3f3f3",
-          "#ffffff",
-          "#980000",
-          "#ff0000",
-          "#ff9900",
-          "#ffff00",
-          "#00ff00",
-          "#00ffff",
-          "#4a86e8",
-          "#0000ff",
-          "#9900ff",
-          "#ff00ff",
-          "#e6b8af",
-          "#f4cccc",
-          "#fce5cd",
-          "#fff2cc",
-          "#d9ead3",
-          "#d0e0e3",
-          "#c9daf8",
-          "#cfe2f3",
-          "#d9d2e9",
-          "#ead1dc",
-          "#dd7e6b",
-          "#ea9999",
-          "#f9cb9c",
-          "#ffe599",
-          "#b6d7a8",
-          "#a2c4c9",
-          "#a4c2f4",
-          "#9fc5e8",
-          "#b4a7d6",
-          "#d5a6bd",
-        ].map((color) => (
-          <button
-            key={color}
-            className="w-6 h-6 rounded-full border border-gray-300 dark:border-gray-600"
-            style={{ backgroundColor: color }}
-            onClick={(e) => {
-              e.preventDefault();
-              editor.chain().focus().setColor(color).run();
-            }}
-          />
-        ))}
-      </div>
-    </div>
-  </PopoverContent>
-</Popover>
+                <PopoverTrigger asChild>
+                  <Button variant="ghost" size="icon" onClick={preventScrollJump}>
+                    <Palette className="h-4 w-4" />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-80">
+                  <div className="flex flex-col gap-2">
+                    <h3 className="text-sm font-medium">Text Color</h3>
+                    <div className="grid grid-cols-8 gap-2">
+                      {[
+                        "#000000",
+                        "#434343",
+                        "#666666",
+                        "#999999",
+                        "#b7b7b7",
+                        "#cccccc",
+                        "#d9d9d9",
+                        "#efefef",
+                        "#f3f3f3",
+                        "#ffffff",
+                        "#980000",
+                        "#ff0000",
+                        "#ff9900",
+                        "#ffff00",
+                        "#00ff00",
+                        "#00ffff",
+                        "#4a86e8",
+                        "#0000ff",
+                        "#9900ff",
+                        "#ff00ff",
+                        "#e6b8af",
+                        "#f4cccc",
+                        "#fce5cd",
+                        "#fff2cc",
+                        "#d9ead3",
+                        "#d0e0e3",
+                        "#c9daf8",
+                        "#cfe2f3",
+                        "#d9d2e9",
+                        "#ead1dc",
+                        "#dd7e6b",
+                        "#ea9999",
+                        "#f9cb9c",
+                        "#ffe599",
+                        "#b6d7a8",
+                        "#a2c4c9",
+                        "#a4c2f4",
+                        "#9fc5e8",
+                        "#b4a7d6",
+                        "#d5a6bd",
+                      ].map((color) => (
+                        <button
+                          key={color}
+                          className="w-6 h-6 rounded-full border border-gray-300 dark:border-gray-600"
+                          style={{ backgroundColor: color }}
+                          onClick={(e) => {
+                            preventScrollJump(e)
+                            editor.chain().focus().setColor(color).run()
+                          }}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                </PopoverContent>
+              </Popover>
 
               <div className="w-px h-6 bg-gray-200 dark:bg-gray-700 mx-1" />
 
@@ -783,7 +759,14 @@ export default function EnhancedEditor({ content, onChange, formData, setFormDat
         .ProseMirror {
           min-height: 400px;
           outline: none;
+          line-height: 1.8;
         }
+        
+        .ProseMirror p {
+          margin-bottom: 1rem;
+          line-height: 1.8;
+        }
+        
         .ProseMirror p.is-editor-empty:first-child::before {
           content: attr(data-placeholder);
           float: left;
@@ -791,48 +774,64 @@ export default function EnhancedEditor({ content, onChange, formData, setFormDat
           pointer-events: none;
           height: 0;
         }
+        
         .ProseMirror img {
           max-width: 100%;
           height: auto;
           margin: 1rem 0;
           display: block;
         }
+        
         .ProseMirror ul {
           list-style-type: disc;
           padding-left: 1.5em;
+          margin: 1rem 0;
         }
+        
         .ProseMirror ol {
           list-style-type: decimal;
           padding-left: 1.5em;
+          margin: 1rem 0;
         }
+        
         .ProseMirror li {
           margin-bottom: 0.5em;
+          line-height: 1.7;
         }
+        
         .ProseMirror blockquote {
           border-left: 3px solid #ddd;
           padding-left: 1em;
           margin-left: 0;
           margin-right: 0;
+          margin-top: 1rem;
+          margin-bottom: 1rem;
         }
+        
         .ProseMirror iframe {
           max-width: 100%;
           border: none;
           margin: 1rem 0;
         }
+        
         .toolbar::-webkit-scrollbar {
           height: 4px;
         }
+        
         .toolbar::-webkit-scrollbar-track {
           background: transparent;
         }
+        
         .toolbar::-webkit-scrollbar-thumb {
           background-color: rgba(155, 155, 155, 0.5);
           border-radius: 20px;
         }
+        
         .bullet-list {
           list-style-type: disc;
           padding-left: 1.5em;
         }
+        
         .ordered-list {
           list-style-type: decimal;
           padding-left: 1.5em;
