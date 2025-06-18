@@ -15,42 +15,49 @@ export default function BlogContentRenderer({ content, className = "" }) {
       if (domNode instanceof Element) {
         const { name, attribs = {}, children } = domNode
 
-        // Handle images with custom sizing
+        // Handle images with proper styling and sizing
         if (name === "img") {
           const { src, alt, style } = attribs
           const hasError = imageErrors.has(src)
 
           if (hasError) {
             return (
-              <div className="w-full h-48 bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center my-6">
-                <span className="text-gray-500">Image not available</span>
+              <div className="w-full h-48 bg-gray-100 dark:bg-gray-800 rounded-md flex items-center justify-center my-3">
+                <span className="text-gray-500 text-sm">Image not available</span>
               </div>
             )
           }
 
-          // Parse style attribute for width
-          let width = "100%"
-          let height = "auto"
+          let imageStyle = {
+            maxWidth: "100%",
+            height: "auto",
+            margin: "0.75rem auto",
+            display: "block",
+            borderRadius: "6px",
+            boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
+          }
 
           if (style) {
-            const widthMatch = style.match(/width:\s*([^;]+)/)
-            const heightMatch = style.match(/height:\s*([^;]+)/)
-            if (widthMatch) width = widthMatch[1].trim()
-            if (heightMatch) height = heightMatch[1].trim()
+            const styleObj = style.split(";").reduce((acc, rule) => {
+              const [key, value] = rule.split(":")
+              if (key && value) {
+                const camelKey = key.trim().replace(/-([a-z])/g, (g) => g[1].toUpperCase())
+                acc[camelKey] = value.trim()
+              }
+              return acc
+            }, {})
+            imageStyle = { ...imageStyle, ...styleObj }
           }
 
           return (
-            <div className="my-6 flex justify-center">
-              <div style={{ width, height }} className="relative">
-                <img
-                  src={src || "/placeholder.svg"}
-                  alt={alt || "Blog image"}
-                  className="rounded-lg shadow-md object-cover w-full h-auto"
-                  style={{ width, height }}
-                  onError={() => handleImageError(src)}
-                  loading="lazy"
-                />
-              </div>
+            <div className="my-3 flex justify-center">
+              <img
+                src={src || "/placeholder.svg"}
+                alt={alt || "Blog image"}
+                style={imageStyle}
+                onError={() => handleImageError(src)}
+                loading="lazy"
+              />
             </div>
           )
         }
@@ -58,10 +65,13 @@ export default function BlogContentRenderer({ content, className = "" }) {
         // Handle YouTube iframes
         if (name === "iframe" && attribs.src?.includes("youtube")) {
           return (
-            <div className="my-8 relative w-full" style={{ paddingBottom: "56.25%" }}>
+            <div
+              className="my-4 relative w-full overflow-hidden rounded-md shadow-sm"
+              style={{ paddingBottom: "56.25%" }}
+            >
               <iframe
                 src={attribs.src}
-                className="absolute top-0 left-0 w-full h-full rounded-lg"
+                className="absolute top-0 left-0 w-full h-full"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
                 title="YouTube video"
@@ -70,35 +80,31 @@ export default function BlogContentRenderer({ content, className = "" }) {
           )
         }
 
-        // Handle bullet lists
+        // Handle lists with proper spacing
         if (name === "ul") {
           return (
-            <ul className="list-disc list-outside ml-6 my-6 space-y-3 text-gray-700 dark:text-gray-300">
+            <ul className="list-disc list-outside ml-5 my-3 space-y-1 text-gray-700 dark:text-gray-300">
               {domToReact(children, options)}
             </ul>
           )
         }
 
-        // Handle ordered lists
         if (name === "ol") {
           return (
-            <ol className="list-decimal list-outside ml-6 my-6 space-y-3 text-gray-700 dark:text-gray-300">
+            <ol className="list-decimal list-outside ml-5 my-3 space-y-1 text-gray-700 dark:text-gray-300">
               {domToReact(children, options)}
             </ol>
           )
         }
 
-        // Handle list items
         if (name === "li") {
-          return (
-            <li className="text-gray-700 dark:text-gray-300 leading-relaxed mb-2">{domToReact(children, options)}</li>
-          )
+          return <li className="text-gray-700 dark:text-gray-300 leading-relaxed">{domToReact(children, options)}</li>
         }
 
-        // Handle headings with proper spacing
+        // Handle headings with professional spacing
         if (name === "h1") {
           return (
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mt-12 mb-6 leading-tight">
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mt-8 mb-4 leading-tight">
               {domToReact(children, options)}
             </h1>
           )
@@ -106,7 +112,7 @@ export default function BlogContentRenderer({ content, className = "" }) {
 
         if (name === "h2") {
           return (
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mt-10 mb-5 leading-tight">
+            <h2 className="text-xl md:text-2xl font-semibold text-gray-900 dark:text-white mt-6 mb-3 leading-tight">
               {domToReact(children, options)}
             </h2>
           )
@@ -114,15 +120,14 @@ export default function BlogContentRenderer({ content, className = "" }) {
 
         if (name === "h3") {
           return (
-            <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mt-8 mb-4 leading-tight">
+            <h3 className="text-lg md:text-xl font-semibold text-gray-900 dark:text-white mt-5 mb-2 leading-tight">
               {domToReact(children, options)}
             </h3>
           )
         }
 
-        // Handle paragraphs with proper spacing - CRITICAL FIX
+        // Handle paragraphs with professional spacing - FIXED
         if (name === "p") {
-          // Check if paragraph is empty or contains only whitespace/nbsp
           const hasContent =
             children &&
             children.some((child) => {
@@ -132,13 +137,12 @@ export default function BlogContentRenderer({ content, className = "" }) {
               return child.type === "tag"
             })
 
-          // If paragraph is empty, render as spacing
           if (!hasContent) {
-            return <div className="h-6 mb-4"></div>
+            return <div className="h-3"></div>
           }
 
           return (
-            <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6 text-base md:text-lg">
+            <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-3 text-base">
               {domToReact(children, options)}
             </p>
           )
@@ -146,14 +150,16 @@ export default function BlogContentRenderer({ content, className = "" }) {
 
         // Handle line breaks
         if (name === "br") {
-          return <div className="h-4"></div>
+          return <br />
         }
 
         // Handle blockquotes
         if (name === "blockquote") {
           return (
-            <blockquote className="border-l-4 border-primary pl-6 py-4 my-8 bg-gray-50 dark:bg-gray-800 rounded-r-lg">
-              <div className="text-gray-700 dark:text-gray-300 italic text-lg">{domToReact(children, options)}</div>
+            <blockquote className="border-l-3 border-primary pl-4 py-2 my-4 bg-primary/5 dark:bg-primary/10 rounded-r-md">
+              <div className="text-gray-700 dark:text-gray-300 italic leading-relaxed">
+                {domToReact(children, options)}
+              </div>
             </blockquote>
           )
         }
@@ -161,7 +167,7 @@ export default function BlogContentRenderer({ content, className = "" }) {
         // Handle code blocks
         if (name === "pre") {
           return (
-            <pre className="bg-gray-900 dark:bg-gray-800 text-gray-100 p-6 rounded-lg overflow-x-auto my-8 text-sm">
+            <pre className="bg-gray-900 dark:bg-gray-800 text-gray-100 p-4 rounded-md overflow-x-auto my-4 text-sm font-mono">
               {domToReact(children, options)}
             </pre>
           )
@@ -170,7 +176,7 @@ export default function BlogContentRenderer({ content, className = "" }) {
         // Handle inline code
         if (name === "code" && domNode.parent?.name !== "pre") {
           return (
-            <code className="bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 px-2 py-1 rounded text-sm font-mono">
+            <code className="bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 px-1.5 py-0.5 rounded text-sm font-mono">
               {domToReact(children, options)}
             </code>
           )
@@ -207,7 +213,7 @@ export default function BlogContentRenderer({ content, className = "" }) {
           return <s className="line-through">{domToReact(children, options)}</s>
         }
 
-        // Handle divs with text alignment
+        // Handle text alignment
         if (name === "div" && attribs.style?.includes("text-align")) {
           const alignMatch = attribs.style.match(/text-align:\s*([^;]+)/)
           if (alignMatch) {
@@ -228,130 +234,126 @@ export default function BlogContentRenderer({ content, className = "" }) {
                 alignClass = "text-left"
             }
 
-            return <div className={`${alignClass} mb-6`}>{domToReact(children, options)}</div>
+            return <div className={`${alignClass} mb-3`}>{domToReact(children, options)}</div>
           }
         }
 
-        // Handle colored text
-        if (attribs.style?.includes("color")) {
-          return (
-            <span style={{ color: attribs.style.match(/color:\s*([^;]+)/)?.[1] }}>{domToReact(children, options)}</span>
-          )
-        }
+        // Handle inline styles (color, font-size, etc.)
+        if (attribs.style) {
+          const styleObj = attribs.style.split(";").reduce((acc, rule) => {
+            const [key, value] = rule.split(":")
+            if (key && value) {
+              acc[key.trim().replace(/-([a-z])/g, (g) => g[1].toUpperCase())] = value.trim()
+            }
+            return acc
+          }, {})
 
-        // Handle font size
-        if (attribs.style?.includes("font-size")) {
-          return (
-            <span style={{ fontSize: attribs.style.match(/font-size:\s*([^;]+)/)?.[1] }}>
-              {domToReact(children, options)}
-            </span>
-          )
+          return <span style={styleObj}>{domToReact(children, options)}</span>
         }
       }
     },
   }
 
   if (!content) {
-    return <div className="text-gray-500 italic">No content available</div>
+    return <div className="text-gray-500 italic text-sm">No content available</div>
   }
 
   return (
-    <div className={`blog-content ${className}`}>
+    <div className={`blog-content-renderer ${className}`}>
       {parse(content, options)}
 
       <style jsx global>{`
-        .blog-content {
-          line-height: 1.8;
+        .blog-content-renderer {
+          line-height: 1.6;
+          font-size: 16px;
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
         
-        .blog-content p {
-          margin-bottom: 1.5rem !important;
-          line-height: 1.8 !important;
+        .blog-content-renderer p {
+          margin-bottom: 0.75rem !important;
+          line-height: 1.6 !important;
         }
         
-        .blog-content p:last-child {
+        .blog-content-renderer p:last-child {
           margin-bottom: 0;
         }
         
-        .blog-content ul {
+        .blog-content-renderer ul {
           list-style-type: disc;
-          padding-left: 1.5em;
-          margin: 1.5rem 0;
+          padding-left: 1.25em;
+          margin: 0.75rem 0;
         }
         
-        .blog-content ol {
+        .blog-content-renderer ol {
           list-style-type: decimal;
-          padding-left: 1.5em;
-          margin: 1.5rem 0;
-        }
-        
-        .blog-content li {
-          margin-bottom: 0.75rem;
-          line-height: 1.7;
-        }
-        
-        .blog-content ul ul {
-          list-style-type: circle;
+          padding-left: 1.25em;
           margin: 0.75rem 0;
         }
         
-        .blog-content ol ol {
-          list-style-type: lower-alpha;
-          margin: 0.75rem 0;
+        .blog-content-renderer li {
+          margin-bottom: 0.25rem;
+          line-height: 1.6;
         }
         
-        .blog-content blockquote {
-          border-left: 4px solid #3b82f6;
-          padding-left: 1.5rem;
-          margin: 2rem 0;
+        .blog-content-renderer blockquote {
+          border-left: 3px solid #3b82f6;
+          padding: 0.75rem 1rem;
+          margin: 1rem 0;
           font-style: italic;
+          background-color: rgba(59, 130, 246, 0.05);
+          border-radius: 0 6px 6px 0;
         }
         
-        .blog-content img {
+        .blog-content-renderer img {
           max-width: 100%;
           height: auto;
-          border-radius: 0.5rem;
-          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-          margin: 1.5rem 0;
+          border-radius: 6px;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+          margin: 0.75rem auto;
+          display: block;
         }
         
-        .blog-content iframe {
-          border-radius: 0.5rem;
-          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-          margin: 2rem 0;
+        .blog-content-renderer iframe {
+          border-radius: 6px;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+          margin: 1rem auto;
+          display: block;
         }
         
-        .blog-content pre {
+        .blog-content-renderer pre {
           background-color: #1f2937;
           color: #f9fafb;
-          padding: 1.5rem;
-          border-radius: 0.5rem;
+          padding: 1rem;
+          border-radius: 6px;
           overflow-x: auto;
-          margin: 2rem 0;
+          margin: 1rem 0;
+          font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
         }
         
-        .blog-content code {
-          font-family: 'Courier New', monospace;
+        .blog-content-renderer code {
+          font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
         }
         
-        .blog-content a {
+        .blog-content-renderer a {
           color: #3b82f6;
           text-decoration: underline;
           font-weight: 500;
         }
         
-        .blog-content a:hover {
+        .blog-content-renderer a:hover {
           color: #2563eb;
         }
         
-        .blog-content h1, .blog-content h2, .blog-content h3 {
-          margin-top: 2.5rem;
-          margin-bottom: 1.5rem;
+        .blog-content-renderer h1, 
+        .blog-content-renderer h2, 
+        .blog-content-renderer h3 {
+          margin-top: 2rem;
+          margin-bottom: 1rem;
         }
         
-        .blog-content h1:first-child, 
-        .blog-content h2:first-child, 
-        .blog-content h3:first-child {
+        .blog-content-renderer h1:first-child, 
+        .blog-content-renderer h2:first-child, 
+        .blog-content-renderer h3:first-child {
           margin-top: 0;
         }
       `}</style>
