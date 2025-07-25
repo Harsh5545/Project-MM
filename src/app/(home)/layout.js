@@ -1,39 +1,35 @@
-import { Geist, Geist_Mono } from "next/font/google";
-import "../globals.css";
-import { auth } from "@/auth";
-import Footer from "@/components/footer/Footer";
-import Header from "@/components/Navbar/Navbar";
-import { Toaster } from "@/components/ui/toaster";
-import { SessionProvider } from "next-auth/react";
-import Script from "next/script";
-import EmailPopup from "@/components/EmailPopup/EmailPopup";
-import PushNotificationManager from "@/components/PushNotificationManager/PushNotificationManager";
-
-
-
-
+import { Geist, Geist_Mono } from "next/font/google"
+import "../globals.css"
+import { auth } from "@/auth"
+import Footer from "@/components/footer/Footer"
+import Header from "@/components/Navbar/Navbar"
+import { Toaster } from "@/components/ui/toaster"
+import { SessionProvider } from "next-auth/react"
+import Script from "next/script"
+import EmailPopup from "@/components/EmailPopup/EmailPopup" // Updated import path
+import PushNotificationManager from "@/components/PushNotificationManager/PushNotificationManager" // Updated import path
+import LoadingScreen from "@/components/loading-screen" // Import the new component
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
-});
+})
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
-});
+})
 
 export const metadata = {
   title: {
     template: "Modern Mannerism | %s",
-  }
-};
+  },
+}
 
 export default async function RootLayout({ children }) {
-  const session = await auth();
+  const session = await auth()
   return (
     <SessionProvider session={session}>
-
       <html lang="en">
         <Script
           id="clarity-script"
@@ -45,21 +41,20 @@ export default async function RootLayout({ children }) {
             })(window, document, "clarity", "script", "q24bu9sz4y");`,
           }}
         />
-        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`} >
+        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+          <LoadingScreen /> {/* Add the loading screen here */}
           <div className="flex flex-col">
             <Header />
             <div className="flex-grow">
               {children}
-              {/* <Manners/> */}
               <Toaster />
               <EmailPopup />
               <PushNotificationManager />
             </div>
             <Footer />
           </div>
-
         </body>
       </html>
     </SessionProvider>
-  );
+  )
 }
