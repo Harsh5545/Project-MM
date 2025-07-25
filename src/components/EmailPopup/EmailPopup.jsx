@@ -136,6 +136,7 @@ export default function EmailPopup() {
           <Image
             src="/assets/Book.png"
             alt="Branding"
+            title="Modern Mannerism E-Book"
             width={400}
             height={300}
             className="object-cover md:h-full h-[24vh] rounded-l-lg"

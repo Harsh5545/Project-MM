@@ -128,6 +128,7 @@ const HeroCarousel = () => {
                 width={500}
                 height={400}
                 alt="Modern Mannerism"
+                title="Modern Mannerism Coach Manasi Kadam"
                 className="object-contain max-w-screen-2xl rounded-3xl"
               />
 

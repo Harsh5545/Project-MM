@@ -100,9 +100,9 @@ const HomeSection = () => {
             >
               {!showThankYou ? (
                 <>
-                  <h5 className="text-lg font-semibold text-gray-800 dark:text-white mb-4 text-center">
+                  <p className="text-lg font-semibold text-gray-800 dark:text-white mb-4 text-center">
                     Join the Community
-                  </h5>
+                  </p>
                   <form onSubmit={handleSubmit} className="space-y-4">
                     <Input
                       type="email"

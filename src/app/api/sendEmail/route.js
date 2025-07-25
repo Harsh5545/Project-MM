@@ -128,6 +128,7 @@ export async function POST(req) {
                   .button {
                       padding: 10px 20px !important;
                       font-size: 14px !important;
+                      text-color: #ffffff; /* Ensure button text is white */
                   }
               }
           </style>

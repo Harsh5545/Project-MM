@@ -39,6 +39,11 @@ export const metadata = {
   alternates: {
     canonical: `${process.env.NEXT_PUBLIC_SITE_URL}`,
   },
+  icons: {
+    icon: "/MM.png", // Path to your logo in the public directory
+    shortcut: "/MM.png",
+    apple: "/MM.png",
+  },
   openGraph: {
     title: "Modern Mannerism",
     description: "Modern Mannerism offers personalized coaching in business etiquette, children's manners, and personality development.",

@@ -1,88 +1,368 @@
-"use client";
+"use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { Input } from "@/components/ui/input"
-import { MessageSquare, Reply, Flag, Send, Heart } from "lucide-react"
+import { MessageSquare, Reply, Flag, Send, Trash2, CheckCircle2, XCircle } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { useToast } from "@/hooks/use-toast" // Assuming you have useToast
+import { formatDistanceToNow } from "date-fns"
 
-export default function BlogCommentSection({ blogId, comments = [] }) {
+export default function BlogCommentSection({ blogId, initialComments = [], session }) {
+  // Initialize comments state directly from initialComments prop.
+  // This runs only once on the initial mount.
+  const [comments, setComments] = useState(initialComments)
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
-  const [comment, setComment] = useState("")
+  const [commentContent, setCommentContent] = useState("")
   const [submitting, setSubmitting] = useState(false)
-  const [replyingTo, setReplyingTo] = useState(null)
+  const [replyingTo, setReplyingTo] = useState(null) // Stores parent comment ID
   const [activeTab, setActiveTab] = useState("recent")
+  const { toast } = useToast()
 
-  // Mock comments if none provided
-  const mockComments = [
-    {
-      id: 1,
-      name: "Shalini Gupta",
-      date: "2 weeks ago",
-      content:
-        "This article was incredibly insightful! I've been struggling with proper dining etiquette at formal events, and your tips about European vs. American dining styles were exactly what I needed. Thank you for sharing your expertise.",
-      likes: 12,
-      replies: [
-        {
-          id: 101,
-          name: "Manasi Kadam",
-          isAuthor: true,
-          date: "2 weeks ago",
-          content:
-            "Thank you for your kind words, Shalini! I'm glad you found the dining etiquette tips helpful. Feel free to reach out if you have any specific questions about formal dining situations.",
-          likes: 3,
-        },
-      ],
-    },
-    {
-      id: 2,
-      name: "Aniket Singh",
-      date: "3 weeks ago",
-      content:
-        "I appreciate how you broke down business meeting etiquette across different cultures. As someone who frequently travels for work, these insights will definitely help me navigate international business relationships more effectively.",
-      likes: 8,
-      replies: [],
-    },
-  ]
+  const isAdmin = session?.user?.role?.name === "ADMIN" // Assuming role name is 'ADMIN'
 
-  const displayComments = comments.length > 0 ? comments : mockComments
+  useEffect(() => {
+    console.log("BlogCommentSection received blogId:", blogId)
+  }, [blogId])
 
-  // Sort comments based on active tab
-  const sortedComments = [...displayComments].sort((a, b) => {
-    if (activeTab === "recent") {
-      // Sort by date (newest first)
-      return new Date(b.date) - new Date(a.date)
-    } else {
-      // Sort by likes (most liked first)
-      return b.likes - a.likes
+  // Refetch comments function
+  const fetchComments = async () => {
+    try {
+      // For admins, fetch all comments (including pending/rejected)
+      // For public, fetch only approved comments (as per GET route's filter)
+      const response = await fetch(`/api/comments?blogId=${blogId}${isAdmin ? "&includeAllStatuses=true" : ""}`)
+      if (response.ok) {
+        const data = await response.json()
+        setComments(data.data)
+      } else {
+        console.error("Failed to fetch comments:", response.statusText)
+        toast({
+          title: "Error",
+          description: "Failed to load comments.",
+          variant: "destructive",
+        })
+      }
+    } catch (error) {
+      console.error("Error fetching comments:", error)
+      toast({
+        title: "Error",
+        description: "Network error while loading comments.",
+        variant: "destructive",
+      })
     }
-  })
+  }
 
+  useEffect(() => {
+    // This effect runs when blogId changes.
+    // It ensures that if the user navigates to a different blog post,
+    // the comments are re-fetched for the new blogId.
+    // It also runs on initial mount if blogId is present.
+    if (blogId) {
+      fetchComments()
+    }
+  }, [blogId]) // Dependency array only includes blogId
   const handleSubmitComment = async (e) => {
     e.preventDefault()
     setSubmitting(true)
 
-    // Simulate API call
-    setTimeout(() => {
-      // Reset form
-      setName("")
-      setEmail("")
-      setComment("")
+    if (!commentContent.trim()) {
+      toast({
+        title: "Validation Error",
+        description: "Comment cannot be empty.",
+        variant: "destructive",
+      })
       setSubmitting(false)
-      setReplyingTo(null)
+      return
+    }
 
-      // Show success message or update comments list
-      alert("Comment submitted successfully! It will appear after moderation.")
-    }, 1000)
+    if (!session?.user?.id && (!name.trim() || !email.trim())) {
+      toast({
+        title: "Validation Error",
+        description: "Name and email are required for guest comments.",
+        variant: "destructive",
+      })
+      setSubmitting(false)
+      return
+    }
+
+    if (!blogId || typeof blogId !== "number" || isNaN(blogId)) {
+      toast({
+        title: "Error",
+        description: "Blog ID is missing or invalid. Cannot post comment.",
+        variant: "destructive",
+      })
+      setSubmitting(false)
+      return
+    }
+
+    try {
+      const payload = {
+        blogId: Number(blogId), // Ensure blogId is a number
+        content: commentContent,
+        parentId: replyingTo,
+        name: session?.user?.id ? undefined : name, // Only send name/email if guest
+        email: session?.user?.id ? undefined : email,
+      }
+
+      console.log("Sending comment payload:", payload) // Log payload before sending
+
+      const response = await fetch("/api/comments", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      })
+
+      if (response.ok) {
+        const newComment = await response.json() // Get the newly created comment from the API
+        toast({
+          title: "Comment Posted!",
+          description: "Your comment has been successfully added.",
+        })
+        setCommentContent("")
+        setName("")
+        setEmail("")
+        setReplyingTo(null)
+
+        // Immediately add the new comment to the state
+        // If it's a reply, find the parent and add it there
+        if (newComment.data.parentId) {
+          setComments((prevComments) =>
+            prevComments.map((c) =>
+              c.id === newComment.data.parentId ? { ...c, replies: [...(c.replies || []), newComment.data] } : c,
+            ),
+          )
+        } else {
+          // If it's a top-level comment, add it to the top
+          setComments((prevComments) => [newComment.data, ...prevComments])
+        }
+      } else {
+        const errorData = await response.json()
+        toast({
+          title: "Submission Failed",
+          description: errorData.error || "Failed to post comment. Please try again.",
+          variant: "destructive",
+        })
+      }
+    } catch (error) {
+      console.error("Error submitting comment:", error)
+      toast({
+        title: "Error",
+        description: "Network error while submitting comment.",
+        variant: "destructive",
+      })
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
+  const handleDeleteComment = async (commentId) => {
+    if (!confirm("Are you sure you want to delete this comment?")) return
+
+    try {
+      const response = await fetch(`/api/comments/${commentId}`, {
+        method: "DELETE",
+      })
+
+      if (response.ok) {
+        toast({
+          title: "Comment Deleted",
+          description: "The comment has been successfully deleted.",
+        })
+        fetchComments() // Refetch comments to update the list
+      } else {
+        const errorData = await response.json()
+        toast({
+          title: "Deletion Failed",
+          description: errorData.error || "Failed to delete comment.",
+          variant: "destructive",
+        })
+      }
+    } catch (error) {
+      console.error("Error deleting comment:", error)
+      toast({
+        title: "Error",
+        description: "Network error while deleting comment.",
+        variant: "destructive",
+      })
+    }
+  }
+
+  const handleUpdateCommentStatus = async (commentId, newStatus) => {
+    try {
+      const response = await fetch(`/api/comments/${commentId}/status`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: newStatus }),
+      })
+
+      if (response.ok) {
+        toast({
+          title: "Comment Status Updated",
+          description: `Comment status changed to ${newStatus}.`,
+        })
+        fetchComments() // Refetch comments to update the list
+      } else {
+        const errorData = await response.json()
+        toast({
+          title: "Status Update Failed",
+          description: errorData.error || "Failed to update comment status.",
+          variant: "destructive",
+        })
+      }
+    } catch (error) {
+      console.error("Error updating comment status:", error)
+      toast({
+        title: "Error",
+        description: "Network error while updating comment status.",
+        variant: "destructive",
+      })
+    }
+  }
+
+  // Sort comments based on active tab
+  const sortedComments = [...comments].sort((a, b) => {
+    if (activeTab === "recent") {
+      return new Date(b.createdAt) - new Date(a.createdAt)
+    } else {
+      // For "popular", you'd need a 'likes' field on comments, which isn't in schema yet.
+      // For now, we'll just keep it by recent if no likes are tracked.
+      return new Date(b.createdAt) - new Date(a.createdAt)
+    }
+  })
+
+  const renderComment = (comment, isReply = false) => {
+    const authorName = comment.user ? `${comment.user.first_name} ${comment.user.last_name}` : comment.guestName
+    const isAuthor = comment.user?.role?.name === "AUTHOR" // Assuming 'AUTHOR' role for blog authors
+    const isCommentAdmin = comment.user?.role?.name === "ADMIN" // Check if the comment was made by an admin
+
+    return (
+      <div
+        key={comment.id}
+        className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden"
+      >
+        <div className="p-6">
+          <div className="flex items-start gap-4">
+            <Avatar
+              className={`h-${isReply ? 8 : 10} w-${isReply ? 8 : 10} border border-gray-200 dark:border-gray-700`}
+            >
+              <AvatarImage
+                src={comment.user?.image || `https://api.dicebear.com/7.x/avataaars/svg?seed=${authorName}`}
+                alt={authorName}
+              />
+              <AvatarFallback>{authorName.charAt(0)}</AvatarFallback>
+            </Avatar>
+
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center justify-between flex-wrap gap-2">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="font-medium">{authorName}</span>
+                  {isAuthor && <Badge className="bg-primary/20 text-primary hover:bg-primary/30 text-xs">Author</Badge>}
+                  {isCommentAdmin && (
+                    <Badge className="bg-blue-500/20 text-blue-500 hover:bg-blue-500/30 text-xs">Admin</Badge>
+                  )}
+                  <span className="text-xs text-gray-500 dark:text-gray-400">
+                    {formatDistanceToNow(new Date(comment.createdAt), { addSuffix: true })}
+                  </span>
+                  {isAdmin && comment.status !== "APPROVED" && (
+                    <Badge variant="outline" className="bg-yellow-500/20 text-yellow-500 text-xs">
+                      {comment.status}
+                    </Badge>
+                  )}
+                </div>
+
+                {isAdmin && (
+                  <div className="flex gap-2">
+                    {comment.status !== "APPROVED" && (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-8 w-8 p-0 rounded-full text-green-500 hover:bg-green-500/10"
+                        onClick={() => handleUpdateCommentStatus(comment.id, "APPROVED")}
+                        title="Approve Comment"
+                      >
+                        <CheckCircle2 className="h-4 w-4" />
+                        <span className="sr-only">Approve</span>
+                      </Button>
+                    )}
+                    {comment.status !== "REJECTED" && (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="h-8 w-8 p-0 rounded-full text-red-500 hover:bg-red-500/10"
+                        onClick={() => handleUpdateCommentStatus(comment.id, "REJECTED")}
+                        title="Reject Comment"
+                      >
+                        <XCircle className="h-4 w-4" />
+                        <span className="sr-only">Reject</span>
+                      </Button>
+                    )}
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="h-8 w-8 p-0 rounded-full text-gray-500 hover:bg-gray-500/10"
+                      onClick={() => handleDeleteComment(comment.id)}
+                      title="Delete Comment"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                      <span className="sr-only">Delete</span>
+                    </Button>
+                  </div>
+                )}
+                {!isAdmin && (
+                  <Button variant="ghost" size="sm" className="h-8 w-8 p-0 rounded-full">
+                    <Flag className="h-4 w-4 text-gray-500" />
+                    <span className="sr-only">Report</span>
+                  </Button>
+                )}
+              </div>
+
+              <p className="mt-2 text-gray-700 dark:text-gray-300">{comment.content}</p>
+
+              <div className="mt-3 flex items-center gap-4">
+                {/* Likes functionality for comments is not in schema, so omitting for now */}
+                {/* <Button variant="ghost" size="sm" className="text-gray-500 dark:text-gray-400 h-8 px-3">
+                  <Heart className="h-4 w-4 mr-1 text-primary" />
+                  {comment.likes || 0}
+                </Button> */}
+
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="text-gray-500 dark:text-gray-400 h-8 px-3"
+                  onClick={() => setReplyingTo(comment.id)}
+                >
+                  <Reply className="h-4 w-4 mr-1" />
+                  Reply
+                </Button>
+              </div>
+            </div>
+          </div>
+
+          {/* Nested Replies */}
+          {comment.replies && comment.replies.length > 0 && (
+            <div className="mt-6 pl-14 space-y-6">
+              {comment.replies.map((reply) => (
+                <div key={reply.id} className="relative">
+                  <div className="absolute left-0 top-0 bottom-0 w-px bg-gray-200 dark:bg-gray-700"></div>
+                  <div className="flex items-start gap-3 pl-6">
+                    {renderComment(reply, true)} {/* Recursively render replies */}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    )
   }
 
   return (
-    <section className="py-12 bg-gray-50 dark:bg-gray-900/50">
+    <section id="comments" className="py-12 bg-gray-50 dark:bg-gray-900/50">
       <div className="container max-w-[1000px] mx-auto px-4 sm:px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -93,13 +373,16 @@ export default function BlogCommentSection({ blogId, comments = [] }) {
           <div className="flex items-center justify-between">
             <h2 className="text-2xl font-serif font-bold flex items-center gap-2">
               <MessageSquare className="h-5 w-5 text-primary" />
-              Conversation ({displayComments.length})
+              Conversation ({comments.length})
             </h2>
 
             <Tabs defaultValue="recent" className="w-[200px]" onValueChange={setActiveTab}>
               <TabsList className="grid w-full grid-cols-2">
                 <TabsTrigger value="recent">Recent</TabsTrigger>
-                <TabsTrigger value="popular">Popular</TabsTrigger>
+                <TabsTrigger value="popular" disabled>
+                  Popular (Coming Soon)
+                </TabsTrigger>{" "}
+                {/* Disabled as no likes on comments yet */}
               </TabsList>
             </Tabs>
           </div>
@@ -107,39 +390,43 @@ export default function BlogCommentSection({ blogId, comments = [] }) {
           {/* Comment Form */}
           <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 border border-gray-100 dark:border-gray-700">
             <h3 className="text-lg font-medium mb-4">
-              {replyingTo ? `Reply to ${replyingTo}` : "Join the Conversation"}
+              {replyingTo
+                ? `Reply to ${comments.find((c) => c.id === replyingTo)?.user?.first_name || comments.find((c) => c.id === replyingTo)?.guestName || "comment"}`
+                : "Join the Conversation"}
             </h3>
 
             <form onSubmit={handleSubmitComment} className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
-                    Name <span className="text-red-500">*</span>
-                  </label>
-                  <Input
-                    id="name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    required
-                    placeholder="Your name"
-                    className="border-gray-200 dark:border-gray-700"
-                  />
+              {!session?.user?.id && ( // Only show name/email fields if not logged in
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label htmlFor="name" className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
+                      Name <span className="text-red-500">*</span>
+                    </label>
+                    <Input
+                      id="name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      required={!session?.user?.id}
+                      placeholder="Your name"
+                      className="border-gray-200 dark:border-gray-700"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
+                      Email <span className="text-red-500">*</span>
+                    </label>
+                    <Input
+                      id="email"
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required={!session?.user?.id}
+                      placeholder="Your email (will not be published)"
+                      className="border-gray-200 dark:border-gray-700"
+                    />
+                  </div>
                 </div>
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
-                    Email <span className="text-red-500">*</span>
-                  </label>
-                  <Input
-                    id="email"
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    placeholder="Your email (will not be published)"
-                    className="border-gray-200 dark:border-gray-700"
-                  />
-                </div>
-              </div>
+              )}
 
               <div>
                 <label htmlFor="comment" className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">
@@ -147,8 +434,8 @@ export default function BlogCommentSection({ blogId, comments = [] }) {
                 </label>
                 <Textarea
                   id="comment"
-                  value={comment}
-                  onChange={(e) => setComment(e.target.value)}
+                  value={commentContent}
+                  onChange={(e) => setCommentContent(e.target.value)}
                   required
                   placeholder="Share your thoughts or questions..."
                   rows={4}
@@ -165,7 +452,9 @@ export default function BlogCommentSection({ blogId, comments = [] }) {
                 <Button
                   type="submit"
                   className="bg-primary hover:bg-primary/90 text-white ml-auto"
-                  disabled={submitting}
+                  disabled={
+                    submitting || !blogId || typeof blogId !== "number" || isNaN(blogId) || !commentContent.trim()
+                  }
                 >
                   {submitting ? "Submitting..." : "Post Comment"}
                   <Send className="ml-2 h-4 w-4" />
@@ -180,113 +469,11 @@ export default function BlogCommentSection({ blogId, comments = [] }) {
 
           {/* Comments List */}
           <div className="space-y-6">
-            {sortedComments.map((comment, index) => (
-              <motion.div
-                key={comment.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden"
-              >
-                <div className="p-6">
-                  <div className="flex items-start gap-4">
-                    <Avatar className="h-10 w-10 border border-gray-200 dark:border-gray-700">
-                      <AvatarImage
-                        src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${comment.name}`}
-                        alt={comment.name}
-                      />
-                      <AvatarFallback>{comment.name.charAt(0)}</AvatarFallback>
-                    </Avatar>
-
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between flex-wrap gap-2">
-                        <div className="flex items-center gap-2 flex-wrap">
-                          <span className="font-medium">{comment.name}</span>
-                          {comment.isAuthor && (
-                            <Badge className="bg-primary/20 text-primary hover:bg-primary/30 text-xs">Author</Badge>
-                          )}
-                          <span className="text-xs text-gray-500 dark:text-gray-400">{comment.date}</span>
-                        </div>
-
-                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0 rounded-full">
-                          <Flag className="h-4 w-4 text-gray-500" />
-                          <span className="sr-only">Report</span>
-                        </Button>
-                      </div>
-
-                      <p className="mt-2 text-gray-700 dark:text-gray-300">{comment.content}</p>
-
-                      <div className="mt-3 flex items-center gap-4">
-                        <Button variant="ghost" size="sm" className="text-gray-500 dark:text-gray-400 h-8 px-3">
-                          <Heart className="h-4 w-4 mr-1 text-primary" />
-                          {comment.likes}
-                        </Button>
-
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="text-gray-500 dark:text-gray-400 h-8 px-3"
-                          onClick={() => setReplyingTo(comment.name)}
-                        >
-                          <Reply className="h-4 w-4 mr-1" />
-                          Reply
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Nested Replies */}
-                  {comment.replies && comment.replies.length > 0 && (
-                    <div className="mt-6 pl-14 space-y-6">
-                      {comment.replies.map((reply) => (
-                        <div key={reply.id} className="relative">
-                          <div className="absolute left-0 top-0 bottom-0 w-px bg-gray-200 dark:bg-gray-700"></div>
-
-                          <div className="flex items-start gap-3 pl-6">
-                            <Avatar className="h-8 w-8 border border-gray-200 dark:border-gray-700">
-                              <AvatarImage
-                                src={
-                                  reply.isAuthor
-                                    ? "/assets/Manasi_kadam_image.jpg"
-                                    : `https://api.dicebear.com/7.x/avataaars/svg?seed=${reply.name}`
-                                }
-                                alt={reply.name}
-                              />
-                              <AvatarFallback>{reply.name.charAt(0)}</AvatarFallback>
-                            </Avatar>
-
-                            <div className="flex-1 min-w-0">
-                              <div className="flex items-center flex-wrap gap-2">
-                                <span className="font-medium">{reply.name}</span>
-                                {reply.isAuthor && (
-                                  <Badge className="bg-primary/20 text-primary hover:bg-primary/30 text-xs">
-                                    Author
-                                  </Badge>
-                                )}
-                                <span className="text-xs text-gray-500 dark:text-gray-400">{reply.date}</span>
-                              </div>
-
-                              <p className="mt-1 text-sm text-gray-700 dark:text-gray-300">{reply.content}</p>
-
-                              <div className="mt-2">
-                                <Button
-                                  variant="ghost"
-                                  size="sm"
-                                  className="text-gray-500 dark:text-gray-400 h-7 px-2 text-xs"
-                                >
-                                  <Heart className="h-3 w-3 mr-1 text-primary" />
-                                  {reply.likes}
-                                </Button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </motion.div>
-            ))}
+            {sortedComments.length === 0 ? (
+              <p className="text-center text-gray-500 dark:text-gray-400">No comments yet. Be the first to comment!</p>
+            ) : (
+              sortedComments.map((comment) => renderComment(comment))
+            )}
           </div>
 
           {/* Etiquette Guidelines */}
@@ -302,4 +489,3 @@ export default function BlogCommentSection({ blogId, comments = [] }) {
     </section>
   )
 }
-

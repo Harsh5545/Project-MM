@@ -104,6 +104,7 @@ const RecentBlogs = ({ blogs = [] }) => {
                       <img
                         src={post.image || "/placeholder.svg"}
                         alt={post.title}
+                        title={post.title}
                         className="w-full h-60 object-cover"
                       />
                       <div className="absolute top-2 left-2">

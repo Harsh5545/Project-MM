@@ -41,6 +41,7 @@ const BlogContainer = ({ title, description, imageSrc, reverse, categories = fal
         <Image
           src={imageSrc}
           alt={title}
+          title={title}
           fill
           style={{ objectFit: "cover" }}
           className="rounded-lg bg-no-repeat shadow-md"

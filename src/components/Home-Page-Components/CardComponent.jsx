@@ -113,6 +113,7 @@ const CourseCard = ({ course, handleReadMore, isMobile }) => (
         alt={course.title}
         className="object-cover w-full h-full"
         height={250}
+        title="Modern Mannerism Course Image"
         width={380}
         src={course.image || "/placeholder.svg"}
       />

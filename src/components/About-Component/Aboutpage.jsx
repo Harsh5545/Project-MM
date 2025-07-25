@@ -54,6 +54,7 @@ function Aboutpage() {
             src="/assets/AboutUsModernMannerism.webp"
             height={300}
             width={500}
+            title="Modern Mannerism"
             className="border-2 border-[#c3965d] dark:border-[#eabf91] shadow-2xl rounded-lg  border-5"
             alt="modern Mannerism"
           />
