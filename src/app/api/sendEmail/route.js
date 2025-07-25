@@ -146,7 +146,7 @@ export async function POST(req) {
                               <tr>
                                   <td class="content">
                                       <p style="color: #555555; font-size: 16px; line-height: 1.6; margin-bottom: 15px; text-align: left;">
-                                          Hello there! I’m Manasi, founder of Modern Mannerism, and I’m delighted to share this resource with you!
+                                          Hello ${firstName}! I’m Manasi, founder of Modern Mannerism, and I’m delighted to share this resource with you!
                                       </p>
                                       <p style="color: #555555; font-size: 16px; line-height: 1.6; margin-bottom: 15px; text-align: left;">
                                           If it inspires or helps you in any way, we’d love to hear from you, whether through a quick Google review or a simple email.
