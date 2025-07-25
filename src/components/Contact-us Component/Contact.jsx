@@ -7,7 +7,7 @@ import { z } from "zod"
 import { Check, Instagram, Linkedin, Facebook, BookOpen, Loader2 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -150,159 +150,152 @@ export default function ContactForm() {
             </div>
           </div>
 
-         
           <div className="w-full md:w-3/5 p-6 md:p-8">
-           {/* Right Section - Form 
-            <div className="mb-6">
-              <h2 className="text-2xl font-bold text-gray-800 dark:text-white">Contact Us</h2>
-              <p className="text-gray-600 dark:text-gray-300">
-                Fill out the form below and we'll get back to you shortly
-              </p>
-            </div>*/}
-<div className="flex flex-col md:hidden text-center justify-center"> <h1 className="text-3xl md:text-4xl font-bold text-[#eabf91] mb-6">Get in Touch</h1>
+            <div className="flex flex-col md:hidden text-center justify-center">
+              {" "}
+              <h1 className="text-3xl md:text-4xl font-bold text-[#eabf91] mb-6">Get in Touch</h1>
               <p className="text-gray-700 text-sm dark:text-gray-200 mb-8">
                 Our team will reach out to you as soon as possible to discuss your needs and how we can help you enhance
                 your personal and professional presence.
-              </p></div>
+              </p>
+            </div>
             <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4">
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Input
-                    placeholder="Name and Surname"
-                    {...field}
-                    className="w-full p-2 md:p-4 rounded-md bg-gray-100 dark:bg-[#0C1522] dark:text-white border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-[#933469]"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+              <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4">
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input
+                          placeholder="Name and Surname"
+                          {...field}
+                          className="w-full p-2 md:p-4 rounded-md bg-gray-100 dark:bg-[#0C1522] dark:text-white border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-[#933469]"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Input
-                    placeholder="Email Address"
-                    type="email"
-                    {...field}
-                    className="w-full p-2 md:p-4 rounded-md bg-gray-100 dark:bg-[#0C1522] dark:text-white border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-[#933469]"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input
+                          placeholder="Email Address"
+                          type="email"
+                          {...field}
+                          className="w-full p-2 md:p-4 rounded-md bg-gray-100 dark:bg-[#0C1522] dark:text-white border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-[#933469]"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-          <FormField
-            control={form.control}
-            name="phone"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Input
-                    placeholder="Phone Number (Optional)"
-                    type="tel"
-                    {...field}
-                    className="w-full p-2 md:p-4 rounded-md bg-gray-100 dark:bg-[#0C1522] dark:text-white border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-[#933469]"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+                <FormField
+                  control={form.control}
+                  name="phone"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input
+                          placeholder="Phone Number (Optional)"
+                          type="tel"
+                          {...field}
+                          className="w-full p-2 md:p-4 rounded-md bg-gray-100 dark:bg-[#0C1522] dark:text-white border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-[#933469]"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-          <FormField
-            control={form.control}
-            name="course"
-            render={({ field }) => (
-              <FormItem>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <FormControl>
-                    <SelectTrigger className="w-full p-2 md:p-4 rounded-md bg-gray-100 dark:bg-[#0C1522] dark:text-white border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-[#933469]">
-                      <SelectValue placeholder="Select a Course" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="personal-branding">Personal Branding</SelectItem>
-                    <SelectItem value="communication-skills">Communication Skills</SelectItem>
-                    <SelectItem value="corporate-etiquette">Corporate Etiquette</SelectItem>
-                    <SelectItem value="fine-dining-manners">Fine Dining Manners</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+                <FormField
+                  control={form.control}
+                  name="course"
+                  render={({ field }) => (
+                    <FormItem>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger className="w-full p-2 md:p-4 rounded-md bg-gray-100 dark:bg-[#0C1522] dark:text-white border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-[#933469]">
+                            <SelectValue placeholder="Select a Course" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="personal-branding">Personal Branding</SelectItem>
+                          <SelectItem value="communication-skills">Communication Skills</SelectItem>
+                          <SelectItem value="corporate-etiquette">Corporate Etiquette</SelectItem>
+                          <SelectItem value="fine-dining-manners">Fine Dining Manners</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-          <FormField
-            control={form.control}
-            name="message"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Textarea
-                    placeholder="Message"
-                    {...field}
-                    className="w-full p-2 md:p-4 rounded-md bg-gray-100 dark:bg-[#0C1522] dark:text-white border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-[#933469]"
-                    rows={5}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+                <FormField
+                  control={form.control}
+                  name="message"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Textarea
+                          placeholder="Message"
+                          {...field}
+                          className="w-full p-2 md:p-4 rounded-md bg-gray-100 dark:bg-[#0C1522] dark:text-white border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-[#933469]"
+                          rows={5}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-          <FormField
-            control={form.control}
-            name="agree"
-            render={({ field }) => (
-              <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                <FormControl>
-                  <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                    id="agree"
-                    className="mr-2 data-[state=checked]:bg-[#933469] data-[state=checked]:border-[#933469]"
-                  />
-                </FormControl>
-                <div className="space-y-1 leading-none">
-                  <label htmlFor="agree" className="text-sm text-gray-700 dark:text-gray-200">
-                    I agree to receive marketing materials from Modern Mannerism.
-                  </label>
-                  <FormMessage />
-                </div>
-              </FormItem>
-            )}
-          />
+                <FormField
+                  control={form.control}
+                  name="agree"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                      <FormControl>
+                        <Checkbox
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                          id="agree"
+                          className="mr-2 data-[state=checked]:bg-[#933469] data-[state=checked]:border-[#933469]"
+                        />
+                      </FormControl>
+                      <div className="space-y-1 leading-none">
+                        <label htmlFor="agree" className="text-sm text-gray-700 dark:text-gray-200">
+                          I agree to receive marketing materials from Modern Mannerism.
+                        </label>
+                        <FormMessage />
+                      </div>
+                    </FormItem>
+                  )}
+                />
 
-          <Button
-            type="submit"
-            disabled={isSubmitting || !form.formState.isValid}
-            className="w-full py-3 tracking-wide rounded-full bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] text-white transition-colors duration-300"
-          >
-            {isSubmitting ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Sending...
-              </>
-            ) : (
-              "Send"
-            )}
-          </Button>
-        </form>
-      </Form>
+                <Button
+                  type="submit"
+                  disabled={isSubmitting || !form.formState.isValid}
+                  className="w-full py-3 tracking-wide rounded-full bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] text-white transition-colors duration-300"
+                >
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Sending...
+                    </>
+                  ) : (
+                    "Send"
+                  )}
+                </Button>
+              </form>
+            </Form>
           </div>
         </div>
-
-     
       </div>
 
       {/* Success Dialog */}
@@ -321,8 +314,8 @@ export default function ContactForm() {
               <Check className="w-8 h-8 text-green-600" />
             </div>
             <p className="text-center text-gray-700 dark:text-gray-200 mb-4">
-              {formData && formData.name ? `Thank you, ${formData.name}!` : "Thank you!"} Our team will reach out to you as soon as
-              possible.
+              {formData && formData.name ? `Thank you, ${formData.name}!` : "Thank you!"} Our team will reach out to you
+              as soon as possible.
             </p>
             <p className="text-center text-gray-600 dark:text-gray-300 text-sm">
               We've sent you an email with more information about our services.
