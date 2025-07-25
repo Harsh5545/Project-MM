@@ -112,14 +112,7 @@ model Blog {
   views       Int        @default(0)
   likes       Int        @default(0) 
   @@index([slug], name: "Blog_slug_idx")
-
-  
-  userId    Int
-  
-  comments  Comment[]
-
-  @@index([userId], map: "Blog_userId_idx")
-  @@map("blogs")
+  Comments  Comment[]
 
 }
 
