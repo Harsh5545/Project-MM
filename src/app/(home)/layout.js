@@ -9,6 +9,7 @@ import Script from "next/script"
 import EmailPopup from "@/components/EmailPopup/EmailPopup" // Updated import path
 import PushNotificationManager from "@/components/PushNotificationManager/PushNotificationManager" // Updated import path
 import LoadingScreen from "@/components/loading-screen" // Import the new component
+import OpenInExternalBrowser from "@/components/open-in-external-browser"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -42,7 +43,9 @@ export default async function RootLayout({ children }) {
           }}
         />
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-          <LoadingScreen /> {/* Add the loading screen here */}
+          <LoadingScreen />
+          <OpenInExternalBrowser />
+          {/* Add this line */}
           <div className="flex flex-col">
             <Header />
             <div className="flex-grow">

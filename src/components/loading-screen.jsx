@@ -31,7 +31,7 @@ export default function LoadingScreen() {
             transition={{ duration: 0.5, ease: "easeOut" }}
           >
             <Image
-              src="/MM.png" // Use the provided logo
+              src="/MMM.png" // Use the provided logo
               alt="Modern Mannerism Logo"
               width={200}
               height={200}

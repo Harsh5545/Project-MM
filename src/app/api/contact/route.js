@@ -125,6 +125,7 @@ export async function POST(request) {
                   .button {
                       padding: 10px 20px !important;
                       font-size: 14px !important;
+                      text-color: #ffffff; /* Ensure button text is white */
                   }
               }
           </style>
@@ -143,7 +144,7 @@ export async function POST(request) {
                                   <td class="content">
                                       <h2>Hello ${firstName},</h2>
                                       <p>
-                                          Thank you for reaching out to <strong>Modern Mannerism</strong>! We've received your <span style="font-weight: bold;">inquiry</span> regarding the <strong>${courseName}</strong> course.
+                                          Thank you for reaching out to <strong>Modern Mannerism</strong>! We've received your <span style="font-weight: bold;">enquiry</span> regarding the <strong>${courseName}</strong> course.
                                       </p>
                                       <p>
                                           Our team is excited to connect with you and will get in touch shortly to discuss your needs and how we can help you enhance your personal and professional presence.

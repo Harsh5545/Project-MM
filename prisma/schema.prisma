@@ -90,6 +90,7 @@ model Notification {
   @@index([userId], map: "Notification_userId_fkey")
 }
 
+
 model Blog {
   id          Int        @id @default(autoincrement())
   title       String     
@@ -111,7 +112,15 @@ model Blog {
   views       Int        @default(0)
   likes       Int        @default(0) 
   @@index([slug], name: "Blog_slug_idx")
-  Comment Comment[]
+
+  
+  userId    Int
+  
+  comments  Comment[]
+
+  @@index([userId], map: "Blog_userId_idx")
+  @@map("blogs")
+
 }
 
 
@@ -178,6 +187,10 @@ model Comment {
   blogId      Int
   userId      Int
   parentId    Int?
+
+  // New fields for guest comments
+  guestName   String?
+  guestEmail  String?
 
   // Relations
   blog        Blog          @relation(fields: [blogId], references: [id], onDelete: Cascade)

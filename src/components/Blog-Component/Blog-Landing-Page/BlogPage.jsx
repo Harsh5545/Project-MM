@@ -2,21 +2,19 @@
 
 import { motion } from "framer-motion"
 import Image from "next/image"
-import parse from "html-react-parser"
 import Link from "next/link"
-import { formatDistanceToNow } from "date-fns"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react" // Import useCallback
 import { BookmarkPlus, Eye, Calendar, User, Heart, MessageSquare, Clock, ChevronRight, TrendingUp } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
-import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { DM_Sans } from "next/font/google"
-import { FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa"
+// Removed FaFacebook, FaInstagram, FaLinkedin as they are replaced by SocialShare
 import { Card, CardContent } from "@/components/ui/card"
-import BlogCommentSection from "./BlogCommentSection"
 import BlogContentRenderer from "./BlogContentRenderer"
+import SocialShare from "./social-share" // Import the SocialShare component
+
 const dmsans = DM_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
@@ -28,56 +26,13 @@ const BlogPage = ({ data }) => {
   const [liked, setLiked] = useState(false)
   const [estimatedReadTime, setEstimatedReadTime] = useState("5 min")
 
-  const [hasData, setHasData] = useState(false)
-
-  useEffect(() => {
-    if (data) {
-      setHasData(true)
-    }
-  }, [data])
-
-  useEffect(() => {
-    if (hasData) {
-      const storedLikedStatus = localStorage.getItem(`liked_${data.id}`) === "true"
-      setLiked(storedLikedStatus)
-
-      // Calculate estimated read time based on content length
-      if (data.content) {
-        const wordCount = data.content.replace(/<[^>]*>/g, "").split(/\s+/).length
-        const readingTime = Math.ceil(wordCount / 200) // Assuming 200 words per minute
-        setEstimatedReadTime(`${readingTime} min read`)
-      }
-
-      updateViewCount()
-
-      const handleScroll = () => {
-        setIsScrolled(window.scrollY > 200)
-      }
-
-      window.addEventListener("scroll", handleScroll)
-      return () => window.removeEventListener("scroll", handleScroll)
-    }
-  }, [data, hasData])
-
-  if (!data) {
-    return <div className="flex items-center justify-center min-h-screen text-red-500 text-lg">Blog not found</div>
-  }
-
-  // Format the date if available
-  const formattedDate = data.createdAt ? formatDistanceToNow(new Date(data.createdAt), { addSuffix: true }) : ""
-  const exactDate = data.createdAt
-    ? new Date(data.createdAt).toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      })
-    : ""
-
-  const updateViewCount = async () => {
+  // Use useCallback for stable function references
+  const updateViewCount = useCallback(async () => {
+    if (!data?.id || !data?.slug) return
     try {
       const response = await fetch(`/api/blog/update-view-count`, {
         method: "POST",
-        body: JSON.stringify({ id: data?.id, slug: data?.slug }),
+        body: JSON.stringify({ id: data.id, slug: data.slug }),
       })
 
       if (!response.ok) {
@@ -89,33 +44,75 @@ const BlogPage = ({ data }) => {
     } catch (error) {
       console.error("Error updating view count:", error)
     }
-  }
+  }, [data?.id, data?.slug]) // Dependencies for useCallback
 
-  const updateLikeCount = async (status) => {
-    try {
-      const response = await fetch(`/api/blog/update-likes-count`, {
-        method: "POST",
-        body: JSON.stringify({ id: data?.id, slug: data?.slug, status }),
-      })
+  const updateLikeCount = useCallback(
+    async (status) => {
+      if (!data?.id || !data?.slug) return
+      try {
+        const response = await fetch(`/api/blog/update-likes-count`, {
+          method: "POST",
+          body: JSON.stringify({ id: data.id, slug: data.slug, status }),
+        })
 
-      if (!response.ok) {
-        throw new Error("Failed to update like count")
+        if (!response.ok) {
+          throw new Error("Failed to update like count")
+        }
+
+        const responseData = await response.json()
+        console.log("Like count updated successfully:", responseData)
+      } catch (error) {
+        console.error("Error updating like count:", error)
       }
-
-      const responseData = await response.json()
-      console.log("Like count updated successfully:", responseData)
-    } catch (error) {
-      console.error("Error updating like count:", error)
-    }
-  }
+    },
+    [data?.id, data?.slug],
+  ) // Dependencies for useCallback
 
   const toggleLike = () => {
     const newLikedStatus = !liked
     setLiked(newLikedStatus)
     setLikesCount(newLikedStatus ? likesCount + 1 : likesCount - 1)
     updateLikeCount(newLikedStatus ? "like" : "unlike")
-    localStorage.setItem(`liked_${data.id}`, newLikedStatus)
+    localStorage.setItem(`liked_${data.id}`, newLikedStatus.toString()) // Store as string
   }
+
+  useEffect(() => {
+    if (data?.id) {
+      // Initialize liked status from local storage
+      const storedLikedStatus = localStorage.getItem(`liked_${data.id}`) === "true"
+      setLiked(storedLikedStatus)
+
+      // Calculate estimated read time
+      if (data.content) {
+        const wordCount = data.content.replace(/<[^>]*>/g, "").split(/\s+/).length
+        const readingTime = Math.ceil(wordCount / 200) // Assuming 200 words per minute
+        setEstimatedReadTime(`${readingTime} min read`)
+      }
+
+      // Update view count when data.id changes
+      updateViewCount()
+
+      const handleScroll = () => {
+        setIsScrolled(window.scrollY > 200)
+      }
+
+      window.addEventListener("scroll", handleScroll)
+      return () => window.removeEventListener("scroll", handleScroll)
+    }
+  }, [data?.id, data?.content, updateViewCount]) // Dependencies for this effect
+
+  if (!data) {
+    return <div className="flex items-center justify-center min-h-screen text-red-500 text-lg">Blog not found</div>
+  }
+
+  // Format the date if available
+  const exactDate = data.createdAt
+    ? new Date(data.createdAt).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
+    : ""
 
   return (
     <div className="relative pt-20">
@@ -128,9 +125,13 @@ const BlogPage = ({ data }) => {
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button variant="ghost" size="icon" className="rounded-full hover:bg-primary/10 h-10 w-10">
-                <FaLinkedin className="h-5 w-5 text-[#0A66C2]" />
-              </Button>
+              <SocialShare
+                url={`/blogs/${data.slug}`}
+                title={data.title}
+                description={data.metaDescription}
+                platform="linkedin"
+                isFloating={true}
+              />
             </TooltipTrigger>
             <TooltipContent side="right">
               <p>Share on LinkedIn</p>
@@ -139,9 +140,13 @@ const BlogPage = ({ data }) => {
 
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button variant="ghost" size="icon" className="rounded-full hover:bg-primary/10 h-10 w-10">
-                <FaInstagram className="h-5 w-5 text-[#E4405F]" />
-              </Button>
+              <SocialShare
+                url={`/blogs/${data.slug}`}
+                title={data.title}
+                description={data.metaDescription}
+                platform="instagram"
+                isFloating={true}
+              />
             </TooltipTrigger>
             <TooltipContent side="right">
               <p>Share on Instagram</p>
@@ -150,9 +155,13 @@ const BlogPage = ({ data }) => {
 
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button variant="ghost" size="icon" className="rounded-full hover:bg-primary/10 h-10 w-10">
-                <FaFacebook className="h-5 w-5 text-[#1877F2]" />
-              </Button>
+              <SocialShare
+                url={`/blogs/${data.slug}`}
+                title={data.title}
+                description={data.metaDescription}
+                platform="facebook"
+                isFloating={true}
+              />
             </TooltipTrigger>
             <TooltipContent side="right">
               <p>Share on Facebook</p>
@@ -221,12 +230,6 @@ const BlogPage = ({ data }) => {
           >
             {/* Blog Header */}
             <header className="space-y-4">
-              {/* {data.category && typeof data.category.category_name === "string" ? (
-                // <Badge className="bg-primary/20 text-primary hover:bg-primary/30 px-3 py-1 text-xs uppercase tracking-wider font-medium">
-                //   {data.category.category_name}
-                // </Badge>
-              ) : null} */}
-
               <h1
                 className={`${dmsans.className} font-semibold text-3xl md:text-4xl lg:text-5xl text-gray-900 dark:text-white leading-tight`}
               >
@@ -239,6 +242,7 @@ const BlogPage = ({ data }) => {
                     <AvatarImage
                       src={data.author?.image || "/assets/MMMMM.png"}
                       alt={data.author?.first_name || "Author"}
+                      title={data.author?.first_name || "Author"}
                     />
                     <AvatarFallback>{data.author?.first_name?.[0] || "A"}</AvatarFallback>
                   </Avatar>
@@ -286,12 +290,7 @@ const BlogPage = ({ data }) => {
             </div>
 
             {/* Blog Content */}
-            {/* <div className="prose prose-lg dark:prose-invert max-w-none">
-              {parse(typeof data?.content === "string" ? data?.content : "<p>No Content</p>")}
-            </div> */}
-
-
-<BlogContentRenderer content={typeof data?.content === "string" ? data?.content : "<p>No Content</p>"} />
+            <BlogContentRenderer content={typeof data?.content === "string" ? data?.content : "<p>No Content</p>"} />
 
             {/* Article Actions */}
             <div className="flex flex-wrap items-center justify-between gap-4 py-6 border-t border-b border-gray-200 dark:border-gray-700">
@@ -309,7 +308,7 @@ const BlogPage = ({ data }) => {
                 <Button
                   variant="outline"
                   size="sm"
-                  className="rounded-full"
+                  className="rounded-full bg-transparent"
                   onClick={() => document.getElementById("comments").scrollIntoView({ behavior: "smooth" })}
                 >
                   <MessageSquare className="h-4 w-4 mr-1.5" />
@@ -319,46 +318,9 @@ const BlogPage = ({ data }) => {
 
               <div className="flex items-center gap-2">
                 <span className="text-sm text-gray-500">Share:</span>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="rounded-full h-8 w-8"
-                  as="a"
-                  href="https://www.linkedin.com/company/modernmannerism/posts/?feedView=all"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="LinkedIn"
-                >
-                  <FaLinkedin className="h-4 w-4 text-[#0A66C2]" />
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="rounded-full h-8 w-8"
-                  as="a"
-                  href="https://www.instagram.com/modernmannerism/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Instagram"
-                >
-                  <FaInstagram className="h-4 w-4 text-[#E4405F]" />
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="rounded-full h-8 w-8"
-                  as="a"
-                  href="https://www.facebook.com/modernmannerism/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Facebook"
-                >
-                  <FaFacebook className="h-4 w-4 text-[#1877F2]" />
-                </Button>
+                <SocialShare url={`/blogs/${data.slug}`} title={data.title} description={data.metaDescription} />
               </div>
-           
             </div>
-           
           </motion.article>
 
           {/* Sidebar */}
@@ -390,12 +352,9 @@ const BlogPage = ({ data }) => {
                   </p>
 
                   <div className="flex items-center gap-3 mt-4">
-                    <Button variant="outline" size="sm" className="rounded-full" asChild>
+                    <Button variant="outline" size="sm" className="rounded-full bg-transparent" asChild>
                       <Link href="/about-us">Know More</Link>
                     </Button>
-                    {/* <Button variant="outline" size="sm" className="rounded-full" asChild>
-                      <Link href="/contact-us">Contact</Link>
-                    </Button> */}
                   </div>
                 </div>
               </CardContent>
@@ -423,6 +382,7 @@ const BlogPage = ({ data }) => {
                           <Image
                             src={blog.image || "/assets/default-blog.png"}
                             alt={blog.title}
+                            title={blog.title}
                             fill
                             className="object-cover"
                           />
@@ -488,42 +448,40 @@ const BlogPage = ({ data }) => {
               </CardContent>
             </Card>
           </motion.aside>
-          
         </div>
-        <BlogCommentSection/>
-            {/* Related Articles */}
-            {data.recentBlogs && data.recentBlogs.length > 0 && (
-              <div className="mt-12">
-                <h3 className={`${dmsans.className} text-2xl font-semibold mb-6`}>You May Also Like</h3>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  {data.recentBlogs.slice(0, 3).map((blog, index) => (
-                    <Link key={index} href={`/blogs/${blog.slug}`}>
-                      <Card className="overflow-hidden h-full hover:shadow-md transition-shadow">
-                        <div className="relative aspect-[16/9]">
-                          <Image
-                            src={blog.image || "/assets/default-blog.png"}
-                            alt={blog.title}
-                            fill
-                            className="object-cover"
-                          />
-                        </div>
-                        <CardContent className="p-4">
-                          <h4 className={`${dmsans.className} font-medium text-lg mb-2 line-clamp-2`}>{blog.title}</h4>
-                          <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
-                            <span>Manasi Kadam</span>
-                            {/* {blog.createdAt && <span>{new Date(blog.createdAt).toLocaleDateString()}</span>} */}
-                          </div>
-                        </CardContent>
-                      </Card>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            )}
+
+        {/* Related Articles */}
+        {data.recentBlogs && data.recentBlogs.length > 0 && (
+          <div className="mt-12">
+            <h3 className={`${dmsans.className} text-2xl font-semibold mb-6`}>You May Also Like</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {data.recentBlogs.slice(0, 3).map((blog, index) => (
+                <Link key={index} href={`/blogs/${blog.slug}`}>
+                  <Card className="overflow-hidden h-full hover:shadow-md transition-shadow">
+                    <div className="relative aspect-[16/9]">
+                      <Image
+                        src={blog.image || "/assets/default-blog.png"}
+                        alt={blog.title}
+                        title={blog.title}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    <CardContent className="p-4">
+                      <h4 className={`${dmsans.className} font-medium text-lg mb-2 line-clamp-2`}>{blog.title}</h4>
+                      <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
+                        <span>Manasi Kadam</span>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   )
 }
 
 export default BlogPage
-

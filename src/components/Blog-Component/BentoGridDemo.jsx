@@ -173,6 +173,7 @@ export function BentoGridDemo({ blogs }) {
                       <Image
                         src={item.image || "/assets/default-blog.png"}
                         alt={item.title}
+                        title={item.title}
                         width={400}
                         height={225}
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
