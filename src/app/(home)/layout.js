@@ -25,6 +25,11 @@ export const metadata = {
   title: {
     template: "Modern Mannerism | %s",
   },
+  icons: {
+    icon: "/MM.png", // Path to your logo in the public directory
+    shortcut: "/MM.png",
+    apple: "/MM.png",
+  },
 }
 
 export default async function RootLayout({ children }) {
