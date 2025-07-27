@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import { Aleo, Cormorant_Garamond, Lato, Montserrat } from "next/font/google"
+import { Loader2 } from "lucide-react" // Import Loader2 icon
 
 const Montserratt = Montserrat({ subsets: ["latin"], weight: ["400"] })
 const dm_Sansss = Cormorant_Garamond({ subsets: ["latin"], weight: ["700"] })
@@ -39,18 +40,13 @@ export default function EmailPopup() {
       }
     }
   }, [])
-  useEffect(() => {
-    if (isOpen) {
-      document.body.classList.add("overflow-hidden")
-    } else {
-      document.body.classList.remove("overflow-hidden")
-    }
-  }, [isOpen])
+
   const handleSubmit = async () => {
     if (!firstName.trim() || !lastName.trim() || !email.match(/\S+@\S+\.\S+/)) {
-      alert("Please enter valid details.")
+      setError("Please enter valid details.") // Set error message for UI
       return
     }
+    setError("") // Clear previous errors
 
     setLoading(true)
 
@@ -71,11 +67,11 @@ export default function EmailPopup() {
           downloadPDF()
         }, 1000)
       } else {
-        alert(data.error || "Error sending email. Please try again.")
+        setError(data.error || "Error sending email. Please try again.") // Set error message from API
       }
     } catch (error) {
       console.error("Email sending error:", error)
-      alert("Something went wrong. Please try again.")
+      setError("Something went wrong. Please try again.") // Set generic error
     } finally {
       setLoading(false)
     }
@@ -85,10 +81,6 @@ export default function EmailPopup() {
     localStorage.setItem("popupDismissed", new Date().toISOString())
     setIsOpen(false)
   }
-
-  // const downloadPDF = () => {
-  //   window.open(`${process.env.NEXT_PUBLIC_API_URL}/Modern_mannerism.pdf`, "_blank");
-  // };
 
   const downloadPDF = async () => {
     try {
@@ -123,6 +115,7 @@ export default function EmailPopup() {
     setFirstName("")
     setLastName("")
     setEmail("")
+    setError("")
   }
 
   return (
@@ -134,9 +127,8 @@ export default function EmailPopup() {
         {/* Left Side - Image */}
         <div className="flex-1 h-full md:flex justify-start  items-center w-full max-w-[450px] lg:max-w-[550px]">
           <Image
-            src="/assets/Book.webp"
+            src="/assets/Book.png"
             alt="Branding"
-            title="Modern Mannerism E-Book"
             width={400}
             height={300}
             className="object-cover md:h-full h-[24vh] rounded-l-lg"
@@ -198,8 +190,16 @@ export default function EmailPopup() {
                 <Button
                   onClick={handleSubmit}
                   className="bg-gradient-to-r from-[#c3965d] to-[#eabf91] text-white px-6 py-2 rounded-md transition-all"
+                  disabled={loading} // Ensure button is disabled during loading
                 >
-                  Get Your Free E-Book Now
+                  {loading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Downloading...
+                    </>
+                  ) : (
+                    "Get Your Free E-Book Now"
+                  )}
                 </Button>
               </div>
             </motion.div>

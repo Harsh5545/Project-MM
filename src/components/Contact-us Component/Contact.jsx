@@ -79,9 +79,8 @@ export default function ContactForm() {
 
   return (
     <div
-      className={`relative flex items-center justify-center min-h-screen bg-cover bg-center bg-no-repeat pt-[80px] md:pt-[120px] ${
-        theme === "dark" ? "dark" : ""
-      }`}
+      className={`relative flex items-center justify-center min-h-screen bg-cover bg-center bg-no-repeat pt-[80px] md:pt-[120px] ${theme === "dark" ? "dark" : ""
+        }`}
       style={{
         backgroundImage: `url("/assets/${theme === "dark" ? "dark-image.jpg" : "ContactUsBg.jpg"}")`,
       }}
@@ -203,7 +202,7 @@ export default function ContactForm() {
                     <FormItem>
                       <FormControl>
                         <Input
-                          placeholder="Phone Number (Optional)"
+                          placeholder="Phone Number"
                           type="tel"
                           {...field}
                           className="w-full p-2 md:p-4 rounded-md bg-gray-100 dark:bg-[#0C1522] dark:text-white border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-[#933469]"
@@ -226,10 +225,21 @@ export default function ContactForm() {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="personal-branding">Personal Branding</SelectItem>
-                          <SelectItem value="communication-skills">Communication Skills</SelectItem>
-                          <SelectItem value="corporate-etiquette">Corporate Etiquette</SelectItem>
-                          <SelectItem value="fine-dining-manners">Fine Dining Manners</SelectItem>
+                          <SelectItem value="personal-branding">Business Etiquette
+                          </SelectItem>
+                          <SelectItem value="communication-skills">Professional Grooming
+                          </SelectItem>
+                          <SelectItem value="corporate-etiquette">Ladies Grooming Workshop
+                          </SelectItem>
+                          <SelectItem value="fine-dining-manners">Personalised Transformation Programme</SelectItem>
+                          <SelectItem value="fine-dining-manners">Children's Etiquette
+                          </SelectItem>
+                          <SelectItem value="fine-dining-manners">Young Adult Finishing Programme
+                          </SelectItem>
+                          <SelectItem value="fine-dining-manners">Interview Preparation
+                          </SelectItem>
+                           <SelectItem value="fine-dining-manners">Communication & Public Speaking
+                          </SelectItem>
                         </SelectContent>
                       </Select>
                       <FormMessage />
@@ -270,7 +280,7 @@ export default function ContactForm() {
                       </FormControl>
                       <div className="space-y-1 leading-none">
                         <label htmlFor="agree" className="text-sm text-gray-700 dark:text-gray-200">
-                          I agree to receive marketing materials from Modern Mannerism.
+                          I agree to receive exclusive offers, newsletter and updates from Modern Mannerism.
                         </label>
                         <FormMessage />
                       </div>

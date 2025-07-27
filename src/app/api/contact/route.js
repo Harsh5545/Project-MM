@@ -19,11 +19,16 @@ export async function POST(request) {
     })
 
     const courseMap = {
-      "personal-branding": "Personal Branding",
-      "communication-skills": "Communication Skills",
-      "corporate-etiquette": "Corporate Etiquette",
-      "fine-dining-manners": "Fine Dining Manners",
-    }
+  "personal-branding": "Business Etiquette",
+  "communication-skills": "Professional Grooming",
+  "corporate-etiquette": "Ladies Grooming Workshop",
+  "fine-dining-manners": "Personalised Transformation Programme",
+  "children-etiquette": "Children's Etiquette",
+  "young-adult-finishing": "Young Adult Finishing Programme",
+  "interview-preparation": "Interview Preparation",
+  "communication-public-speaking": "Communication & Public Speaking"
+};
+
 
     const courseName = courseMap[course] || course
     const firstName = name.split(" ")[0]

@@ -240,16 +240,16 @@ const BlogPage = ({ data }) => {
                 <div className="flex items-center gap-2">
                   <Avatar className="h-10 w-10 border-2 border-white dark:border-gray-800 shadow-sm">
                     <AvatarImage
-                      src={data.author?.image || "/assets/MMMMM.png"}
+                      src={data.author?.image || "/assets/M.webp"}
                       alt={data.author?.first_name || "Author"}
                       title={data.author?.first_name || "Author"}
                     />
                     <AvatarFallback>{data.author?.first_name?.[0] || "A"}</AvatarFallback>
                   </Avatar>
                   <div className="flex flex-col">
-                    <span className="font-medium">
+                    <h2 className="font-medium">
                       {data.author ? `${data.author.first_name} ${data.author.last_name}` : "Manasi Kadam"}
-                    </span>
+                    </h2>
                     <span className="text-xs text-gray-500 dark:text-gray-400">Certified Consultant</span>
                   </div>
                 </div>
@@ -280,8 +280,9 @@ const BlogPage = ({ data }) => {
             {/* Featured Image */}
             <div className="relative w-full aspect-[16/9] overflow-hidden rounded-xl shadow-md">
               <Image
-                src={data.image || "/assets/manasi-box.png"}
+                src={data.image || "/assets/M.webp"}
                 alt={data.title}
+                title={data.title}
                 fill
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 75vw, 50vw"
@@ -335,11 +336,11 @@ const BlogPage = ({ data }) => {
               <CardContent className="p-6">
                 <div className="flex flex-col items-center text-center">
                   <Avatar className="h-24 w-24 border-4 border-white dark:border-gray-800 shadow-md mb-4">
-                    <AvatarImage src={"/assets/MMMMM.png"} alt="Manasi Kadam" />
+                    <AvatarImage src={"/assets/M.webp"} alt="Manasi Kadam" />
                     <AvatarFallback>MK</AvatarFallback>
                   </Avatar>
 
-                  <h3 className="text-xl font-serif font-bold">Manasi Kadam</h3>
+                  <p className="text-xl font-serif font-bold">Manasi Kadam</p>
                   <p className={`${dmsans.className} text-sm text-gray-600 dark:text-gray-300 mt-1`}>
                     Certified Image & Etiquette Consultant
                   </p>
@@ -364,10 +365,10 @@ const BlogPage = ({ data }) => {
             {data.recentBlogs && data.recentBlogs.length > 0 && (
               <Card className="overflow-hidden border border-gray-100 dark:border-gray-700 shadow-sm">
                 <div className="bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10 p-4">
-                  <h3 className="text-lg font-serif font-bold flex items-center gap-2">
+                  <h5 className="text-lg font-serif font-bold flex items-center gap-2">
                     <TrendingUp className="h-4 w-4" />
                     <span>Trending Articles</span>
-                  </h3>
+                  </h5>
                 </div>
 
                 <div className="divide-y divide-gray-100 dark:divide-gray-800">
@@ -389,9 +390,9 @@ const BlogPage = ({ data }) => {
                         </div>
 
                         <div className="flex-1 min-w-0">
-                          <h4 className="text-sm font-medium line-clamp-2 hover:text-primary transition-colors">
+                          <p className="text-sm font-medium line-clamp-2 hover:text-primary transition-colors">
                             {blog.title}
-                          </h4>
+                          </p>
                           <div className="flex items-center gap-2 mt-1 text-xs text-gray-500 dark:text-gray-400">
                             <User className="h-3 w-3" />
                             <span>{blog.author?.first_name || "Author"}</span>
@@ -453,7 +454,7 @@ const BlogPage = ({ data }) => {
         {/* Related Articles */}
         {data.recentBlogs && data.recentBlogs.length > 0 && (
           <div className="mt-12">
-            <h3 className={`${dmsans.className} text-2xl font-semibold mb-6`}>You May Also Like</h3>
+            <p className={`${dmsans.className} text-2xl font-semibold mb-6`}>You May Also Like</p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {data.recentBlogs.slice(0, 3).map((blog, index) => (
                 <Link key={index} href={`/blogs/${blog.slug}`}>
