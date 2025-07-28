@@ -59,7 +59,7 @@ const ServicePage = ({ data }) => {
     <div className="flex h-full dark:bg-[rgb(0,0,31)] bg-gradient-to-b from-neutral-50 to-neutral-100 items-center justify-center w-full flex-col">
       {/* Hero Section */}
       <div className="w-full  bg-cover bg-center flex items-end justify-center">
-        <ServicesHero data={testimonials?.heroImage} className="relative" />
+        <ServicesHero data={testimonials?.heroImage}  className="relative" />
 
         <motion.div
           initial="hidden"

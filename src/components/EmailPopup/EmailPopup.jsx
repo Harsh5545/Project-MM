@@ -127,10 +127,11 @@ export default function EmailPopup() {
         {/* Left Side - Image */}
         <div className="flex-1 h-full md:flex justify-start  items-center w-full max-w-[450px] lg:max-w-[550px]">
           <Image
-            src="/assets/Book.png"
+            src="/assets/Book.webp"
             alt="Branding"
             width={400}
             height={300}
+            title="Modern Mannerism E-Book"
             className="object-cover md:h-full h-[24vh] rounded-l-lg"
           />
         </div>

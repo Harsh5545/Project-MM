@@ -112,7 +112,7 @@ function ServicesComponent({ data }) {
       <div className="max-w-2xl md:max-w-6xl lg:max-w-7xl mx-auto">
         {/* Heading */}
         <div className=" flex items-center flex-col justify-center text-center">
-          <motion.h4
+          <motion.h1
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
@@ -120,7 +120,7 @@ function ServicesComponent({ data }) {
           >
             Our Services
           
-          </motion.h4>
+          </motion.h1>
             <hr className="h-1 mt-1 bg-gradient-to-r text-center  from-[#c3965d] via-[#eabf91] to-[#c3965d]   w-32" />
           {/* <motion.p
             initial={{ opacity: 0, y: -20 }}
@@ -280,6 +280,7 @@ function ServicesComponent({ data }) {
                         <Image
                           alt={course.heading}
                           src={course.image || "/placeholder.svg"}
+                          title={course.heading}
                           fill
                           className="object-cover transition-transform duration-500 group-hover:scale-110"
                         />
@@ -305,9 +306,9 @@ function ServicesComponent({ data }) {
                           <span className="text-xs ml-2 text-gray-600 dark:text-gray-400">(4.0)</span>
                         </div> */}
 
-                        <h5 className="text-xl font-semibold text-gray-900 dark:text-white line-clamp-2 mb-2">
+                        <p className="text-xl font-semibold text-gray-900 dark:text-white line-clamp-2 mb-2">
                           {course?.heading}
-                        </h5>
+                        </p>
 
                         <p className="text-gray-700 dark:text-gray-400 text-sm flex-grow line-clamp-2 mb-4">
                           {course?.subheading}
@@ -325,14 +326,14 @@ function ServicesComponent({ data }) {
                   </Link>
                 ))
               ) : (
-                <motion.p
+                <motion.h2
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.9 }}
                   className="col-span-full text-center text-gray-700 dark:text-gray-300 text-lg py-12"
                 >
                   No services match your search.
-                </motion.p>
+                </motion.h2>
               )}
             </div>
 
