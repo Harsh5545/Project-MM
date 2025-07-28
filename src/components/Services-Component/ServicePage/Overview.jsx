@@ -48,6 +48,7 @@ const Overview = ({ data }) => {
             <Image
               width={800}
               height={600}
+              title="Overview Image"
               alt={`${data?.overviewDescription?.slice(0, 3) || "Overview image"}`}
               src={data?.overviewImage || "/placeholder.svg?height=600&width=500"}
               className="shadow-2xl h-auto max-h-[45vh] md:max-h-[55vh] lg:max-h-[65vh] rounded-2xl object-cover z-10"
@@ -74,11 +75,11 @@ const Overview = ({ data }) => {
         >
           {/* Header */}
           <div className="flex flex-col items-center gap-2 justify-center">
-            <h3
+            <h6
               className={`${cormorant.className} text-4xl md:text-5xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#c3965d] via-[#eabf91] to-[#c3965d] mb-6 md:mb-8 tracking-wide`}
             >
               Overview
-            </h3>
+            </h6>
           </div>
 
           {/* Description */}

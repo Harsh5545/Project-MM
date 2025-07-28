@@ -8,9 +8,10 @@ function ServicesHero({ data }) {
         <div className="w-full min-h-[44vh] sm:min-h-[35vh] md:min-h-[30vh] lg:min-h-[40vh] relative pt-16 sm:pt-20 md:pt-24">
         <Image
           src={data || "/placeholder.svg?height=800&width=1600"}
-          alt="Service Hero"
+          alt=" Modern Mannerism Service Hero"
           layout="fill"
           objectFit="cover"
+          title="Service Hero Image"
           quality={100}
           priority
           className="z-0 "

@@ -108,13 +108,13 @@ const HeroCarousel = () => {
             </motion.div>
 
             <motion.div variants={itemVariants} className="w-full flex md:justify-start justify-center items-center">
-              <Link href="/services">
+              <Link href="https://calendly.com/modernmannerism/mini-consultation">
                 <motion.button
                   whileHover={{ scale: 1.05, boxShadow: "0 10px 25px -5px rgba(201, 148, 81, 0.3)" }}
                   whileTap={{ scale: 0.95 }}
                   className={`${cormorantGaramond.className} flex text-lg items-center justify-center px-10 py-3 bg-gradient-to-r from-[#c3965d] to-[#eabf91] text-white rounded-full font-medium shadow-lg hover:shadow-xl transition-all duration-300`}
                 >
-                  Know more
+                  Book Your Free Consultation
                 </motion.button>
               </Link>
             </motion.div>
