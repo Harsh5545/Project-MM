@@ -168,7 +168,7 @@ export default function ContactForm() {
                     <FormItem>
                       <FormControl>
                         <Input
-                          placeholder="Name and Surname"
+                          placeholder="Full Name"
                           {...field}
                           className="w-full p-2 md:p-4 rounded-md bg-gray-100 dark:bg-[#0C1522] dark:text-white border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-[#933469]"
                         />
