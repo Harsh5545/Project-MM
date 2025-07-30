@@ -92,8 +92,7 @@ export default function ContactForm() {
             <div>
               <h1 className="text-3xl md:text-4xl font-bold text-[#eabf91] mb-6">Get in Touch</h1>
               <p className="text-gray-700 dark:text-gray-200 mb-8">
-                Our team will reach out to you as soon as possible to discuss your needs and how we can help you enhance
-                your personal and professional presence.
+                 Our team will contact you promptly to discuss your requirements and how we can help you strengthen your personal and professional brand presence.
               </p>
 
               <div className="space-y-4 mb-8">
