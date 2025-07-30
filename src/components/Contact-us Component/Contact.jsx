@@ -92,8 +92,7 @@ export default function ContactForm() {
             <div>
               <h1 className="text-3xl md:text-4xl font-bold text-[#eabf91] mb-6">Get in Touch</h1>
               <p className="text-gray-700 dark:text-gray-200 mb-8">
-                Our team will reach out to you as soon as possible to discuss your needs and how we can help you enhance
-                your personal and professional presence.
+                 Our team will contact you promptly to discuss your requirements and how we can help you strengthen your personal and professional brand presence.
               </p>
 
               <div className="space-y-4 mb-8">
@@ -168,7 +167,7 @@ export default function ContactForm() {
                     <FormItem>
                       <FormControl>
                         <Input
-                          placeholder="Name and Surname"
+                          placeholder="Full Name"
                           {...field}
                           className="w-full p-2 md:p-4 rounded-md bg-gray-100 dark:bg-[#0C1522] dark:text-white border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-[#933469]"
                         />
