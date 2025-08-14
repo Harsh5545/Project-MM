@@ -134,7 +134,7 @@ const ServicePage = ({ data }) => {
               className={`${playfair.className} text-2xl sm:text-3xl lg:text-4xl mb-6 md:mb-8 font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-50 tracking-wide`}
             >
               {testimonials?.taglineHeading || "Transform Your Etiquette Today"}
-            </p><Link href={"/contact-us"}>
+            </p><Link href={"https://wa.me/919867831324"}>
             <ShadcnButton
               variant="contained"
               className={`${cormorant.className} rounded-full w-auto bg-white hover:bg-gray-50 text-[#c3965d] border-2 border-[#dd9f5d] hover:text-[#b07d3a] p-3 px-6 sm:px-8 md:px-10 text-base sm:text-lg font-semibold shadow-lg transition-all duration-300 hover:shadow-xl`}
