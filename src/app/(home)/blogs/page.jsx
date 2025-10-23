@@ -36,32 +36,7 @@ const page = async ({searchParams}) => {
         <div>
           <BlogHero />
           <BentoGridDemo blogs={data.data} />
-          <div className="flex justify-center mt-4">
-            {/* Previous Page Link */}
-            {currentPage > 1 && (
-              <a
-                href={`?page=${currentPage - 1}`}
-                className="px-4 py-2 mx-2 bg-gray-300 rounded"
-              >
-                Previous
-              </a>
-            )}
-
-            {/* Page Info */}
-            <span className="mx-2">
-              Page {currentPage} of {data.totalPages}
-            </span>
-
-            {/* Next Page Link */}
-            {currentPage < data.totalPages && (
-              <a
-                href={`?page=${currentPage + 1}`}
-                className="px-4 py-2 mx-2 bg-gray-300 rounded"
-              >
-                Next
-              </a>
-            )}
-          </div>
+      
           <HomeSection />
         </div>
       )
