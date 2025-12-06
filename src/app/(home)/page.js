@@ -75,7 +75,7 @@ async function getRecentBlogs() {
     })
 
     if (!response.ok) {
-      throw new Error("Failed to fetch blogs")
+      return []
     }
 
     const result = await response.json()
