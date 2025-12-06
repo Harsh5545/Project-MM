@@ -7,44 +7,87 @@ import { cache } from "react"
 
 export const revalidate = 3600;
 
+// export async function generateStaticParams() {
+//   const data = await fetchBlogs();  
+//   const allBlogs = data.data || [];
+//   return allBlogs.map((tag) => ({
+//     slug: tag.slug,
+//   }));
+// }
+
+// const getData = cache(GetBlogDetails)
+
+// export async function generateMetadata({ params }) {
+//   const slug = (await params).slug
+//   const response = await getData(slug)
+//   if (!response.Success) {
+//     throw new Error("Failed to fetch blog details")
+//   }
+
+//   if (!response?.data) {
+//     return notFound()
+//   }
+//   const { title, description, image } = response.data
+//   return {
+//     title: title,
+//     description: description,
+//     alternates: {
+//       canonical: `/blogs/${slug}`,
+//     },
+//     openGraph: {
+//       title: title,
+//       description: description,
+//       images: [
+//         {
+//           url: image,
+//           width: 800,
+//           height: 600,
+//         },
+//       ],
+//     }
+//   }
+// }
+
+
 export async function generateStaticParams() {
-  const data = await fetchBlogs();  
-  const allBlogs = data.data || [];
-  return allBlogs.map((tag) => ({
-    slug: tag.slug,
-  }));
+  try {
+    const data = await fetchBlogs();
+    const allBlogs = data?.data || []; // Safe fallback
+
+    return allBlogs.map((tag) => ({
+      slug: tag.slug,
+    }));
+  } catch (error) {
+    return []; // Prevent build crash
+  }
 }
 
-const getData = cache(GetBlogDetails)
+const getData = cache(GetBlogDetails);
 
 export async function generateMetadata({ params }) {
-  const slug = (await params).slug
-  const response = await getData(slug)
-  if (!response.Success) {
-    throw new Error("Failed to fetch blog details")
-  }
+  const slug = params.slug;
 
-  if (!response?.data) {
-    return notFound()
-  }
-  const { title, description, image } = response.data
-  return {
-    title: title,
-    description: description,
-    alternates: {
-      canonical: `/blogs/${slug}`,
-    },
-    openGraph: {
-      title: title,
-      description: description,
-      images: [
-        {
-          url: image,
-          width: 800,
-          height: 600,
-        },
-      ],
+  try {
+    const response = await getData(slug);
+
+    if (!response?.data) {
+      return {}; // instead of throw
     }
+
+    const { title, description, image } = response.data;
+
+    return {
+      title,
+      description,
+      alternates: { canonical: `/blogs/${slug}` },
+      openGraph: {
+        title,
+        description,
+        images: [{ url: image, width: 800, height: 600 }],
+      },
+    };
+  } catch (error) {
+    return {}; // Prevent build crash
   }
 }
 
