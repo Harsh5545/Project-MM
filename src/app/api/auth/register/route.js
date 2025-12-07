@@ -46,7 +46,7 @@ export async function POST(req) {
             email: body.email,
             mobile_number: body.mobileNumber,
             password: hashedPassword,
-            roleId: 1,  // Default role, you can adjust this as needed
+            roleId: 2,  // Default role, you can adjust this as needed
         };
         // Create the user in the database
         try {
