@@ -50,7 +50,7 @@ function ServicesComponent({ data }) {
   }, []);
 
   // Filter courses based on search term and selected categories
-  const filteredCourses = data.filter((course) => {
+  const filteredCourses = data?.filter((course) => {
     const title = course?.heading || "";
     const description = course?.subheading || "";
     const categoryName = course?.category?.category_name || "";
