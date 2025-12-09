@@ -7,7 +7,7 @@ import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@
 import { useToast } from "@/hooks/use-toast"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
-import { Dialog, DialogContent } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
 import icons from "@/hooks/icons"
 import UploadServices from "../Add-Service/UploadServices"
 
@@ -890,7 +890,7 @@ const EditServices = ({ data}) => {
 
       <Dialog open={showSuccessDialog} onOpenChange={setShowSuccessDialog}>
         <DialogContent>
-          <h2 className="text-lg font-semibold text-center">Service Successfully Updated!</h2>
+          <DialogTitle className="text-lg font-semibold text-center">Service Successfully Updated!</DialogTitle>
           <Button
             onClick={() => {
               setShowSuccessDialog(false)

@@ -105,10 +105,13 @@ export async function GET(req) {
           },
         },
         tags: {
-          select: {
-            name: true,
-          },
-        },
+  select: {
+    tag: {
+      select: { name: true }
+    }
+  },
+},
+
       },
       ...queryOptions, // Apply pagination or fetch all records based on pageSize
     });

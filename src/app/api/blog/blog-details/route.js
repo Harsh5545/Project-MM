@@ -34,9 +34,9 @@ export async function GET(req) {
             include: {
                 author: {
                     select: {
-                        first_name: true, 
+                        first_name: true,
                         last_name: true,
-                        image:true
+                        image: true
                     },
                 },
                 category: {
@@ -46,9 +46,12 @@ export async function GET(req) {
                 },
                 tags: {
                     select: {
-                        name: true,
+                        tag: {
+                            select: { name: true }
+                        }
                     },
                 },
+
             },
         });
         if (!blog) {

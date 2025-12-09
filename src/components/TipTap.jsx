@@ -5,9 +5,10 @@ import StarterKit from "@tiptap/starter-kit"
 import UnderlineExtension from "@tiptap/extension-underline"
 import TextAlign from "@tiptap/extension-text-align"
 import Image from "@tiptap/extension-image"
+import { FixedYoutube } from "@/lib/youtubeFix"
 import Link from "@tiptap/extension-link"
 import Placeholder from "@tiptap/extension-placeholder"
-import Youtube from "@tiptap/extension-youtube"
+// import Youtube from "@tiptap/extension-youtube"
 import Color from "@tiptap/extension-color"
 import TextStyle from "@tiptap/extension-text-style"
 import { useState, useCallback, useEffect } from "react"
@@ -57,7 +58,7 @@ export default function TipTapEditor({ content, onChange, previewMode }) {
       Placeholder.configure({
         placeholder: "Write something amazing...",
       }),
-      Youtube.configure({
+      FixedYoutube.configure({
         width: 640,
         height: 480,
         controls: true,
