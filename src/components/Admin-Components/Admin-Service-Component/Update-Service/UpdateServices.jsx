@@ -11,7 +11,7 @@ import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
 import icons from "@/hooks/icons"
 import UploadServices from "../Add-Service/UploadServices"
 
-const EditServices = ({ data}) => {
+const EditServices = ({ data }) => {
   const { toast } = useToast()
   const [isFormValid, setIsFormValid] = useState(false)
   const [showSuccessDialog, setShowSuccessDialog] = useState(false)
@@ -52,7 +52,11 @@ const EditServices = ({ data}) => {
   //   },
   // })
 
-  const [ formData, setFormData ] = useState(data)
+  // const [ formData, setFormData ] = useState(data)
+  const [formData, setFormData] = useState({
+    ...data,
+    categoryId: data?.categoryId || data?.category?.id || "",
+  })
 
   const [categories, setCategories] = useState([])
   const [loading, setLoading] = useState(true)
@@ -99,21 +103,27 @@ const EditServices = ({ data}) => {
     setFormData((prevData) => ({ ...prevData, [name]: value }))
   }, [])
 
+  // const handleSelectChange = useCallback((value) => {
+  //   console.log(value,'VALUE')
+  //   setFormData((prevData) => ({ ...prevData, category: value }))
+  // }, [])
   const handleSelectChange = useCallback((value) => {
-    console.log(value,'VALUE')
-    setFormData((prevData) => ({ ...prevData, category: value }))
+    setFormData((prevData) => ({
+      ...prevData,
+      categoryId: Number(value),
+    }))
   }, [])
 
   const handleFormSubmit = async (e) => {
     e.preventDefault()
     try {
-      console.log(formData,'FORMDATA')
+      console.log(formData, 'FORMDATA')
       const response = await fetch(`/api/services/update-service`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        
+
         body: JSON.stringify(formData),
       })
 
@@ -221,13 +231,20 @@ const EditServices = ({ data}) => {
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700">Category</label>
-              <Select onValueChange={handleSelectChange} value={formData.categoryId}>
+              {/* <Select onValueChange={handleSelectChange} value={formData.categoryId}> */}
+              <Select
+                value={formData.categoryId?.toString()}
+                onValueChange={handleSelectChange}
+              >
+
                 <SelectTrigger className="w-full mt-1">
+
                   <SelectValue placeholder="Select a category" />
                 </SelectTrigger>
                 <SelectContent>
                   {categories.map((category) => (
-                    <SelectItem key={category.id} value={category.id}>
+                    <SelectItem key={category.id} value={category.id.toString()}>
+
                       {category.category_name}
                     </SelectItem>
                   ))}
