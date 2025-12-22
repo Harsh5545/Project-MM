@@ -64,7 +64,11 @@ export default function EditBlog({ existingBlog }) {
 
     const payload = {
       ...blogData,
-      tags: tagsAsStrings, // All tags are now strings
+      //  tags: tagsAsStrings,// All tags are now strings
+         tags: (blogData.tags || []).filter(
+    (tag) => typeof tag === "string" && tag.trim() !== ""
+  ),
+
       categoryId: Number(blogData.categoryId),
     }
 
@@ -75,7 +79,12 @@ export default function EditBlog({ existingBlog }) {
         body: JSON.stringify(payload),
       })
 
-      if (!response.ok) throw new Error("Failed to update blog")
+      const result = await response.json()
+
+      if (!response.ok || !result.success) {
+        throw new Error(result.message || "Failed to update blog")
+      }
+
 
       toast({ title: "Success", description: "Blog updated successfully" })
     } catch (error) {

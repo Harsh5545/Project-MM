@@ -22,7 +22,7 @@ export default function AddBlog({ existingBlog, userId }) {
     title: existingBlog?.title || "",
     content: existingBlog?.content || "",
     slug: existingBlog?.slug || "",
-    published: existingBlog?.published || true,
+    published: existingBlog?.published ?? true,
     authorId: existingBlog?.authorId || userId,
     categoryId: existingBlog?.categoryId || "",
     image: existingBlog?.image || "",
@@ -117,6 +117,7 @@ export default function AddBlog({ existingBlog, userId }) {
     }
 
     const payload = {
+       id: existingBlog?.id, 
       ...blogData,
       authorId: Number(blogData.authorId),
       categoryId: Number(blogData.categoryId),

@@ -2,28 +2,60 @@ import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
+// const blogSchema = z.object({
+//     id: z.number().optional(), // Optional id for updating an existing blog
+//     title: z.string().min(2, "Title is required"),
+//     content: z.string().min(10, "Content must be at least 10 characters"),
+//     slug: z
+//         .string()
+//         .min(2, "Slug is required")
+//         .regex(/^[a-z0-9-]+$/, "Slug must be lowercase with dashes"),
+//     published: z.boolean(),
+//     authorId: z.number().int().positive("Author ID must be a positive integer"),
+//     categoryId: z.number().int().positive("Category ID must be a positive integer"),
+//     meta_title: z.string().optional().nullable(),
+//     meta_desc: z.string().optional().nullable(),
+//     tags: z.array(z.string()).optional(),
+//     image: z.string().optional().nullable(),
+// });
 const blogSchema = z.object({
-    id: z.number().optional(), // Optional id for updating an existing blog
-    title: z.string().min(2, "Title is required"),
-    content: z.string().min(10, "Content must be at least 10 characters"),
-    slug: z
-        .string()
-        .min(2, "Slug is required")
-        .regex(/^[a-z0-9-]+$/, "Slug must be lowercase with dashes"),
+    id: z.number().optional(),
+
+    title: z.string().min(2),
+    content: z.string().min(10),
+
+    slug: z.string()
+        .min(2)
+        .regex(/^[a-z0-9-]+$/),
+
     published: z.boolean(),
-    authorId: z.number().int().positive("Author ID must be a positive integer"),
-    categoryId: z.number().int().positive("Category ID must be a positive integer"),
-    meta_title: z.string().optional().nullable(),
-    meta_desc: z.string().optional().nullable(),
-    tags: z.array(z.string()).optional(),
-    image: z.string().optional().nullable(),
-});
+
+    authorId: z.number().int().positive(),
+    categoryId: z.number().int().positive(),
+
+    meta_title: z.string().nullable().optional(),
+    meta_desc: z.string().nullable().optional(),
+tags: z.array(z.string().min(1)).optional().default([]),
+
+    // tags: z.array(z.string()).optional().default([]),
+
+    image: z.string().nullable().optional(),
+})
+
 
 
 export async function POST(req) {
     try {
         const data = await req.json();
-        console.log(data)
+        // ✅ ADD THIS BLOCK HERE 👇
+        if (Array.isArray(data.tags)) {
+            data.tags = data.tags.filter(
+                (tag) => typeof tag === "string" && tag.trim() !== ""
+            );
+        }
+
+        console.log("SANITIZED TAGS:", data.tags);
+        // console.log(data)
         const parsedData = blogSchema.parse(data);
 
         const {
@@ -68,6 +100,46 @@ export async function POST(req) {
             }
 
             // Update the existing blog
+            // const updatedBlog = await prisma.blog.update({
+            //     where: { id },
+            //     data: {
+            //         title,
+            //         content,
+            //         slug,
+            //         published,
+            //         categoryId,
+            //         image,
+            //         meta_title: meta_title || null,
+            //         meta_desc: meta_desc || null,
+            //         // tags: {
+            //         //     connectOrCreate: tags?.map((tag) => ({
+            //         //         where: { name: tag },
+            //         //         create: { name: tag },
+            //         //     })),
+            //         // },
+            //         tags: {
+            //             set: [],
+            //             connectOrCreate: tags?.map(tag => ({
+            //                 where: { name: tag },
+            //                 create: { name: tag },
+            //             })),
+            //         }
+
+            //     },
+            //     include: {
+            //         author: {
+            //             select: {
+            //                 id: true,
+            //                 email: true,
+            //                 image: true,
+            //                 first_name: true,
+            //                 last_name: true,
+            //             },
+            //         },
+            //         category: true,
+            //         tags: true,
+            //     },
+            // });
             const updatedBlog = await prisma.blog.update({
                 where: { id },
                 data: {
@@ -77,29 +149,25 @@ export async function POST(req) {
                     published,
                     categoryId,
                     image,
-                    meta_title: meta_title || null,
-                    meta_desc: meta_desc || null,
+                    meta_title: meta_title || "",
+                    meta_desc: meta_desc || "",
+
                     tags: {
-                        connectOrCreate: tags?.map((tag) => ({
-                            where: { name: tag },
-                            create: { name: tag },
+                        deleteMany: {},
+
+                        create: (tags ?? []).map(tagName => ({
+                            tag: {
+                                connectOrCreate: {
+                                    where: { name: tagName },
+                                    create: { name: tagName },
+                                },
+                            },
                         })),
                     },
                 },
-                include: {
-                    author: {
-                        select: {
-                            id: true,
-                            email: true,
-                            image: true,
-                            first_name: true,
-                            last_name: true,
-                        },
-                    },
-                    category: true,
-                    tags: true,
-                },
             });
+
+
 
             return NextResponse.json({ success: true, data: updatedBlog });
         } else {
@@ -157,7 +225,46 @@ export async function POST(req) {
                 );
             }
 
-            // Create a new blog entry
+            // // Create a new blog entry
+            // const newBlog = await prisma.blog.create({
+            //     data: {
+            //         title,
+            //         content,
+            //         slug,
+            //         published,
+            //         authorId,
+            //         categoryId,
+            //         image,
+            //         meta_title: meta_title || "",
+            //         meta_desc: meta_desc || "",
+            //         tags: {
+            //             deleteMany: {},
+
+            //             create: tags.map(tag => ({
+            //                 tag: {
+            //                     connectOrCreate: {
+            //                         where: { name: tag },
+            //                         create: { name: tag },
+            //                     },
+            //                 },
+            //             })),
+            //         }
+
+            //     },
+            //     include: {
+            //         author: {
+            //             select: {
+            //                 id: true,
+            //                 email: true,
+            //                 image: true,
+            //                 first_name: true,
+            //                 last_name: true,
+            //             },
+            //         },
+            //         category: true,
+            //         tags: true,
+            //     },
+            // });
             const newBlog = await prisma.blog.create({
                 data: {
                     title,
@@ -167,29 +274,22 @@ export async function POST(req) {
                     authorId,
                     categoryId,
                     image,
-                    meta_title: meta_title || null,
-                    meta_desc: meta_desc || null,
+                    meta_title: meta_title || "",
+                    meta_desc: meta_desc || "",
+
                     tags: {
-                        connectOrCreate: tags?.map((tag) => ({
-                            where: { name: tag },
-                            create: { name: tag },
+                        create: (tags ?? []).map(tagName => ({
+                            tag: {
+                                connectOrCreate: {
+                                    where: { name: tagName },
+                                    create: { name: tagName },
+                                },
+                            },
                         })),
                     },
                 },
-                include: {
-                    author: {
-                        select: {
-                            id: true,
-                            email: true,
-                            image: true,
-                            first_name: true,
-                            last_name: true,
-                        },
-                    },
-                    category: true,
-                    tags: true,
-                },
             });
+
 
             return NextResponse.json({ success: true, data: newBlog });
         }

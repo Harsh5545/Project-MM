@@ -40,9 +40,13 @@ export async function POST(req) {
         } = parsedData;
 
 
-        const existingBlogSlug = await prisma.blog.findUnique({
-            where: { slug },
+        const existingBlogSlug = await prisma.blog.findFirst({
+            where: {
+                slug,
+                NOT: data.id ? { id: data.id } : undefined,
+            },
         });
+
 
         if (existingBlogSlug) {
             return NextResponse.json(
@@ -93,49 +97,74 @@ export async function POST(req) {
 
 
         // Create the blog entry
+        // const newBlog = await prisma.blog.create({
+        //     data: {
+        //         title,
+        //         content,
+        //         slug,
+        //         published,
+        //         authorId,
+        //         categoryId,
+        //         image,
+        //         meta_title: meta_title || null,
+        //         meta_desc: meta_desc || null,
+        //         tags: {
+        //             connectOrCreate: tags?.map((tag) => ({
+        //                 where: { name: tag },
+        //                 create: { name: tag },
+        //             })),
+        //         },
+        //     },
+        //     include: {
+        //         author: {
+        //             select: {
+        //                 id: true,
+        //                 email: true,
+        //                 image: true,
+        //                 first_name: true,
+        //                 last_name: true,
+        //             },
+        //         },
+        //         category: true,
+        //         tags: true,
+        //     },
+        // });
         const newBlog = await prisma.blog.create({
             data: {
                 title,
                 content,
                 slug,
                 published,
-                authorId,
-                categoryId,
-                image,
-                meta_title: meta_title || null,
-                meta_desc: meta_desc || null,
+                authorId: Number(authorId),
+                categoryId: Number(categoryId),
+                image: image || null,
+                meta_title: meta_title || "",
+                meta_desc: meta_desc || "",
+
                 tags: {
-                    connectOrCreate: tags?.map((tag) => ({
-                        where: { name: tag },
-                        create: { name: tag },
+                    create: tags?.map(tagName => ({
+                        tag: {
+                            connectOrCreate: {
+                                where: { name: tagName },
+                                create: { name: tagName },
+                            },
+                        },
                     })),
                 },
             },
-            include: {
-                author: {
-                    select: {
-                        id: true,
-                        email: true,
-                        image: true,
-                        first_name: true,
-                        last_name: true,
-                    },
-                },
-                category: true,
-                tags: true,
-            },
-        });
+        })
+
 
         // Send notification to all users after creating the blog
         const subscriptions = await prisma.subscription.findMany();  // Fetch all subscriptions
 
         // Prepare the notification payload
         const notificationMessage = `New Blog Published: ${newBlog.title}`;
-        const notificationLink = `${process.env.NEXT_PUBLIC_SITE_URL}/blogs/${newBlog.slug}`; 
+        const notificationLink = `${process.env.NEXT_PUBLIC_SITE_URL}/blogs/${newBlog.slug}`;
 
         // Send notifications to all users
         if (subscriptions && subscriptions.length > 0) {
-            await sendNotification('New Blog Added',notificationMessage, notificationLink, subscriptions);
+            await sendNotification('New Blog Added', notificationMessage, notificationLink, subscriptions);
         }
 
         return NextResponse.json({ success: true, data: newBlog });

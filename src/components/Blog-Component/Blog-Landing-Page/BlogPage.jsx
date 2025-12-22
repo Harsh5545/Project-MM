@@ -128,7 +128,7 @@ const BlogPage = ({ data }) => {
               <SocialShare
                 url={`/blogs/${data.slug}`}
                 title={data.title}
-                description={data.metaDescription}
+                description={data.meta_desc}
                 platform="linkedin"
                 isFloating={true}
               />
@@ -143,7 +143,7 @@ const BlogPage = ({ data }) => {
               <SocialShare
                 url={`/blogs/${data.slug}`}
                 title={data.title}
-                description={data.metaDescription}
+                description={data.meta_desc}
                 platform="instagram"
                 isFloating={true}
               />
@@ -158,7 +158,7 @@ const BlogPage = ({ data }) => {
               <SocialShare
                 url={`/blogs/${data.slug}`}
                 title={data.title}
-                description={data.metaDescription}
+                description={data.meta_desc}
                 platform="facebook"
                 isFloating={true}
               />
@@ -319,7 +319,7 @@ const BlogPage = ({ data }) => {
 
               <div className="flex items-center gap-2">
                 <span className="text-sm text-gray-500">Share:</span>
-                <SocialShare url={`/blogs/${data.slug}`} title={data.title} description={data.metaDescription} />
+                <SocialShare url={`/blogs/${data.slug}`} title={data.title} description={data.meta_desc} />
               </div>
             </div>
           </motion.article>
